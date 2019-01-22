@@ -104,7 +104,6 @@ export class HorizontalMenuComponent implements OnInit {
   getDimensionData(e) {
     this.menuService.getDimensionData(e).toPromise().then(
       data => {
-
         this.files = data['data']
         if (this.files.length != 0) {
           //sessionStorage.removeItem('dimensionData')
