@@ -1,0 +1,480 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i');
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+@import url('https://cdn.quilljs.com/1.2.2/quill.snow.css');
+@import url('https://cdn.quilljs.com/1.2.2/quill.bubble.css');
+
+// indigo-pink, deeppurple-amber, purple-green and pink-bluegrey.
+@import 'assets/indigo-pink.css';
+@import "app/theme/styles/base";
+@import "app/theme/styles/theme";
+@import "app/theme/styles/libs-override";
+@import "app/theme/styles/rtl";
+@import './assets/component.css';
+
+
+
+.pagination>.active>a, .pagination>.active>a:focus, .pagination>.active>a:hover, .pagination>.active>span, .pagination>.active>span:focus, .pagination>.active>span:hover {
+    z-index: 3 !important;
+    cursor: default !important;
+    background: #eee !important;
+    border-color: #dddddd !important;
+    color: #333 !important;
+}
+
+
+//For Modal header
+
+.modal-header{
+//   background-color: #1a237e !important;
+background-color: #606389;
+  color: white !important;
+}
+
+//For Modal Title
+.titlemodal{
+    font-size:17px;
+}
+//Ends here
+
+
+//For size on filter dropdown and search
+
+.input-xsmall {
+    width: 65px !important;
+}
+.input-small{
+width: 145px !important;
+}
+
+.input-inline{
+    display: inline-block !important;
+}
+
+//Ends here
+
+.dataTables_wrapper{
+    margin-top: 6px !important;
+}
+
+// .btn-success{
+//   background-color: #428bca !important;
+//   border-color: #357ebd !important;
+
+// }
+
+.breadtitle {
+    margin-left: 6px;
+}
+
+.breadcrumbicon {
+    margin-top: -3px;
+}
+
+.modal-backdrop {
+    z-index: -1 !important;
+}
+
+//Styles for Icons in Tree
+.blue {
+    color: #89C4F4 !important;
+}
+
+.green {
+    color: #45B6AF !important;
+}
+
+.gold {
+    color: #dfba49 !important;
+}
+
+.red {
+    color: red !important;
+}
+
+//Styles End here for tree
+
+
+
+
+a:hover,
+a:visited,
+a:link,
+a:active {
+    text-decoration: none !important;
+  outline: 0 !important;
+    color: #fff;
+}
+
+;
+// a:active{
+//     text-decoration: none !important;
+//     background-color: #89C4F4 !important;
+//     color: aliceblue !important;
+// }
+::ng-deep .cdk-focused .cdk-mouse-focused {
+    text-decoration: none !important
+}
+
+//For profile pic style
+.rounded {
+    border-radius: 50% !important;
+}
+
+//Ends here 
+
+
+//For tables
+.thblue {
+    background-color: #3e4798;
+    color: azure;
+    font-weight: 500 !important;
+
+} //Ends here
+.marginbtn {
+    margin: 2px;
+}
+
+.pill_bg_color {
+    background-color: #67809f;
+    margin: 2px;
+    text-align: center;
+    border-radius: 15%;
+
+}
+
+.greenSnackbar{
+    background-color: #257d1f !important;
+}
+
+.redSnackbar{
+    background-color: #c32e2d !important;
+}
+
+div>.nav>.pill_bg_color.active>a {
+    background-color: #1568b0;
+    color: #fff;
+    border-bottom-color: transparent!important;
+    text-decoration: none;
+}
+
+div>.nav>.pill_bg_color:hover>a {
+background-color: #1568b0;
+    color: #fff;
+    border-bottom-color: #00adef;
+}
+div>.nav>.navpills.active>a {
+    background-color: #1568b0;
+    color: #fff;
+    border-bottom-color: transparent!important;
+    text-decoration: none;
+}
+
+.pillbtn{
+  margin-bottom: 10px !important;
+}
+
+
+
+
+.app.horizontal-menu .inner-sidenav-content {
+    padding-top: 10px !important;
+ 
+}
+
+// For Menu
+
+.app.indigo-light .mat-toolbar.mat-primary {
+    background: #1a237e !important;
+    color: white !important;
+}
+
+//Ends here
+
+
+.helptext{
+    border-left: 7px #1a237e solid !important;
+}
+
+//For shadow on right side tree div
+
+.gridrole{
+    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+
+    min-height: 445px !important;
+
+  }
+
+  .gridrole > * {
+      width: 100%;
+      
+  }
+
+
+//Ends here  
+
+
+//For Table text align
+
+th{
+    text-align: center !important;
+}
+
+td{
+    text-align: center !important;
+}
+
+.table_labels{
+    display:inline-block; 
+    font-weight: 400;
+}
+ 
+// tr{
+// background-color: #ffffff !important; 
+// }
+tr:hover{
+    background: #f1f1f1 !important;
+}
+//Ends here
+
+
+// Customization for pill buttons
+.pill_bg_color, .navpills{
+border-radius: 3px !important;  
+}
+
+div > .nav > .pill_bg_color.active > a{
+border-radius: 3px !important;  
+
+}
+
+.btn{
+border-radius: 2px !important;  
+
+}
+
+
+
+    //For modal headers
+
+
+//Styles for tree (PrimeNg)
+
+    
+ body .ui-widget {
+    font-family: "Segoe UI", "Helvetica Neue", sans-serif !important;
+    font-size: 16px !important;
+    text-decoration: none;
+    border: 1px solid #283593 !important;   
+    height: 405px; 
+  }
+
+  
+.ui-tree {
+    width: 100% !important;
+}
+ body .ui-tree {
+  border: 0px;
+}
+
+
+  .example-tree-invisible {
+    display: none;
+  }
+  
+  .example-tree ul,
+  .example-tree li {
+    margin-top: 0;
+    margin-bottom: 0;
+    list-style-type: none;
+  }
+  
+
+  //Ends here
+
+
+  //Portlet Title
+
+  .portlet-title{
+    background-color: #1a237e;
+    color: azure;
+    padding: 10px;
+  }
+  
+  //Ends here
+
+
+  /* style for checkbox color starts here*/
+ .mat-checkbox-checked.mat-accent .mat-checkbox-background, .mat-checkbox-indeterminate.mat-accent .mat-checkbox-background {
+    background-color: rgb(27, 142, 241) !important;
+  }
+  
+ .mat-ripple-element {
+    background: rgba(27, 142, 241, .4) !important;
+  }
+  /* Ends here */
+
+
+  // For border
+
+  .border{
+    border: 1px solid #283593;    
+    }
+
+
+    //Styles for Timeline
+
+.timeline {
+    position: relative;
+    margin: 0 0 30px 0;
+    padding: 0;
+    list-style: none;
+    margin-top: 40px !important;
+  }
+  .timeline:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background: #ddd;
+    left: 31px;
+    margin: 0;
+    border-radius: 2px;
+  }
+  .timeline > li {
+    position: relative;
+    margin-right: 10px;
+    margin-bottom: 15px;
+  }
+  .timeline > li:before,
+  .timeline > li:after {
+    content: " ";
+    display: table;
+  }
+  .timeline > li:after {
+    clear: both;
+  }
+  .timeline > li:before,
+  .timeline > li:after {
+    content: " ";
+    display: table;
+  }
+  .timeline > li:after {
+    clear: both;
+  }
+  .timeline > li > .timeline-item {
+    -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+    border-radius: 3px;
+    margin-top: 0;
+    background: #fff;
+    color: #444;
+    margin-left: 60px;
+    margin-right: 15px;
+    padding: 0;
+    position: relative;
+    
+  }
+  .timeline > li > .timeline-item > .time {
+    color: #999;
+    float: right;
+    padding: 10px;
+    font-size: 12px;
+  }
+  .timeline > li > .timeline-item > .timeline-header {
+    margin: 0;
+    color: #555;
+    border-bottom: 1px solid #f4f4f4;
+    padding: 10px;
+    font-size: 16px;
+    line-height: 1.1;
+  }
+  .timeline > li > .timeline-item > .timeline-header > a {
+    font-weight: 600;
+  }
+  .timeline > li > .timeline-item > .timeline-body,
+  .timeline > li > .timeline-item > .timeline-footer {
+    padding: 10px;
+  }
+  .timeline > li > .fa,
+  .timeline > li > .glyphicon,
+  .timeline > li > .ion {
+    width: 30px;
+    height: 30px;
+    font-size: 15px;
+    line-height: 30px;
+    position: absolute;
+    color: #666;
+    background: #d2d6de;
+    border-radius: 50%;
+    text-align: center;
+    left: 18px;
+    top: 0;
+  }
+  .timeline > .time-label > span {
+    font-weight: 600;
+    padding: 5px;
+    display: inline-block;
+    background-color: #fff;
+    border-radius: 4px;
+  }
+  .timeline-inverse > li > .timeline-item {
+    background: #f0f0f0;
+    border: 1px solid #ddd;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+  }
+  .timeline-inverse > li > .timeline-item > .timeline-header {
+    border-bottom-color: #ddd;
+  }
+  .box-body {
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 3px;
+      border-bottom-left-radius: 3px;
+      padding: 10px;
+      margin-top: 55px;
+  }
+
+  //Styles for timeline ends here
+
+//For margins
+
+ .margin-top{
+    margin-top: 10px !important;
+}
+
+
+
+.margin-top20{
+    margin-top: 20px;
+}
+
+.marging{
+    margin: 25px;
+}
+
+.no-padding{
+    padding: 0;
+    margin: 0;
+}
+//Ends here
+
+//For Blue color on buttons in timeline
+.bluecolor{
+    color:#357ebd !important;
+}
+
+//Ends here
+
+//Disable Class
+.disablecustom{
+    cursor: not-allowed !important;
+    pointer-events:none !important;
+    background-color: #aba7a757 !important;
+  }
+
+

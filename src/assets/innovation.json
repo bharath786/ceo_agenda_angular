@@ -1,0 +1,63 @@
+{
+    "data": [
+        {
+            "label": "Summary",
+            "data": "Documents Folder",
+            "expandedIcon": "fa fa-file green",
+            "collapsedIcon": "fa fa-file green"
+            
+        },
+        {
+            "label": "Innovation",
+            "data": "Documents Folder",
+            "expandedIcon": "fa fa-folder-open gold",
+            "collapsedIcon": "fa fa-folder gold",
+            "expanded": true,
+            "selectable": false,
+            "children": [
+                {
+                    "label": "Technology",
+                    "data": "Documents Folder",
+                    "expandedIcon": "fa fa-file green",
+                    "collapsedIcon": "fa fa-file green"
+                },
+                {
+                    "label": "Solutions",
+                    "data": "Documents Folder",
+                    "expandedIcon": "fa fa-file green",
+                    "collapsedIcon": "fa fa-file green"
+                },
+                {
+                    "label": "Process",
+                    "data": "Documents Folder",
+                    "expandedIcon": "fa fa-file green",
+                    "collapsedIcon": "fa fa-file green"
+                },
+                {
+                    "label": "HR",
+                    "data": "Documents Folder",
+                    "expandedIcon": "fa fa-file green",
+                    "collapsedIcon": "fa fa-file green"
+                },
+                {
+                    "label": "Domains",
+                    "data": "Documents Folder",
+                    "expandedIcon": "fa fa-file green",
+                    "collapsedIcon": "fa fa-file green"
+                },
+                {
+                    "label": "Marketing",
+                    "data": "Documents Folder",
+                    "expandedIcon": "fa fa-file green",
+                    "collapsedIcon": "fa fa-file green"
+                }
+            ]
+        },
+        {
+            "label": "Exceptions",
+            "data": "Work Folder",
+            "expandedIcon": "fa fa-exclamation-circle red",
+            "collapsedIcon": "fa fa-exclamation-circle red"
+        }
+    ]
+}

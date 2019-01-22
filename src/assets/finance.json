@@ -1,0 +1,87 @@
+{
+    "data": [
+        {
+            "label": "Summary",
+            "data": "Documents Folder",
+            "expandedIcon": "fa fa-file green",
+            "collapsedIcon": "fa fa-file green",
+            "expanded": true
+        },
+        {
+            "label": "Finance",
+            "data": "Work Folder",
+            "expandedIcon": "fa fa-folder-open gold",
+            "collapsedIcon": "fa fa-folder gold",
+            "expanded": true,
+            "selectable": false,
+            "children": [
+                {
+                    "label": "Cash Reserves",
+                    "data": "Work Folder",
+                    "expandedIcon": "fa fa-file green",
+                    "collapsedIcon": "fa fa-file green"
+                },
+                {
+                    "label": "Debt Free",
+                    "data": "Work Folder",
+                    "expandedIcon": "fa fa-file green",
+                    "collapsedIcon": "fa fa-file green"
+                },
+                {
+                    "label": "Variance",
+                    "data": "Work Folder",
+                    "expandedIcon": "fa fa-file green",
+                    "collapsedIcon": "fa fa-file green"
+                },
+                {
+                    "label": "Trends",
+                    "data": "Work Folder",
+                    "expandedIcon": "fa fa-file green",
+                    "collapsedIcon": "fa fa-file green"
+                },
+                {
+                    "label": "Distribution",
+                    "data": "Work Folder",
+                    "expandedIcon": "fa fa-file green",
+                    "collapsedIcon": "fa fa-file green"
+                },
+                {
+                    "label": "Balance Sheet",
+                    "data": "Work Folder",
+                    "expandedIcon": "fa fa-file green",
+                    "collapsedIcon": "fa fa-file green"
+                },
+                {
+                    "label": "Income",
+                    "data": "Work Folder",
+                    "expandedIcon": "fa fa-file green",
+                    "collapsedIcon": "fa fa-file green"
+                },
+                {
+                    "label": "Receivables",
+                    "data": "Work Folder",
+                    "expandedIcon": "fa fa-file green",
+                    "collapsedIcon": "fa fa-file green"
+                },
+                {
+                    "label": "Payables",
+                    "data": "Work Folder",
+                    "expandedIcon": "fa fa-file green",
+                    "collapsedIcon": "fa fa-file green"
+                },
+                {
+                    "label": "Ratio Analysis",
+                    "data": "Work Folder",
+                    "expandedIcon": "fa fa-file green",
+                    "collapsedIcon": "fa fa-file green"
+                }
+            ]
+        },
+        {
+            "label": "Exceptions",
+            "data": "Work Folder",
+            "expandedIcon": "fa fa-exclamation-circle red",
+            "collapsedIcon": "fa fa-exclamation-circle red"
+        }
+    ]
+}

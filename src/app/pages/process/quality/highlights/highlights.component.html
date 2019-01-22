@@ -1,0 +1,761 @@
+<div class="row">
+  <div class="col-sm-12">
+
+    <!-- For Quality tree -->
+    <div class="col-sm-4">
+      <div class="portlet-title">
+        <div class="caption">
+          <i class="fa fa-cogs"></i>&nbsp; Quality
+        </div>
+      </div>
+      <p-tree [value]="files" selectionMode="single" [(selection)]="selectedFile" (onNodeSelect)="nodeSelect($event)"></p-tree>
+    </div>
+
+    <!-- For Quality Tree data  -->
+    <div class="col-sm-8">
+      <div *ngIf="mainvalue==='Summary'|| mainvalue==null" class="grey-cararra table-responsive">
+        <table class="table table-bordered text-center table-striped" id="">
+          <thead>
+            <tr>
+              <th scope="col">KRA</th>
+              <th scope="col">KPI</th>
+              <th scope="col">MAX</th>
+              <th scope="col">MIN</th>
+              <th scope="col">Average</th>
+              <th scope="col">Target</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td rowspan="16" scope="row">Quality </td>
+              <td>Feedback</td>
+              <td>90</td>
+              <td>50</td>
+              <td>75</td>
+              <td>90</td>
+            </tr>
+            <tr>
+              <td>Pulse </td>
+              <td>85</td>
+              <td>48</td>
+              <td>69</td>
+              <td>90</td>
+            </tr>
+            <tr>
+              <td>Schedule </td>
+              <td>75</td>
+              <td>45</td>
+              <td>66</td>
+              <td>90</td>
+            </tr>
+            <tr>
+              <td>Exceptions </td>
+              <td>75</td>
+              <td>42</td>
+              <td>66</td>
+              <td>90</td>
+            </tr>
+            <tr>
+              <td>Briefing </td>
+              <td>75</td>
+              <td>42</td>
+              <td>66</td>
+              <td>90</td>
+            </tr>
+            <tr>
+              <td>QA Checklist</td>
+              <td>75</td>
+              <td>42</td>
+              <td>66</td>
+              <td>90</td>
+            </tr>
+            <tr>
+              <td>Clearance</td>
+              <td>75</td>
+              <td>42</td>
+              <td>66</td>
+              <td>90</td>
+            </tr>
+            <tr>
+              <td>Demos</td>
+              <td>4.8</td>
+              <td>2.2</td>
+              <td>3.9</td>
+              <td>4.9</td>
+            </tr>
+            <tr>
+              <td>Automation</td>
+              <td>8.8</td>
+              <td>6.2</td>
+              <td>7.7</td>
+              <td>9.0</td>
+            </tr>
+            <tr>
+
+              <td>Zap</td>
+              <td>500</td>
+              <td>220</td>
+              <td>350</td>
+              <td>750</td>
+            </tr>
+            <tr>
+              <td>Tech Audit</td>
+              <td>5000</td>
+              <td>2200</td>
+              <td>3950</td>
+              <td>5900</td>
+            </tr>
+            <tr>
+              <td>Process Audit</td>
+              <td>1500</td>
+              <td>1220</td>
+              <td>1350</td>
+              <td>2000</td>
+            </tr>
+            <tr>
+              <td>UI Audit </td>
+              <td>1500</td>
+              <td>1220</td>
+              <td>1350</td>
+              <td>2000</td>
+            </tr>
+            <tr>
+              <td>DB Audit </td>
+              <td>1500</td>
+              <td>1220</td>
+              <td>1350</td>
+              <td>2000</td>
+            </tr>
+            <tr>
+              <td>Productivity Audit </td>
+              <td>1500</td>
+              <td>1220</td>
+              <td>1350</td>
+              <td>2000</td>
+            </tr>
+            <tr>
+              <td>Improvement </td>
+              <td>1500</td>
+              <td>1220</td>
+              <td>1350</td>
+              <td>2000</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+
+      <div class="border" *ngIf="mainvalue==='Feedback'">
+        <div class="col-sm-12 portlet-title">
+          <div class="caption">
+            &nbsp;{{mainvalue}}
+          </div>
+        </div>
+        <div class="col-sm-12 margin-top">
+            <div class="col-sm-6 pull-right">
+                <input type="search" class="form-control input-small input-inline pull-right" placeholder="Keyword Search" style="margin-right: 5px;" aria-controls="Progress_table1">
+              </div>
+            </div>
+        <div class="box-body">
+          <ul class="timeline">
+            <li>
+              <i class="fa fa-envelope bg-blue"></i>
+              <div class="timeline-item">
+
+                <h3 class="timeline-header"><a class="bluecolor" href="javascript:;">Navin Challa
+                    </a></h3>
+                <div class="timeline-body">
+                  <p>Win-Win should be the focus</p>
+                </div>
+                <div class="timeline-footer">
+                  <span class="time"><i class="fa fa-calendar"></i> Tue, 1 Nov</span>
+                </div>
+              </div>
+            </li>
+
+            <li>
+              <i class="fa fa-envelope bg-blue"></i>
+              <div class="timeline-item">
+
+                <h3 class="timeline-header">
+                  <a class="bluecolor" href="javascript:;">Shesha Rao</a></h3>
+                <div class="timeline-body">
+                  <p>Implement Php standards as per the process </p>
+                </div>
+                <div class="timeline-footer">
+                  <span class="time"><i class="fa fa-calendar"></i> Tue, 29 Nov</span>
+                </div>
+              </div>
+            </li>
+
+            <li>
+              <i class="fa fa-envelope bg-blue"></i>
+              <div class="timeline-item">
+
+                <h3 class="timeline-header"><a class="bluecolor" href="javascript:;">Naveen Challa</a></h3>
+                <div class="timeline-body">
+                  <p>Win-Win should be the focus</p>
+                </div>
+                <div class="timeline-footer">
+                  <span class="time"><i class="fa fa-calendar"></i> Tue, 29 Nov</span>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+      
+      <div class="border" *ngIf="mainvalue==='Pulse'">
+        <div class="col-sm-12 portlet-title">
+          <div class="caption">
+            &nbsp;{{mainvalue}}
+          </div>
+
+        </div>
+        <div [chart]="pulsechart"></div>
+      
+      </div>
+
+      <div class="border" *ngIf="mainvalue==='Schedule'">
+        <div class="col-sm-12 portlet-title">
+          <div class="caption">
+            &nbsp;{{mainvalue}}
+          </div>
+        </div>
+        <div class="col-sm-12 margin-top">
+            <div class="col-sm-6 pull-right">
+                <input type="search" class="form-control input-small input-inline pull-right" placeholder="Keyword Search" style="margin-right: 5px;" aria-controls="Progress_table1">
+              </div>
+            </div>
+        <div class="box-body">
+          <ul class="timeline">
+            <li>
+              <i class="fa fa-envelope bg-blue"></i>
+              <div class="timeline-item">
+
+                <h3 class="timeline-header"><a class="bluecolor" href="javascript:;">Navin Malik
+                    </a></h3>
+                <div class="timeline-body">
+                  <p>20th January: Demo to client</p>
+                </div>
+                <div class="timeline-footer">
+                  <span class="time"><i class="fa fa-calendar"></i> Tue, 1 Nov</span>
+                </div>
+              </div>
+            </li>
+
+            <li>
+              <i class="fa fa-envelope bg-blue"></i>
+              <div class="timeline-item">
+
+                <h3 class="timeline-header">
+                  <a class="bluecolor" href="javascript:;">Vaibhav</a></h3>
+                <div class="timeline-body">
+                  <p>21st January: Approval of next sprint</p>
+                </div>
+                <div class="timeline-footer">
+                  <span class="time"><i class="fa fa-calendar"></i> Tue, 29 Nov</span>
+                </div>
+              </div>
+            </li>
+
+            <li>
+              <i class="fa fa-envelope bg-blue"></i>
+              <div class="timeline-item">
+
+                <h3 class="timeline-header"><a class="bluecolor" href="javascript:;">Naveen Challa</a></h3>
+                <div class="timeline-body">
+                  <p>21st January: Approval of next sprint</p>
+                </div>
+                <div class="timeline-footer">
+                  <span class="time"><i class="fa fa-calendar"></i> Tue, 29 Nov</span>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+
+
+      <div class="border" *ngIf="mainvalue==='Briefing'">
+        <div class="col-sm-12 portlet-title">
+          <div class="caption">
+            &nbsp;{{mainvalue}}
+          </div>
+
+        </div>
+        <div [chart]="briefingchart"></div>
+      
+      </div>
+
+      <div class="border" *ngIf="mainvalue==='QA Checklist'">
+        <div class="col-sm-12 portlet-title">
+          <div class="caption">
+            &nbsp;{{mainvalue}}
+          </div>
+        </div>
+        <div class="col-sm-12 margin-top">
+            <div class="col-sm-6 pull-right">
+                <input type="search" class="form-control input-small input-inline pull-right" placeholder="Keyword Search" style="margin-right: 5px;" aria-controls="Progress_table1">
+              </div>
+            </div>
+       <div class="box-body">
+          <ul class="timeline">
+            <li>
+              <i class="fa fa-envelope bg-blue"></i>
+              <div class="timeline-item">
+
+                <h3 class="timeline-header"><a class="bluecolor" href="javascript:;">Aravind
+                    </a></h3>
+                <div class="timeline-body">
+                  <p>Provided for GMS Sprint 12
+                  </p>
+                </div>
+                <div class="timeline-footer">
+                  <span class="time"><i class="fa fa-calendar"></i> Tue, 1 Nov</span>
+                </div>
+              </div>
+            </li>
+
+            <li>
+              <i class="fa fa-envelope bg-blue"></i>
+              <div class="timeline-item">
+
+                <h3 class="timeline-header">
+                  <a class="bluecolor" href="javascript:;">Neeraja</a></h3>
+                <div class="timeline-body">
+                  <p>Provided for BGR ERP Sprint 25</p>
+                </div>
+                <div class="timeline-footer">
+                  <span class="time"><i class="fa fa-calendar"></i> Tue, 29 Nov</span>
+                </div>
+              </div>
+            </li>
+
+            <li>
+              <i class="fa fa-envelope bg-blue"></i>
+              <div class="timeline-item">
+
+                <h3 class="timeline-header"><a class="bluecolor" href="javascript:;">Avinash</a></h3>
+                <div class="timeline-body">
+                  <p>Provided for People First Sprint 12</p>
+                </div>
+                <div class="timeline-footer">
+                  <span class="time"><i class="fa fa-calendar"></i> Tue, 29 Nov</span>
+                </div>
+              </div>
+            </li>
+          </ul>
+          <!-- /.table-responsive -->
+        </div>
+
+      </div>
+
+      <div class="border" *ngIf="mainvalue==='Clearance'">
+        <div class="col-sm-12 portlet-title">
+          <div class="caption">
+            &nbsp;{{mainvalue}}
+          </div>
+
+        </div>
+        <div [chart]="clearancechart"></div>
+      
+      </div>
+
+      <div class="border" *ngIf="mainvalue==='Demos'">
+        <div class="col-sm-12 portlet-title">
+          <div class="caption">
+            &nbsp;{{mainvalue}}
+          </div>
+
+        </div>
+        <div [chart]="demoschart"></div>
+      
+      </div>
+
+      <div class="border" *ngIf="mainvalue==='Automation'">
+        <div class="col-sm-12 portlet-title">
+          <div class="caption">
+            &nbsp;{{mainvalue}}
+          </div>
+
+        </div>
+        <div [chart]="automationchart"></div>
+      
+      </div>
+
+      <div class="border" *ngIf="mainvalue==='Zap'">
+        <div class="col-sm-12 portlet-title">
+          <div class="caption">
+            &nbsp;{{mainvalue}}
+          </div>
+
+        </div>
+        <div [chart]="zapchart"></div>
+      
+      </div>
+
+      <div class="border" *ngIf="mainvalue==='Tech Audit'">
+        <div class="col-sm-12 portlet-title">
+          <div class="caption">
+            &nbsp;{{mainvalue}}
+          </div>
+
+        </div>
+        <div [chart]="techauditchart"></div>
+      
+      </div>
+
+      <div class="border" *ngIf="mainvalue==='Process Audit'">
+        <div class="col-sm-12 portlet-title">
+          <div class="caption">
+            &nbsp;{{mainvalue}}
+          </div>
+
+        </div>
+        <div [chart]="processauditchart"></div>
+      
+      </div>
+
+      <div class="border" *ngIf="mainvalue==='UI Audit'">
+        <div class="col-sm-12 portlet-title">
+          <div class="caption">
+            &nbsp;{{mainvalue}}
+          </div>
+
+        </div>
+        <div [chart]="uiauditchart"></div>
+      
+      </div>
+
+      <div class="border" *ngIf="mainvalue==='DB Audit'">
+        <div class="col-sm-12 portlet-title">
+          <div class="caption">
+            &nbsp;{{mainvalue}}
+          </div>
+
+        </div>
+        <div [chart]="dbauditchart"></div>
+      
+      </div>
+
+      <div class="border" *ngIf="mainvalue==='Productivity Audit'">
+        <div class="col-sm-12 portlet-title">
+          <div class="caption">
+            &nbsp;{{mainvalue}}
+          </div>
+
+        </div>
+        <div [chart]="productivityauditchart"></div>
+      
+      </div>
+
+      <div class="border" *ngIf="mainvalue==='Improvement'">
+        <div class="col-sm-12 portlet-title">
+          <div class="caption">
+            &nbsp;{{mainvalue}}
+          </div>
+
+        </div>
+        <div [chart]="improvementchart"></div>
+      
+      </div>
+      <div class="margin-top20" *ngIf="mainvalue==='Briefing'|| mainvalue==='Clearance'||mainvalue==='Demos'||mainvalue==='Automation'||mainvalue==='Zap'|| mainvalue==='Tech Audit'||mainvalue==='Process Audit'||mainvalue==='UI Audit'||mainvalue==='DB Audit'||mainvalue==='Productivity Audit'">
+
+
+        <table class="table table-hover table-striped table-bordered text-center margin-top-10" id="">
+          <thead>
+            <tr>
+              <th scope="col">Months</th>
+              <th scope="col">{{mainvalue}}</th>
+
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+
+              <td>January</td>
+              <td>06</td>
+            </tr>
+            <tr>
+              <td>February</td>
+              <td>07</td>
+            </tr>
+            <tr>
+              <td>March</td>
+              <td>09</td>
+            </tr>
+            <tr>
+              <td>April</td>
+              <td>08</td>
+            </tr>
+            <tr>
+              <td>May</td>
+              <td>04</td>
+            </tr>
+            <tr>
+              <td>June</td>
+              <td>04</td>
+            </tr>
+            <tr>
+              <td>July</td>
+              <td>06</td>
+            </tr>
+            <tr>
+              <td>August</td>
+              <td>11</td>
+            </tr>
+            <tr>
+              <td>September</td>
+              <td>10</td>
+            </tr>
+            <tr>
+              <td>October</td>
+              <td>10</td>
+            </tr>
+            <tr>
+              <td>November</td>
+              <td>15</td>
+            </tr>
+            <tr>
+              <td>December</td>
+              <td>13</td>
+            </tr>
+
+
+          </tbody>
+        </table>
+      </div>
+
+      <div class="margin-top20" *ngIf="mainvalue==='Improvement'">
+
+
+        <table class="table table-bordered text-center table-striped" id="">
+          <thead>
+            <tr>
+              <th scope="col">Months</th>
+              <th scope="col">{{mainvalue}}</th>
+
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+
+              <td>January</td>
+              <td>20</td>
+            </tr>
+            <tr>
+              <td>February</td>
+              <td>45</td>
+            </tr>
+            <tr>
+              <td>March</td>
+              <td>35</td>
+            </tr>
+            <tr>
+              <td>April</td>
+              <td>74</td>
+            </tr>
+            <tr>
+              <td>May</td>
+              <td>42</td>
+            </tr>
+            <tr>
+              <td>June</td>
+              <td>90</td>
+            </tr>
+            <tr>
+              <td>July</td>
+              <td>69</td>
+            </tr>
+            <tr>
+              <td>August</td>
+              <td>39</td>
+            </tr>
+            <tr>
+              <td>September</td>
+              <td>52</td>
+            </tr>
+            <tr>
+              <td>October</td>
+              <td>69</td>
+            </tr>
+            <tr>
+              <td>November</td>
+              <td>55</td>
+            </tr>
+            <tr>
+              <td>December</td>
+              <td>72</td>
+
+            </tr>
+
+
+          </tbody>
+        </table>
+      </div>
+
+      
+      <div class="margin-top20" *ngIf="mainvalue==='Pulse'">
+
+
+        <table class="table table-bordered text-center table-striped" id="">
+          <thead>
+            <tr>
+              <th scope="col">Months</th>
+              <th scope="col">{{mainvalue}}</th>
+
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+
+              <td>January</td>
+              <td>100</td>
+            </tr>
+            <tr>
+              <td>February</td>
+              <td>95</td>
+            </tr>
+            <tr>
+              <td>March</td>
+              <td>95</td>
+            </tr>
+            <tr>
+              <td>April</td>
+              <td>95</td>
+            </tr>
+            <tr>
+              <td>May</td>
+              <td>100</td>
+            </tr>
+            <tr>
+              <td>June</td>
+              <td>90</td>
+            </tr>
+            <tr>
+              <td>July</td>
+              <td>90</td>
+            </tr>
+            <tr>
+              <td>August</td>
+              <td>95</td>
+            </tr>
+            <tr>
+              <td>September</td>
+              <td>80</td>
+            </tr>
+            <tr>
+              <td>October</td>
+              <td>95</td>
+            </tr>
+            <tr>
+              <td>November</td>
+              <td>95</td>
+            </tr>
+            <tr>
+              <td>December</td>
+              <td>92</td>
+
+            </tr>
+
+
+          </tbody>
+        </table>
+      </div>
+
+
+
+      <div *ngIf="mainvalue==='Exceptions'" class="grey-cararra table-responsive">
+    
+        <table class="table table-bordered table-striped text-center table-responsive" id="">
+          <thead>
+            <tr>
+              <th scope="col">KRA</th>
+              <th scope="col">KPI</th>
+              <th scope="col">Execptions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td rowspan="16" scope="row">Quality</td>
+              <td>Feedback</td>
+              <td>9</td>
+            </tr>
+            <tr>
+              <td>Pulse</td>
+              <td>0</td>
+            </tr>
+            <tr>
+              <td>Schedule</td>
+              <td>0</td>
+            </tr>
+            <tr>
+              <td>Exceptions</td>
+              <td>4</td>
+            </tr>
+            <tr>
+              <td>Briefing</td>
+              <td>5</td>
+            </tr>
+            <tr>
+              <td>QA Checklist</td>
+              <td>9</td>
+            </tr>
+            <tr>
+              <td>Clearance</td>
+              <td>0</td>
+            </tr>
+            <tr>
+    
+              <td>Demos</td>
+              <td>4</td>
+            </tr>
+            <tr>
+              <td>Automation</td>
+              <td>7</td>
+            </tr>
+            <tr>
+           
+              <td>Zap</td>
+              <td>0</td>
+            </tr>
+            <tr>
+              <td>Tech Audit</td>
+              <td>0</td>
+            </tr>
+            <tr>
+              <td>Process Audit</td>
+              <td>0</td>
+            </tr>
+            <tr>
+              <td>UI Audit</td>
+              <td>7</td>
+            </tr>
+            <tr>
+              <td>DB Audit</td>
+              <td>0</td>
+            </tr>
+            <tr>
+              <td>Productivity Audit </td>
+              <td>0</td>
+            </tr>
+            <tr>
+              <td>Improvement</td>
+              <td>0</td>
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+
+      
+
+
+    </div>
+  </div>
+
+
+</div>

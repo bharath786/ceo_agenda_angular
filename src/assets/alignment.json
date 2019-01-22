@@ -1,0 +1,98 @@
+{
+    "data": [
+        {
+            "label": "Summary",
+            "data": "Documents Folder",
+            "expandedIcon": "fa fa-file green",
+            "collapsedIcon": "fa fa-file green"
+        },
+        {
+            "label": "Alignment",
+            "data": "Documents Folder",
+            "expandedIcon": "fa fa-folder-open gold",
+            "collapsedIcon": "fa fa-folder gold",
+            "expanded": true,
+            "selectable": false,
+            "children": [
+                {
+                    "label": "Attrition",
+                    "data": "Documents Folder",
+                    "expandedIcon": "fa fa-file green",
+                    "collapsedIcon": "fa fa-file green"
+                },
+                {
+                    "label": "Quarterly Review",
+                    "data": "Documents Folder",
+                    "expandedIcon": "fa fa-file green",
+                    "collapsedIcon": "fa fa-file green"
+                },
+                {
+                    "label": "Fitness Awards",
+                    "data": "Documents Folder",
+                    "expandedIcon": "fa fa-file green",
+                    "collapsedIcon": "fa fa-file green"
+                },
+                {
+                    "label": "Quartiles",
+                    "data": "Documents Folder",
+                    "expandedIcon": "fa fa-file green",
+                    "collapsedIcon": "fa fa-file green"
+                },
+                {
+                    "label": "Fitness Metrics",
+                    "data": "Documents Folder",
+                    "expandedIcon": "fa fa-file green",
+                    "collapsedIcon": "fa fa-file green"
+                },
+                {
+                    "label": "Unplanned Leaves",
+                    "data": "Documents Folder",
+                    "expandedIcon": "fa fa-file green",
+                    "collapsedIcon": "fa fa-file green"
+                },
+                {
+                    "label": "Attendance Metrics",
+                    "data": "Documents Folder",
+                    "expandedIcon": "fa fa-file green",
+                    "collapsedIcon": "fa fa-file green"
+                },
+                {
+                    "label": "Late Attendance",
+                    "data": "Documents Folder",
+                    "expandedIcon": "fa fa-file green",
+                    "collapsedIcon": "fa fa-file green"
+                },
+                {
+                    "label": "Associate Pulse",
+                    "data": "Documents Folder",
+                    "expandedIcon": "fa fa-file green",
+                    "collapsedIcon": "fa fa-file green"
+                },
+                {
+                    "label": "Exit Interviews",
+                    "data": "Documents Folder",
+                    "expandedIcon": "fa fa-file green",
+                    "collapsedIcon": "fa fa-file green"
+                },
+                {
+                    "label": "Alumnni Dues",
+                    "data": "Documents Folder",
+                    "expandedIcon": "fa fa-file green",
+                    "collapsedIcon": "fa fa-file green"
+                },
+                {
+                    "label": "Retention",
+                    "data": "Documents Folder",
+                    "expandedIcon": "fa fa-file green",
+                    "collapsedIcon": "fa fa-file green"
+                }
+            ]
+        },
+        {
+            "label": "Exceptions",
+            "data": "Work Folder",
+            "expandedIcon": "fa fa-exclamation-circle red",
+            "collapsedIcon": "fa fa-exclamation-circle red"
+        }
+    ]
+}

@@ -1,0 +1,122 @@
+{
+    "data": [
+        {
+            "label": "Summary",
+            "data": "Documents Folder",
+            "expandedIcon": "fa fa-file green",
+            "collapsedIcon": "fa fa-file green",
+            "expanded": true
+        },
+        {
+            "label": "Quality",
+            "data": "Work Folder",
+            "expandedIcon": "fa fa-folder-open gold",
+            "collapsedIcon": "fa fa-folder gold",
+            "expanded": true,
+            "children": [
+                {
+                    "label": "Feedback",
+                    "data": "Work Folder",
+                    "expandedIcon": "fa fa-file green",
+                    "collapsedIcon": "fa fa-file green"
+                },
+                {
+                    "label": "Pulse",
+                    "data": "Work Folder",
+                    "expandedIcon": "fa fa-file green",
+                    "collapsedIcon": "fa fa-file green"
+                },
+                {
+                    "label": "Schedule",
+                    "data": "Work Folder",
+                    "expandedIcon": "fa fa-file green",
+                    "collapsedIcon": "fa fa-file green"
+                },
+                {
+                    "label": "Exceptions",
+                    "data": "Work Folder",
+                    "expandedIcon": "fa fa-file green",
+                    "collapsedIcon": "fa fa-file green"
+                },
+                {
+                    "label": "Briefing",
+                    "data": "Work Folder",
+                    "expandedIcon": "fa fa-file green",
+                    "collapsedIcon": "fa fa-file green"
+                },
+                {
+                    "label": "QA Checklist",
+                    "data": "Work Folder",
+                    "expandedIcon": "fa fa-file green",
+                    "collapsedIcon": "fa fa-file green"
+                },
+                {
+                    "label": "Clearance",
+                    "data": "Work Folder",
+                    "expandedIcon": "fa fa-file green",
+                    "collapsedIcon": "fa fa-file green"
+                },
+                {
+                    "label": "Demos",
+                    "data": "Work Folder",
+                    "expandedIcon": "fa fa-file green",
+                    "collapsedIcon": "fa fa-file green"
+                },
+                {
+                    "label": "Automation",
+                    "data": "Work Folder",
+                    "expandedIcon": "fa fa-file green",
+                    "collapsedIcon": "fa fa-file green"
+                },
+                {
+                    "label": "Zap",
+                    "data": "Work Folder",
+                    "expandedIcon": "fa fa-file green",
+                    "collapsedIcon": "fa fa-file green"
+                },
+                {
+                    "label": "Tech Audit",
+                    "data": "Work Folder",
+                    "expandedIcon": "fa fa-file green",
+                    "collapsedIcon": "fa fa-file green"
+                },
+                {
+                    "label": "Process Audit",
+                    "data": "Work Folder",
+                    "expandedIcon": "fa fa-file green",
+                    "collapsedIcon": "fa fa-file green"
+                },
+                {
+                    "label": "UI Audit",
+                    "data": "Work Folder",
+                    "expandedIcon": "fa fa-file green",
+                    "collapsedIcon": "fa fa-file green"
+                },
+                {
+                    "label": "DB Audit",
+                    "data": "Work Folder",
+                    "expandedIcon": "fa fa-file green",
+                    "collapsedIcon": "fa fa-file green"
+                },
+                {
+                    "label": "Productivity Audit",
+                    "data": "Work Folder",
+                    "expandedIcon": "fa fa-file green",
+                    "collapsedIcon": "fa fa-file green"
+                },
+                {
+                    "label": "Improvement",
+                    "data": "Work Folder",
+                    "expandedIcon": "fa fa-file green",
+                    "collapsedIcon": "fa fa-file green"
+                }
+            ]
+        },
+        {
+            "label": "Exceptions",
+            "data": "Work Folder",
+            "expandedIcon": "fa fa-exclamation-circle red",
+            "collapsedIcon": "fa fa-exclamation-circle red"
+        }
+    ]
+}

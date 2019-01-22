@@ -1,0 +1,69 @@
+{
+    "data": [
+        {
+            "label": "Summary",
+            "data": "Documents Folder",
+            "expandedIcon": "fa fa-file green",
+            "collapsedIcon": "fa fa-file green"
+
+        },
+        {
+            "label": "Talent",
+            "data": "Documents Folder",
+            "expandedIcon": "fa fa-folder-open gold",
+            "collapsedIcon": "fa fa-folder gold",
+            "expanded": true,
+            "selectable":false,
+            "children": [
+                {
+                    "label": "Recruitment",
+                    "data": "Documents Folder",
+                    "expandedIcon": "fa fa-file green",
+                    "collapsedIcon": "fa fa-file green"
+                },
+                {
+                    "label": "Joining Ratio",
+                    "data": "Documents Folder",
+                    "expandedIcon": "fa fa-file green",
+                    "collapsedIcon": "fa fa-file green"
+                },
+                {
+                    "label": "Induction",
+                    "data": "Documents Folder",
+                    "expandedIcon": "fa fa-file green",
+                    "collapsedIcon": "fa fa-file green"
+                },
+                {
+                    "label": "Work Experience",
+                    "data": "Documents Folder",
+                    "expandedIcon": "fa fa-file green",
+                    "collapsedIcon": "fa fa-file green"
+                },
+                {
+                    "label": "IQ Distribution",
+                    "data": "Documents Folder",
+                    "expandedIcon": "fa fa-file green",
+                    "collapsedIcon": "fa fa-file green"
+                },
+                {
+                    "label": "Gestation",
+                    "data": "Documents Folder",
+                    "expandedIcon": "fa fa-file green",
+                    "collapsedIcon": "fa fa-file green"
+                },
+                {
+                    "label": "Subject Expertise",
+                    "data": "Documents Folder",
+                    "expandedIcon": "fa fa-file green",
+                    "collapsedIcon": "fa fa-file green"
+                }
+            ]
+        },
+        {
+            "label": "Exceptions",
+            "data": "Work Folder",
+            "expandedIcon": "fa fa-exclamation-circle red",
+            "collapsedIcon": "fa fa-exclamation-circle red"
+        }
+    ]
+}

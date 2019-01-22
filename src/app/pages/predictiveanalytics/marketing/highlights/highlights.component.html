@@ -1,0 +1,981 @@
+<div class="row">
+
+  <div class="col-sm-12">
+
+    <!-- For Marketing Tree -->
+    <div class="col-sm-4">
+      <div class="portlet-title">
+        <div class="caption">
+          <i class="fa fa-cogs"></i>&nbsp; Marketing
+        </div>
+      </div>
+
+      <p-tree [value]="files" selectionMode="single" [(selection)]="selectedFile" (onNodeSelect)="nodeSelect($event)"></p-tree>
+    </div>
+
+    <!-- For Tree related data and charts -->
+    <div class="col-sm-8">
+
+      <!-- For Summary -->
+      <div *ngIf="mainvalue==='Summary'|| mainvalue==null" class="grey-cararra table-responsive">
+
+        <table class="table table-bordered text-center table-striped">
+          <thead>
+            <tr>
+              <th scope="col">KRA</th>
+              <th scope="col">KPI</th>
+              <th scope="col">MAX</th>
+              <th scope="col">MIN</th>
+              <th scope="col">Average</th>
+              <th scope="col">Target</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td rowspan="7" scope="row">Business Development</td>
+              <td>Prospects</td>
+              <td>90</td>
+              <td>50</td>
+              <td>75</td>
+              <td>90</td>
+            </tr>
+            <tr>
+              <td>Active Leads</td>
+              <td>85</td>
+              <td>48</td>
+              <td>69</td>
+              <td>90</td>
+            </tr>
+            <tr>
+              <td>Future Leads</td>
+              <td>75</td>
+              <td>45</td>
+              <td>66</td>
+              <td>90</td>
+            </tr>
+            <tr>
+              <td>Parallel Projects</td>
+              <td>75</td>
+              <td>42</td>
+              <td>66</td>
+              <td>90</td>
+            </tr>
+            <tr>
+              <td>Conversion Ratio</td>
+              <td>75</td>
+              <td>42</td>
+              <td>66</td>
+              <td>90</td>
+            </tr>
+            <tr>
+              <td>Wins</td>
+              <td>75</td>
+              <td>42</td>
+              <td>66</td>
+              <td>90</td>
+            </tr>
+            <tr>
+              <td>Loses</td>
+              <td>75</td>
+              <td>42</td>
+              <td>66</td>
+              <td>90</td>
+            </tr>
+            <tr>
+              <td rowspan="2">Reputation</td>
+              <td>Glassdoor Reviews</td>
+              <td>4.8</td>
+              <td>2.2</td>
+              <td>3.9</td>
+              <td>4.9</td>
+            </tr>
+            <tr>
+              <td>Google Reviews</td>
+              <td>8.8</td>
+              <td>6.2</td>
+              <td>7.7</td>
+              <td>9.0</td>
+            </tr>
+            <tr>
+              <td rowspan="3" scope="row">Coverage</td>
+              <td>Mail</td>
+              <td>500</td>
+              <td>220</td>
+              <td>350</td>
+              <td>750</td>
+            </tr>
+            <tr>
+              <td>Social</td>
+              <td>5000</td>
+              <td>2200</td>
+              <td>3950</td>
+              <td>5900</td>
+            </tr>
+            <tr>
+              <td>Voice</td>
+              <td>1500</td>
+              <td>1220</td>
+              <td>1350</td>
+              <td>2000</td>
+            </tr>
+
+          </tbody>
+        </table>
+
+
+      </div>
+
+      <div class="border" *ngIf="mainvalue==='Prospects'">
+        <div class="col-sm-12 portlet-title">
+          <div class="caption">
+            &nbsp;Prospects
+          </div>
+
+        </div>
+        <div [chart]="prospects"></div>
+
+      </div>
+
+
+      <div class="border" *ngIf="mainvalue==='Future Leads'">
+        <div class="col-sm-12 portlet-title">
+          <div class="caption">
+            &nbsp;Future Leads
+          </div>
+        </div>
+        <div class="col-sm-12" style="background-color:white;">
+          <div class="col-sm-8">
+
+          </div>
+          <div class="col-sm-4 pull-right margin-top">
+            <mat-select placeholder="Select Month" [(value)]="selected" class="form-control marginbtn">
+              <mat-option *ngFor="let month of months" [value]="month.viewValue">
+                {{month.viewValue}}
+              </mat-option>
+            </mat-select>
+          </div>
+
+        </div>
+        <div [chart]="futureleads"></div>
+
+
+      </div>
+
+      <div class="margin-top20" *ngIf="mainvalue==='Future Leads'">
+        <table class="table table-bordered table-striped text-center margin-top-10" id="">
+          <thead>
+            <tr>
+              <th scope="col">Weeks</th>
+              <th scope="col">Leads</th>
+
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+
+              <td>1st Week</td>
+              <td>15</td>
+            </tr>
+            <tr>
+              <td>2nd Week</td>
+              <td>25</td>
+            </tr>
+            <tr>
+              <td>3rd Week</td>
+              <td>27</td>
+            </tr>
+            <tr>
+              <td>4th Week</td>
+              <td>22</td>
+            </tr>
+
+
+
+          </tbody>
+        </table>
+
+      </div>
+
+
+      <div class="border" *ngIf="mainvalue==='Active Leads'">
+        <div class="col-sm-12 portlet-title">
+          <div class="caption">
+            &nbsp;Active Leads
+          </div>
+
+        </div>
+
+        <div class="col-sm-12" style="background-color:white;">
+          <div class="col-sm-8">
+
+          </div>
+          <div class="col-sm-4 pull-right margin-top">
+            <mat-select placeholder="Select Month" [(value)]="selected" class="form-control marginbtn">
+              <mat-option *ngFor="let month of months" [value]="month.viewValue">
+                {{month.viewValue}}
+              </mat-option>
+            </mat-select>
+          </div>
+
+        </div>
+
+        <div [chart]="activeleads"></div>
+
+      </div>
+
+      <div class="margin-top20"  *ngIf="mainvalue==='Active Leads'">
+
+
+        <table class="table table-bordered table-striped text-center margin-top-10" id="">
+          <thead>
+            <tr>
+              <th scope="col">Days</th>
+              <th scope="col">Leads</th>
+
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+
+              <td>{{selected}}-01</td>
+              <td>15</td>
+            </tr>
+            <tr>
+              <td>{{selected}}-02</td>
+              <td>11</td>
+            </tr>
+            <tr>
+              <td>{{selected}}-03</td>
+              <td>16</td>
+            </tr>
+            <tr>
+              <td>{{selected}}-04</td>
+              <td>26</td>
+            </tr>
+            <tr>
+              <td>{{selected}}-05</td>
+              <td>33</td>
+            </tr>
+            <tr>
+              <td>{{selected}}-06</td>
+              <td>31</td>
+            </tr>
+            <tr>
+              <td>{{selected}}-07</td>
+              <td>38</td>
+            </tr>
+            <tr>
+              <td>{{selected}}-08</td>
+              <td>37</td>
+            </tr>
+            <tr>
+              <td>{{selected}}-09</td>
+              <td>41</td>
+            </tr>
+            <tr>
+              <td>{{selected}}-10</td>
+              <td>49</td>
+            </tr>
+            <tr>
+              <td>{{selected}}-11</td>
+              <td>46</td>
+            </tr>
+            <tr>
+              <td>{{selected}}-12</td>
+              <td>51</td>
+
+            </tr>
+            <tr>
+              <td>{{selected}}-13</td>
+              <td>50</td>
+            </tr>
+            <tr>
+              <td>{{selected}}-14</td>
+              <td>55</td>
+            </tr>
+            <tr>
+              <td>{{selected}}-15</td>
+              <td>49</td>
+            </tr>
+            <tr>
+              <td>{{selected}}-16</td>
+              <td>56</td>
+            </tr>
+            <tr>
+              <td>{{selected}}-17</td>
+              <td>53</td>
+            </tr>
+            <tr>
+              <td>{{selected}}-18</td>
+              <td>50</td>
+            </tr>
+            <tr>
+              <td>{{selected}}-19</td>
+              <td>59</td>
+            </tr>
+            <tr>
+              <td>{{selected}}-20</td>
+              <td>59</td>
+            </tr>
+            <tr>
+              <td>{{selected}}-21</td>
+              <td>52</td>
+            </tr>
+            <tr>
+              <td>{{selected}}-22</td>
+              <td>59</td>
+            </tr>
+            <tr>
+              <td>{{selected}}-23</td>
+              <td>45</td>
+            </tr>
+            <tr>
+              <td>{{selected}}-24</td>
+              <td>62</td>
+
+            </tr>
+            <tr>
+              <td>{{selected}}-25</td>
+              <td>58</td>
+            </tr>
+            <tr>
+              <td>{{selected}}-26</td>
+              <td>52</td>
+            </tr>
+            <tr>
+              <td>{{selected}}-27</td>
+              <td>45</td>
+            </tr>
+            <tr>
+              <td>{{selected}}-28</td>
+              <td>55</td>
+            </tr>
+            <tr>
+              <td>{{selected}}-29</td>
+              <td>33</td>
+            </tr>
+            <tr>
+              <td>{{selected}}-30</td>
+              <td>48</td>
+
+            </tr>
+
+
+
+          </tbody>
+        </table>
+      </div>
+
+
+      <div class="border" *ngIf="mainvalue==='Parallel Projects'">
+        <div class="col-sm-12 portlet-title">
+          <div class="caption">
+            &nbsp;{{mainvalue}}
+          </div>
+
+        </div>
+        <div [chart]="parallelprojects"></div>
+
+      </div>
+
+      <div class="margin-top20" *ngIf="mainvalue==='Parallel Projects'">
+
+
+        <table class="table table-hover table-striped table-bordered text-center margin-top-10" id="">
+          <thead>
+            <tr>
+              <th scope="col">Quarters</th>
+              <th scope="col">{{mainvalue}}</th>
+
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+
+              <td>1st Quarter</td>
+              <td>10</td>
+            </tr>
+            <tr>
+              <td>2nd Quarter</td>
+              <td>08</td>
+            </tr>
+            <tr>
+              <td>3rd Quarter</td>
+              <td>09</td>
+            </tr>
+            <tr>
+              <td>4th Quarter</td>
+              <td>19</td>
+            </tr>
+
+
+          </tbody>
+        </table>
+      </div>
+
+
+      <div class="border" *ngIf="mainvalue==='Conversion Ratio'">
+        <div class="col-sm-12 portlet-title">
+          <div class="caption">
+            &nbsp;{{mainvalue}}
+          </div>
+
+        </div>
+        <div [chart]="conversionratiochart"></div>
+
+      </div>
+
+
+      <div class="border" *ngIf="mainvalue==='Social' ">
+        <div class="col-sm-12 portlet-title">
+          <div class="caption">
+            &nbsp;{{mainvalue}}
+          </div>
+
+        </div>
+        <div [chart]="socialchart"></div>
+
+      </div>
+
+      <div class="border" *ngIf="mainvalue==='Wins'">
+        <div class="col-sm-12 portlet-title">
+          <div class="caption">
+            &nbsp;{{mainvalue}}
+          </div>
+
+        </div>
+        <div [chart]="wins"></div>
+      </div>
+
+      <div class="margin-top20" *ngIf="mainvalue==='Wins'">
+
+
+        <table class="table table-hover table-striped table-bordered text-center margin-top-10" id="">
+          <thead>
+            <tr>
+              <th scope="col">Months</th>
+              <th scope="col">{{mainvalue}}</th>
+
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+
+              <td>January</td>
+              <td>06</td>
+            </tr>
+            <tr>
+              <td>February</td>
+              <td>07</td>
+            </tr>
+            <tr>
+              <td>March</td>
+              <td>09</td>
+            </tr>
+            <tr>
+              <td>April</td>
+              <td>08</td>
+            </tr>
+            <tr>
+              <td>May</td>
+              <td>04</td>
+            </tr>
+            <tr>
+              <td>June</td>
+              <td>04</td>
+            </tr>
+            <tr>
+              <td>July</td>
+              <td>06</td>
+            </tr>
+            <tr>
+              <td>August</td>
+              <td>11</td>
+            </tr>
+            <tr>
+              <td>September</td>
+              <td>10</td>
+            </tr>
+            <tr>
+              <td>October</td>
+              <td>10</td>
+            </tr>
+            <tr>
+              <td>November</td>
+              <td>15</td>
+            </tr>
+            <tr>
+              <td>December</td>
+              <td>13</td>
+            </tr>
+
+
+          </tbody>
+        </table>
+      </div>
+
+
+      <div class="border" *ngIf="mainvalue==='Losses' ">
+        <div class="col-sm-12 portlet-title">
+          <div class="caption">
+            &nbsp;{{mainvalue}}
+          </div>
+
+        </div>
+        <div [chart]="losses"></div>
+      </div>
+
+      <div class="margin-top20" *ngIf="mainvalue==='Losses'">
+
+
+        <table class="table table-hover table-striped table-bordered text-center margin-top-10" id="">
+          <thead>
+            <tr>
+              <th scope="col">Months</th>
+              <th scope="col">{{mainvalue}}</th>
+
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+
+              <td>January</td>
+              <td>03</td>
+            </tr>
+            <tr>
+              <td>February</td>
+              <td>04</td>
+            </tr>
+            <tr>
+              <td>March</td>
+              <td>04</td>
+            </tr>
+            <tr>
+              <td>April</td>
+              <td>01</td>
+            </tr>
+            <tr>
+              <td>May</td>
+              <td>02</td>
+            </tr>
+            <tr>
+              <td>June</td>
+              <td>03</td>
+            </tr>
+            <tr>
+              <td>July</td>
+              <td>01</td>
+            </tr>
+            <tr>
+              <td>August</td>
+              <td>04</td>
+            </tr>
+            <tr>
+              <td>September</td>
+              <td>01</td>
+            </tr>
+            <tr>
+              <td>October</td>
+              <td>01</td>
+            </tr>
+            <tr>
+              <td>November</td>
+              <td>02</td>
+            </tr>
+            <tr>
+              <td>December</td>
+              <td>03</td>
+            </tr>
+
+
+          </tbody>
+        </table>
+      </div>
+
+
+      <div class="border" *ngIf="mainvalue==='Glassdoor Review' ||mainvalue==='Google Review'">
+        <div class="col-sm-12 portlet-title">
+          <div class="caption">
+            &nbsp;{{mainvalue}}
+          </div>
+        </div>
+        <div class="col-sm-12 margin-top">
+        <div class="col-sm-3">
+          <mat-select placeholder="Min Rating" class="col-sm-10 form-control marginbtn">
+            <mat-option>
+              01
+            </mat-option>
+            <mat-option>
+              02
+            </mat-option>
+            <mat-option>
+              03
+            </mat-option>
+            <mat-option>
+              04
+            </mat-option>
+            <mat-option>
+              05
+            </mat-option>
+          </mat-select>
+        </div>
+        <div class="col-sm-3">
+          <mat-select placeholder="Max Rating" class="col-sm-10 form-control marginbtn">
+            <mat-option>
+              01
+            </mat-option>
+            <mat-option>
+              02
+            </mat-option>
+            <mat-option>
+              03
+            </mat-option>
+            <mat-option>
+              04
+            </mat-option>
+            <mat-option>
+              05
+            </mat-option>
+          </mat-select>
+        </div>
+        <div class="col-sm-1">
+          <a class="btn btn-success" id="" style="margin-top: 6px;" title="Click to Go">GO</a>
+        </div>
+        <div class="col-sm-5 pull-right">
+            <input type="search" class="form-control input-small input-inline pull-right" placeholder="Keyword Search" style="margin-right: 5px;" aria-controls="Progress_table1">
+          </div>
+        </div>
+        <div class="box-body">
+          <ul class="timeline">
+            <li>
+              <i class="fa fa-comments bg-blue"></i>
+              <div class="timeline-item">
+
+                <a class="btn btn-primary btn-flat btn-xs">
+                  <span class="fa fa-star"></span>
+                  <span class="fa fa-star"></span>
+                  <span class="fa fa-star"></span>
+                  <span class="fa fa-star"></span>
+                  <span class="fa fa-star"></span></a>
+                <h3 class="timeline-header"><a class="bluecolor" href="javascript:;">Venkata Radhakrishna
+                    Satyavarapu</a></h3>
+                <div class="timeline-body">
+                  <p>I have been working with Option Matrix since 2005, We have an excellent team around here but
+                    this is a place for merit not for weak professionals. The company offers better salaries than
+                    MNCs for the 2-5 years experience bracket. Organization is in progressive mode and we welcome
+                    intelligent and experienced professionals.</p>
+                </div>
+                <div class="timeline-footer">
+                  <span class="time"><i class="fa fa-calendar"></i> Tue, 1 Nov</span>
+                </div>
+              </div>
+            </li>
+
+            <li>
+              <i class="fa fa-comments bg-blue"></i>
+              <div class="timeline-item">
+
+                <a class="btn btn-primary btn-flat btn-xs"><span class="fa fa-star"></span>
+                  <span class="fa fa-star"></span>
+                  <span class="fa fa-star"></span>
+                  <span class="fa fa-star"></span>
+                  <span class="fa fa-star"></span></a>
+                <h3 class="timeline-header">
+                  <a class="bluecolor" href="javascript:;">Neeraja A</a></h3>
+                <div class="timeline-body">
+                  <p>I have been working with the organization for 5 years now. Every organization has its own culture
+                    and operations function. To start with, most amazing part of Option Matrix is it gives ample of
+                    opportunities to get certified or to enhance skills irrespective of your specification and
+                    experience. A great place to start your career and drive your progress with crystal clarity. It
+                    majorly believes in self-expression, leadership and fitness.</p>
+                </div>
+                <div class="timeline-footer">
+                  <span class="time"><i class="fa fa-calendar"></i> Tue, 29 Nov</span>
+                </div>
+              </div>
+            </li>
+
+            <li>
+              <i class="fa fa-comments bg-blue"></i>
+              <div class="timeline-item">
+
+                <a class="btn btn-primary btn-flat btn-xs"> <span class="fa fa-star"></span>
+                  <span class="fa fa-star"></span>
+                  <span class="fa fa-star"></span>
+                  <span class="fa fa-star"></span>
+                  <span class="fa fa-star"></span></a>
+                <h3 class="timeline-header"><a class="bluecolor" href="javascript:;">Naveen Challa</a></h3>
+                <div class="timeline-body">
+                  <p>Have been working with Option Matrix as Business Analyst from Past 5 months. Best place to work
+                    surrounded by fully energetic team. Promising career progress path.</p>
+                </div>
+                <div class="timeline-footer">
+                  <span class="time"><i class="fa fa-calendar"></i> Tue, 29 Nov</span>
+                </div>
+              </div>
+            </li>
+          </ul>
+          <!-- /.table-responsive -->
+        </div>
+
+      </div>
+
+      <div class="border" *ngIf="mainvalue==='Mail'">
+        <div class="col-sm-12 portlet-title">
+          <div class="caption">
+            &nbsp;{{mainvalue}}
+          </div>
+        </div>
+        <div class="col-sm-12 margin-top">
+        <div class="col-sm-6 pull-right">
+            <input type="search" class="form-control input-small input-inline pull-right" placeholder="Keyword Search" style="margin-right: 5px;" aria-controls="Progress_table1">
+          </div>
+        </div>
+        <div class="box-body">
+          <ul class="timeline">
+            <li>
+              <i class="fa fa-envelope bg-blue"></i>
+              <div class="timeline-item">
+
+                <h3 class="timeline-header"><a class="bluecolor" href="javascript:;">Venkata Radhakrishna
+                    Satyavarapu</a></h3>
+                <div class="timeline-body">
+                  <p>I have been working with Option Matrix since 2005, We have an excellent team around here but
+                    this is a place for merit not for weak professionals. The company offers better salaries than
+                    MNCs for the 2-5 years experience bracket. Organization is in progressive mode and we welcome
+                    intelligent and experienced professionals.</p>
+                </div>
+                <div class="timeline-footer">
+                  <span class="time"><i class="fa fa-calendar"></i> Tue, 1 Nov</span>
+                </div>
+              </div>
+            </li>
+
+            <li>
+              <i class="fa fa-envelope bg-blue"></i>
+              <div class="timeline-item">
+
+                <h3 class="timeline-header">
+                  <a class="bluecolor" href="javascript:;">Neeraja A</a></h3>
+                <div class="timeline-body">
+                  <p>I have been working with the organization for 5 years now. Every organization has its own culture
+                    and operations function. To start with, most amazing part of Option Matrix is it gives ample of
+                    opportunities to get certified or to enhance skills irrespective of your specification and
+                    experience. A great place to start your career and drive your progress with crystal clarity. It
+                    majorly believes in self-expression, leadership and fitness.</p>
+                </div>
+                <div class="timeline-footer">
+                  <span class="time"><i class="fa fa-calendar"></i> Tue, 29 Nov</span>
+                </div>
+              </div>
+            </li>
+
+            <li>
+              <i class="fa fa-envelope bg-blue"></i>
+              <div class="timeline-item">
+
+                <h3 class="timeline-header"><a class="bluecolor" href="javascript:;">Naveen Challa</a></h3>
+                <div class="timeline-body">
+                  <p>Have been working with Option Matrix as Business Analyst from Past 5 months. Best place to work
+                    surrounded by fully energetic team. Promising career progress path.</p>
+                </div>
+                <div class="timeline-footer">
+                  <span class="time"><i class="fa fa-calendar"></i> Tue, 29 Nov</span>
+                </div>
+              </div>
+            </li>
+          </ul>
+          <!-- /.table-responsive -->
+        </div>
+
+      </div>
+
+      <div class="border" *ngIf="mainvalue==='Voice'">
+        <div class="col-sm-12 portlet-title">
+          <div class="caption">
+            &nbsp;Prospects
+          </div>
+
+        </div>
+        <div [chart]="voice"></div>
+
+      </div>
+
+      <div class="margin-top20" *ngIf="mainvalue==='Prospects'|| mainvalue==='Voice'">
+
+
+        <table class="table table-bordered text-center table-striped" id="">
+          <thead>
+            <tr>
+              <th scope="col">Months</th>
+              <th scope="col">{{mainvalue}}</th>
+
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+
+              <td>January</td>
+              <td>20</td>
+            </tr>
+            <tr>
+              <td>February</td>
+              <td>45</td>
+            </tr>
+            <tr>
+              <td>March</td>
+              <td>35</td>
+            </tr>
+            <tr>
+              <td>April</td>
+              <td>74</td>
+            </tr>
+            <tr>
+              <td>May</td>
+              <td>42</td>
+            </tr>
+            <tr>
+              <td>June</td>
+              <td>90</td>
+            </tr>
+            <tr>
+              <td>July</td>
+              <td>69</td>
+            </tr>
+            <tr>
+              <td>August</td>
+              <td>39</td>
+            </tr>
+            <tr>
+              <td>September</td>
+              <td>52</td>
+            </tr>
+            <tr>
+              <td>October</td>
+              <td>69</td>
+            </tr>
+            <tr>
+              <td>November</td>
+              <td>55</td>
+            </tr>
+            <tr>
+              <td>December</td>
+              <td>72</td>
+
+            </tr>
+
+
+          </tbody>
+        </table>
+      </div>
+
+      <div class="margin-top20" *ngIf="mainvalue === 'Conversion Ratio' || mainvalue==='Social'">
+
+
+        <table class="table table-bordered text-center table-striped" id="">
+          <thead>
+            <tr>
+              <th scope="col">Quarters</th>
+              <th scope="col">{{mainvalue}} Percentage</th>
+
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+
+              <td>Quarter 01</td>
+              <td>30%</td>
+            </tr>
+            <tr>
+              <td>Quarter 02</td>
+              <td>20%</td>
+            </tr>
+            <tr>
+              <td>Quarter 03</td>
+              <td>28%</td>
+            </tr>
+            <tr>
+              <td>Quarter 04</td>
+              <td>22%</td>
+            </tr>
+
+
+          </tbody>
+        </table>
+      </div>
+
+      <div *ngIf="mainvalue==='Exceptions'" class="grey-cararra table-responsive">
+
+        <table class="table table-bordered table-striped text-center table-responsive" id="">
+          <thead>
+            <tr>
+              <th scope="col">KRA</th>
+              <th scope="col">KPI</th>
+              <th scope="col">Execptions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td rowspan="7" scope="row">Business Development</td>
+              <td>Prospects</td>
+              <td>9</td>
+            </tr>
+            <tr>
+              <td>Active Leads</td>
+              <td>0</td>
+            </tr>
+            <tr>
+              <td>Future Leads</td>
+              <td>0</td>
+            </tr>
+            <tr>
+              <td>Parallel Projects</td>
+              <td>4</td>
+            </tr>
+            <tr>
+              <td>Conversion Ratio</td>
+              <td>5</td>
+            </tr>
+            <tr>
+              <td>Wins</td>
+              <td>9</td>
+            </tr>
+            <tr>
+              <td>Loses</td>
+              <td>0</td>
+            </tr>
+            <tr>
+              <td rowspan="2">Reputation</td>
+              <td>Glassdoor Reviews</td>
+              <td>4</td>
+            </tr>
+            <tr>
+              <td>Google Reviews</td>
+              <td>7</td>
+            </tr>
+            <tr>
+              <td rowspan="3" scope="row">Coverage</td>
+              <td>Mail</td>
+              <td>0</td>
+            </tr>
+            <tr>
+              <td>Social</td>
+              <td>0</td>
+            </tr>
+            <tr>
+              <td>Voice</td>
+              <td>0</td>
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+
+
+
+
+    </div>
+  </div>
+
+
+</div>

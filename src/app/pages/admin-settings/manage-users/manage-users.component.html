@@ -1,0 +1,606 @@
+<div class="col-sm-12">
+
+    <!-- Add User Button/Pill -->
+    <div class="col-lg-12 no-padding" style="margin-bottom:10px; margin-right: 0px;">
+        <a class="btn btn-primary pull-right" (click)="addUserModalToggle(1)" title="Click to Add New User">
+            <i class="fa fa-plus"></i>&nbsp;Add User
+        </a>
+    </div>
+
+    <!-- For Records and Search Option above table -->
+    <div class="row">
+        <div class="col-md-6 col-sm-12 pull-right">
+            <div id="Quality_table1_filter" class="dataTables_filter pull-right"><label class="table_labels">Search:&nbsp;</label>
+                <input type="search" [(ngModel)]="filterQuery" class="form-control input-small input-inline"
+                    placeholder=""></div>
+        </div>
+    </div>
+
+    <!-- Users Table with delete and edit options -->
+    <table class="table table-hover table-bordered table-scrollable-borderless table-striped margin-top" [mfData]="users | dataFilter : filterQuery"
+        #mf="mfDataTable" [mfRowsOnPage]="5">
+        <thead>
+            <tr>
+                <th class="thblue">
+                    First Name
+                </th>
+                <th class="thblue">
+                    Last Name
+                </th>
+                <th class="thblue">
+                    Email ID
+                </th>
+                <th class="thblue">
+                    Phone Number
+                </th>
+                <th class="thblue">
+                    Permissions
+                </th>
+                <th class="thblue">
+                    Status
+                </th>
+                <th class="text-center thblue">
+                    Actions
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let data of mf.data" [ngClass]="{'disablerow': data.firstName=='Admin'}">
+                <td>{{data.firstName}} </td>
+                <td>{{data.lastName}}</td>
+                <td>{{data.email}}</td>
+                <td>{{data.phoneNo}}</td>
+                <td>
+                    <a title="Click to Assign Permissions" (click)="permissionModal1Toggle(1)">11/24</a>
+                </td>
+                <td>
+                    <a (click)="changeStatus(data)">{{ data.status ? '&nbsp;&nbsp;&nbsp;Active'
+                        :'Inactive'}}
+                    </a>
+                </td>
+                <td class="text-center">
+                    <a title="Click to Update details">
+                        <i (click)="updateProfile(data)" class="fa fa-pencil-square"></i>
+                    </a>&nbsp;
+                    <a title="Click to Delete">
+                        <i (click)="deleteModalToggle(data)" class="fa fa-trash red"></i>
+                    </a>
+                </td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr class="removeborder">
+                <td colspan="7" style="padding-right:0px !important;">
+                    <mfBootstrapPaginator class="pull-right"></mfBootstrapPaginator>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+    <!-- For Number of records and pagination -->
+</div>
+
+<!-- For Add User Modal Popup -->
+<div class="modal fade" bsModal #addUserModal="bs-modal" [config]="{backdrop: 'static'}" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title titlemodal">
+                    <b>  {{ emailchange !=
+                            null ? 'Edit
+                            User Details' : 'Add User Details'}}</b> <i (click)="addUserModalToggle(2)" class="fa fa-times pull-right titlemodal"></i>
+                </h4>
+            </div>
+            <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)" #userForm="ngForm" class="form-horizontal">
+                <div class="modal-body col-md-12">
+                    <input type="number" class="hide" formControlName="userId">
+                    <input type="number" class="hide" formControlName="createdBy">
+                    <input type="number" class="hide" formControlName="modifiedBy">
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">First Name&nbsp;:</label>
+                        <div class="col-md-8">
+                            <div class="input-icon right">
+                                <i class="fa fa-user"></i>
+                                <input type="text" class="form-control" formControlName="firstName" maxlength="50" autocomplete="off"
+                                    placeholder="Enter First Name">
+                                <mat-error *ngIf="form.controls.firstName.errors?.required && form.controls.firstName.touched">First
+                                    Name is required</mat-error>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Last Name&nbsp;:</label>
+                        <div class="col-md-8">
+                            <div class="input-icon right">
+                                <i class="fa fa-user"></i>
+                                <input type="text" class="form-control" maxlength="50" formControlName="lastName" autocomplete="off"
+                                    placeholder="Enter Last Name">
+                                <mat-error *ngIf="form.controls.lastName.errors?.required && form.controls.lastName.touched">Last
+                                    Name is required</mat-error>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Date Of Birth&nbsp;:</label>
+                        <div class="col-md-8">
+                            <div class="input-icon right">
+                                <i class="fa fa-calendar"></i>
+                                <!-- <input type="date" max="2014-05-15" formControlName="dateOfBirth" class="form-control" placeholder="mm/dd/yyyy"> -->
+                                <input type="text" formControlName="dateOfBirth" placeholder="MM/DD/YYYY" class="form-control" bsDatepicker [bsConfig]="{ dateInputFormat: 'MM/DD/YYYY', containerClass: 'theme-dark-blue'}" [maxDate]="maxDate">
+<!-- 
+                                 <input matInput [matDatepicker]="picker" placeholder="Choose a date">
+                                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                 <mat-datepicker #picker></mat-datepicker> -->
+                          
+                                <mat-error *ngIf="form.controls.dateOfBirth.errors?.required  && form.controls.dateOfBirth.touched">Date
+                                    of Birth is required</mat-error>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Email Address&nbsp;:</label>
+                        <div class="col-md-8">
+                            <div class="input-icon right">
+                                <i class="fa fa-envelope"></i>
+                                <input type="text" maxlength="50" formControlName="email" class="form-control" autocomplete="off" [ngClass]="{'disablerow': emailchange != null}"
+                                    placeholder="Enter Email Address">
+                                <mat-error *ngIf="form.controls.email.errors?.required && form.controls.email.touched">Email
+                                    is required</mat-error>
+                                <mat-error *ngIf="form.controls.email.hasError('invalidEmail') && form.controls.email.touched">Invalid email address</mat-error>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Phone Number&nbsp;:</label>
+                        <div class="col-md-8">
+                            <div class="input-icon right">
+                                <i class="fa fa-mobile"></i>
+                                <input type="text" maxlength="50" formControlName="phoneNo" class="form-control" autocomplete="off"
+                                    (keypress)="keyPress($event)" minlength=10 maxlength=14 placeholder="Enter Phone Number">
+                                <mat-error *ngIf="form.controls.phoneNo.errors?.required && form.controls.phoneNo.touched">Phone
+                                    Number is required</mat-error>
+                                <mat-error *ngIf="form.controls.phoneNo.hasError('minlength') && form.controls.phoneNo.touched">Phone Number isn't valid</mat-error>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Permissions&nbsp;:</label>
+                        <div class="col-md-7 no-padding">
+                            <label class="radio-inline" style="margin-left:0px;" (click)="permissionModalToggle(1)"><a>Click
+                                    Here</a></label>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="!userForm.form.valid" type="submit" class="btn btn-success">Submit</button>
+                    <button class="btn btn-default" (click)="addUserModalToggle(2)">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
+
+<!-- For Delete Modal Popup -->
+<div class="modal fade" bsModal #deleteModal="bs-modal" [config]="{backdrop: 'static'}" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title titlemodal">
+                    <b>Delete Record</b> <i (click)="deleteModalToggle(2)" class="fa fa-times pull-right titlemodal"></i>
+                </h4>
+            </div>
+            <div class="modal-body col-md-12">
+
+                <div class="col-sm-12">
+                    <label>Are You Sure ? You want to delete record, this action can't be undone.</label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" (click)="deleteUser()" class="btn btn-danger"><i class="fa fa-check"></i>&nbsp;Delete</button>
+                <button type="button" class="btn btn-default" (click)="deleteModalToggle(2)"><i class="fa fa-times"></i>&nbsp;Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- For Permission Modal Popup -->
+<div class="modal fade" bsModal #permissionModal="bs-modal" [config]="{backdrop: 'static'}" role="dialog">
+    <div class="modal-dialog modal-custom">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title titlemodal">
+                    <b>Permissions</b> <i (click)="permissionModalToggle(2)" class="fa fa-times pull-right titlemodal"></i>
+                </h4>
+            </div>
+            <div class="modal-body row">
+                <div class="col-sm-6">
+                    <table class="table table-hover table-bordered table-scrollable-borderless col-sm-6 table-striped margin-top"
+                        id="table1">
+                        <thead>
+
+                            <tr>
+                                <th class="thblue">
+                                    Select
+                                </th>
+                                <th class="thblue">
+                                    Permission
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <mat-checkbox></mat-checkbox>
+                                </td>
+                                <td class="textleft"><b>View Dashboard</b></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <mat-checkbox></mat-checkbox>
+                                </td>
+                                <td class="textleft">Manage Organization</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <mat-checkbox></mat-checkbox>
+                                </td>
+                                <td class="textleft">Manage Division</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <mat-checkbox></mat-checkbox>
+                                </td>
+                                <td class="textleft">Manage Location</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <mat-checkbox></mat-checkbox>
+                                </td>
+                                <td class="textleft">Manage Entity</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <mat-checkbox></mat-checkbox>
+                                </td>
+                                <td class="textleft"><b>Setup</b></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <mat-checkbox></mat-checkbox>
+                                </td>
+                                <td class="textleft">Manage Dimension</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <mat-checkbox></mat-checkbox>
+                                </td>
+                                <td class="textleft">Manage KRA</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <mat-checkbox></mat-checkbox>
+                                </td>
+                                <td class="textleft">Manage KPI</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <mat-checkbox></mat-checkbox>
+                                </td>
+                                <td class="textleft"><b>Users</b></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <mat-checkbox></mat-checkbox>
+                                </td>
+                                <td class="textleft">Manage Users</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <mat-checkbox></mat-checkbox>
+                                </td>
+                                <td class="textleft">Assign Permissions</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-sm-6">
+                    <table class="table table-hover table-bordered table-scrollable-borderless table-striped margin-top"
+                        id="table1">
+                        <thead>
+                            <tr>
+                                <th class="thblue">
+                                    Select
+                                </th>
+                                <th class="thblue">
+                                    Permission
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <mat-checkbox></mat-checkbox>
+                                </td>
+                                <td class="textleft"><b>Predictive Analytics</b></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <mat-checkbox></mat-checkbox>
+                                </td>
+                                <td class="textleft">Manage Highlights</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <mat-checkbox></mat-checkbox>
+                                </td>
+                                <td class="textleft">Manage Data</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <mat-checkbox></mat-checkbox>
+                                </td>
+                                <td class="textleft"><b>System Analytics</b></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <mat-checkbox></mat-checkbox>
+                                </td>
+                                <td class="textleft">Manage Highlights</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <mat-checkbox></mat-checkbox>
+                                </td>
+                                <td class="textleft">Manage Data</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <mat-checkbox></mat-checkbox>
+                                </td>
+                                <td class="textleft"><b>Control Analytics</b></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <mat-checkbox></mat-checkbox>
+                                </td>
+                                <td class="textleft">Manage Highlights</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <mat-checkbox></mat-checkbox>
+                                </td>
+                                <td class="textleft">Manage Data</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <mat-checkbox></mat-checkbox>
+                                </td>
+                                <td class="textleft"><b>Process Analytics</b></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <mat-checkbox></mat-checkbox>
+                                </td>
+                                <td class="textleft">Manage Highlights</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <mat-checkbox></mat-checkbox>
+                                </td>
+                                <td class="textleft">Manage Data</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" (click)="permissionModalToggle(2)" class="btn btn-primary"><i class="fa fa-check"></i>&nbsp;Update</button>
+                <button type="button" class="btn btn-default" (click)="permissionModalToggle(2)"><i class="fa fa-arrow-left"></i>&nbsp;Go
+                    Back</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- For Permission Modal Popup Readonly Mode -->
+<div class="modal fade" bsModal #permissionModal1="bs-modal" [config]="{backdrop: 'static'}" role="dialog">
+    <div class="modal-dialog modal-custom">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title titlemodal">
+                    <b>Permissions</b> <i (click)="permissionModal1Toggle(2)" class="fa fa-times pull-right titlemodal"></i>
+                </h4>
+            </div>
+            <div class="modal-body row">
+                <div class="col-sm-6">
+                    <table class="table table-hover table-bordered table-scrollable-borderless col-sm-6 table-striped margin-top"
+                        id="table1">
+                        <thead>
+                            <tr>
+                                <th class="thblue">
+                                    Select
+                                </th>
+                                <th class="thblue">
+                                    Permission
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <mat-checkbox [disabled]="disabled" [checked]="myModel"></mat-checkbox>
+                                </td>
+                                <td class="textleft"><b>View Dashboard</b></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <mat-checkbox [disabled]="disabled"></mat-checkbox>
+                                </td>
+                                <td class="textleft">Manage Organization</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <mat-checkbox [disabled]="disabled" [checked]="myModel"></mat-checkbox>
+                                </td>
+                                <td class="textleft">Manage Division</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <mat-checkbox [disabled]="disabled" [checked]="myModel"></mat-checkbox>
+                                </td>
+                                <td class="textleft">Manage Location</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <mat-checkbox [disabled]="disabled" [checked]="myModel"></mat-checkbox>
+                                </td>
+                                <td class="textleft">Manage Entity</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <mat-checkbox [disabled]="disabled"></mat-checkbox>
+                                </td>
+                                <td class="textleft"><b>Setup</b></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <mat-checkbox [disabled]="disabled"></mat-checkbox>
+                                </td>
+                                <td class="textleft">Manage Dimension</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <mat-checkbox [disabled]="disabled"></mat-checkbox>
+                                </td>
+                                <td class="textleft">Manage KRA</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <mat-checkbox [disabled]="disabled"></mat-checkbox>
+                                </td>
+                                <td class="textleft">Manage KPI</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <mat-checkbox [disabled]="disabled"></mat-checkbox>
+                                </td>
+                                <td class="textleft"><b>Users</b></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <mat-checkbox [disabled]="disabled"></mat-checkbox>
+                                </td>
+                                <td class="textleft">Manage Users</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <mat-checkbox [disabled]="disabled"></mat-checkbox>
+                                </td>
+                                <td class="textleft">Assign Permissions</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-sm-6">
+                    <table class="table table-hover table-bordered table-scrollable-borderless table-striped margin-top"
+                        id="table1">
+                        <thead>
+
+                            <tr>
+                                <th class="thblue">
+                                    Select
+                                </th>
+                                <th class="thblue">
+                                    Permission
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <mat-checkbox [disabled]="disabled" [checked]="myModel"></mat-checkbox>
+                                </td>
+                                <td class="textleft"><b>Predictive Analytics</b></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <mat-checkbox [disabled]="disabled" [checked]="myModel"></mat-checkbox>
+                                </td>
+                                <td class="textleft">Manage Highlights</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <mat-checkbox [disabled]="disabled" [checked]="myModel"></mat-checkbox>
+                                </td>
+                                <td class="textleft">Manage Data</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <mat-checkbox [disabled]="disabled" [checked]="myModel"></mat-checkbox>
+                                </td>
+                                <td class="textleft"><b>System Analytics</b></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <mat-checkbox [disabled]="disabled" [checked]="myModel"></mat-checkbox>
+                                </td>
+                                <td class="textleft">Manage Highlights</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <mat-checkbox [disabled]="disabled" [checked]="myModel"></mat-checkbox>
+                                </td>
+                                <td class="textleft">Manage Data</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <mat-checkbox [disabled]="disabled"></mat-checkbox>
+                                </td>
+                                <td class="textleft"><b>Control Analytics</b></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <mat-checkbox [disabled]="disabled" [checked]="myModel"></mat-checkbox>
+                                </td>
+                                <td class="textleft">Manage Highlights</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <mat-checkbox [disabled]="disabled"></mat-checkbox>
+                                </td>
+                                <td class="textleft">Manage Data</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <mat-checkbox [disabled]="disabled"></mat-checkbox>
+                                </td>
+                                <td class="textleft"><b>Process Analytics</b></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <mat-checkbox [disabled]="disabled"></mat-checkbox>
+                                </td>
+                                <td class="textleft">Manage Highlights</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <mat-checkbox [disabled]="disabled"></mat-checkbox>
+                                </td>
+                                <td class="textleft">Manage Data</td>
+                            </tr>
+
+
+
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+
+                <button type="button" class="btn btn-default" (click)="permissionModal1Toggle(2)"><i class="fa fa-times"></i>&nbsp;Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,519 @@
+<div class="row">
+  <div class="col-sm-12">
+
+    <!-- For Finance Tree -->
+    <div class="col-sm-4">
+      <div class="portlet-title">
+        <div class="caption">
+          <i class="fa fa-cogs"></i>&nbsp; Finance
+        </div>
+
+      </div>
+
+      <p-tree [value]="files" selectionMode="single" [(selection)]="selectedFile" (onNodeSelect)="nodeSelect($event)"></p-tree>
+    </div>
+
+    <!-- For Finance Tree data -->
+    <div class="col-sm-8">
+
+      <div *ngIf="mainvalue==='Summary'|| mainvalue==null" class="grey-cararra table-responsive">
+    
+        <table class="table table-bordered text-center table-striped" id="">
+          <thead>
+            <tr>
+              <th scope="col">KRA</th>
+              <th scope="col">KPI</th>
+              <th scope="col">MAX</th>
+              <th scope="col">MIN</th>
+              <th scope="col">Average</th>
+              <th scope="col">Target</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td rowspan="13" scope="row">Finance</td>
+              <td>Cash Reserves</td>
+              <td>90</td>
+              <td>50</td>
+              <td>75</td>
+              <td>90</td>
+            </tr>
+            <tr>
+              <td>Debt Free</td>
+              <td>85</td>
+              <td>48</td>
+              <td>69</td>
+              <td>90</td>
+            </tr>
+            <tr>
+              <td>Variance</td>
+              <td>75</td>
+              <td>45</td>
+              <td>66</td>
+              <td>90</td>
+            </tr>
+            <tr>
+              <td>Trends</td>
+              <td>75</td>
+              <td>42</td>
+              <td>66</td>
+              <td>90</td>
+            </tr>
+            <tr>
+              <td> Distribution</td>
+              <td>75</td>
+              <td>42</td>
+              <td>66</td>
+              <td>90</td>
+            </tr>
+            <tr>
+              <td>Balance Sheet</td>
+              <td>75</td>
+              <td>42</td>
+              <td>66</td>
+              <td>90</td>
+            </tr>
+            <tr>
+              <td>Income</td>
+              <td>75</td>
+              <td>42</td>
+              <td>66</td>
+              <td>90</td>
+            </tr>
+            <tr>
+              <td>Receivables</td>
+              <td>4.8</td>
+              <td>2.2</td>
+              <td>3.9</td>
+              <td>4.9</td>
+            </tr>
+            <tr>
+              <td>Payables</td>
+              <td>8.8</td>
+              <td>6.2</td>
+              <td>7.7</td>
+              <td>9.0</td>
+            </tr>
+            <tr>
+              <td>Ratio Analysis</td>
+              <td>500</td>
+              <td>220</td>
+              <td>350</td>
+              <td>750</td>
+            </tr>
+            <tr>
+              <td>Social</td>
+              <td>5000</td>
+              <td>2200</td>
+              <td>3950</td>
+              <td>5900</td>
+            </tr>
+            <tr>
+              <td>Voice</td>
+              <td>1500</td>
+              <td>1220</td>
+              <td>1350</td>
+              <td>2000</td>
+            </tr>
+
+          </tbody>
+        </table>
+
+
+      </div>
+
+      <div class="border" *ngIf="mainvalue==='Cash Reserves'">
+        <div class="col-sm-12 portlet-title">
+          <div class="caption">
+            &nbsp;{{mainvalue}}
+          </div>
+
+        </div>
+        <div [chart]="cashreserveschart"></div>
+     
+    
+      </div>
+
+      <div class="border" *ngIf="mainvalue==='Debt Free'">
+        <div class="col-sm-12 portlet-title">
+          <div class="caption">
+            &nbsp;{{mainvalue}}
+          </div>
+
+        </div>
+        <div [chart]="debtfreechart"></div>
+     
+    
+      </div>
+
+      <div class="border" *ngIf="mainvalue==='Variance'">
+        <div class="col-sm-12 portlet-title">
+          <div class="caption">
+            &nbsp;{{mainvalue}}
+          </div>
+
+        </div>
+        <div [chart]="variancechart"></div>
+     
+    
+      </div>
+
+      <div class="border" *ngIf="mainvalue==='Trends'">
+        <div class="col-sm-12 portlet-title">
+          <div class="caption">
+            &nbsp;{{mainvalue}}
+          </div>
+
+        </div>
+        <div [chart]="trendschart"></div>
+     
+    
+      </div>
+
+      <div class="border" *ngIf="mainvalue==='Distribution'">
+        <div class="col-sm-12 portlet-title">
+          <div class="caption">
+            &nbsp;{{mainvalue}}
+          </div>
+
+        </div>
+        <div [chart]="distributionchart"></div>
+     
+    
+      </div>
+
+      <div class="border" *ngIf="mainvalue==='Balance Sheet'">
+        <div class="col-sm-12 portlet-title">
+          <div class="caption">
+            &nbsp;{{mainvalue}}
+          </div>
+
+        </div>
+        <div [chart]="balancesheetchart"></div>
+     
+    
+      </div>
+
+      <div class="border" *ngIf="mainvalue==='Income'">
+        <div class="col-sm-12 portlet-title">
+          <div class="caption">
+            &nbsp;{{mainvalue}}
+          </div>
+
+        </div>
+        <div [chart]="incomechart"></div>
+     
+    
+      </div>
+
+      <div class="border" *ngIf="mainvalue==='Receivables'">
+        <div class="col-sm-12 portlet-title">
+          <div class="caption">
+            &nbsp;{{mainvalue}}
+          </div>
+
+        </div>
+        <div [chart]="receivableschart"></div>
+     
+    
+      </div>
+
+      <div class="border" *ngIf="mainvalue==='Payables'">
+        <div class="col-sm-12 portlet-title">
+          <div class="caption">
+            &nbsp;{{mainvalue}}
+          </div>
+
+        </div>
+        <div [chart]="payableschart"></div>
+      </div>
+
+      <div class="border" *ngIf="mainvalue==='Ratio Analysis'">
+        <div class="col-sm-12 portlet-title">
+          <div class="caption">
+            &nbsp;{{mainvalue}}
+          </div>
+
+        </div>
+        <div [chart]="ratioanalysischart"></div>
+      </div>
+
+      <div class="margin-top20" *ngIf="mainvalue==='Cash Reserves'||mainvalue==='Balance Sheet'||mainvalue==='Payables'||mainvalue==='Receivables'">
+
+
+        <table class="table table-hover table-striped table-bordered text-center margin-top-10" id="">
+          <thead>
+            <tr>
+              <th scope="col">Months</th>
+              <th scope="col">{{mainvalue}}</th>
+
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+
+              <td>January</td>
+              <td>06</td>
+            </tr>
+            <tr>
+              <td>February</td>
+              <td>07</td>
+            </tr>
+            <tr>
+              <td>March</td>
+              <td>09</td>
+            </tr>
+            <tr>
+              <td>April</td>
+              <td>08</td>
+            </tr>
+            <tr>
+              <td>May</td>
+              <td>04</td>
+            </tr>
+            <tr>
+              <td>June</td>
+              <td>04</td>
+            </tr>
+            <tr>
+              <td>July</td>
+              <td>06</td>
+            </tr>
+            <tr>
+              <td>August</td>
+              <td>11</td>
+            </tr>
+            <tr>
+              <td>September</td>
+              <td>10</td>
+            </tr>
+            <tr>
+              <td>October</td>
+              <td>10</td>
+            </tr>
+            <tr>
+              <td>November</td>
+              <td>15</td>
+            </tr>
+            <tr>
+              <td>December</td>
+              <td>13</td>
+            </tr>
+
+
+          </tbody>
+        </table>
+      </div>
+
+      <div class="margin-top20" *ngIf="mainvalue==='Debt Free'|| mainvalue==='Variance'||mainvalue==='Trends'">
+
+
+        <table class="table table-bordered text-center table-striped" id="">
+          <thead>
+            <tr>
+              <th scope="col">Months</th>
+              <th scope="col">{{mainvalue}}</th>
+
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+
+              <td>January</td>
+              <td>20</td>
+            </tr>
+            <tr>
+              <td>February</td>
+              <td>45</td>
+            </tr>
+            <tr>
+              <td>March</td>
+              <td>35</td>
+            </tr>
+            <tr>
+              <td>April</td>
+              <td>74</td>
+            </tr>
+            <tr>
+              <td>May</td>
+              <td>42</td>
+            </tr>
+            <tr>
+              <td>June</td>
+              <td>90</td>
+            </tr>
+            <tr>
+              <td>July</td>
+              <td>69</td>
+            </tr>
+            <tr>
+              <td>August</td>
+              <td>39</td>
+            </tr>
+            <tr>
+              <td>September</td>
+              <td>52</td>
+            </tr>
+            <tr>
+              <td>October</td>
+              <td>69</td>
+            </tr>
+            <tr>
+              <td>November</td>
+              <td>55</td>
+            </tr>
+            <tr>
+              <td>December</td>
+              <td>72</td>
+
+            </tr>
+
+
+          </tbody>
+        </table>
+      </div>
+
+      <div class="margin-top20" *ngIf="mainvalue === 'Ratio Analysis'||mainvalue==='Distribution'">
+
+
+        <table class="table table-bordered text-center table-striped" id="">
+          <thead>
+            <tr>
+              <th scope="col">Quarters</th>
+              <th scope="col">{{mainvalue}} Percentage</th>
+
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+
+              <td>Quarter 01</td>
+              <td>30%</td>
+            </tr>
+            <tr>
+              <td>Quarter 02</td>
+              <td>20%</td>
+            </tr>
+            <tr>
+              <td>Quarter 03</td>
+              <td>28%</td>
+            </tr>
+            <tr>
+              <td>Quarter 04</td>
+              <td>22%</td>
+            </tr>
+        
+
+          </tbody>
+        </table>
+      </div>
+      <div class="margin-top20" *ngIf="mainvalue==='Income'">
+
+
+        <table class="table table-hover table-striped table-bordered text-center margin-top-10" id="">
+          <thead>
+            <tr>
+              <th scope="col">Quarters</th>
+              <th scope="col">{{mainvalue}}</th>
+
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+
+              <td>1st Quarter</td>
+              <td>120000$</td>
+            </tr>
+            <tr>
+              <td>2nd Quarter</td>
+              <td>80000$</td>
+            </tr>
+            <tr>
+              <td>3rd Quarter</td>
+              <td>180000$</td>
+            </tr>
+            <tr>
+              <td>4th Quarter</td>
+              <td>190000$</td>
+            </tr>
+
+
+          </tbody>
+        </table>
+      </div>
+
+      <div *ngIf="mainvalue==='Exceptions'" class="grey-cararra table-responsive">
+    
+        <table class="table table-bordered table-striped text-center table-responsive" id="">
+          <thead>
+            <tr>
+              <th scope="col">KRA</th>
+              <th scope="col">KPI</th>
+              <th scope="col">Execptions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td rowspan="12" scope="row">Finance </td>
+              <td>Cash Reserves	</td>
+              <td>9</td>
+            </tr>
+            <tr>
+              <td>Debt Free</td>
+              <td>0</td>
+            </tr>
+            <tr>
+              <td>Variance</td>
+              <td>0</td>
+            </tr>
+            <tr>
+              <td>Trends </td>
+              <td>4</td>
+            </tr>
+            <tr>
+              <td>Distribution </td>
+              <td>5</td>
+            </tr>
+            <tr>
+              <td>Balance Sheet	</td>
+              <td>9</td>
+            </tr>
+            <tr>
+              <td>Income</td>
+              <td>0</td>
+            </tr>
+            <tr>
+            
+              <td>Receivables</td>
+              <td>4</td>
+            </tr>
+            <tr>
+              <td>Payables</td>
+              <td>7</td>
+            </tr>
+            <tr>
+              
+              <td>Ratio Analysis</td>
+              <td>0</td>
+            </tr>
+            <tr>
+              <td>Social</td>
+              <td>0</td>
+            </tr>
+            <tr>
+              <td>Voice</td>
+              <td>0</td>
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+
+      
+
+
+    </div>
+  </div>
+
+
+</div>

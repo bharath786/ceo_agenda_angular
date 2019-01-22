@@ -1,0 +1,31 @@
+<!-- <div fxLayout="row wrap">
+    <div fxFlex="100" class="flex-p">
+        <h3 class="page-title">
+            {{helptext.heading}} <small>{{helptext.text}}</small>
+        </h3>
+    </div>
+</div> -->
+
+
+<div fxLayout="row wrap" class="breadcrumb" *ngIf="router.url != '/'" style="margin-bottom:0 !important; background-color: #fafafa !important;">
+    <div fxFlex="100" class="flex-p">
+        <mat-card fxLayout="row" class="breadcrumb helptext">
+                <div fxFlex="100" class="flex-p">
+                        <h3 class="page-title nomargin">
+                           <span class="helpheading">{{helptext.heading}}</span>  <small> &nbsp;{{helptext.text}}</small>
+                        </h3>
+                    </div>
+                    
+            <a *ngIf="router.url != '/'" routerLink="/" class="breadcrumb-item" fxLayout="row" fxLayoutAlign="start center" (click)="closeSubMenus()">
+                <mat-icon class="breadcrumbicon">home</mat-icon>
+                <span class="breadtitle breadcrumb-title">Home</span>
+            </a>
+            <div *ngFor="let breadcrumb of breadcrumbs; let i = index;" class="breadcrumb-item" fxLayout="row" fxLayoutAlign="start center">                 
+                <a [hidden]="i == (breadcrumbs.length - 1)" [routerLink]="[breadcrumb.url]">{{breadcrumb.name}}</a>   
+                <span [hidden]="i != (breadcrumbs.length - 1)" class="breadcrumb-title active margin-right">{{breadcrumb.name}}</span>
+            </div> 
+            
+        </mat-card>
+    </div> 
+</div>
+

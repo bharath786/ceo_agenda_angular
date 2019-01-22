@@ -1,0 +1,102 @@
+<div class="col-sm-12">
+
+    <!-- For Number of Records to show and Search for table -->
+    <div class="row">
+        <div class="col-md-6 col-sm-12">
+            <div class="dataTables_length">
+                <select class="form-control input-xsmall input-inline">
+                    <option value="10">10</option>
+                    <option value="25">25</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                </select><label class="table_labels"> &nbsp;records </label>
+            </div>
+        </div>
+        <div class="col-md-6 col-sm-12 pull-right">
+            <div id="Quality_table1_filter" class="dataTables_filter pull-right">
+                <label class="table_labels">Search:&nbsp;</label>
+                <input type="search" class="form-control input-small input-inline" placeholder="">
+            </div>
+        </div>
+    </div>
+
+    <!-- For Table -->
+    <table class="table table-hover table-bordered table-scrollable-borderless table-striped margin-top" id="table1">
+        <thead>
+            <tr>
+                <th>
+                    Name
+                </th>
+                <th>
+                    Description
+                </th>
+                <th>
+                    Previous Value
+                </th>
+                <th>
+                    New Value
+                </th>
+                <th>
+                    Actions
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Grid Length</td>
+                <td>Default Grid Length</td>
+                <td>10</td>
+                <td>
+                    <mat-select placeholder="Select New Value" class="form-control" style="margin: 0px !important;">
+                        <mat-option *ngFor="let value of values" [value]="value.value">
+                            {{value.viewValue}}
+                        </mat-option>
+                    </mat-select>
+                </td>
+
+                <td>
+                    <a title="Click to Save details">
+                        Save
+                    </a>
+
+                </td>
+            </tr>
+            <tr>
+                <td>Notification Email</td>
+                <td>Default Admin Notification Email</td>
+                <td>admin@ceo.com</td>
+                <td>
+                    <input type="text" class="form-control" autocomplete="off" placeholder="Email ID" style="margin: 0px !important">
+                </td>
+
+                <td>
+                    <a title="Click to Save details">
+                        Save
+                    </a>
+
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+
+    <!-- For Pagination -->
+    <div class="row">
+        <div class="col-md-5 col-sm-12">
+            <div class="dataTables_info" id="table1_info" role="status" aria-live="polite">Showing 1 to 2 of 2 entries</div>
+        </div>
+        <div class="col-md-7 col-sm-12 pull-right" style="margin-top: -15px;">
+            <div class="dataTables_paginate paging_simple_numbers pull-right">
+                <ul class="pagination">
+                    <li class="paginate_button previous disabled"><a>
+                            <i class="fa fa-angle-left"></i></a>
+                    </li>
+                    <li class="paginate_button active"><a>1</a></li>
+                    <li class="paginate_button next disabled"><a><i class="fa fa-angle-right"></i></a></li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+
+</div>

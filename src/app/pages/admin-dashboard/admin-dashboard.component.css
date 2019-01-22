@@ -1,0 +1,17 @@
+/* For charts Charts */
+.charts{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+/* For body padding */
+.bodypadding{
+    padding: 30px;
+    background-color: white;
+}
+
+/* Daterange Picker CSS */
+::ng-deep bs-daterangepicker-container{
+    left:auto !important;
+    right:30px;
+}

@@ -1,0 +1,89 @@
+{
+    "data": [
+        {
+            "label": "Summary",
+            "data": "Documents Folder",
+            "expandedIcon": "fa fa-file green",
+            "collapsedIcon": "fa fa-file green",
+            "expanded": true
+        },
+{
+    "label": "Infrastructure",
+    "data": "Work Folder",
+    "expandedIcon": "fa fa-folder-open gold",
+    "collapsedIcon": "fa fa-folder gold",
+    "expanded":true,
+    "selectable":false,
+    "children": [
+        {
+            "label": "Internet",
+            "data": "Work Folder",
+            "expandedIcon": "fa fa-file green",
+            "collapsedIcon": "fa fa-file green"
+        },
+        {
+            "label": "Power",
+            "data": "Work Folder",
+            "expandedIcon": "fa fa-file green",
+            "collapsedIcon": "fa fa-file green"
+        },
+        {
+            "label": "Hygiene",
+            "data": "Work Folder",
+            "expandedIcon": "fa fa-file green",
+            "collapsedIcon": "fa fa-file green"
+        },
+        {
+            "label": "Work Stations",
+            "data": "Work Folder",
+            "expandedIcon": "fa fa-file green",
+            "collapsedIcon": "fa fa-file green"
+        },
+        {
+            "label": "Discussion Rooms",
+            "data": "Work Folder",
+            "expandedIcon": "fa fa-file green",
+            "collapsedIcon": "fa fa-file green"
+        },
+        {
+            "label": "Silence",
+            "data": "Work Folder",
+            "expandedIcon": "fa fa-file green",
+            "collapsedIcon": "fa fa-file green"
+        },
+        {
+            "label": "Ambience",
+            "data": "Work Folder",
+            "expandedIcon": "fa fa-file green",
+            "collapsedIcon": "fa fa-file green"
+        },
+        {
+            "label": "Air Conditioning",
+            "data": "Work Folder",
+            "expandedIcon": "fa fa-file green",
+            "collapsedIcon": "fa fa-file green"
+        },
+        {
+            "label": "Water",
+            "data": "Work Folder",
+            "expandedIcon": "fa fa-file green",
+            "collapsedIcon": "fa fa-file green"
+        },
+        {
+            "label": "Dining",
+            "data": "Work Folder",
+            "expandedIcon": "fa fa-file green",
+            "collapsedIcon": "fa fa-file green"
+        }
+    ]
+},
+
+        {
+            "label": "Exceptions",
+            "data": "Work Folder",
+            "expandedIcon": "fa fa-exclamation-circle red",
+            "collapsedIcon": "fa fa-exclamation-circle red"
+        }
+    ]
+}
+        

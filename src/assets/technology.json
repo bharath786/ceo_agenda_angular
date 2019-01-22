@@ -1,0 +1,95 @@
+{
+    "data": [
+        {
+            "label": "Summary",
+            "data": "Documents Folder",
+            "expandedIcon": "fa fa-file green",
+            "collapsedIcon": "fa fa-file green",
+            "expanded": true
+        },
+        
+{
+    "label": "Technology",
+    "data": "Work Folder",
+    "expandedIcon": "fa fa-folder-open gold",
+    "collapsedIcon": "fa fa-folder gold",
+    "expanded":true,
+    "selectable": false,
+    "children": [
+        {
+            "label": ".NET",
+            "data": "Work Folder",
+            "expandedIcon": "fa fa-file green",
+            "collapsedIcon": "fa fa-file green"
+        },
+        {
+            "label": "PHP",
+            "data": "Work Folder",
+            "expandedIcon": "fa fa-file green",
+            "collapsedIcon": "fa fa-file green"
+        },
+        {
+            "label": "Android",
+            "data": "Work Folder",
+            "expandedIcon": "fa fa-file green",
+            "collapsedIcon": "fa fa-file green"
+        },
+        {
+            "label": "IOS",
+            "data": "Work Folder",
+            "expandedIcon": "fa fa-file green",
+            "collapsedIcon": "fa fa-file green"
+        },
+        {
+            "label": "Testing Automation",
+            "data": "Work Folder",
+            "expandedIcon": "fa fa-file green",
+            "collapsedIcon": "fa fa-file green"
+        },
+        {
+            "label": "IOT",
+            "data": "Work Folder",
+            "expandedIcon": "fa fa-file green",
+            "collapsedIcon": "fa fa-file green"
+        },
+        {
+            "label": "AI",
+            "data": "Work Folder",
+            "expandedIcon": "fa fa-file green",
+            "collapsedIcon": "fa fa-file green"
+        },
+        {
+            "label": "Big Data",
+            "data": "Work Folder",
+            "expandedIcon": "fa fa-file green",
+            "collapsedIcon": "fa fa-file green"
+        },
+        {
+            "label": "Analytics",
+            "data": "Work Folder",
+            "expandedIcon": "fa fa-file green",
+            "collapsedIcon": "fa fa-file green"
+        },
+        {
+            "label": "Java",
+            "data": "Work Folder",
+            "expandedIcon": "fa fa-file green",
+            "collapsedIcon": "fa fa-file green"
+        },
+        {
+            "label": "Security",
+            "data": "Work Folder",
+            "expandedIcon": "fa fa-file green",
+            "collapsedIcon": "fa fa-file green"
+        }
+    ]
+},
+{
+    "label": "Exceptions",
+    "data": "Work Folder",
+    "expandedIcon": "fa fa-exclamation-circle red",
+    "collapsedIcon": "fa fa-exclamation-circle red"
+}
+
+    ]
+}

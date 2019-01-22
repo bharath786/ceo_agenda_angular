@@ -1,0 +1,78 @@
+<div class="col-sm-12">
+    
+    <!-- For Dashboard Pills -->
+    <div class="row">
+        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+            <div class="dashboard-stat blue-madison">
+                <div class="visual">
+                    <i class="fa fa-comments"></i>
+                </div>
+                <div class="details">
+                    <div class="number">
+                        4/9
+                    </div>
+                    <div class="desc">
+                        Dimension Score
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+            <div class="dashboard-stat red-intense">
+                <div class="visual">
+                    <i class="fa fa-bar-chart-o"></i>
+                </div>
+                <div class="details">
+                    <div class="number">
+                        40/53
+                    </div>
+                    <div class="desc">
+                        KRA Score
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+            <div class="dashboard-stat green-haze">
+                <div class="visual">
+                    <i class="fa fa-shopping-cart"></i>
+                </div>
+                <div class="details">
+                    <div class="number">
+                        64/70
+                    </div>
+                    <div class="desc">
+                        KPI Score
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+            <div class="dashboard-stat purple-plum">
+                <div class="visual">
+                    <i class="fa fa-globe"></i>
+                </div>
+                <div class="details">
+                    <div class="number">
+                        75%
+                    </div>
+                    <div class="desc">
+                        Overall Score
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- For Dashboard Charts -->
+    <div class="row">
+        <div [chart]="dimensionsummarychart" class="col-sm-6 charts"></div>
+        <div [chart]="krasummarychart" class="col-sm-6 charts"></div>
+        <div [chart]="kpisummarychart" class="col-sm-6 charts"></div>
+        <div [chart]="exceptionschart" class="col-sm-6 charts"></div>
+
+    </div>
+
+</div>

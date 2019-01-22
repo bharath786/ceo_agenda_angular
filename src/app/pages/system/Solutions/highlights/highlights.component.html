@@ -1,0 +1,1276 @@
+<div class="row">
+  <div class="col-sm-12">
+
+    <!-- For Solutions Tree -->
+    <div class="col-sm-4">
+      <div class="portlet-title">
+        <div class="caption">
+          <i class="fa fa-cogs"></i>&nbsp; Solutions
+        </div>
+
+      </div>
+
+      <p-tree [value]="files" selectionMode="single" [(selection)]="selectedFile" (onNodeSelect)="nodeSelect($event)"></p-tree>
+    </div>
+
+    <!-- For Solutions Tree data -->
+    <div class="col-sm-8">
+
+      <div *ngIf="mainvalue==='Summary'|| mainvalue==null" class="grey-cararra table-responsive">
+    
+        <table class="table table-bordered text-center table-striped" id="">
+          <thead>
+            <tr>
+              <th scope="col">KRA</th>
+              <th scope="col">KPI</th>
+              <th scope="col">MAX</th>
+              <th scope="col">MIN</th>
+              <th scope="col">Average</th>
+              <th scope="col">Target</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td rowspan="5" scope="row">Audit Bench</td>
+              <td>Sites</td>
+              <td>90</td>
+              <td>50</td>
+              <td>75</td>
+              <td>90</td>
+            </tr>
+            <tr>
+              <td>Domains</td>
+              <td>85</td>
+              <td>48</td>
+              <td>69</td>
+              <td>90</td>
+            </tr>
+            <tr>
+              <td>Locations</td>
+              <td>75</td>
+              <td>45</td>
+              <td>66</td>
+              <td>90</td>
+            </tr>
+            <tr>
+              <td>Testimonials</td>
+              <td>75</td>
+              <td>42</td>
+              <td>66</td>
+              <td>90</td>
+            </tr>
+            <tr>
+              <td>Status</td>
+              <td>75</td>
+              <td>42</td>
+              <td>66</td>
+              <td>90</td>
+            </tr>
+            <tr>
+              <td rowspan="5" scope="row">CEO Agenda</td>
+              <td>Sites</td>
+              <td>90</td>
+              <td>50</td>
+              <td>75</td>
+              <td>90</td>
+            </tr>
+            <tr>
+              <td>Domains</td>
+              <td>85</td>
+              <td>48</td>
+              <td>69</td>
+              <td>90</td>
+            </tr>
+            <tr>
+              <td>Locations</td>
+              <td>75</td>
+              <td>45</td>
+              <td>66</td>
+              <td>90</td>
+            </tr>
+            <tr>
+              <td>Testimonials</td>
+              <td>75</td>
+              <td>42</td>
+              <td>66</td>
+              <td>90</td>
+            </tr>
+            <tr>
+              <td>Status</td>
+              <td>75</td>
+              <td>42</td>
+              <td>66</td>
+              <td>90</td>
+            </tr>
+         
+            <tr>
+              <td rowspan="5" scope="row">Venue Cloud</td>
+              <td>Sites</td>
+              <td>90</td>
+              <td>50</td>
+              <td>75</td>
+              <td>90</td>
+            </tr>
+            <tr>
+              <td>Domains</td>
+              <td>85</td>
+              <td>48</td>
+              <td>69</td>
+              <td>90</td>
+            </tr>
+            <tr>
+              <td>Locations</td>
+              <td>75</td>
+              <td>45</td>
+              <td>66</td>
+              <td>90</td>
+            </tr>
+            <tr>
+              <td>Testimonials</td>
+              <td>75</td>
+              <td>42</td>
+              <td>66</td>
+              <td>90</td>
+            </tr>
+            <tr>
+              <td>Status</td>
+              <td>75</td>
+              <td>42</td>
+              <td>66</td>
+              <td>90</td>
+            </tr>
+            <tr>
+              <td rowspan="5" scope="row">F2O</td>
+              <td>Sites</td>
+              <td>90</td>
+              <td>50</td>
+              <td>75</td>
+              <td>90</td>
+            </tr>
+            <tr>
+              <td>Domains</td>
+              <td>85</td>
+              <td>48</td>
+              <td>69</td>
+              <td>90</td>
+            </tr>
+            <tr>
+              <td>Locations</td>
+              <td>75</td>
+              <td>45</td>
+              <td>66</td>
+              <td>90</td>
+            </tr>
+            <tr>
+              <td>Testimonials</td>
+              <td>75</td>
+              <td>42</td>
+              <td>66</td>
+              <td>90</td>
+            </tr>
+            <tr>
+              <td>Status</td>
+              <td>75</td>
+              <td>42</td>
+              <td>66</td>
+              <td>90</td>
+            </tr>
+            <tr>
+              <td rowspan="5" scope="row">Maintenance</td>
+              <td>Sites</td>
+              <td>90</td>
+              <td>50</td>
+              <td>75</td>
+              <td>90</td>
+            </tr>
+            <tr>
+              <td>Domains</td>
+              <td>85</td>
+              <td>48</td>
+              <td>69</td>
+              <td>90</td>
+            </tr>
+            <tr>
+              <td>Locations</td>
+              <td>75</td>
+              <td>45</td>
+              <td>66</td>
+              <td>90</td>
+            </tr>
+            <tr>
+              <td>Testimonials</td>
+              <td>75</td>
+              <td>42</td>
+              <td>66</td>
+              <td>90</td>
+            </tr>
+            <tr>
+              <td>Status</td>
+              <td>75</td>
+              <td>42</td>
+              <td>66</td>
+              <td>90</td>
+            </tr>
+            <tr>
+              <td rowspan="5" scope="row">Purchase & Stores</td>
+              <td>Sites</td>
+              <td>90</td>
+              <td>50</td>
+              <td>75</td>
+              <td>90</td>
+            </tr>
+            <tr>
+              <td>Domains</td>
+              <td>85</td>
+              <td>48</td>
+              <td>69</td>
+              <td>90</td>
+            </tr>
+            <tr>
+              <td>Locations</td>
+              <td>75</td>
+              <td>45</td>
+              <td>66</td>
+              <td>90</td>
+            </tr>
+            <tr>
+              <td>Testimonials</td>
+              <td>75</td>
+              <td>42</td>
+              <td>66</td>
+              <td>90</td>
+            </tr>
+            <tr>
+              <td>Status</td>
+              <td>75</td>
+              <td>42</td>
+              <td>66</td>
+              <td>90</td>
+            </tr>
+            <tr>
+              <td rowspan="5" scope="row">Capital Finance</td>
+              <td>Sites</td>
+              <td>90</td>
+              <td>50</td>
+              <td>75</td>
+              <td>90</td>
+            </tr>
+            <tr>
+              <td>Domains</td>
+              <td>85</td>
+              <td>48</td>
+              <td>69</td>
+              <td>90</td>
+            </tr>
+            <tr>
+              <td>Locations</td>
+              <td>75</td>
+              <td>45</td>
+              <td>66</td>
+              <td>90</td>
+            </tr>
+            <tr>
+              <td>Testimonials</td>
+              <td>75</td>
+              <td>42</td>
+              <td>66</td>
+              <td>90</td>
+            </tr>
+            <tr>
+              <td>Status</td>
+              <td>75</td>
+              <td>42</td>
+              <td>66</td>
+              <td>90</td>
+            </tr>
+            <tr>
+              <td rowspan="5" scope="row">Patient Adherence</td>
+              <td>Sites</td>
+              <td>90</td>
+              <td>50</td>
+              <td>75</td>
+              <td>90</td>
+            </tr>
+            <tr>
+              <td>Domains</td>
+              <td>85</td>
+              <td>48</td>
+              <td>69</td>
+              <td>90</td>
+            </tr>
+            <tr>
+              <td>Locations</td>
+              <td>75</td>
+              <td>45</td>
+              <td>66</td>
+              <td>90</td>
+            </tr>
+            <tr>
+              <td>Testimonials</td>
+              <td>75</td>
+              <td>42</td>
+              <td>66</td>
+              <td>90</td>
+            </tr>
+            <tr>
+              <td>Status</td>
+              <td>75</td>
+              <td>42</td>
+              <td>66</td>
+              <td>90</td>
+            </tr>
+            <tr>
+              <td rowspan="5" scope="row">Dynamic Scheduling</td>
+              <td>Sites</td>
+              <td>90</td>
+              <td>50</td>
+              <td>75</td>
+              <td>90</td>
+            </tr>
+            <tr>
+              <td>Domains</td>
+              <td>85</td>
+              <td>48</td>
+              <td>69</td>
+              <td>90</td>
+            </tr>
+            <tr>
+              <td>Locations</td>
+              <td>75</td>
+              <td>45</td>
+              <td>66</td>
+              <td>90</td>
+            </tr>
+            <tr>
+              <td>Testimonials</td>
+              <td>75</td>
+              <td>42</td>
+              <td>66</td>
+              <td>90</td>
+            </tr>
+            <tr>
+              <td>Status</td>
+              <td>75</td>
+              <td>42</td>
+              <td>66</td>
+              <td>90</td>
+            </tr>
+            <tr>
+              <td rowspan="5" scope="row">Guest Relations</td>
+              <td>Sites</td>
+              <td>90</td>
+              <td>50</td>
+              <td>75</td>
+              <td>90</td>
+            </tr>
+            <tr>
+              <td>Domains</td>
+              <td>85</td>
+              <td>48</td>
+              <td>69</td>
+              <td>90</td>
+            </tr>
+            <tr>
+              <td>Locations</td>
+              <td>75</td>
+              <td>45</td>
+              <td>66</td>
+              <td>90</td>
+            </tr>
+            <tr>
+              <td>Testimonials</td>
+              <td>75</td>
+              <td>42</td>
+              <td>66</td>
+              <td>90</td>
+            </tr>
+            <tr>
+              <td>Status</td>
+              <td>75</td>
+              <td>42</td>
+              <td>66</td>
+              <td>90</td>
+            </tr>
+            <tr>
+              <td rowspan="5" scope="row">Dynamic Attendance</td>
+              <td>Sites</td>
+              <td>90</td>
+              <td>50</td>
+              <td>75</td>
+              <td>90</td>
+            </tr>
+            <tr>
+              <td>Domains</td>
+              <td>85</td>
+              <td>48</td>
+              <td>69</td>
+              <td>90</td>
+            </tr>
+            <tr>
+              <td>Locations</td>
+              <td>75</td>
+              <td>45</td>
+              <td>66</td>
+              <td>90</td>
+            </tr>
+            <tr>
+              <td>Testimonials</td>
+              <td>75</td>
+              <td>42</td>
+              <td>66</td>
+              <td>90</td>
+            </tr>
+            <tr>
+              <td>Status</td>
+              <td>75</td>
+              <td>42</td>
+              <td>66</td>
+              <td>90</td>
+            </tr>
+           
+
+          </tbody>
+        </table>
+
+
+      </div>
+
+      <div class="border" *ngIf="mainvalue==='Prospects'">
+        <div class="col-sm-12 portlet-title">
+          <div class="caption">
+            &nbsp;Prospects
+          </div>
+
+        </div>
+        <div [chart]="locations"></div>
+     
+      </div>
+
+
+
+      <div class="border" *ngIf="mainvalue==='Future Leads'">
+        <div class="col-sm-12 portlet-title">
+          <div class="caption">
+            &nbsp;Future Leads
+          </div>
+
+        </div>
+        <div [chart]="futureleads"></div>
+     
+    
+      </div>
+
+
+      <div class="border" *ngIf="mainvalue==='Sites'">
+        <div class="col-sm-12 portlet-title">
+          <div class="caption">
+            &nbsp;{{mainvalue}}
+          </div>
+
+        </div>
+        <div [chart]="sites"></div>
+      
+      </div>
+
+      <div class="border" *ngIf="mainvalue==='Domains'">
+        <div class="col-sm-12 portlet-title">
+          <div class="caption">
+            &nbsp;{{mainvalue}}
+          </div>
+
+        </div>
+        <div [chart]="domains"></div>
+      
+      </div>
+
+      <div class="border" *ngIf="mainvalue==='Locations'">
+        <div class="col-sm-12 portlet-title">
+          <div class="caption">
+            &nbsp;{{mainvalue}}
+          </div>
+
+        </div>
+        <div [chart]="locations"></div>
+      
+      </div>
+
+      <div class="border" *ngIf="mainvalue==='Testimonials'">
+        <div class="col-sm-12 portlet-title">
+          <div class="caption">
+            &nbsp;{{mainvalue}}
+          </div>
+        </div>
+        <div class="col-sm-12 margin-top">
+            <div class="col-sm-3">
+              <mat-select placeholder="Min Rating" class="col-sm-10 form-control marginbtn">
+                <mat-option>
+                  01
+                </mat-option>
+                <mat-option>
+                  02
+                </mat-option>
+                <mat-option>
+                  03
+                </mat-option>
+                <mat-option>
+                  04
+                </mat-option>
+                <mat-option>
+                  05
+                </mat-option>
+              </mat-select>
+            </div>
+            <div class="col-sm-3">
+              <mat-select placeholder="Max Rating" class="col-sm-10 form-control marginbtn">
+                <mat-option>
+                  01
+                </mat-option>
+                <mat-option>
+                  02
+                </mat-option>
+                <mat-option>
+                  03
+                </mat-option>
+                <mat-option>
+                  04
+                </mat-option>
+                <mat-option>
+                  05
+                </mat-option>
+              </mat-select>
+            </div>
+            <div class="col-sm-1">
+              <a class="btn btn-success" id="" style="margin-top: 6px;" title="Click to Go">GO</a>
+            </div>
+            <div class="col-sm-5 pull-right">
+                <input type="search" class="form-control input-small input-inline pull-right" placeholder="Keyword Search" style="margin-right: 5px;" aria-controls="Progress_table1">
+              </div>
+            </div>
+        <div class="box-body">
+          <ul class="timeline">
+            <li>
+              <i class="fa fa-comments bg-blue"></i>
+              <div class="timeline-item">
+
+                <a class="btn btn-primary btn-flat btn-xs">
+                  <span class="fa fa-star"></span>
+                  <span class="fa fa-star"></span>
+                  <span class="fa fa-star"></span>
+                  <span class="fa fa-star"></span>
+                  <span class="fa fa-star"></span></a>
+                <h3 class="timeline-header"><a class="bluecolor" href="javascript:;">
+                  Jennie Ross, MLS Delivery</a></h3>
+                <div class="timeline-body">
+                  <p>We have been incredibly happy with the product they deliver to us and the communication we have with them, the responses we get with regards to technology.</p>
+                </div>
+                <div class="timeline-footer">
+                  <span class="time"><i class="fa fa-calendar"></i> Tue, 1 Nov</span>
+                </div>
+              </div>
+            </li>
+
+            <li>
+              <i class="fa fa-comments bg-blue"></i>
+              <div class="timeline-item">
+
+                <a class="btn btn-primary btn-flat btn-xs"><span class="fa fa-star"></span>
+                  <span class="fa fa-star"></span>
+                  <span class="fa fa-star"></span>
+                  <span class="fa fa-star"></span>
+                  <span class="fa fa-star"></span></a>
+                <h3 class="timeline-header">
+                  <a class="bluecolor" href="javascript:;">	
+                    Director,
+                    
+                    Medical Diagnostic Scheduling firm</a></h3>
+                <div class="timeline-body">
+                  <p>Option Matrix has the ability to design solutions,we had originally imagined. I highly recommend Option Matrix for custom application development.</p>
+                </div>
+                <div class="timeline-footer">
+                  <span class="time"><i class="fa fa-calendar"></i> Tue, 29 Nov</span>
+                </div>
+              </div>
+            </li>
+
+            <li>
+              <i class="fa fa-comments bg-blue"></i>
+              <div class="timeline-item">
+
+                <a class="btn btn-primary btn-flat btn-xs"> <span class="fa fa-star"></span>
+                  <span class="fa fa-star"></span>
+                  <span class="fa fa-star"></span>
+                  <span class="fa fa-star"></span>
+                  <span class="fa fa-star"></span></a>
+                <h3 class="timeline-header"><a class="bluecolor" href="javascript:;">	
+                  Founder,
+                  
+                  Leading Sports Portal solutions provider</a></h3>
+                <div class="timeline-body">
+                  <p>I recommend Option Matrix as a professional, flexible and skilled development partner. Keep up the good work.</p>
+                </div>
+                <div class="timeline-footer">
+                  <span class="time"><i class="fa fa-calendar"></i> Tue, 29 Nov</span>
+                </div>
+              </div>
+            </li>
+          </ul>
+          <!-- /.table-responsive -->
+        </div>
+       
+      
+      </div>
+
+      <div class="border" *ngIf="mainvalue==='Status'">
+        <div class="col-sm-12 portlet-title">
+          <div class="caption">
+            &nbsp;{{mainvalue}}
+          </div>
+
+        </div>
+        <div [chart]="status"></div>
+      
+      </div>
+
+      <div class="border" *ngIf="mainvalue==='Parallel Projects' || mainvalue==='Conversion Ratio' || mainvalue==='Wins'|| mainvalue==='Losses' || mainvalue==='Glassdoor Review' ||mainvalue==='Google Review' || mainvalue==='Voice' || mainvalue==='Social' ||mainvalue==='Mail'  ">
+        <div class="col-sm-12 portlet-title">
+          <div class="caption">
+            &nbsp;{{mainvalue}}
+          </div>
+
+        </div>
+        <div [chart]="chart"></div>
+      
+      </div>
+
+      <div class="margin-top20" *ngIf="mainvalue==='Sites'">
+
+
+        <table class="table table-bordered text-center table-striped" id="">
+          <thead>
+            <tr>
+              <th scope="col">Months</th>
+              <th scope="col">{{mainvalue}}</th>
+
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+
+              <td>January</td>
+              <td>20</td>
+            </tr>
+            <tr>
+              <td>February</td>
+              <td>45</td>
+            </tr>
+            <tr>
+              <td>March</td>
+              <td>35</td>
+            </tr>
+            <tr>
+              <td>April</td>
+              <td>74</td>
+            </tr>
+            <tr>
+              <td>May</td>
+              <td>42</td>
+            </tr>
+            <tr>
+              <td>June</td>
+              <td>90</td>
+            </tr>
+            <tr>
+              <td>July</td>
+              <td>69</td>
+            </tr>
+            <tr>
+              <td>August</td>
+              <td>39</td>
+            </tr>
+            <tr>
+              <td>September</td>
+              <td>52</td>
+            </tr>
+            <tr>
+              <td>October</td>
+              <td>69</td>
+            </tr>
+            <tr>
+              <td>November</td>
+              <td>55</td>
+            </tr>
+            <tr>
+              <td>December</td>
+              <td>72</td>
+
+            </tr>
+
+
+          </tbody>
+        </table>
+      </div>
+
+  
+     
+  
+      <div class="margin-top20" *ngIf="mainvalue==='Domains'">
+
+
+        <table class="table table-bordered text-center table-striped" id="">
+          <thead>
+            <tr>
+              <th scope="col">Months</th>
+              <th scope="col">{{mainvalue}}</th>
+
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+
+              <td>January</td>
+              <td>01</td>
+            </tr>
+            <tr>
+              <td>February</td>
+              <td>02</td>
+            </tr>
+            <tr>
+              <td>March</td>
+              <td>02</td>
+            </tr>
+            <tr>
+              <td>April</td>
+              <td>04</td>
+            </tr>
+            <tr>
+              <td>May</td>
+              <td>05</td>
+            </tr>
+            <tr>
+              <td>June</td>
+              <td>04</td>
+            </tr>
+            <tr>
+              <td>July</td>
+              <td>06</td>
+            </tr>
+            <tr>
+              <td>August</td>
+              <td>07</td>
+            </tr>
+            <tr>
+              <td>September</td>
+              <td>04</td>
+            </tr>
+            <tr>
+              <td>October</td>
+              <td>05</td>
+            </tr>
+            <tr>
+              <td>November</td>
+              <td>05</td>
+            </tr>
+            <tr>
+              <td>December</td>
+              <td>03</td>
+
+            </tr>
+
+
+          </tbody>
+        </table>
+      </div>
+
+      <div class="margin-top20" *ngIf="mainvalue==='Locations'">
+
+
+        <table class="table table-bordered text-center table-striped" id="">
+          <thead>
+            <tr>
+              <th scope="col">Months</th>
+              <th scope="col">{{mainvalue}}</th>
+
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+
+              <td>January</td>
+              <td>01</td>
+            </tr>
+            <tr>
+              <td>February</td>
+              <td>02</td>
+            </tr>
+            <tr>
+              <td>March</td>
+              <td>02</td>
+            </tr>
+            <tr>
+              <td>April</td>
+              <td>04</td>
+            </tr>
+            <tr>
+              <td>May</td>
+              <td>05</td>
+            </tr>
+            <tr>
+              <td>June</td>
+              <td>04</td>
+            </tr>
+            <tr>
+              <td>July</td>
+              <td>06</td>
+            </tr>
+            <tr>
+              <td>August</td>
+              <td>07</td>
+            </tr>
+            <tr>
+              <td>September</td>
+              <td>04</td>
+            </tr>
+            <tr>
+              <td>October</td>
+              <td>05</td>
+            </tr>
+            <tr>
+              <td>November</td>
+              <td>05</td>
+            </tr>
+            <tr>
+              <td>December</td>
+              <td>03</td>
+
+            </tr>
+
+
+          </tbody>
+        </table>
+      </div>
+      <div class="margin-top20" *ngIf="mainvalue==='Status'">
+
+
+        <table class="table table-bordered text-center table-striped" id="">
+          <thead>
+            <tr>
+              <th scope="col">Months</th>
+              <th scope="col">UI</th>
+              <th scope="col">Development</th>
+              <th scope="col">Testting</th>
+              <th scope="col">Status</th>
+
+              
+
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+
+              <td>January</td>
+              <td>05</td>
+              <td>05</td>
+              <td>05</td>
+              <td>15</td>
+
+            </tr>
+            <tr>
+              <td>February</td>
+              <td>03</td>
+              <td>05</td>
+              <td>03</td>
+              <td>11</td>
+            </tr>
+            <tr>
+              <td>March</td>
+              <td>04</td>
+              <td>08</td>
+              <td>04</td>
+              <td>16</td>
+            </tr>
+            <tr>
+              <td>April</td>
+              <td>07</td>
+              <td>07</td>
+              <td>07</td>
+              <td>21</td>
+            </tr>
+            <tr>
+              <td>May</td>
+              <td>02</td>
+              <td>03</td>
+              <td>02</td>
+              <td>07</td>
+            </tr>
+            <tr>
+              <td>June</td>
+              <td>03</td>
+              <td>04</td>
+              <td>10</td>
+              <td>17</td>
+            </tr>
+            <tr>
+              <td>July</td>
+              <td>05</td>
+              <td>05</td>
+              <td>05</td>
+              <td>15</td>
+            </tr>
+            <tr>
+              <td>August</td>
+              <td>06</td>
+              <td>06</td>
+              <td>06</td>
+              <td>18</td>
+            </tr>
+            <tr>
+              <td>September</td>
+              <td>02</td>
+              <td>02</td>
+              <td>02</td>
+              <td>06</td>
+            </tr>
+            <tr>
+              <td>October</td>
+              <td>05</td>
+              <td>05</td>
+              <td>05</td>
+              <td>15</td>
+            </tr>
+            <tr>
+              <td>November</td>
+              <td>06</td>
+              <td>06</td>
+              <td>06</td>
+              <td>18</td>
+            </tr>
+            <tr>
+              <td>December</td>
+              <td>01</td>
+              <td>04</td>
+              <td>08</td>
+              <td>13</td>
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+  
+
+
+      <div *ngIf="mainvalue==='Exceptions'" class="grey-cararra table-responsive">
+    
+     
+
+        <table class="table table-bordered text-center table-striped" id="">
+          <thead>
+            <tr>
+              <th scope="col">KRA</th>
+              <th scope="col">KPI</th>
+              <th scope="col">Exceptions</th>
+           
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td rowspan="5" scope="row">Audit Bench</td>
+              <td>Sites</td>
+              <td>9</td>
+          
+            </tr>
+            <tr>
+              <td>Domains</td>
+              <td>8</td>
+     
+            </tr>
+            <tr>
+              <td>Locations</td>
+              <td>7</td>
+            
+            </tr>
+            <tr>
+              <td>Testimonials</td>
+              <td>5</td>
+           
+            </tr>
+            <tr>
+              <td>Status</td>
+              <td>5</td>
+          
+            </tr>
+            <tr>
+              <td rowspan="5" scope="row">CEO Agenda</td>
+              <td>Sites</td>
+              <td>0</td>
+          
+            </tr>
+            <tr>
+              <td>Domains</td>
+              <td>0</td>
+          
+            </tr>
+            <tr>
+              <td>Locations</td>
+              <td>1</td>
+            
+            </tr>
+            <tr>
+              <td>Testimonials</td>
+              <td>1</td>
+              
+            </tr>
+            <tr>
+              <td>Status</td>
+              <td>5</td>
+            
+            </tr>
+         
+            <tr>
+              <td rowspan="5" scope="row">Venue Cloud</td>
+              <td>Sites</td>
+              <td>0</td>
+             
+            </tr>
+            <tr>
+              <td>Domains</td>
+              <td>5</td>
+         
+            </tr>
+            <tr>
+              <td>Locations</td>
+              <td>1</td>
+            
+            </tr>
+            <tr>
+              <td>Testimonials</td>
+              <td>5</td>
+        
+            </tr>
+            <tr>
+              <td>Status</td>
+              <td>4</td>
+           
+            </tr>
+            <tr>
+              <td rowspan="5" scope="row">F2O</td>
+              <td>Sites</td>
+              <td>0</td>
+         
+            </tr>
+            <tr>
+              <td>Domains</td>
+              <td>5</td>
+       
+            </tr>
+            <tr>
+              <td>Locations</td>
+              <td>11</td>
+           
+            </tr>
+            <tr>
+              <td>Testimonials</td>
+              <td>5</td>
+          
+            </tr>
+            <tr>
+              <td>Status</td>
+              <td>5</td>
+          
+            </tr>
+            <tr>
+              <td rowspan="5" scope="row">Maintenance</td>
+              <td>Sites</td>
+              <td>0</td>
+           
+            </tr>
+            <tr>
+              <td>Domains</td>
+              <td>5</td>
+       
+            </tr>
+            <tr>
+              <td>Locations</td>
+              <td>7</td>
+        
+            </tr>
+            <tr>
+              <td>Testimonials</td>
+              <td>15</td>
+           
+            </tr>
+            <tr>
+              <td>Status</td>
+              <td>5</td>
+          
+            </tr>
+            <tr>
+              <td rowspan="5" scope="row">Purchase & Stores</td>
+              <td>Sites</td>
+              <td>9</td>
+             
+            </tr>
+            <tr>
+              <td>Domains</td>
+              <td>5</td>
+          
+            </tr>
+            <tr>
+              <td>Locations</td>
+              <td>2</td>
+       
+            </tr>
+            <tr>
+              <td>Testimonials</td>
+              <td>8</td>
+          
+            </tr>
+            <tr>
+              <td>Status</td>
+              <td>7</td>
+         
+            </tr>
+            <tr>
+              <td rowspan="5" scope="row">Capital Finance</td>
+              <td>Sites</td>
+              <td>0</td>
+           
+            </tr>
+            <tr>
+              <td>Domains</td>
+              <td>5</td>
+             
+            </tr>
+            <tr>
+              <td>Locations</td>
+              <td>5</td>
+            
+            </tr>
+            <tr>
+              <td>Testimonials</td>
+              <td>4</td>
+           
+            </tr>
+            <tr>
+              <td>Status</td>
+              <td>6</td>
+            
+            </tr>
+            <tr>
+              <td rowspan="5" scope="row">Patient Adherence</td>
+              <td>Sites</td>
+              <td>0</td>
+           
+            </tr>
+            <tr>
+              <td>Domains</td>
+              <td>5</td>
+           
+            </tr>
+            <tr>
+              <td>Locations</td>
+              <td>5</td>
+            
+            </tr>
+            <tr>
+              <td>Testimonials</td>
+              <td>5</td>
+             
+            </tr>
+            <tr>
+              <td>Status</td>
+              <td>5</td>
+           
+            </tr>
+            <tr>
+              <td rowspan="5" scope="row">Dynamic Scheduling</td>
+              <td>Sites</td>
+              <td>0</td>
+            
+            </tr>
+            <tr>
+              <td>Domains</td>
+              <td>8</td>
+         
+            </tr>
+            <tr>
+              <td>Locations</td>
+              <td>5</td>
+           
+            </tr>
+            <tr>
+              <td>Testimonials</td>
+              <td>5</td>
+            
+            </tr>
+            <tr>
+              <td>Status</td>
+              <td>5</td>
+          
+            </tr>
+            <tr>
+              <td rowspan="5" scope="row">Guest Relations</td>
+              <td>Sites</td>
+              <td>0</td>
+         
+            </tr>
+            <tr>
+              <td>Domains</td>
+              <td>5</td>
+           
+            </tr>
+            <tr>
+              <td>Locations</td>
+              <td>9</td>
+           
+            </tr>
+            <tr>
+              <td>Testimonials</td>
+              <td>3</td>
+            
+            </tr>
+            <tr>
+              <td>Status</td>
+              <td>7</td>
+              
+            </tr>
+            <tr>
+              <td rowspan="5" scope="row">Dynamic Attendance</td>
+              <td>Sites</td>
+              <td>0</td>
+             
+            </tr>
+            <tr>
+              <td>Domains</td>
+              <td>5</td>
+           
+            </tr>
+            <tr>
+              <td>Locations</td>
+              <td>7</td>
+           
+            </tr>
+            <tr>
+              <td>Testimonials</td>
+              <td>4</td>
+           
+            </tr>
+            <tr>
+              <td>Status</td>
+              <td>5</td>
+          
+            </tr>
+           
+
+          </tbody>
+        </table>
+
+      </div>
+
+      
+
+
+    </div>
+  </div>
+
+
+</div>

@@ -1,0 +1,1416 @@
+{
+    "data": [
+        {
+            "label": "Predictive",
+            "data": "Documents Folder",
+            "expandedIcon": "fa fa-folder-open blue",
+            "collapsedIcon": "fa fa-folder blue",
+            "expanded":true,
+            "children": [
+                {
+                    "label": "Marketing",
+                    "data": "Work Folder",
+                    "expandedIcon": "fa fa-folder-open green",
+                    "collapsedIcon": "fa fa-folder green",
+                    "expanded":true,
+                    "children": [
+                        {
+                            "label": "Business Development",
+                            "data": "Work Folder",
+                            "expandedIcon": "fa fa-folder-open gold",
+                            "collapsedIcon": "fa fa-folder gold",
+                            "children": [
+                                {
+                                    "label": "Prospects",
+                                    "data": "Work Folder",
+                                    "expandedIcon": "fa fa-folder gold",
+                                    "collapsedIcon": "fa fa-folder gold"
+                                },
+                                {
+                                    "label": "Active Leads",
+                                    "data": "Work Folder",
+                                    "expandedIcon": "fa fa-folder gold",
+                                    "collapsedIcon": "fa fa-folder gold"
+                                },
+                                {
+                                    "label": "Future Leads",
+                                    "data": "Work Folder",
+                                    "expandedIcon": "fa fa-folder gold",
+                                    "collapsedIcon": "fa fa-folder gold"
+                                },
+                                {
+                                    "label": "Parallel Projects",
+                                    "data": "Work Folder",
+                                    "expandedIcon": "fa fa-folder gold",
+                                    "collapsedIcon": "fa fa-folder gold"
+                                },
+                                {
+                                    "label": "Conversion Ratio",
+                                    "data": "Work Folder",
+                                    "expandedIcon": "fa fa-folder gold",
+                                    "collapsedIcon": "fa fa-folder gold"
+                                },
+                                {
+                                    "label": "Wins",
+                                    "data": "Work Folder",
+                                    "expandedIcon": "fa fa-folder gold",
+                                    "collapsedIcon": "fa fa-folder gold"
+                                },
+                                {
+                                    "label": "Losses",
+                                    "data": "Work Folder",
+                                    "expandedIcon": "fa fa-folder gold",
+                                    "collapsedIcon": "fa fa-folder gold"
+                                }
+                            ]
+                        },
+                        {
+                            "label": "Reputation",
+                            "data": "Work Folder",
+                            "expandedIcon": "fa fa-folder-open gold",
+                            "collapsedIcon": "fa fa-folder gold",
+                            "children": [
+                                {
+                                    "label": "Glassdoor Review",
+                                    "data": "Work Folder",
+                                    "expandedIcon": "fa fa-folder gold",
+                                    "collapsedIcon": "fa fa-folder gold"
+                                },
+                                {
+                                    "label": "Google Review",
+                                    "data": "Work Folder",
+                                    "expandedIcon": "fa fa-folder gold",
+                                    "collapsedIcon": "fa fa-folder gold"
+                                }
+                            ]
+                        },
+                        {
+                            "label": "Coverage",
+                            "data": "Work Folder",
+                            "expandedIcon": "fa fa-folder-open gold",
+                            "collapsedIcon": "fa fa-folder gold",
+                            "children": [
+                                {
+                                    "label": "Voice",
+                                    "data": "Work Folder",
+                                    "expandedIcon": "fa fa-folder gold",
+                                    "collapsedIcon": "fa fa-folder gold"
+                                },
+                                {
+                                    "label": "Social",
+                                    "data": "Work Folder",
+                                    "expandedIcon": "fa fa-folder gold",
+                                    "collapsedIcon": "fa fa-folder gold"
+                                },
+                                {
+                                    "label": "Mail",
+                                    "data": "Work Folder",
+                                    "expandedIcon": "fa fa-folder gold",
+                                    "collapsedIcon": "fa fa-folder gold"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "label": "Technology",
+                    "data": "Work Folder",
+                    "expandedIcon": "fa fa-folder-open green",
+                    "collapsedIcon": "fa fa-folder green",
+                    "expanded":true,
+                    "children": [
+                        {
+                            "label": ".NET",
+                            "data": "Work Folder",
+                            "expandedIcon": "fa fa-folder-open gold",
+                            "collapsedIcon": "fa fa-folder gold"
+                        },
+                        {
+                            "label": "PHP",
+                            "data": "Work Folder",
+                            "expandedIcon": "fa fa-folder-open gold",
+                            "collapsedIcon": "fa fa-folder gold"
+                        },
+                        {
+                            "label": "Android",
+                            "data": "Work Folder",
+                            "expandedIcon": "fa fa-folder-open gold",
+                            "collapsedIcon": "fa fa-folder gold"
+                        },
+                        {
+                            "label": "IOS",
+                            "data": "Work Folder",
+                            "expandedIcon": "fa fa-folder-open gold",
+                            "collapsedIcon": "fa fa-folder gold"
+                        },
+                        {
+                            "label": "Testing Automation",
+                            "data": "Work Folder",
+                            "expandedIcon": "fa fa-folder-open gold",
+                            "collapsedIcon": "fa fa-folder gold"
+                        },
+                        {
+                            "label": "IOT",
+                            "data": "Work Folder",
+                            "expandedIcon": "fa fa-folder-open gold",
+                            "collapsedIcon": "fa fa-folder gold"
+                        },
+                        {
+                            "label": "AI",
+                            "data": "Work Folder",
+                            "expandedIcon": "fa fa-folder-open gold",
+                            "collapsedIcon": "fa fa-folder gold"
+                        },
+                        {
+                            "label": "Big Data",
+                            "data": "Work Folder",
+                            "expandedIcon": "fa fa-folder-open gold",
+                            "collapsedIcon": "fa fa-folder gold"
+                        },
+                        {
+                            "label": "Analytics",
+                            "data": "Work Folder",
+                            "expandedIcon": "fa fa-folder-open gold",
+                            "collapsedIcon": "fa fa-folder gold"
+                        },
+                        {
+                            "label": "Java",
+                            "data": "Work Folder",
+                            "expandedIcon": "fa fa-folder-open gold",
+                            "collapsedIcon": "fa fa-folder gold"
+                        },
+                        {
+                            "label": "Security",
+                            "data": "Work Folder",
+                            "expandedIcon": "fa fa-folder-open gold",
+                            "collapsedIcon": "fa fa-folder gold"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "label": "System",
+            "data": "Documents Folder",
+            "expandedIcon": "fa fa-folder-open blue",
+            "collapsedIcon": "fa fa-folder blue",
+            "children": [
+                {
+                    "label": "Solutions",
+                    "data": "Work Folder",
+                    "expandedIcon": "fa fa-folder-open green",
+                    "collapsedIcon": "fa fa-folder green",
+                    "expanded":true,
+                    "children": [
+                        {
+                            "label": "Audit Bench",
+                            "data": "Work Folder",
+                            "expandedIcon": "fa fa-folder-open gold",
+                            "collapsedIcon": "fa fa-folder gold",
+                            "children": [
+                                {
+                                    "label": "Sites",
+                                    "data": "Work Folder",
+                                    "expandedIcon": "fa fa-folder gold",
+                                    "collapsedIcon": "fa fa-folder gold"
+                                },
+                                {
+                                    "label": "Domains",
+                                    "data": "Work Folder",
+                                    "expandedIcon": "fa fa-folder gold",
+                                    "collapsedIcon": "fa fa-folder gold"
+                                },
+                                {
+                                    "label": "Locations",
+                                    "data": "Work Folder",
+                                    "expandedIcon": "fa fa-folder gold",
+                                    "collapsedIcon": "fa fa-folder gold"
+                                },
+                                {
+                                    "label": "Testimonials",
+                                    "data": "Work Folder",
+                                    "expandedIcon": "fa fa-folder gold",
+                                    "collapsedIcon": "fa fa-folder gold"
+                                },
+                                {
+                                    "label": "Status",
+                                    "data": "Work Folder",
+                                    "expandedIcon": "fa fa-folder gold",
+                                    "collapsedIcon": "fa fa-folder gold"
+                                }
+                            ]
+                        },
+                        {
+                            "label": "CEO Agenda",
+                            "data": "Work Folder",
+                            "expandedIcon": "fa fa-folder-open gold",
+                            "collapsedIcon": "fa fa-folder gold",
+                            "children": [
+                                {
+                                    "label": "Sites",
+                                    "data": "Work Folder",
+                                    "expandedIcon": "fa fa-folder gold",
+                                    "collapsedIcon": "fa fa-folder gold"
+                                },
+                                {
+                                    "label": "Domains",
+                                    "data": "Work Folder",
+                                    "expandedIcon": "fa fa-folder gold",
+                                    "collapsedIcon": "fa fa-folder gold"
+                                },
+                                {
+                                    "label": "Locations",
+                                    "data": "Work Folder",
+                                    "expandedIcon": "fa fa-folder gold",
+                                    "collapsedIcon": "fa fa-folder gold"
+                                },
+                                {
+                                    "label": "Testimonials",
+                                    "data": "Work Folder",
+                                    "expandedIcon": "fa fa-folder gold",
+                                    "collapsedIcon": "fa fa-folder gold"
+                                },
+                                {
+                                    "label": "Status",
+                                    "data": "Work Folder",
+                                    "expandedIcon": "fa fa-folder gold",
+                                    "collapsedIcon": "fa fa-folder gold"
+                                }
+                            ]
+                        },
+                        {
+                            "label": "Venue Cloud",
+                            "data": "Work Folder",
+                            "expandedIcon": "fa fa-folder-open gold",
+                            "collapsedIcon": "fa fa-folder gold",
+                            "children": [
+                                {
+                                    "label": "Sites",
+                                    "data": "Work Folder",
+                                    "expandedIcon": "fa fa-folder gold",
+                                    "collapsedIcon": "fa fa-folder gold"
+                                },
+                                {
+                                    "label": "Domains",
+                                    "data": "Work Folder",
+                                    "expandedIcon": "fa fa-folder gold",
+                                    "collapsedIcon": "fa fa-folder gold"
+                                },
+                                {
+                                    "label": "Locations",
+                                    "data": "Work Folder",
+                                    "expandedIcon": "fa fa-folder gold",
+                                    "collapsedIcon": "fa fa-folder gold"
+                                },
+                                {
+                                    "label": "Testimonials",
+                                    "data": "Work Folder",
+                                    "expandedIcon": "fa fa-folder gold",
+                                    "collapsedIcon": "fa fa-folder gold"
+                                },
+                                {
+                                    "label": "Status",
+                                    "data": "Work Folder",
+                                    "expandedIcon": "fa fa-folder gold",
+                                    "collapsedIcon": "fa fa-folder gold"
+                                }
+                            ]
+                        },
+                        {
+                            "label": "F2O",
+                            "data": "Work Folder",
+                            "expandedIcon": "fa fa-folder-open gold",
+                            "collapsedIcon": "fa fa-folder gold",
+                            "children": [
+                                {
+                                    "label": "Sites",
+                                    "data": "Work Folder",
+                                    "expandedIcon": "fa fa-folder gold",
+                                    "collapsedIcon": "fa fa-folder gold"
+                                },
+                                {
+                                    "label": "Domains",
+                                    "data": "Work Folder",
+                                    "expandedIcon": "fa fa-folder gold",
+                                    "collapsedIcon": "fa fa-folder gold"
+                                },
+                                {
+                                    "label": "Locations",
+                                    "data": "Work Folder",
+                                    "expandedIcon": "fa fa-folder gold",
+                                    "collapsedIcon": "fa fa-folder gold"
+                                },
+                                {
+                                    "label": "Testimonials",
+                                    "data": "Work Folder",
+                                    "expandedIcon": "fa fa-folder gold",
+                                    "collapsedIcon": "fa fa-folder gold"
+                                },
+                                {
+                                    "label": "Status",
+                                    "data": "Work Folder",
+                                    "expandedIcon": "fa fa-folder gold",
+                                    "collapsedIcon": "fa fa-folder gold"
+                                }
+                            ]
+                        },
+                        {
+                            "label": "Maintenance",
+                            "data": "Work Folder",
+                            "expandedIcon": "fa fa-folder-open gold",
+                            "collapsedIcon": "fa fa-folder gold",
+                            "children": [
+                                {
+                                    "label": "Sites",
+                                    "data": "Work Folder",
+                                    "expandedIcon": "fa fa-folder gold",
+                                    "collapsedIcon": "fa fa-folder gold"
+                                },
+                                {
+                                    "label": "Domains",
+                                    "data": "Work Folder",
+                                    "expandedIcon": "fa fa-folder gold",
+                                    "collapsedIcon": "fa fa-folder gold"
+                                },
+                                {
+                                    "label": "Locations",
+                                    "data": "Work Folder",
+                                    "expandedIcon": "fa fa-folder gold",
+                                    "collapsedIcon": "fa fa-folder gold"
+                                },
+                                {
+                                    "label": "Testimonials",
+                                    "data": "Work Folder",
+                                    "expandedIcon": "fa fa-folder gold",
+                                    "collapsedIcon": "fa fa-folder gold"
+                                },
+                                {
+                                    "label": "Status",
+                                    "data": "Work Folder",
+                                    "expandedIcon": "fa fa-folder gold",
+                                    "collapsedIcon": "fa fa-folder gold"
+                                }
+                            ]
+                        },
+                        {
+                            "label": "Purchase & Stores",
+                            "data": "Work Folder",
+                            "expandedIcon": "fa fa-folder-open gold",
+                            "collapsedIcon": "fa fa-folder gold",
+                            "children": [
+                                {
+                                    "label": "Sites",
+                                    "data": "Work Folder",
+                                    "expandedIcon": "fa fa-folder gold",
+                                    "collapsedIcon": "fa fa-folder gold"
+                                },
+                                {
+                                    "label": "Domains",
+                                    "data": "Work Folder",
+                                    "expandedIcon": "fa fa-folder gold",
+                                    "collapsedIcon": "fa fa-folder gold"
+                                },
+                                {
+                                    "label": "Locations",
+                                    "data": "Work Folder",
+                                    "expandedIcon": "fa fa-folder gold",
+                                    "collapsedIcon": "fa fa-folder gold"
+                                },
+                                {
+                                    "label": "Testimonials",
+                                    "data": "Work Folder",
+                                    "expandedIcon": "fa fa-folder gold",
+                                    "collapsedIcon": "fa fa-folder gold"
+                                },
+                                {
+                                    "label": "Status",
+                                    "data": "Work Folder",
+                                    "expandedIcon": "fa fa-folder gold",
+                                    "collapsedIcon": "fa fa-folder gold"
+                                }
+                            ]
+                        },
+                        {
+                            "label": "Capital Finance",
+                            "data": "Work Folder",
+                            "expandedIcon": "fa fa-folder-open gold",
+                            "collapsedIcon": "fa fa-folder gold",
+                            "children": [
+                                {
+                                    "label": "Sites",
+                                    "data": "Work Folder",
+                                    "expandedIcon": "fa fa-folder gold",
+                                    "collapsedIcon": "fa fa-folder gold"
+                                },
+                                {
+                                    "label": "Domains",
+                                    "data": "Work Folder",
+                                    "expandedIcon": "fa fa-folder gold",
+                                    "collapsedIcon": "fa fa-folder gold"
+                                },
+                                {
+                                    "label": "Locations",
+                                    "data": "Work Folder",
+                                    "expandedIcon": "fa fa-folder gold",
+                                    "collapsedIcon": "fa fa-folder gold"
+                                },
+                                {
+                                    "label": "Testimonials",
+                                    "data": "Work Folder",
+                                    "expandedIcon": "fa fa-folder gold",
+                                    "collapsedIcon": "fa fa-folder gold"
+                                },
+                                {
+                                    "label": "Status",
+                                    "data": "Work Folder",
+                                    "expandedIcon": "fa fa-folder gold",
+                                    "collapsedIcon": "fa fa-folder gold"
+                                }
+                            ]
+                        },
+                        {
+                            "label": "Patient Adherence",
+                            "data": "Work Folder",
+                            "expandedIcon": "fa fa-folder-open gold",
+                            "collapsedIcon": "fa fa-folder gold",
+                            "children": [
+                                {
+                                    "label": "Sites",
+                                    "data": "Work Folder",
+                                    "expandedIcon": "fa fa-folder gold",
+                                    "collapsedIcon": "fa fa-folder gold"
+                                },
+                                {
+                                    "label": "Domains",
+                                    "data": "Work Folder",
+                                    "expandedIcon": "fa fa-folder gold",
+                                    "collapsedIcon": "fa fa-folder gold"
+                                },
+                                {
+                                    "label": "Locations",
+                                    "data": "Work Folder",
+                                    "expandedIcon": "fa fa-folder gold",
+                                    "collapsedIcon": "fa fa-folder gold"
+                                },
+                                {
+                                    "label": "Testimonials",
+                                    "data": "Work Folder",
+                                    "expandedIcon": "fa fa-folder gold",
+                                    "collapsedIcon": "fa fa-folder gold"
+                                },
+                                {
+                                    "label": "Status",
+                                    "data": "Work Folder",
+                                    "expandedIcon": "fa fa-folder gold",
+                                    "collapsedIcon": "fa fa-folder gold"
+                                }
+                            ]
+                        },
+                        {
+                            "label": "Dynamic Scheduling",
+                            "data": "Work Folder",
+                            "expandedIcon": "fa fa-folder-open gold",
+                            "collapsedIcon": "fa fa-folder gold",
+                            "children": [
+                                {
+                                    "label": "Sites",
+                                    "data": "Work Folder",
+                                    "expandedIcon": "fa fa-folder gold",
+                                    "collapsedIcon": "fa fa-folder gold"
+                                },
+                                {
+                                    "label": "Domains",
+                                    "data": "Work Folder",
+                                    "expandedIcon": "fa fa-folder gold",
+                                    "collapsedIcon": "fa fa-folder gold"
+                                },
+                                {
+                                    "label": "Locations",
+                                    "data": "Work Folder",
+                                    "expandedIcon": "fa fa-folder gold",
+                                    "collapsedIcon": "fa fa-folder gold"
+                                },
+                                {
+                                    "label": "Testimonials",
+                                    "data": "Work Folder",
+                                    "expandedIcon": "fa fa-folder gold",
+                                    "collapsedIcon": "fa fa-folder gold"
+                                },
+                                {
+                                    "label": "Status",
+                                    "data": "Work Folder",
+                                    "expandedIcon": "fa fa-folder gold",
+                                    "collapsedIcon": "fa fa-folder gold"
+                                }
+                            ]
+                        },
+                        {
+                            "label": "Guest Relations",
+                            "data": "Work Folder",
+                            "expandedIcon": "fa fa-folder-open gold",
+                            "collapsedIcon": "fa fa-folder gold",
+                            "children": [
+                                {
+                                    "label": "Sites",
+                                    "data": "Work Folder",
+                                    "expandedIcon": "fa fa-folder gold",
+                                    "collapsedIcon": "fa fa-folder gold"
+                                },
+                                {
+                                    "label": "Domains",
+                                    "data": "Work Folder",
+                                    "expandedIcon": "fa fa-folder gold",
+                                    "collapsedIcon": "fa fa-folder gold"
+                                },
+                                {
+                                    "label": "Locations",
+                                    "data": "Work Folder",
+                                    "expandedIcon": "fa fa-folder gold",
+                                    "collapsedIcon": "fa fa-folder gold"
+                                },
+                                {
+                                    "label": "Testimonials",
+                                    "data": "Work Folder",
+                                    "expandedIcon": "fa fa-folder gold",
+                                    "collapsedIcon": "fa fa-folder gold"
+                                },
+                                {
+                                    "label": "Status",
+                                    "data": "Work Folder",
+                                    "expandedIcon": "fa fa-folder gold",
+                                    "collapsedIcon": "fa fa-folder gold"
+                                }
+                            ]
+                        },
+                        {
+                            "label": "Dynamic Attendance",
+                            "data": "Work Folder",
+                            "expandedIcon": "fa fa-folder-open gold",
+                            "collapsedIcon": "fa fa-folder gold",
+                            "children": [
+                                {
+                                    "label": "Sites",
+                                    "data": "Work Folder",
+                                    "expandedIcon": "fa fa-folder gold",
+                                    "collapsedIcon": "fa fa-folder gold"
+                                },
+                                {
+                                    "label": "Domains",
+                                    "data": "Work Folder",
+                                    "expandedIcon": "fa fa-folder gold",
+                                    "collapsedIcon": "fa fa-folder gold"
+                                },
+                                {
+                                    "label": "Locations",
+                                    "data": "Work Folder",
+                                    "expandedIcon": "fa fa-folder gold",
+                                    "collapsedIcon": "fa fa-folder gold"
+                                },
+                                {
+                                    "label": "Testimonials",
+                                    "data": "Work Folder",
+                                    "expandedIcon": "fa fa-folder gold",
+                                    "collapsedIcon": "fa fa-folder gold"
+                                },
+                                {
+                                    "label": "Status",
+                                    "data": "Work Folder",
+                                    "expandedIcon": "fa fa-folder gold",
+                                    "collapsedIcon": "fa fa-folder gold"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "label": "Progress",
+                    "data": "Documents Folder",
+                    "expandedIcon": "fa fa-folder-open green",
+                    "collapsedIcon": "fa fa-folder green",
+                    "expanded":true,
+                    "children": [
+                        {
+                            "label": "Monetary",
+                            "data": "Documents Folder",
+                            "expandedIcon": "fa fa-folder gold",
+                            "collapsedIcon": "fa fa-folder gold"
+                        },
+                        {
+                            "label": "Skills",
+                            "data": "Documents Folder",
+                            "expandedIcon": "fa fa-folder gold",
+                            "collapsedIcon": "fa fa-folder gold"
+                        },
+                        {
+                            "label": "Fitness",
+                            "data": "Documents Folder",
+                            "expandedIcon": "fa fa-folder gold",
+                            "collapsedIcon": "fa fa-folder gold",
+                            "children": [
+                                {
+                                    "label": "BP",
+                                    "data": "Documents Folder",
+                                    "expandedIcon": "fa fa-folder gold",
+                                    "collapsedIcon": "fa fa-folder gold"
+                                },
+                                {
+                                    "label": "BMI",
+                                    "data": "Documents Folder",
+                                    "expandedIcon": "fa fa-folder gold",
+                                    "collapsedIcon": "fa fa-folder gold"
+                                },
+                                {
+                                    "label": "Fat %",
+                                    "data": "Documents Folder",
+                                    "expandedIcon": "fa fa-folder gold",
+                                    "collapsedIcon": "fa fa-folder gold"
+                                },
+                                {
+                                    "label": "Pulse",
+                                    "data": "Documents Folder",
+                                    "expandedIcon": "fa fa-folder gold",
+                                    "collapsedIcon": "fa fa-folder gold"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "label": "Innovation",
+                    "data": "Documents Folder",
+                    "expandedIcon": "fa fa-folder-open green",
+                    "collapsedIcon": "fa fa-folder green",
+                    "expanded":true,
+                    "children": [
+                        {
+                            "label": "Technology",
+                            "data": "Documents Folder",
+                            "expandedIcon": "fa fa-folder gold",
+                            "collapsedIcon": "fa fa-folder gold"
+                        },
+                        {
+                            "label": "Solutions",
+                            "data": "Documents Folder",
+                            "expandedIcon": "fa fa-folder gold",
+                            "collapsedIcon": "fa fa-folder gold"
+                        },
+                        {
+                            "label": "Process",
+                            "data": "Documents Folder",
+                            "expandedIcon": "fa fa-folder gold",
+                            "collapsedIcon": "fa fa-folder gold"
+                        },
+                        {
+                            "label": "HR",
+                            "data": "Documents Folder",
+                            "expandedIcon": "fa fa-folder gold",
+                            "collapsedIcon": "fa fa-folder gold"
+                        },
+                        {
+                            "label": "Domains",
+                            "data": "Documents Folder",
+                            "expandedIcon": "fa fa-folder gold",
+                            "collapsedIcon": "fa fa-folder gold"
+                        },
+                        {
+                            "label": "Marketing",
+                            "data": "Documents Folder",
+                            "expandedIcon": "fa fa-folder gold",
+                            "collapsedIcon": "fa fa-folder gold"
+                        }
+                    ]
+                },
+                {
+                    "label": "Talent",
+                    "data": "Documents Folder",
+                    "expandedIcon": "fa fa-folder-open green",
+                    "collapsedIcon": "fa fa-folder green",
+                    "expanded":true,
+                    "children": [
+                        {
+                            "label": "Recruitment",
+                            "data": "Documents Folder",
+                            "expandedIcon": "fa fa-folder gold",
+                            "collapsedIcon": "fa fa-folder gold"
+                        },
+                        {
+                            "label": "Joining Ratio",
+                            "data": "Documents Folder",
+                            "expandedIcon": "fa fa-folder gold",
+                            "collapsedIcon": "fa fa-folder gold"
+                        },
+                        {
+                            "label": "Induction",
+                            "data": "Documents Folder",
+                            "expandedIcon": "fa fa-folder gold",
+                            "collapsedIcon": "fa fa-folder gold"
+                        },
+                        {
+                            "label": "Work Experience",
+                            "data": "Documents Folder",
+                            "expandedIcon": "fa fa-folder gold",
+                            "collapsedIcon": "fa fa-folder gold"
+                        },
+                        {
+                            "label": "IQ Distribution",
+                            "data": "Documents Folder",
+                            "expandedIcon": "fa fa-folder gold",
+                            "collapsedIcon": "fa fa-folder gold"
+                        },
+                        {
+                            "label": "Gestation",
+                            "data": "Documents Folder",
+                            "expandedIcon": "fa fa-folder gold",
+                            "collapsedIcon": "fa fa-folder gold"
+                        },
+                        {
+                            "label": "Subject Expertise",
+                            "data": "Documents Folder",
+                            "expandedIcon": "fa fa-folder gold",
+                            "collapsedIcon": "fa fa-folder gold"
+                        }
+                    ]
+                },
+                {
+                    "label": "Culture",
+                    "data": "Documents Folder",
+                    "expandedIcon": "fa fa-folder-open green",
+                    "collapsedIcon": "fa fa-folder green",
+                    "expanded":true,
+                    "children": [
+                        {
+                            "label": "Intelligence",
+                            "data": "Documents Folder",
+                            "expandedIcon": "fa fa-folder gold",
+                            "collapsedIcon": "fa fa-folder gold"
+                        },
+                        {
+                            "label": "Self-Expression",
+                            "data": "Documents Folder",
+                            "expandedIcon": "fa fa-folder gold",
+                            "collapsedIcon": "fa fa-folder gold"
+                        },
+                        {
+                            "label": "Family",
+                            "data": "Documents Folder",
+                            "expandedIcon": "fa fa-folder gold",
+                            "collapsedIcon": "fa fa-folder gold"
+                        },
+                        {
+                            "label": "Leadership",
+                            "data": "Documents Folder",
+                            "expandedIcon": "fa fa-folder gold",
+                            "collapsedIcon": "fa fa-folder gold"
+                        },
+                        {
+                            "label": "Incidents",
+                            "data": "Documents Folder",
+                            "expandedIcon": "fa fa-folder gold",
+                            "collapsedIcon": "fa fa-folder gold"
+                        },
+                        {
+                            "label": "Complaints",
+                            "data": "Documents Folder",
+                            "expandedIcon": "fa fa-folder gold",
+                            "collapsedIcon": "fa fa-folder gold"
+                        },
+                        {
+                            "label": "Celebration",
+                            "data": "Documents Folder",
+                            "expandedIcon": "fa fa-folder gold",
+                            "collapsedIcon": "fa fa-folder gold"
+                        },
+                        {
+                            "label": "Fitness",
+                            "data": "Documents Folder",
+                            "expandedIcon": "fa fa-folder gold",
+                            "collapsedIcon": "fa fa-folder gold"
+                        },
+                        {
+                            "label": "Harmony",
+                            "data": "Documents Folder",
+                            "expandedIcon": "fa fa-folder gold",
+                            "collapsedIcon": "fa fa-folder gold"
+                        },
+                        {
+                            "label": "Respect",
+                            "data": "Documents Folder",
+                            "expandedIcon": "fa fa-folder gold",
+                            "collapsedIcon": "fa fa-folder gold"
+                        },
+                        {
+                            "label": "Birthdays",
+                            "data": "Documents Folder",
+                            "expandedIcon": "fa fa-folder gold",
+                            "collapsedIcon": "fa fa-folder gold"
+                        }
+                    ]
+                },
+                {
+                    "label": "Industries",
+                    "data": "Documents Folder",
+                    "expandedIcon": "fa fa-folder-open green",
+                    "collapsedIcon": "fa fa-folder green",
+                    "expanded":true,
+                    "children": [
+                        {
+                            "label": "Inra",
+                            "data": "Documents Folder",
+                            "expandedIcon": "fa fa-folder gold",
+                            "collapsedIcon": "fa fa-folder gold"
+                        },
+                        {
+                            "label": "Hotels",
+                            "data": "Documents Folder",
+                            "expandedIcon": "fa fa-folder gold",
+                            "collapsedIcon": "fa fa-folder gold"
+                        },
+                        {
+                            "label": "Manufacturing",
+                            "data": "Documents Folder",
+                            "expandedIcon": "fa fa-folder gold",
+                            "collapsedIcon": "fa fa-folder gold"
+                        },
+                        {
+                            "label": "Health Care",
+                            "data": "Documents Folder",
+                            "expandedIcon": "fa fa-folder gold",
+                            "collapsedIcon": "fa fa-folder gold"
+                        },
+                        {
+                            "label": "Emerging",
+                            "data": "Documents Folder",
+                            "expandedIcon": "fa fa-folder gold",
+                            "collapsedIcon": "fa fa-folder gold"
+                        },
+                        {
+                            "label": "Segmentation",
+                            "data": "Documents Folder",
+                            "expandedIcon": "fa fa-folder gold",
+                            "collapsedIcon": "fa fa-folder gold"
+                        }
+                    ]
+                },
+                {
+                    "label": "Alignment",
+                    "data": "Documents Folder",
+                    "expandedIcon": "fa fa-folder-open green",
+                    "collapsedIcon": "fa fa-folder green",
+                    "expanded":true,
+                    "children": [
+                        {
+                            "label": "Attrition",
+                            "data": "Documents Folder",
+                            "expandedIcon": "fa fa-folder gold",
+                            "collapsedIcon": "fa fa-folder gold"
+                        },
+                        {
+                            "label": "Quarterly Review",
+                            "data": "Documents Folder",
+                            "expandedIcon": "fa fa-folder gold",
+                            "collapsedIcon": "fa fa-folder gold"
+                        },
+                        {
+                            "label": "Fitness Awards",
+                            "data": "Documents Folder",
+                            "expandedIcon": "fa fa-folder gold",
+                            "collapsedIcon": "fa fa-folder gold"
+                        },
+                        {
+                            "label": "Quartiles",
+                            "data": "Documents Folder",
+                            "expandedIcon": "fa fa-folder gold",
+                            "collapsedIcon": "fa fa-folder gold"
+                        },
+                        {
+                            "label": "Fitness Metrics",
+                            "data": "Documents Folder",
+                            "expandedIcon": "fa fa-folder gold",
+                            "collapsedIcon": "fa fa-folder gold"
+                        },
+                        {
+                            "label": "Unplanned Leaves",
+                            "data": "Documents Folder",
+                            "expandedIcon": "fa fa-folder gold",
+                            "collapsedIcon": "fa fa-folder gold"
+                        },
+                        {
+                            "label": "Attendance Metrics",
+                            "data": "Documents Folder",
+                            "expandedIcon": "fa fa-folder gold",
+                            "collapsedIcon": "fa fa-folder gold"
+                        },
+                        {
+                            "label": "Late Attendance",
+                            "data": "Documents Folder",
+                            "expandedIcon": "fa fa-folder gold",
+                            "collapsedIcon": "fa fa-folder gold"
+                        },
+                        {
+                            "label": "Associate Pulse",
+                            "data": "Documents Folder",
+                            "expandedIcon": "fa fa-folder gold",
+                            "collapsedIcon": "fa fa-folder gold"
+                        },
+                        {
+                            "label": "Exit Interviews",
+                            "data": "Documents Folder",
+                            "expandedIcon": "fa fa-folder gold",
+                            "collapsedIcon": "fa fa-folder gold"
+                        },
+                        {
+                            "label": "Alumnni Dues",
+                            "data": "Documents Folder",
+                            "expandedIcon": "fa fa-folder gold",
+                            "collapsedIcon": "fa fa-folder gold"
+                        },
+                        {
+                            "label": "Retention",
+                            "data": "Documents Folder",
+                            "expandedIcon": "fa fa-folder gold",
+                            "collapsedIcon": "fa fa-folder gold"
+                        }
+                    ]
+                },
+                {
+                    "label": "Risk",
+                    "data": "Documents Folder",
+                    "expandedIcon": "fa fa-folder-open green",
+                    "collapsedIcon": "fa fa-folder green",
+                    "expanded":true,
+                    "children": [
+                        {
+                            "label": "Legal",
+                            "data": "Documents Folder",
+                            "expandedIcon": "fa fa-folder gold",
+                            "collapsedIcon": "fa fa-folder gold"
+                        },
+                        {
+                            "label": "Market",
+                            "data": "Documents Folder",
+                            "expandedIcon": "fa fa-folder gold",
+                            "collapsedIcon": "fa fa-folder gold"
+                        },
+                        {
+                            "label": "Technology",
+                            "data": "Documents Folder",
+                            "expandedIcon": "fa fa-folder gold",
+                            "collapsedIcon": "fa fa-folder gold"
+                        },
+                        {
+                            "label": "Social",
+                            "data": "Documents Folder",
+                            "expandedIcon": "fa fa-folder gold",
+                            "collapsedIcon": "fa fa-folder gold"
+                        },
+                        {
+                            "label": "Knowledge",
+                            "data": "Documents Folder",
+                            "expandedIcon": "fa fa-folder gold",
+                            "collapsedIcon": "fa fa-folder gold"
+                        },
+                        {
+                            "label": "HR",
+                            "data": "Documents Folder",
+                            "expandedIcon": "fa fa-folder gold",
+                            "collapsedIcon": "fa fa-folder gold"
+                        },
+                        {
+                            "label": "Data Security",
+                            "data": "Documents Folder",
+                            "expandedIcon": "fa fa-folder gold",
+                            "collapsedIcon": "fa fa-folder gold"
+                        },
+                        {
+                            "label": "Safety",
+                            "data": "Documents Folder",
+                            "expandedIcon": "fa fa-folder gold",
+                            "collapsedIcon": "fa fa-folder gold"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "label": "Control",
+            "data": "Documents Folder",
+            "expandedIcon": "fa fa-folder-open blue",
+            "collapsedIcon": "fa fa-folder blue",
+            "children": [
+                {
+                    "label": "Infrastructure",
+                    "data": "Work Folder",
+                    "expandedIcon": "fa fa-folder-open green",
+                    "collapsedIcon": "fa fa-folder green",
+                    "expanded":true,
+                    "children": [
+                        {
+                            "label": "Internet",
+                            "data": "Work Folder",
+                            "expandedIcon": "fa fa-folder gold",
+                            "collapsedIcon": "fa fa-folder gold"
+                        },
+                        {
+                            "label": "Power",
+                            "data": "Work Folder",
+                            "expandedIcon": "fa fa-folder gold",
+                            "collapsedIcon": "fa fa-folder gold"
+                        },
+                        {
+                            "label": "Hygiene",
+                            "data": "Work Folder",
+                            "expandedIcon": "fa fa-folder gold",
+                            "collapsedIcon": "fa fa-folder gold"
+                        },
+                        {
+                            "label": "Work Stations",
+                            "data": "Work Folder",
+                            "expandedIcon": "fa fa-folder gold",
+                            "collapsedIcon": "fa fa-folder gold"
+                        },
+                        {
+                            "label": "Discussion Rooms",
+                            "data": "Work Folder",
+                            "expandedIcon": "fa fa-folder gold",
+                            "collapsedIcon": "fa fa-folder gold"
+                        },
+                        {
+                            "label": "Silence",
+                            "data": "Work Folder",
+                            "expandedIcon": "fa fa-folder gold",
+                            "collapsedIcon": "fa fa-folder gold"
+                        },
+                        {
+                            "label": "Ambience",
+                            "data": "Work Folder",
+                            "expandedIcon": "fa fa-folder gold",
+                            "collapsedIcon": "fa fa-folder gold"
+                        },
+                        {
+                            "label": "Air Conditioning",
+                            "data": "Work Folder",
+                            "expandedIcon": "fa fa-folder gold",
+                            "collapsedIcon": "fa fa-folder gold"
+                        },
+                        {
+                            "label": "Water",
+                            "data": "Work Folder",
+                            "expandedIcon": "fa fa-folder gold",
+                            "collapsedIcon": "fa fa-folder gold"
+                        },
+                        {
+                            "label": "Dining",
+                            "data": "Work Folder",
+                            "expandedIcon": "fa fa-folder gold",
+                            "collapsedIcon": "fa fa-folder gold"
+                        }
+                    ]
+                },
+                        
+
+                        {
+                            "label": "Finance",
+                            "data": "Work Folder",
+                            "expandedIcon": "fa fa-folder-open green",
+                            "collapsedIcon": "fa fa-folder green",
+                            "expanded":true,
+                            "children": [
+                                {
+                                    "label": "Cash Reserves",
+                                    "data": "Work Folder",
+                                    "expandedIcon": "fa fa-folder gold",
+                                    "collapsedIcon": "fa fa-folder gold"
+                                },
+                                {
+                                    "label": "Debt Free",
+                                    "data": "Work Folder",
+                                    "expandedIcon": "fa fa-folder gold",
+                                    "collapsedIcon": "fa fa-folder gold"
+                                },
+                                {
+                                    "label": "Variance",
+                                    "data": "Work Folder",
+                                    "expandedIcon": "fa fa-folder gold",
+                                    "collapsedIcon": "fa fa-folder gold"
+                                },
+                                {
+                                    "label": "Trends",
+                                    "data": "Work Folder",
+                                    "expandedIcon": "fa fa-folder gold",
+                                    "collapsedIcon": "fa fa-folder gold"
+                                },
+                                {
+                                    "label": "Distribution",
+                                    "data": "Work Folder",
+                                    "expandedIcon": "fa fa-folder gold",
+                                    "collapsedIcon": "fa fa-folder gold"
+                                },
+                                {
+                                    "label": "Balance Sheet",
+                                    "data": "Work Folder",
+                                    "expandedIcon": "fa fa-folder gold",
+                                    "collapsedIcon": "fa fa-folder gold"
+                                },
+                                {
+                                    "label": "Income",
+                                    "data": "Work Folder",
+                                    "expandedIcon": "fa fa-folder gold",
+                                    "collapsedIcon": "fa fa-folder gold"
+                                },
+                                {
+                                    "label": "Receivables",
+                                    "data": "Work Folder",
+                                    "expandedIcon": "fa fa-folder gold",
+                                    "collapsedIcon": "fa fa-folder gold"
+                                },
+                                {
+                                    "label": "Payables",
+                                    "data": "Work Folder",
+                                    "expandedIcon": "fa fa-folder gold",
+                                    "collapsedIcon": "fa fa-folder gold"
+                                },
+                                {
+                                    "label": "Ratio Analysis",
+                                    "data": "Work Folder",
+                                    "expandedIcon": "fa fa-folder gold",
+                                    "collapsedIcon": "fa fa-folder gold"
+                                }
+
+                            ]
+                        },
+                        {
+                            "label": "Statutory",
+                            "data": "Work Folder",
+                            "expandedIcon": "fa fa-folder-open green",
+                            "collapsedIcon": "fa fa-folder green",
+                            "expanded":true,
+                            "children": [
+                                {
+                                    "label": "Provident Fund",
+                                    "data": "Work Folder",
+                                    "expandedIcon": "fa fa-folder gold",
+                                    "collapsedIcon": "fa fa-folder gold"
+                                },
+                                {
+                                    "label": "Professional Tax",
+                                    "data": "Work Folder",
+                                    "expandedIcon": "fa fa-folder gold",
+                                    "collapsedIcon": "fa fa-folder gold"
+                                },
+                                {
+                                    "label": "TDS",
+                                    "data": "Work Folder",
+                                    "expandedIcon": "fa fa-folder gold",
+                                    "collapsedIcon": "fa fa-folder gold"
+                                },
+                                {
+                                    "label": "Income Tax",
+                                    "data": "Work Folder",
+                                    "expandedIcon": "fa fa-folder gold",
+                                    "collapsedIcon": "fa fa-folder gold"
+                                },
+                                {
+                                    "label": "GST",
+                                    "data": "Work Folder",
+                                    "expandedIcon": "fa fa-folder gold",
+                                    "collapsedIcon": "fa fa-folder gold"
+                                },
+                                {
+                                    "label": "Licenses",
+                                    "data": "Work Folder",
+                                    "expandedIcon": "fa fa-folder gold",
+                                    "collapsedIcon": "fa fa-folder gold"
+                                },
+                                {
+                                    "label": "Annual Accounts",
+                                    "data": "Work Folder",
+                                    "expandedIcon": "fa fa-folder gold",
+                                    "collapsedIcon": "fa fa-folder gold"
+                                }
+
+                            ]
+                        }
+                    ]
+                },
+            
+    
+        {
+            "label": "Process",
+            "data": "Documents Folder",
+            "expandedIcon": "fa fa-folder-open blue",
+            "collapsedIcon": "fa fa-folder blue",
+            "children": [
+                {
+                    "label": "Projects",
+                    "data": "Work Folder",
+                    "expandedIcon": "fa fa-folder-open green",
+                    "collapsedIcon": "fa fa-folder green",
+                    "expanded":true,
+                    "children": [
+                        {
+                            "label": "Pillars",
+                            "data": "Work Folder",
+                            "expandedIcon": "fa fa-folder-open gold",
+                            "collapsedIcon": "fa fa-folder gold",
+                            "children": [
+                                {
+                                    "label": "New Clients",
+                                    "data": "Work Folder",
+                                    "expandedIcon": "fa fa-folder gold",
+                                    "collapsedIcon": "fa fa-folder gold"
+                                },
+                                {
+                                    "label": "Repeat Clients",
+                                    "data": "Work Folder",
+                                    "expandedIcon": "fa fa-folder gold",
+                                    "collapsedIcon": "fa fa-folder gold"
+                                },
+                                {
+                                    "label": "Referral Projects",
+                                    "data": "Work Folder",
+                                    "expandedIcon": "fa fa-folder gold",
+                                    "collapsedIcon": "fa fa-folder gold"
+                                },
+                                {
+                                    "label": "Repeat Projects",
+                                    "data": "Work Folder",
+                                    "expandedIcon": "fa fa-folder gold",
+                                    "collapsedIcon": "fa fa-folder gold"
+                                }
+                            ]
+                        },
+                        {
+                            "label": "Allocation",
+                            "data": "Work Folder",
+                            "expandedIcon": "fa fa-folder-open gold",
+                            "collapsedIcon": "fa fa-folder gold",
+                            "children": [
+                                {
+                                    "label": "Billing",
+                                    "data": "Work Folder",
+                                    "expandedIcon": "fa fa-folder gold",
+                                    "collapsedIcon": "fa fa-folder gold"
+                                },
+                                {
+                                    "label": "Bench",
+                                    "data": "Work Folder",
+                                    "expandedIcon": "fa fa-folder gold",
+                                    "collapsedIcon": "fa fa-folder gold"
+                                }
+                            ]
+                        }
+                        
+                    ]
+                },
+                {
+                    "label": "Quality",
+                    "data": "Work Folder",
+                    "expandedIcon": "fa fa-folder-open green",
+                    "collapsedIcon": "fa fa-folder green",
+                    "expanded":true,
+                    "children": [
+                        {
+                            "label": "Feedback",
+                            "data": "Work Folder",
+                            "expandedIcon": "fa fa-folder gold",
+                            "collapsedIcon": "fa fa-folder gold"
+                        },
+                        {
+                            "label": "Pulse",
+                            "data": "Work Folder",
+                            "expandedIcon": "fa fa-folder gold",
+                            "collapsedIcon": "fa fa-folder gold"
+                        },
+                        {
+                            "label": "Schedule",
+                            "data": "Work Folder",
+                            "expandedIcon": "fa fa-folder gold",
+                            "collapsedIcon": "fa fa-folder gold"
+                        },
+                        {
+                            "label": "Exceptions",
+                            "data": "Work Folder",
+                            "expandedIcon": "fa fa-folder gold",
+                            "collapsedIcon": "fa fa-folder gold"
+                        },
+                        {
+                            "label": "Briefing",
+                            "data": "Work Folder",
+                            "expandedIcon": "fa fa-folder gold",
+                            "collapsedIcon": "fa fa-folder gold"
+                        },
+                        {
+                            "label": "QA Checklist",
+                            "data": "Work Folder",
+                            "expandedIcon": "fa fa-folder gold",
+                            "collapsedIcon": "fa fa-folder gold"
+                        },
+                        {
+                            "label": "Clearance",
+                            "data": "Work Folder",
+                            "expandedIcon": "fa fa-folder gold",
+                            "collapsedIcon": "fa fa-folder gold"
+                        },
+                        {
+                            "label": "Demos",
+                            "data": "Work Folder",
+                            "expandedIcon": "fa fa-folder gold",
+                            "collapsedIcon": "fa fa-folder gold"
+                        },
+                        {
+                            "label": "Automation",
+                            "data": "Work Folder",
+                            "expandedIcon": "fa fa-folder gold",
+                            "collapsedIcon": "fa fa-folder gold"
+                        },
+                        {
+                            "label": "Zap",
+                            "data": "Work Folder",
+                            "expandedIcon": "fa fa-folder gold",
+                            "collapsedIcon": "fa fa-folder gold"
+                        },
+                        {
+                            "label": "Tech Audit",
+                            "data": "Work Folder",
+                            "expandedIcon": "fa fa-folder gold",
+                            "collapsedIcon": "fa fa-folder gold"
+                        },
+                        {
+                            "label": "Process Audit",
+                            "data": "Work Folder",
+                            "expandedIcon": "fa fa-folder gold",
+                            "collapsedIcon": "fa fa-folder gold"
+                        },
+                        {
+                            "label": "UI Audit",
+                            "data": "Work Folder",
+                            "expandedIcon": "fa fa-folder gold",
+                            "collapsedIcon": "fa fa-folder gold"
+                        },
+                        {
+                            "label": "DB Audit",
+                            "data": "Work Folder",
+                            "expandedIcon": "fa fa-folder gold",
+                            "collapsedIcon": "fa fa-folder gold"
+                        },
+                        {
+                            "label": "Productivity Audit",
+                            "data": "Work Folder",
+                            "expandedIcon": "fa fa-folder gold",
+                            "collapsedIcon": "fa fa-folder gold"
+                        },
+                        {
+                            "label": "Improvement",
+                            "data": "Work Folder",
+                            "expandedIcon": "fa fa-folder gold",
+                            "collapsedIcon": "fa fa-folder gold"
+                        }
+                        
+                        
+                    ]
+                }
+            ]
+        }
+       
+    ]
+}

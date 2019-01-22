@@ -1,0 +1,20 @@
+
+
+::ng-deep .large{
+  font-size: 18px !important;
+}
+
+
+::ng-deep  :focus {
+  outline: -webkit-focus-ring-color auto 0px;
+}
+
+
+.close{
+    float: right;
+    color: black;
+}
+
+.radio-inline{
+    margin-left: 15px;
+}

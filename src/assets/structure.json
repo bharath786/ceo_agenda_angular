@@ -1,0 +1,123 @@
+{
+    "data": [
+        {
+            "label": "Option M",
+            "data": "Documents Folder",
+            "expandedIcon": "fa fa-yahoo green large",
+            "collapsedIcon": "fa fa-yahoo green large",
+            "expanded":true,
+            "children": [
+                {
+                    "label": "Project",
+                    "data": "Documents Folder",
+                    "expandedIcon": "fa fa-home blue large",
+                    "collapsedIcon": "fa fa-home blue large",
+                    "expanded":true,
+                    "children": [
+                        {
+                            "label": "India",
+                            "data": "Work Folder",
+                            "expandedIcon": "fa fa-map-marker gold large",
+                            "collapsedIcon": "fa fa-map-marker gold large",
+                       
+                            "children": [{
+                                "label": "Option Matrix",
+                                "data": "Work Folder",
+                                "expandedIcon": "fa fa-bank green large",
+                                "collapsedIcon": "fa fa-bank green large"
+                            },
+                            {
+                                "label": "Option Zero",
+                                "data": "Work Folder",
+                                "expandedIcon": "fa fa-bank green large",
+                                "collapsedIcon": "fa fa-bank green large"
+                            }
+
+                        
+                        
+                        ]
+                        },
+                        {
+                            "label": "Australia",
+                            "data": "Work Folder",
+                            "expandedIcon": "fa fa-map-marker gold large",
+                            "collapsedIcon": "fa fa-map-marker gold large",
+                            "children": [{
+                                "label": "Option Matrix",
+                                "data": "Work Folder",
+                                "expandedIcon": "fa fa-bank green large",
+                                "collapsedIcon": "fa fa-bank green large"
+                            },
+                            {
+                                "label": "Option Zero",
+                                "data": "Work Folder",
+                                "expandedIcon": "fa fa-bank green large",
+                                "collapsedIcon": "fa fa-bank green large"
+                            }
+
+                        
+                        
+                        ]
+                        }
+
+                    ]
+                },
+                {
+                    "label": "Product",
+                    "data": "Documents Folder",
+                    "expandedIcon": "fa fa-home blue large",
+                    "collapsedIcon": "fa fa-home blue large",
+                    "expanded":true,
+                    "children": [
+                        {
+                            "label": "India",
+                            "data": "Work Folder",
+                            "expandedIcon": "fa fa-map-marker gold large",
+                            "collapsedIcon": "fa fa-map-marker gold large",
+                            "children": [{
+                                "label": "Option Matrix",
+                                "data": "Work Folder",
+                                "expandedIcon": "fa fa-bank green large",
+                                "collapsedIcon": "fa fa-bank green large"
+                            },
+                            {
+                                "label": "Option Zero",
+                                "data": "Work Folder",
+                                "expandedIcon": "fa fa-bank green large",
+                                "collapsedIcon": "fa fa-bank green large"
+                            }
+
+                        
+                        
+                        ]
+                        },
+                        {
+                            "label": "Canada",
+                            "data": "Work Folder",
+                            "expandedIcon": "fa fa-map-marker gold large",
+                            "collapsedIcon": "fa fa-map-marker gold large",
+                            "children": [{
+                                "label": "Option Matrix",
+                                "data": "Work Folder",
+                                "expandedIcon": "fa fa-bank green large",
+                                "collapsedIcon": "fa fa-bank green large"
+                            },
+                            {
+                                "label": "Option Zero",
+                                "data": "Work Folder",
+                                "expandedIcon": "fa fa-bank green large",
+                                "collapsedIcon": "fa fa-bank green large"
+                            }
+
+                        
+                        
+                        ]
+                        }
+
+                    ]
+                }
+            ]
+        }
+    ]
+}   
+                       
