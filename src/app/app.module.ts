@@ -44,16 +44,9 @@ import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { NgbAlertModule, NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgxDaterangepickerMd } from 'ngx-daterangepicker-material';
 import { UserIdleModule } from 'angular-user-idle';
-import { AdminsettingsService } from './pages/admin-settings/adminsettings.service';
-import { ChatService } from './pages/chat/chat.service';
-import { DynamicMenuService } from './pages/dynamic-menu/dynamic-menu.service';
-import { IconsService } from './pages/icons/icons.service';
-
-
-
+import { AppService } from './app.service';
 
 @NgModule({
-
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -75,8 +68,6 @@ import { IconsService } from './pages/icons/icons.service';
     NgxDaterangepickerMd,
     Daterangepicker,
     UserIdleModule.forRoot({ idle: 700, timeout: 1, ping: 0 })
-
-
   ],
   declarations: [
     AppComponent,
@@ -94,8 +85,7 @@ import { IconsService } from './pages/icons/icons.service';
     MessagesComponent,
     UserMenuComponent,
     AdminDashboardComponent,
-    FooterComponent,
-
+    FooterComponent
   ],
   entryComponents: [
     VerticalMenuComponent
@@ -104,7 +94,8 @@ import { IconsService } from './pages/icons/icons.service';
     AppSettings,
     { provide: PERFECT_SCROLLBAR_CONFIG, useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG },
     { provide: OverlayContainer, useClass: CustomOverlayContainer },
-    { provide: LocationStrategy, useClass: HashLocationStrategy }
+    { provide: LocationStrategy, useClass: HashLocationStrategy },
+    AppService
     //AppService, LoginService
   ],
   bootstrap: [AppComponent]
