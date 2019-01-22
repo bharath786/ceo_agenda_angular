@@ -7,7 +7,8 @@ import { LoginComponent } from './login.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { CookieService } from 'angular2-cookie/services/cookies.service';
-import { AppSettings } from 'src/app/app.settings';
+import { LoginService } from './login.service';
+import { AuthGuard } from './auth.guard';
 
 export const routes = [
   { path: '', component: LoginComponent },
@@ -29,6 +30,6 @@ export const routes = [
     ForgotPasswordComponent,
     ChangePasswordComponent
   ],
-  providers: [CookieService]
+  providers: [CookieService, LoginService, AuthGuard]
 })
 export class LoginModule { }

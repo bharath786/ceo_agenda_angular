@@ -1,4 +1,3 @@
-import { ConstructionComponent } from './../../construction/construction.component';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { SetupComponent } from './setup/setup.component';
 import { RouterModule, Routes } from '@angular/router';

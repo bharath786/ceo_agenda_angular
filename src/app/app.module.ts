@@ -1,4 +1,3 @@
-import { ConstructionComponent } from './construction/construction.component';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { ModalModule } from 'ngx-bootstrap';
 import { TreeModule } from 'primeng/tree';
@@ -45,6 +44,10 @@ import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { NgbAlertModule, NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgxDaterangepickerMd } from 'ngx-daterangepicker-material';
 import { UserIdleModule } from 'angular-user-idle';
+import { AdminsettingsService } from './pages/admin-settings/adminsettings.service';
+import { ChatService } from './pages/chat/chat.service';
+import { DynamicMenuService } from './pages/dynamic-menu/dynamic-menu.service';
+import { IconsService } from './pages/icons/icons.service';
 
 
 
@@ -101,7 +104,7 @@ import { UserIdleModule } from 'angular-user-idle';
     AppSettings,
     { provide: PERFECT_SCROLLBAR_CONFIG, useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG },
     { provide: OverlayContainer, useClass: CustomOverlayContainer },
-    { provide: LocationStrategy, useClass: HashLocationStrategy },
+    { provide: LocationStrategy, useClass: HashLocationStrategy }
     //AppService, LoginService
   ],
   bootstrap: [AppComponent]
