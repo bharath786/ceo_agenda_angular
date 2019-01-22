@@ -5,7 +5,6 @@ import { DimensionHighlightsComponent } from './dimension-highlights/dimension-h
 import { Routes, RouterModule } from '@angular/router';
 import { TreeModule } from 'primeng/tree';
 import { ChartModule } from 'angular-highcharts';
-import { CustomSharedModule } from 'src/app/custom-shared/custom-shared.module';
 import { ModalModule } from 'ngx-bootstrap';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
@@ -29,7 +28,6 @@ export const routes: Routes = [
     TreeModule,
     HttpClientModule,
     ChartModule,
-    CustomSharedModule,
     ModalModule,
     SharedModule,
     NgxChartsModule,
