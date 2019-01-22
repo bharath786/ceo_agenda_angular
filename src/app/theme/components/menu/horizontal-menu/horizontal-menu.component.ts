@@ -106,7 +106,7 @@ export class HorizontalMenuComponent implements OnInit {
       data => {
         this.files = data['data']
         if (this.files.length != 0) {
-          //sessionStorage.removeItem('dimensionData')
+          sessionStorage.removeItem('dimensionData')
           sessionStorage.setItem('dimensionData', JSON.stringify(this.files));
           console.log(this.files, 'CHECK')
         }

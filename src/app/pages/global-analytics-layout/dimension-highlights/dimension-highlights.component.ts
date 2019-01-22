@@ -10,7 +10,7 @@ import { Router, NavigationEnd } from '@angular/router';
 export class DimensionHighlightsComponent implements OnInit {
     files: any;
     mainvalue: any;
-    selectedFile:any;
+    selectedFile: any;
     // ... your class variables here
     navigationSubscription;
     constructor(private router: Router) {
@@ -19,15 +19,11 @@ export class DimensionHighlightsComponent implements OnInit {
         this.navigationSubscription = this.router.events.subscribe((e: any) => {
             // If it is a NavigationEnd event re-initalise the component
             if (e instanceof NavigationEnd) {
-                this.initialiseInvites();
+                this.getTree();
             }
         });
     }
 
-    initialiseInvites() {
-        // Set default values and re-fetch any data you need.
-        this.getTree();
-    }
     ngOnDestroy() {
         // avoid memory leaks here by cleaning up after ourselves. If we  
         // don't then we will continue to run our initialiseInvites()   
@@ -52,7 +48,6 @@ export class DimensionHighlightsComponent implements OnInit {
         // console.log(event['node']['label']);
         this.mainvalue = event['node'];
         console.log(this.mainvalue);
-
     }
 
     private expandRecursive(node: TreeNode, isExpand: boolean) {

@@ -12,9 +12,6 @@ export class DimensionDataComponent implements OnInit {
   @ViewChild('downloadModal') public downloadModal: ModalDirective;
   arrayBuffer: any;
 
-
-
-
   downloadModalToggle(e){
     if(e==1){
       this.downloadModal.show();
@@ -37,12 +34,6 @@ export class DimensionDataComponent implements OnInit {
 
   ngOnInit() {
   }
-  public changeListener(files: FileList[]){
-    console.log(files)
-    // files.forEach(element => {
-    //   console.log(element)
-    // });
 
-  }
 
 }

@@ -9,40 +9,40 @@ import { MenuService } from '../menu.service';
   templateUrl: './vertical-menu.component.html',
   styleUrls: ['./vertical-menu.component.scss'],
   encapsulation: ViewEncapsulation.None,
-  providers: [ MenuService ]
+  providers: [MenuService]
 })
 export class VerticalMenuComponent implements OnInit {
   @Input('menuItems') menuItems;
   @Input('menuParentId') menuParentId;
-  parentMenu:Array<any>;
+  parentMenu: Array<any>;
   public settings: Settings;
-  constructor(public appSettings:AppSettings, public menuService:MenuService, public router:Router) { 
+  constructor(public appSettings: AppSettings, public menuService: MenuService, public router: Router) {
     this.settings = this.appSettings.settings;
   }
 
-  ngOnInit() {     
-    this.parentMenu = this.menuItems.filter(item => item.parentId == this.menuParentId);  
+  ngOnInit() {
+    this.parentMenu = this.menuItems.filter(item => item.parentId == this.menuParentId);
   }
 
-  ngAfterViewInit(){
+  ngAfterViewInit() {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
-        if(this.settings.fixedHeader){
+        if (this.settings.fixedHeader) {
           let mainContent = document.getElementById('main-content');
-          if(mainContent){
+          if (mainContent) {
             mainContent.scrollTop = 0;
           }
         }
-        else{
+        else {
           document.getElementsByClassName('mat-drawer-content')[0].scrollTop = 0;
         }
-      }                
+      }
     });
   }
 
-  onClick(menuId){
+  onClick(menuId) {
     this.menuService.toggleMenuItem(menuId);
-    this.menuService.closeOtherSubMenus(this.menuItems, menuId);    
+    this.menuService.closeOtherSubMenus(this.menuItems, menuId);
   }
 
 }
