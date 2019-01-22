@@ -48,180 +48,180 @@ export class AdminDashboardComponent implements OnInit {
       // Starts here
     }
 
-    dimensionsummarychart = new Chart({
-        yAxis: {
-            title: {
-                text: null
-            }
-        },
+    // dimensionsummarychart = new Chart({
+    //     yAxis: {
+    //         title: {
+    //             text: null
+    //         }
+    //     },
 
-        title: {
-            text: 'Dimension Summary',
-            align: 'left',
-            x: 65,
-            y: 20
-        },
-        chart: {
-            type: 'area'
-        },
-        credits: {
-            enabled: false
-        },
-        tooltip: {
-            pointFormat: ' <b>{point.y}</b>'
-        },
-        xAxis: {
-            categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+    //     title: {
+    //         text: 'Dimension Summary',
+    //         align: 'left',
+    //         x: 65,
+    //         y: 20
+    //     },
+    //     chart: {
+    //         type: 'area'
+    //     },
+    //     credits: {
+    //         enabled: false
+    //     },
+    //     tooltip: {
+    //         pointFormat: ' <b>{point.y}</b>'
+    //     },
+    //     xAxis: {
+    //         categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
            
 
-        },
-        legend: {
-            enabled: false
-        },
-        series: [{
+    //     },
+    //     legend: {
+    //         enabled: false
+    //     },
+    //     series: [{
 
-            data: [150, 250, 170, 180, 150, 230, 150, 130, 170, 200, 190,170],
-            color: '#e49f9f'
-        }]
-    });
+    //         data: [150, 250, 170, 180, 150, 230, 150, 130, 170, 200, 190,170],
+    //         color: '#e49f9f'
+    //     }]
+    // });
 
 
 
-    kpisummarychart = new Chart({
-        title: {
-            text: 'KPI Summary',
-            align: 'left',
-            x: 70,
-            y: 30
-        },
-        legend: {
-            enabled: false
-        },
+    // kpisummarychart = new Chart({
+    //     title: {
+    //         text: 'KPI Summary',
+    //         align: 'left',
+    //         x: 70,
+    //         y: 30
+    //     },
+    //     legend: {
+    //         enabled: false
+    //     },
 
-        credits: {
-            enabled: false
-        },
-        tooltip: {
-            headerFormat: '{point.x}<br />',
-            pointFormat: 'KPI: <b>{point.y}</b>'
-        },
-        xAxis: {
-            categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-            title: {
-                text: ''
-            }
-        },
-        yAxis: {
-            title: {
-                text: ''
-            }
-        },
-        series: [{
-            name: '',
-            data: [15, 35, 25, 66, 33, 80, 59, 29, 42, 59, 45, 62],
+    //     credits: {
+    //         enabled: false
+    //     },
+    //     tooltip: {
+    //         headerFormat: '{point.x}<br />',
+    //         pointFormat: 'KPI: <b>{point.y}</b>'
+    //     },
+    //     xAxis: {
+    //         categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+    //         title: {
+    //             text: ''
+    //         }
+    //     },
+    //     yAxis: {
+    //         title: {
+    //             text: ''
+    //         }
+    //     },
+    //     series: [{
+    //         name: '',
+    //         data: [15, 35, 25, 66, 33, 80, 59, 29, 42, 59, 45, 62],
 
-        }]
-    });
+    //     }]
+    // });
 
-    krasummarychart = new Chart({
-        yAxis: {
-            title: {
-                text: ''
-            }
-        },
+    // krasummarychart = new Chart({
+    //     yAxis: {
+    //         title: {
+    //             text: ''
+    //         }
+    //     },
 
-        title: {
-            text: 'KRA Summary',
-            align: 'left',
-            x: 65,
-            y: 20
-        },
-        chart: {
-            type: 'area'
-        },
-        credits: {
-            enabled: false
-        },
-        tooltip: {
-            pointFormat: ' <b>{point.y}</b> '
-        },
-        xAxis: {
-            categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+    //     title: {
+    //         text: 'KRA Summary',
+    //         align: 'left',
+    //         x: 65,
+    //         y: 20
+    //     },
+    //     chart: {
+    //         type: 'area'
+    //     },
+    //     credits: {
+    //         enabled: false
+    //     },
+    //     tooltip: {
+    //         pointFormat: ' <b>{point.y}</b> '
+    //     },
+    //     xAxis: {
+    //         categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
           
 
-        },
-        legend: {
-            enabled: false
-        },
-        series: [{
+    //     },
+    //     legend: {
+    //         enabled: false
+    //     },
+    //     series: [{
 
-            data: [300, 600, 900, 600, 650, 700, 650,800, 900, 600,500, 800],
-            color: '#8bc6e9'
-        }]
+    //         data: [300, 600, 900, 600, 650, 700, 650,800, 900, 600,500, 800],
+    //         color: '#8bc6e9'
+    //     }]
 
-    })
+    // })
 
-    exceptionschart = new Chart({
-        chart: {
-            type: 'column'
-        },
-        title: {
-            text: 'KPI Exceptions',
-            align: 'left',
-            x: 65,
-            y: 20
-        },
-        credits: {
-            enabled: false
-        },
-        legend: {
-            enabled: false
-        },  
+    // exceptionschart = new Chart({
+    //     chart: {
+    //         type: 'column'
+    //     },
+    //     title: {
+    //         text: 'KPI Exceptions',
+    //         align: 'left',
+    //         x: 65,
+    //         y: 20
+    //     },
+    //     credits: {
+    //         enabled: false
+    //     },
+    //     legend: {
+    //         enabled: false
+    //     },  
 
-        xAxis: {
-            categories: [
-                'Jan',
-                'Feb',
-                'Mar',
-                'Apr',
-                'May',
-                'Jun',
-                'Jul',
-                'Aug',
-                'Sep',
-                'Oct',
-                'Nov',
-                'Dec'
-            ],
-            crosshair: true
-        },
-        yAxis: {
-            min: 0,
-            title: {
+    //     xAxis: {
+    //         categories: [
+    //             'Jan',
+    //             'Feb',
+    //             'Mar',
+    //             'Apr',
+    //             'May',
+    //             'Jun',
+    //             'Jul',
+    //             'Aug',
+    //             'Sep',
+    //             'Oct',
+    //             'Nov',
+    //             'Dec'
+    //         ],
+    //         crosshair: true
+    //     },
+    //     yAxis: {
+    //         min: 0,
+    //         title: {
 
-                text: null           }
-        },
-        tooltip: {
-            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                '<td style="padding:0"><b>{point.y:.1f} </b></td></tr>',
-            footerFormat: '</table>',
-            shared: true,
-            useHTML: true
-        },
-        plotOptions: {
-            column: {
-                pointPadding: 0.2,
-                borderWidth: 0
-            }
-        },
-        series: [
-            {
-            name: 'Exceptions',
-            data: [2, 4, 1, 3, 5, 4, 3, 4, 1, 1, 2, 3]
+    //             text: null           }
+    //     },
+    //     tooltip: {
+    //         headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+    //         pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+    //             '<td style="padding:0"><b>{point.y:.1f} </b></td></tr>',
+    //         footerFormat: '</table>',
+    //         shared: true,
+    //         useHTML: true
+    //     },
+    //     plotOptions: {
+    //         column: {
+    //             pointPadding: 0.2,
+    //             borderWidth: 0
+    //         }
+    //     },
+    //     series: [
+    //         {
+    //         name: 'Exceptions',
+    //         data: [2, 4, 1, 3, 5, 4, 3, 4, 1, 1, 2, 3]
 
-        }, 
+    //     }, 
         
-    ]
-    });
+    // ]
+    // });
 }

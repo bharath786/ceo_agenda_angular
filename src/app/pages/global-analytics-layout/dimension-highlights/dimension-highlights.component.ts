@@ -10,6 +10,7 @@ import { Router, NavigationEnd } from '@angular/router';
 export class DimensionHighlightsComponent implements OnInit {
     files: any;
     mainvalue: any;
+    selectedFile:any;
     // ... your class variables here
     navigationSubscription;
     constructor(private router: Router) {

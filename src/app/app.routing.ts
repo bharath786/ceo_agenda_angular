@@ -5,7 +5,6 @@ import { PagesComponent } from './pages/pages.component';
 import { BlankComponent } from './pages/blank/blank.component';
 import { NotFoundComponent } from './pages/errors/not-found/not-found.component';
 import { ErrorComponent } from './pages/errors/error/error.component';
-import { ConstructionComponent } from './construction/construction.component';
 import { AuthGuard } from './pages/login/auth.guard';
 
 
@@ -21,11 +20,6 @@ export const routes: Routes = [
             { path: 'icons', loadChildren: './pages/icons/icons.module#IconsModule', data: { breadcrumb: 'Material Icons' } },
             { path: 'drag-drop', loadChildren: './pages/drag-drop/drag-drop.module#DragDropModule', data: { breadcrumb: 'Drag & Drop' } },
             { path: 'schedule', loadChildren: './pages/schedule/schedule.module#ScheduleModule', data: { breadcrumb: 'Schedule' } },
-            { path: 'system', loadChildren: './pages/system/system.module#SystemModule', data: { breadcrumb: 'System' } },
-            { path: 'control', loadChildren: './pages/control/control.module#ControlModule', data: { breadcrumb: 'Control' } },
-            { path: 'process', loadChildren: './pages/process/process.module#ProcessModule', data: { breadcrumb: 'Process' } },
-
-            { path: 'predictive', loadChildren: './pages/predictiveanalytics/predictiveanalytics.module#PredictiveanalyticsModule', data: { breadcrumb: 'Predictive' } },
             { path: 'analytics', loadChildren: './pages/global-analytics-layout/global-analytics.module#GlobalAnalyticsModule', data: { breadcrumb: 'Analyitcs' } },
             // { path: 'underconstruction', component:ConstructionComponent, data: { breadcrumb: 'Under Construction' } },
 
