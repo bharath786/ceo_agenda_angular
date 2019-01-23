@@ -41,6 +41,7 @@ export class StructureComponent implements OnInit {
     cancelText: string = 'No <i class="glyphicon glyphicon-remove"></i>';
     confirmClicked: boolean = false;
     cancelClicked: boolean = false;
+  dimensionsEntityBased: any;
 
   constructor(private structureservice: AdminsettingsService, public router: Router,  public fb: FormBuilder, public snackBar: MatSnackBar) {
 
@@ -202,8 +203,9 @@ export class StructureComponent implements OnInit {
   //For adding Entity
   addEntity(e) {
     this.entityform.reset();
+    this.getDimensionEntity(0);
     this.onCountrySelect(this.mainvalue['countryId']);
-    this.onStateSelect(e)
+    this.onStateSelect(e);
     console.log(this.mainvalue)
     this.entityform.controls['countryId'].setValue(this.mainvalue['countryId'])
     this.entityform.controls['locationId'].setValue(this.mainvalue['locationId']);
@@ -211,6 +213,15 @@ export class StructureComponent implements OnInit {
     this.entityform.controls['createdBy'].setValue(this.sessionUser['user_id']);
     this.allforms = 'addEntity'
   }
+
+  selectDimension(e){
+    if(e=1){
+    this.allforms = 'dimensiondata'
+  }
+  else{
+    this.allforms = 'addEntity'
+  }
+}
 
   //Tree Node Selection on Structure Tree
   nodeSelect(event) {
@@ -250,6 +261,7 @@ export class StructureComponent implements OnInit {
     if (this.entityId != null) {
       this.onCountrySelect(event['node']['countryId']);
       this.onStateSelect(event['node']['stateId'])
+      this.getDimensionEntity(event['node']['entityId'])
       this.entityform.controls['entityId'].setValue(event['node']['entityId']);
       this.entityform.controls['entityName'].setValue(event['node']['entityName']);
       this.entityform.controls['phoneNumber'].setValue(event['node']['phoneNumber']);
@@ -260,9 +272,15 @@ export class StructureComponent implements OnInit {
       this.entityform.controls['locationId'].setValue(event['node']['locationId']);
       this.allforms = 'updateentity';
     }
-
   }
 
+  getDimensionEntity(entityId){
+    this.structureservice.getDimensionEntity(entityId).subscribe(
+      data=>{
+        this.dimensionsEntityBased = data['data'];
+      }
+    )
+  }
 
   //For Updating Organization values (value >> Service >> API)
   public onSubmitOrganization(value: object) {

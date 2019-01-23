@@ -4,7 +4,6 @@ import { DimensionDataComponent } from './dimension-data/dimension-data.componen
 import { DimensionHighlightsComponent } from './dimension-highlights/dimension-highlights.component';
 import { Routes, RouterModule } from '@angular/router';
 import { TreeModule } from 'primeng/tree';
-import { ChartModule } from 'angular-highcharts';
 import { ModalModule } from 'ngx-bootstrap';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
@@ -27,7 +26,6 @@ export const routes: Routes = [
     RouterModule.forChild(routes),
     TreeModule,
     HttpClientModule,
-    ChartModule,
     ModalModule,
     SharedModule,
     NgxChartsModule,

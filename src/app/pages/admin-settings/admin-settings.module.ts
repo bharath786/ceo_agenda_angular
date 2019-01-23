@@ -16,6 +16,7 @@ import {DataTableModule} from "angular2-datatable";
 import { DataFilterPipe } from 'src/app/data-filter.pipe';
 import { AdminsettingsService } from './adminsettings.service';
 import { ConfirmationPopoverModule } from 'angular-confirmation-popover';
+import { DownloadExcelService } from '../download-excel.service';
 
 
 export const routes :Routes = [
@@ -46,7 +47,7 @@ export const routes :Routes = [
   ],
   exports:[RouterModule],
   declarations: [DataFilterPipe, PreferencesComponent, ManageUsersComponent, SetupComponent, StructureComponent, TargetComponent],
-  providers: [AdminsettingsService]
+  providers: [AdminsettingsService, DownloadExcelService]
 
 })
 export class AdminSettingsModule { 

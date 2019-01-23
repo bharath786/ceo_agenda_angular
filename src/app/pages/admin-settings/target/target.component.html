@@ -18,23 +18,23 @@
             </div>
             <div class="col-sm-2 cust-padding">
                 <mat-select placeholder="Division" class="col-sm-10 form-control marginbtn">
-                    <mat-option *ngFor="let division of divisions" [value]="division.value">
-                        {{division.viewValue}}
+                    <mat-option (click)="getLocations(division.divId)" *ngFor="let division of divisions" [value]="division.divId">
+                        {{division.divName}}
                     </mat-option>
                 </mat-select>
             </div>
             <div class="col-sm-2 cust-padding">
                 <mat-select placeholder="Location" class="col-sm-10 form-control marginbtn">
-                    <mat-option *ngFor="let location of locations" [value]="location.value">
-                        {{location.viewValue}}
+                    <mat-option (click)="getEntities(location.countryId)" *ngFor="let location of locations" [value]="location.countryId">
+                        {{location.countryName}}
                     </mat-option>
                 </mat-select>
             </div>
 
             <div class="col-sm-2 cust-padding">
                 <mat-select placeholder="Entity" class="col-sm-10 form-control marginbtn">
-                    <mat-option *ngFor="let entity of entities" [value]="entity.value">
-                        {{entity.viewValue}}
+                    <mat-option *ngFor="let entity of entities" [value]="entity.entityId">
+                        {{entity.entityName}}
                     </mat-option>
                 </mat-select>
             </div>
@@ -48,6 +48,9 @@
 
     <!-- For Upload and Download Pills -->
     <div class="pull-right">
+        <a (click)='getTargetTemplateKPI(1)' class="btn btn-primary marginbtn" id="Quality_Upload" title="Click to Upload Document">
+            <i class="fa fa-upload"></i>&nbsp;&nbsp;Download Sample
+        </a>
         <a (click)='uploadModalToggle(1)' class="btn btn-primary marginbtn" id="Quality_Upload" title="Click to Upload Document">
             <i class="fa fa-upload"></i>&nbsp;&nbsp;Upload
         </a>
@@ -83,84 +86,84 @@
     <table class="table table-hover table-bordered table-scrollable-borderless table-striped margin-top" id="table1">
         <thead>
             <tr>
-                <th>Year</th>
-                <th>Month</th>
-                <th>Dimension</th>
-                <th>KRA</th>
-                <th>KPI</th>
-                <th>Target</th>
+                <th class="thblue">Year</th>
+                <th class="thblue">Month</th>
+                <th class="thblue">Dimension</th>
+                <th class="thblue">KRA</th>
+                <th class="thblue">KPI</th>
+                <th class="thblue">Target</th>
             </tr>
         </thead>
         <tbody>
             <tr>
-                    <td>2018</td>
-                    <td>June</td>
-                    <td>Marketing</td>
-                    <td>Business Development</td>
+                <td>2018</td>
+                <td>June</td>
+                <td>Marketing</td>
+                <td>Business Development</td>
                 <td>Prospects</td>
                 <td>90</td>
             </tr>
             <tr>
-                    <td>2018</td>
-                    <td>July</td>
-                    <td>Marketing</td>
-                    <td>Business Development</td>
+                <td>2018</td>
+                <td>July</td>
+                <td>Marketing</td>
+                <td>Business Development</td>
                 <td>Active Leads</td>
                 <td>90</td>
             </tr>
             <tr>
-                    <td>2018</td>
-                    <td>September</td>
-                    <td>Marketing</td>
-                    <td>Business Development</td>
+                <td>2018</td>
+                <td>September</td>
+                <td>Marketing</td>
+                <td>Business Development</td>
                 <td>Future Leads</td>
                 <td>90</td>
             </tr>
             <tr>
-                    <td>2018</td>
-                    <td>July</td>
-                    <td>Marketing</td>
-                    <td>Business Development</td>
+                <td>2018</td>
+                <td>July</td>
+                <td>Marketing</td>
+                <td>Business Development</td>
                 <td>Parallel Projects</td>
                 <td>90</td>
             </tr>
             <tr>
-                    <td>2018</td>
-                    <td>September</td>
-                    <td>Marketing</td>
-                    <td>Business Development</td>
+                <td>2018</td>
+                <td>September</td>
+                <td>Marketing</td>
+                <td>Business Development</td>
                 <td>Conversion Ratio</td>
                 <td>90</td>
             </tr>
             <tr>
-                    <td>2018</td>
-                    <td>July</td>
-                    <td>Marketing</td>
-                    <td>Business Development</td>
+                <td>2018</td>
+                <td>July</td>
+                <td>Marketing</td>
+                <td>Business Development</td>
                 <td>Wins</td>
                 <td>90</td>
             </tr>
             <tr>
-                    <td>2018</td>
-                    <td>July</td>
-                    <td>Marketing</td>
-                    <td>Coverage</td>
+                <td>2018</td>
+                <td>July</td>
+                <td>Marketing</td>
+                <td>Coverage</td>
                 <td>Coverage</td>
                 <td>90</td>
             </tr>
             <tr>
-                    <td>2018</td>
-                    <td>July</td>
-                    <td>Marketing</td>
-                    <td>Business Development</td>
+                <td>2018</td>
+                <td>July</td>
+                <td>Marketing</td>
+                <td>Business Development</td>
                 <td>Losses</td>
                 <td>90</td>
             </tr>
             <tr>
-                    <td>2019</td>
-                    <td>November</td>
-                    <td>Projects</td>
-                    <td>Pillars</td>
+                <td>2019</td>
+                <td>November</td>
+                <td>Projects</td>
+                <td>Pillars</td>
                 <td>New Clients</td>
                 <td>90</td>
             </tr>
@@ -209,7 +212,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-               
+
                 <button type="button" (click)='downloadModalToggle(2)' class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
         </div>
@@ -233,13 +236,13 @@
                             <label class="control-label">Select File&nbsp;:</label>
                         </div>
                         <div class="col-sm-8">
-                            <input type="file" class="form-control">
+                            <input type="file" (change)="incomingfile($event)" class="form-control">
                         </div>
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-success" data-dismiss="modal"><i class="fa fa-upload"></i>&nbsp;Upload</button>
+                <button type="button" (click)="Upload()" class="btn btn-success" data-dismiss="modal"><i class="fa fa-upload"></i>&nbsp;Upload</button>
                 <button type="button" class="btn btn-default" (click)="uploadModalToggle(2)" data-dismiss="modal">Close</button>
             </div>
         </div>

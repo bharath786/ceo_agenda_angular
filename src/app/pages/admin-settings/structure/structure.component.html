@@ -223,6 +223,8 @@
                 Entity is required</mat-error>
             </div>
           </div>
+          <a class="pull-right btn btn-primary" (click)=selectDimension(1)>Select Dimensions
+          </a>
 
           <div *ngIf="allforms == 'addEntity'" class="pull-right" style="margin-top: 25px;">
             <button [disabled]="!entityupsertform.form.valid" class="btn btn-success pull-right" id="btnupdateFimrDiv" type="submit">Save</button>
@@ -245,6 +247,18 @@
 
         </div>
       </form>
+    </div>
+
+    <div class="" *ngIf="allforms == 'dimensiondata'">
+     
+        <div class="gridrole" style="border: 1px solid rgb(204, 204, 204); padding: 20px; border-radius: 3px;">
+
+          <mat-checkbox *ngFor="let item of dimensionsEntityBased" value="item.dimensionId" [checked]="item.value" class="example-margin">
+          {{item.dimensionName}} 
+          </mat-checkbox>
+          <a class="pull-right btn btn-primary" (click)=selectDimension(2)>Select Dimensions
+          </a>
+        </div>
     </div>
   </div>
 </div>

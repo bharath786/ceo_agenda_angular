@@ -38,7 +38,6 @@ import { FullScreenComponent } from './theme/components/fullscreen/fullscreen.co
 import { ApplicationsComponent } from './theme/components/applications/applications.component';
 import { MessagesComponent } from './theme/components/messages/messages.component';
 import { UserMenuComponent } from './theme/components/user-menu/user-menu.component';
-import { ChartModule } from 'angular-highcharts';
 import { FooterComponent } from './pages/footer/footer.component';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { NgbAlertModule, NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
@@ -60,7 +59,6 @@ import { AppService } from './app.service';
     SharedModule,
     PipesModule,
     routing,
-    ChartModule,
     ModalModule.forRoot(),
     TreeModule,
     HttpClientModule,

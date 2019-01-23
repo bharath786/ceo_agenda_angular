@@ -3,7 +3,6 @@ import * as moment from 'moment';
 import * as jQuery from 'jquery';
 import 'rxjs/add/operator/map';
 
-import { Chart } from 'angular-highcharts';
 
 @Component({
     selector: 'app-admin-dashboard',

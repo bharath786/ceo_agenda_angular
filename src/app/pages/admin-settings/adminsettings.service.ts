@@ -49,6 +49,7 @@ export class AdminsettingsService {
   deleteDivisionAPI = url + "delete-division";
   deleteLocationAPI = url + "delete-location";
   deleteEntityAPI = url + "delete-entity";
+  getDimensionsEntityBasedAPI = url + "get-dimension-entity";
 
   //For Setup API's
   getSetupAPI = url + "get-setup";
@@ -62,10 +63,43 @@ export class AdminsettingsService {
   deleteKpiAPI = url + "delete-kpi";
   kpiDatattypesAPI = url + "get-kpi-lookups";
 
+  //For Target Screen
+  getDivisionAPI = url + "get-lookup-division";
+  getLocationsAPI = url + "get-lookup-location";
+  getEntitiesAPI = url + "get-lookup-entity";
+  getTargetTemplateAPI = url + "get-target-template";
+  upsertTargetAPI = url + "add-edit-target-value";
 
 
   constructor(private http: HttpClient) {
   }
+
+  //For Targets Methods
+
+  //For all divisions
+  getDivisions() {
+    return this.http.get(this.getDivisionAPI, this.getHeaders())
+  }
+
+  //For all locations based on divison
+  getLocations(divisonId) {
+    return this.http.get(this.getLocationsAPI + '/' + divisonId, this.getHeaders())
+  }
+
+  upsertTarget(targetvalues){
+    return this.http.post(this.upsertTargetAPI, targetvalues, this.getHeaders())
+
+  }
+
+  //For all locations based on divison
+  getEntities(locationId) {
+    return this.http.get(this.getEntitiesAPI + '/' + locationId, this.getHeaders())
+  }
+
+  getTargetTemplate(){
+    return this.http.get(this.getTargetTemplateAPI, this.getHeaders())
+  }
+
 
   //For Headers
   getHeaders() {
@@ -221,8 +255,9 @@ export class AdminsettingsService {
     return this.http.get(this.getStructureAPI, this.getHeaders())
   }
 
-
-
+  getDimensionEntity(entityId){
+    return this.http.get(this.getDimensionsEntityBasedAPI+"?entityId="+entityId,this.getHeaders())
+  }
 
 
 
