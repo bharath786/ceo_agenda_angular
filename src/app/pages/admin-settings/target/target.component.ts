@@ -164,6 +164,7 @@ export class TargetComponent implements OnInit {
         this._adminsettingservice.upsertTarget(testing).subscribe(
           data => {
             console.log(data)
+
           },
           error => {
             console.log(error)
@@ -171,7 +172,7 @@ export class TargetComponent implements OnInit {
         )
       });
 
-
+    this.getTargetValue()
   }
 
   //To get all divisions for filter
