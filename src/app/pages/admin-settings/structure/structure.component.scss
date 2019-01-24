@@ -1,4 +1,12 @@
 
+  .ui-grid .ui-grid-col-1,
+  .ui-grid .ui-grid-col-11 {
+      padding: 4px 10px;
+  }
+  .ui-grid label {
+      display: block;
+      margin: 2px 0 0 4px;
+  }
 
 ::ng-deep .large{
   font-size: 18px !important;

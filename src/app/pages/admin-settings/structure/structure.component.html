@@ -78,7 +78,8 @@
                   type="text" placeholder="Enter Contact Number">
                 <mat-error *ngIf="divisionform.controls.phoneNumber.errors?.required && divisionform.controls.phoneNumber.touched">Contact
                   Number is required</mat-error>
-                <mat-error *ngIf="divisionform.controls.phoneNumber.hasError('minlength') && divisionform.controls.phoneNumber.touched">Contact Number isn't valid</mat-error>
+                <mat-error *ngIf="divisionform.controls.phoneNumber.hasError('minlength') && divisionform.controls.phoneNumber.touched">Contact
+                  Number isn't valid</mat-error>
               </div>
             </div>
             <div class="form-group">
@@ -191,7 +192,8 @@
                 type="text" placeholder="Enter Contact Number">
               <mat-error *ngIf="entityform.controls.phoneNumber.errors?.required && entityform.controls.phoneNumber.touched">Phone
                 Number is required</mat-error>
-              <mat-error *ngIf="entityform.controls.phoneNumber.hasError('minlength') && entityform.controls.phoneNumber.touched">Contact Number isn't valid</mat-error>
+              <mat-error *ngIf="entityform.controls.phoneNumber.hasError('minlength') && entityform.controls.phoneNumber.touched">Contact
+                Number isn't valid</mat-error>
             </div>
           </div>
           <div class="form-group">
@@ -227,7 +229,8 @@
           </a>
 
           <div *ngIf="allforms == 'addEntity'" class="pull-right" style="margin-top: 25px;">
-            <button [disabled]="!entityupsertform.form.valid" class="btn btn-success pull-right" id="btnupdateFimrDiv" type="submit">Save</button>
+            <button [disabled]="!entityupsertform.form.valid" class="btn btn-success pull-right" id="btnupdateFimrDiv"
+              type="submit">Save</button>
           </div>
           <div *ngIf="allforms == 'updateentity'" class="pull-right" style="margin-top: 25px;">
             <button type="button" mwlConfirmationPopover [popoverTitle]="popoverTitle" [confirmText]="confirmText"
@@ -249,16 +252,43 @@
       </form>
     </div>
 
-    <div class="" *ngIf="allforms == 'dimensiondata'">
-     
-        <div class="gridrole" style="border: 1px solid rgb(204, 204, 204); padding: 20px; border-radius: 3px;">
 
-          <mat-checkbox *ngFor="let item of dimensionsEntityBased" value="item.dimensionId" [checked]="item.value" class="example-margin">
-          {{item.dimensionName}} 
-          </mat-checkbox>
-          <a class="pull-right btn btn-primary" (click)=selectDimension(2)>Select Dimensions
-          </a>
-        </div>
+    <div class="" *ngIf="allforms == 'dimensiondata'">
+        <form [formGroup]="dimensionForm" (ngSubmit)="onSubmitDIMENSION(dimensionForm['controls']['dimensionValues']['controls'])"
+        #dimform="ngForm">
+      <div class="col-sm-12 clearfix gridrole" style="border: 1px solid rgb(204, 204, 204); padding: 20px; border-radius: 3px;">
+        <h4 class="modal-title"><span style="padding-left: 13px;" class="bold">Dimension Details</span>
+          <button class="pull-right btn btn-primary" type="submit">Go Back
+          </button>
+        </h4>
+        <br>
+
+          <!-- <mat-checkbox *ngFor="let item of dimensionsEntityBased" value="item.dimensionId" formControlName="dimensionValue" [(ngModel)]="item.value" class="example-margin">
+            {{item.dimensionName}} 
+            </mat-checkbox>-->
+
+          <div formArrayName="dimensionValues">
+            <div [formGroupName]="i" *ngFor="let tech of dimensionForm.get('dimensionValues')['controls'] | keyvalue; let i = index">
+              <div class="col-sm-6" style="margin-top:5px">
+                <mat-checkbox formControlName="btdimId">{{dimensionsEntityBased[i].dimensionName}}</mat-checkbox>
+              </div>
+            </div>
+          </div>
+          <!-- <button class="btn btn-success marginbtn pull-right" >Update</button> -->
+      </div>
+    </form>
     </div>
   </div>
 </div>
+
+
+<!-- <div formArrayName="rightMasters">
+  <div [formGroupName]="i" *ngFor="let tech of permissionsForm.get('rightMasters')['controls'] | keyvalue; let i = index">
+
+      <div *ngIf="i>=15" class="col-sm-6" style="margin-top:5px">
+          <mat-checkbox color="primary" *ngIf="rightsMaster.length > 0"
+              formControlName="btRightMaster">{{rightsMaster[i].vcRightMasterName}}</mat-checkbox>
+      </div>
+      Allow generated input field to be removed
+  </div>
+</div> -->

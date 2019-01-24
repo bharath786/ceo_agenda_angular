@@ -69,6 +69,8 @@ export class AdminsettingsService {
   getEntitiesAPI = url + "get-lookup-entity";
   getTargetTemplateAPI = url + "get-target-template";
   upsertTargetAPI = url + "add-edit-target-value";
+  getTargetValueAPI = url+ "get-target-value";
+
 
 
   constructor(private http: HttpClient) {
@@ -98,6 +100,10 @@ export class AdminsettingsService {
 
   getTargetTemplate(){
     return this.http.get(this.getTargetTemplateAPI, this.getHeaders())
+  }
+
+  getTargetValue(){
+    return this.http.get(this.getTargetValueAPI, this.getHeaders())
   }
 
 

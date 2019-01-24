@@ -33,14 +33,14 @@ export class TargetComponent implements OnInit {
   submittedfile: any[];
   uploadTemplate: any = [];
   finalTargetFile: any = [];
+  targetValue: any;
 
   constructor(private _adminsettingservice: AdminsettingsService, private excelService: DownloadExcelService) { }
 
   ngOnInit() {
     this.getDivisions();
     this.getTargetTemplateKPI(0);
-    console.log(this.currentYear)
-    console.log(this.currentMonth + 1, 'AA')
+    this.getTargetValue()
   }
 
   incomingfile(event) {
@@ -124,6 +124,14 @@ export class TargetComponent implements OnInit {
       },
       error => {
         console.log(error)
+      }
+    )
+  }
+
+  getTargetValue(){
+    this._adminsettingservice.getTargetValue().subscribe(
+      data=>{
+        this.targetValue = data['data']
       }
     )
   }

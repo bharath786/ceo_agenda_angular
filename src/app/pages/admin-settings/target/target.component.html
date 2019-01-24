@@ -95,78 +95,15 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>2018</td>
-                <td>June</td>
-                <td>Marketing</td>
-                <td>Business Development</td>
-                <td>Prospects</td>
-                <td>90</td>
+            <tr *ngFor="let item of targetValue">
+                <td>{{item.year}}</td>
+                <td>{{item.month}}</td>
+                <td>{{item.dimensionTitle}}</td>
+                <td>{{item.KRATitle}}</td>
+                <td>{{item.KPITitle}}</td>
+                <td>{{item.target}}</td>
             </tr>
-            <tr>
-                <td>2018</td>
-                <td>July</td>
-                <td>Marketing</td>
-                <td>Business Development</td>
-                <td>Active Leads</td>
-                <td>90</td>
-            </tr>
-            <tr>
-                <td>2018</td>
-                <td>September</td>
-                <td>Marketing</td>
-                <td>Business Development</td>
-                <td>Future Leads</td>
-                <td>90</td>
-            </tr>
-            <tr>
-                <td>2018</td>
-                <td>July</td>
-                <td>Marketing</td>
-                <td>Business Development</td>
-                <td>Parallel Projects</td>
-                <td>90</td>
-            </tr>
-            <tr>
-                <td>2018</td>
-                <td>September</td>
-                <td>Marketing</td>
-                <td>Business Development</td>
-                <td>Conversion Ratio</td>
-                <td>90</td>
-            </tr>
-            <tr>
-                <td>2018</td>
-                <td>July</td>
-                <td>Marketing</td>
-                <td>Business Development</td>
-                <td>Wins</td>
-                <td>90</td>
-            </tr>
-            <tr>
-                <td>2018</td>
-                <td>July</td>
-                <td>Marketing</td>
-                <td>Coverage</td>
-                <td>Coverage</td>
-                <td>90</td>
-            </tr>
-            <tr>
-                <td>2018</td>
-                <td>July</td>
-                <td>Marketing</td>
-                <td>Business Development</td>
-                <td>Losses</td>
-                <td>90</td>
-            </tr>
-            <tr>
-                <td>2019</td>
-                <td>November</td>
-                <td>Projects</td>
-                <td>Pillars</td>
-                <td>New Clients</td>
-                <td>90</td>
-            </tr>
+
         </tbody>
     </table>
 

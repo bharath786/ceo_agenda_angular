@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { TreeNode } from 'primeng/api';
 import { AdminsettingsService } from '../adminsettings.service';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, Validators, FormControl, FormGroup, FormArray } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
+import { CheckboxModule } from 'primeng/checkbox';
+import { element } from '@angular/core/src/render3';
 
 @Component({
   selector: 'app-structure',
@@ -34,16 +36,21 @@ export class StructureComponent implements OnInit {
   locationform: any;
   entityform: any;
 
-    //For Confirmation
-    popoverTitle: string = 'Delete?';
-    popoverMessage: string = "Are You Sure ? You want to delete record, this action can't be undone.";
-    confirmText: string = 'Delete <i class="glyphicon glyphicon-ok"></i>';
-    cancelText: string = 'No <i class="glyphicon glyphicon-remove"></i>';
-    confirmClicked: boolean = false;
-    cancelClicked: boolean = false;
+  //For Confirmation
+  popoverTitle: string = 'Delete?';
+  popoverMessage: string = "Are You Sure ? You want to delete record, this action can't be undone.";
+  confirmText: string = 'Delete <i class="glyphicon glyphicon-ok"></i>';
+  cancelText: string = 'No <i class="glyphicon glyphicon-remove"></i>';
+  confirmClicked: boolean = false;
+  cancelClicked: boolean = false;
   dimensionsEntityBased: any;
+  previousvalue: any;
+  dimensionForm: any;
+  checkedValueDimension: any[] = [];
+  arrayForBinding: any[] = [];
+  finaldimensionId: any[] =[];
 
-  constructor(private structureservice: AdminsettingsService, public router: Router,  public fb: FormBuilder, public snackBar: MatSnackBar) {
+  constructor(private structureservice: AdminsettingsService, public router: Router, public fb: FormBuilder, public snackBar: MatSnackBar) {
 
     this.sessionUser = JSON.parse(sessionStorage['Session_name'])
     //Organization Update Form
@@ -63,6 +70,11 @@ export class StructureComponent implements OnInit {
       'modifiedBy': this.sessionUser['user_id'],
       'createdBy': this.sessionUser['user_id'],
       'organizationId': null
+    });
+
+    //Dimension Update Form
+    this.dimensionForm = this.fb.group({
+      'dimensionValues': new FormArray(this.arrayForBinding)
     });
 
     //Location Upsert Form
@@ -89,21 +101,37 @@ export class StructureComponent implements OnInit {
       'locationId': null
     });
   }
-  
+
+
 
   ngOnInit() {
     //Get Structure Tree
     this.getStructure();
   }
 
-    //For Phone Number Validation
-    keyPress(event: any) {
-      const pattern = /[0-9\+\-\ ]/;
-      let inputChar = String.fromCharCode(event.charCode);
-      if (event.keyCode != 8 && !pattern.test(inputChar)) {
-        event.preventDefault();
-      }
+  //For Phone Number Validation
+  keyPress(event: any) {
+    const pattern = /[0-9\+\-\ ]/;
+    let inputChar = String.fromCharCode(event.charCode);
+    if (event.keyCode != 8 && !pattern.test(inputChar)) {
+      event.preventDefault();
     }
+  }
+
+  onSubmitDIMENSION(e) {
+    console.log(e)
+    let dimension = []
+    e.forEach(element => {
+      dimension.push(element.value);
+    });
+    dimension = dimension.filter(dimension=>dimension.btdimId == true);
+    dimension.forEach(element=>{
+      this.finaldimensionId.push(element.dimensionId)
+      console.log(this.finaldimensionId)
+      this.getBack();
+    })
+  }
+
 
   //For Getting Contries
   getCountries(divId, countryId) {
@@ -113,7 +141,7 @@ export class StructureComponent implements OnInit {
       },
       error => {
         console.log(error)
-        if(error.status==401){
+        if (error.status == 401) {
           sessionStorage.clear();
           this.router.navigate(['/login'])
         }
@@ -129,7 +157,7 @@ export class StructureComponent implements OnInit {
       },
       error => {
         console.log(error)
-        if(error.status==401){
+        if (error.status == 401) {
           sessionStorage.clear();
           this.router.navigate(['/login'])
         }
@@ -142,12 +170,12 @@ export class StructureComponent implements OnInit {
     this.structureservice.getCities(stateId).subscribe(
       data => {
         this.cities = data['data']
-        
+
         console.log(data['data'], 'Cities')
       },
       error => {
         console.log(error)
-        if(error.status==401){
+        if (error.status == 401) {
           sessionStorage.clear();
           this.router.navigate(['/login'])
         }
@@ -169,7 +197,7 @@ export class StructureComponent implements OnInit {
         },
         error => {
           console.log(error);
-          if(error.status==401){
+          if (error.status == 401) {
             sessionStorage.clear();
             this.router.navigate(['/login'])
           }
@@ -184,10 +212,6 @@ export class StructureComponent implements OnInit {
     this.divisionform.controls['createdBy'].setValue(this.sessionUser['user_id']);
     this.allforms = 'adddivision'
   }
-
-  // countryselection() {
-  //   console.log(this.divisionform.value['locationId']);
-  // }
 
   //For Adding Location
   addLoc(e) {
@@ -214,14 +238,20 @@ export class StructureComponent implements OnInit {
     this.allforms = 'addEntity'
   }
 
-  selectDimension(e){
-    if(e=1){
-    this.allforms = 'dimensiondata'
+  selectDimension(e) {
+    if (e = 1) {
+      this.previousvalue = this.allforms;
+      this.allforms = 'dimensiondata';
+    }
   }
-  else{
-    this.allforms = 'addEntity'
+
+  getCheckboxes() {
+    console.log(this.dimensionsEntityBased.filter(x => x.value === false).map(x => x.dimensionName));
   }
-}
+
+  getBack() {
+    this.allforms = this.previousvalue;
+  }
 
   //Tree Node Selection on Structure Tree
   nodeSelect(event) {
@@ -250,7 +280,7 @@ export class StructureComponent implements OnInit {
 
     //Tree node selected on Location
     if (this.locationId != null) {
-      this.getCountries(event['node']['divisionId'],event['node']['countryId']);
+      this.getCountries(event['node']['divisionId'], event['node']['countryId']);
       this.locationform.controls['locationId'].setValue(event['node']['locationId']);
       this.locationform.controls['countryId'].setValue(event['node']['countryId']);
       this.locationform.controls['description'].setValue(event['node']['description']);
@@ -274,12 +304,28 @@ export class StructureComponent implements OnInit {
     }
   }
 
-  getDimensionEntity(entityId){
+  getDimensionEntity(entityId) {
     this.structureservice.getDimensionEntity(entityId).subscribe(
-      data=>{
+      data => {
         this.dimensionsEntityBased = data['data'];
+        this.dimensionsEntityBased.forEach(element => {
+          var newFormElements = new FormGroup({
+            dimensionId: new FormControl(element.dimensionId),
+            dimensionName: new FormControl(element.dimensionName),
+            btdimId: new FormControl(this.getcheckedDimensionId())
+          });
+          this.arrayForBinding.push(newFormElements)
+        });
       }
     )
+  }
+
+  getcheckedDimensionId() {
+    let heell = this.dimensionsEntityBased.filter(el => el['value'] == true)
+    heell.forEach(element => {
+      this.checkedValueDimension.push(element['dimensionId'])
+    });
+    return this.checkedValueDimension[0]
   }
 
   //For Updating Organization values (value >> Service >> API)
@@ -289,17 +335,16 @@ export class StructureComponent implements OnInit {
         this.getStructure();
         this.snackBar.open(data['message'], 'OK', {
           duration: 7000,
-          panelClass :['greenSnackbar']
+          panelClass: ['greenSnackbar']
         });
       },
       error => {
         console.log(error);
-        if(error.status==401){
+        if (error.status == 401) {
           sessionStorage.clear();
           this.router.navigate(['/login'])
         }
       }
-
     )
   }
 
@@ -307,23 +352,23 @@ export class StructureComponent implements OnInit {
   public onSubmitDivision(value: object) {
     this.structureservice.upsertDivision(value).subscribe(
       data => {
-        if(data['error'] == true){
+        if (data['error'] == true) {
           this.snackBar.open(data['message'], 'OK', {
             duration: 7000,
-            panelClass:['redSnackbar']
+            panelClass: ['redSnackbar']
           });
         }
-        else{
-        this.getStructure();
-        this.snackBar.open(data['message'], 'OK', {
-          duration: 7000,
-          panelClass:['greenSnackbar']
-        });
-      }
+        else {
+          this.getStructure();
+          this.snackBar.open(data['message'], 'OK', {
+            duration: 7000,
+            panelClass: ['greenSnackbar']
+          });
+        }
       },
       error => {
         console.log(error);
-        if(error.status==401){
+        if (error.status == 401) {
           sessionStorage.clear();
           this.router.navigate(['/login'])
         }
@@ -351,7 +396,7 @@ export class StructureComponent implements OnInit {
       },
       error => {
         console.log(error);
-        if(error.status==401){
+        if (error.status == 401) {
           sessionStorage.clear();
           this.router.navigate(['/login'])
         }
@@ -361,49 +406,49 @@ export class StructureComponent implements OnInit {
 
   //For Location Upsert values (value >> Service >> API)  
   public onSubmitLocation(value: object) {
-    if(value['locationId'] != null){
-    if(value['countryId'] == this.mainvalue['countryId']){
-    this.structureservice.upsertLocation(value).subscribe(
-      data => {
-        this.getStructure();
-        this.snackBar.open(data['message'], 'OK', {
-          duration: 7000,
-          panelClass:['greenSnackbar']
-        });
-      },
-      error => {
-        console.log(error);
-        if(error.status==401){
-          sessionStorage.clear();
-          this.router.navigate(['/login'])
-        }
+    if (value['locationId'] != null) {
+      if (value['countryId'] == this.mainvalue['countryId']) {
+        this.structureservice.upsertLocation(value).subscribe(
+          data => {
+            this.getStructure();
+            this.snackBar.open(data['message'], 'OK', {
+              duration: 7000,
+              panelClass: ['greenSnackbar']
+            });
+          },
+          error => {
+            console.log(error);
+            if (error.status == 401) {
+              sessionStorage.clear();
+              this.router.navigate(['/login'])
+            }
+          }
+        )
       }
-    )
-    }
-    else{
-      this.snackBar.open("Sorry, You couldn't change Country for this Dimension", 'OK', {
-        duration: 7000,
-      });
-    }
-  }
-  else{
-    this.structureservice.upsertLocation(value).subscribe(
-      data => {
-        this.getStructure();
-        this.snackBar.open(data['message'], 'OK', {
+      else {
+        this.snackBar.open("Sorry, You couldn't change Country for this Dimension", 'OK', {
           duration: 7000,
-          panelClass:['greenSnackbar']
         });
-      },
-      error => {
-        console.log(error);
-        if(error.status==401){
-          sessionStorage.clear();
-          this.router.navigate(['/login'])
-        }
       }
-    )
-  }
+    }
+    else {
+      this.structureservice.upsertLocation(value).subscribe(
+        data => {
+          this.getStructure();
+          this.snackBar.open(data['message'], 'OK', {
+            duration: 7000,
+            panelClass: ['greenSnackbar']
+          });
+        },
+        error => {
+          console.log(error);
+          if (error.status == 401) {
+            sessionStorage.clear();
+            this.router.navigate(['/login'])
+          }
+        }
+      )
+    }
   }
 
   //For Deleting Location 
@@ -426,7 +471,7 @@ export class StructureComponent implements OnInit {
       },
       error => {
         console.log(error);
-        if(error.status==401){
+        if (error.status == 401) {
           sessionStorage.clear();
           this.router.navigate(['/login'])
         }
@@ -435,29 +480,31 @@ export class StructureComponent implements OnInit {
   }
 
   //For Entity Upsert values (value >> Service >> API)    
-  public onSubmitEntity(value: object) {
+  public onSubmitEntity(value) {
+    console.log(value)
+    value['dimensions'] = this.finaldimensionId;
     this.structureservice.upsertEntity(value).subscribe(
       data => {
-        if(this.cities == 0){
+        if (this.cities == 0) {
           this.entityform.controls['cityId'].setValue('null');
         }
-        if(data['error'] == true){
+        if (data['error'] == true) {
           this.snackBar.open(data['message'], 'OK', {
             duration: 7000,
-            panelClass:['redSnackbar']
+            panelClass: ['redSnackbar']
           });
         }
-        else{
-        this.getStructure();
-        this.snackBar.open(data['message'], 'OK', {
-          duration: 7000,
-          panelClass:['greenSnackbar']
-        });
-      }
+        else {
+          this.getStructure();
+          this.snackBar.open(data['message'], 'OK', {
+            duration: 7000,
+            panelClass: ['greenSnackbar']
+          });
+        }
       },
       error => {
         console.log(error);
-        if(error.status==401){
+        if (error.status == 401) {
           sessionStorage.clear();
           this.router.navigate(['/login'])
         }
@@ -485,7 +532,7 @@ export class StructureComponent implements OnInit {
       },
       error => {
         console.log(error);
-        if(error.status==401){
+        if (error.status == 401) {
           sessionStorage.clear();
           this.router.navigate(['/login'])
         }
