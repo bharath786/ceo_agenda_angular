@@ -17,10 +17,6 @@ export class TargetComponent implements OnInit {
 
   currentYear = new Date().getFullYear();
   currentMonth = new Date().getMonth() + 1;
-
-
-
-
   divisions: any;
   locations: any;
   entities: any;
@@ -65,52 +61,114 @@ export class TargetComponent implements OnInit {
     fileReader.readAsArrayBuffer(this.file);
   }
 
+  // comparefiles(submittedfile) {
+  //   console.log(submittedfile, 'submitted file')
+
+  //   this._adminsettingservice.getTargetTemplate().subscribe(
+  //     data => {
+  //       console.log(data['data'], "main data");
+  //       console.log(this.currentMonth);
+  //       this.uploadTemplate = data['data'];
+  //       submittedfile.forEach(element => {
+  //         for (var i = 0; i < this.uploadTemplate.length; i++) {
+  //           if (this.uploadTemplate[i].KPITitle == element.KPITitle
+  //             && this.uploadTemplate[i].DimensionTitle == element.DimensionTitle
+  //             && this.uploadTemplate[i].KRATitle == element.KRATitle) {
+  //             if (element['year'] != 0 && element['year'] >= this.currentYear) {
+
+  //               if (element['month'] != 0 && element['month'] >= this.currentMonth && element['month'] < 12) {
+
+  //                 if (element['target'] != null && element['target'] < 100) {
+  //                   element['KPIId'] = this.uploadTemplate[i].KPIId;
+  //                   element['entityId'] = 1;
+
+  //                   console.log("zzzzzzzzzz");
+  //                 }
+  //                 else {
+  //                   console.log('Error on Target')
+  //                 }
+  //               }
+  //               else {
+  //                 console.log('Error on Month')
+  //               }
+  //             }
+  //             else {
+  //               console.log('Error  on Year')
+  //             }
+  //           }
+  //           else {
+  //             console.log('Matching Error')
+  //           }
+  //         }
+  //         // this.finalTargetFile.push(element)
+  //       });
+  //       // console.log(this.finalTargetFile)
+  //       // this._adminsettingservice.upsertTarget(this.finalTargetFile).subscribe(
+  //       //   data=>{
+  //       //     console.log(data)
+  //       //   },
+  //       //   error=>{
+  //       //     console.log(error)
+  //       //   }
+  //       // )
+  //     });
+
+
+  // }
+
+
+
+  /*  testing */
   comparefiles(submittedfile) {
-    console.log(submittedfile, 'submitted file')
+    console.log(submittedfile, 'submitted file');
+
+    var testing = [];
 
     this._adminsettingservice.getTargetTemplate().subscribe(
       data => {
         console.log(data['data'], "main data");
         this.uploadTemplate = data['data'];
+
         submittedfile.forEach(element => {
           for (var i = 0; i < this.uploadTemplate.length; i++) {
-            if (this.uploadTemplate[i].KPITitle == element.KPITitle
-              && this.uploadTemplate[i].DimensionTitle == element.DimensionTitle
-              && this.uploadTemplate[i].KRATitle == element.KRATitle) {
-              if (element['year'] != 0 && element['year'] >= this.currentYear) {
-                if (element['month'] != 0 && element['month'] >= this.currentMonth && element['month'] < 12) {
-                  if (element['Target'] != null && element['Target'] < 100) {
-                    element['KPIId'] = this.uploadTemplate[i].KPIId;
-                    element['entityId'] = 1;
-                  }
-                  else {
-                    console.log('Error on Target')
-                  }
-                }
-                else {
-                  console.log('Error on Month')
-                }
-              }
-              else {
-                console.log('Error  on Year')
-              }
-            }
-            else {
-              console.log('Matching Error')
-            }
 
+            if (this.uploadTemplate[i].KPITitle == element.KPITitle && this.uploadTemplate[i].DimensionTitle == element.DimensionTitle && this.uploadTemplate[i].KRATitle == element.KRATitle) {
+
+              if (element['year'] >= this.currentYear && element['month'] >= this.currentMonth && element['target'] < 100 && element['target'] != null) {
+                element['KPIId'] = this.uploadTemplate[i].KPIId;
+                let sessionUser = JSON.parse(sessionStorage['Session_name'])
+                element['createdBy'] = sessionUser["user_id"];
+                element['modifiedBy'] = sessionUser["user_id"];
+                element['entityId'] = 1;
+                console.log(sessionUser["user_id"], "user_id")
+                console.log(element, "zzzzzzzzzz");
+                testing.push(element);
+                break;
+              }
+            }
           }
+          console.log("-----------------------")
           // this.finalTargetFile.push(element)
         });
-        // console.log(this.finalTargetFile)
-        // this._adminsettingservice.upsertTarget(this.finalTargetFile).subscribe(
-        //   data=>{
-        //     console.log(data)
-        //   },
-        //   error=>{
-        //     console.log(error)
-        //   }
-        // )
+
+        if (testing.length == this.uploadTemplate.length) {
+          console.log("working")
+        }
+        else {
+          console.log("Invalid")
+        }
+
+
+        /*  WRITE CODE TO SEND VALUES TO THE API  */
+
+        this._adminsettingservice.upsertTarget(testing).subscribe(
+          data => {
+            console.log(data)
+          },
+          error => {
+            console.log(error)
+          }
+        )
       });
 
 
