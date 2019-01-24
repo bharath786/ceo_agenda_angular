@@ -16,9 +16,9 @@ export class TargetComponent implements OnInit {
   @ViewChild('downloadModal') public downloadModal: ModalDirective;
 
   currentYear = new Date().getFullYear();
-  currentMonth = new Date().getMonth()+1;
+  currentMonth = new Date().getMonth() + 1;
 
-  
+
 
 
   divisions: any;
@@ -32,7 +32,7 @@ export class TargetComponent implements OnInit {
   arrayBuffer: any;
   submittedfile: any[];
   uploadTemplate: any = [];
-  finalTargetFile: any= [];
+  finalTargetFile: any = [];
 
   constructor(private _adminsettingservice: AdminsettingsService, private excelService: DownloadExcelService) { }
 
@@ -40,14 +40,14 @@ export class TargetComponent implements OnInit {
     this.getDivisions();
     this.getTargetTemplateKPI(0);
     console.log(this.currentYear)
-    console.log(this.currentMonth+1, 'AA')
+    console.log(this.currentMonth + 1, 'AA')
   }
 
   incomingfile(event) {
     this.file = event.target.files[0];
   }
 
-    Upload() {
+  Upload() {
     let fileReader = new FileReader();
     fileReader.onload = (e) => {
       this.arrayBuffer = fileReader.result;
@@ -77,32 +77,32 @@ export class TargetComponent implements OnInit {
             if (this.uploadTemplate[i].KPITitle == element.KPITitle
               && this.uploadTemplate[i].DimensionTitle == element.DimensionTitle
               && this.uploadTemplate[i].KRATitle == element.KRATitle) {
-                if(element['year'] != 0 && element['year'] >= this.currentYear){
-                  if(element['month'] != 0 && element['month'] >= this.currentMonth && element['month']<12){
-                      if(element['Target'] !=null && element['Target'] <100){
-                        element['KPIId'] = this.uploadTemplate[i].KPIId;
-                        element['entityId'] = 1;
-                      }
-                      else{
-              console.log('Error on Target')
-                      }
+              if (element['year'] != 0 && element['year'] >= this.currentYear) {
+                if (element['month'] != 0 && element['month'] >= this.currentMonth && element['month'] < 12) {
+                  if (element['Target'] != null && element['Target'] < 100) {
+                    element['KPIId'] = this.uploadTemplate[i].KPIId;
+                    element['entityId'] = 1;
                   }
-                  else{
-              console.log('Error on Month')
+                  else {
+                    console.log('Error on Target')
                   }
                 }
-                else{
-              console.log('Error  on Year')
+                else {
+                  console.log('Error on Month')
                 }
+              }
+              else {
+                console.log('Error  on Year')
+              }
             }
-            else{
+            else {
               console.log('Matching Error')
             }
-         
+
           }
-         // this.finalTargetFile.push(element)
+          // this.finalTargetFile.push(element)
         });
-       // console.log(this.finalTargetFile)
+        // console.log(this.finalTargetFile)
         // this._adminsettingservice.upsertTarget(this.finalTargetFile).subscribe(
         //   data=>{
         //     console.log(data)
@@ -135,9 +135,17 @@ export class TargetComponent implements OnInit {
         this.TargetTemplate = data['data'];
         this.TargetTemplate.forEach(element => {
           delete element['KPIId'];
-          element['Year'] = null;
-          element['Month'] = null;
-          element['Target'] = null;
+
+          delete element['entityId'];
+
+          delete element['createdBy'];
+          delete element['createdDate'];
+          delete element['modifiedBy'];
+          delete element['modifiedDate'];
+
+          element['year'] = null;
+          element['month'] = null;
+          element['target'] = null;
           this.downloadData.push(element);
         });
         if (i != 0)
