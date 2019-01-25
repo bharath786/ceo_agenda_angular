@@ -23,7 +23,7 @@
         <br>
         <div class="col-xs-12">
           <div class="form-group">
-            <label class="col-md-12 lblfnt">Organization Name</label>
+            <label class="col-md-12 lblfnt required">Organization Name</label>
             <div class="col-md-12">
               <input formControlName="organizationName" class="form-control" maxlength="50" type="text" placeholder="Organization Name">
               <mat-error *ngIf="organizationform.controls.organizationName.errors?.required && organizationform.controls.organizationName.touched">Organization
@@ -35,8 +35,8 @@
             <div class="col-md-12">
               <textarea class="form-control" cols="20" maxlength="500" formControlName="organizationDescription"
                 placeholder="Description" rows="5"></textarea>
-              <mat-error *ngIf="organizationform.controls.organizationDescription.errors?.required && organizationform.controls.organizationDescription.touched">
-                Organization Description is required</mat-error>
+              <!-- <mat-error *ngIf="organizationform.controls.organizationDescription.errors?.required && organizationform.controls.organizationDescription.touched">
+                Organization Description is required</mat-error> -->
             </div>
           </div>
           <div class="pull-right" style="margin-top: 25px;">
@@ -63,7 +63,7 @@
           <br>
           <div class="col-xs-12">
             <div class="form-group">
-              <label class="add-member-label add-member-input col-md-12 lblfnt">Division Name</label>
+              <label class="col-md-12 lblfnt required">Division Name</label>
               <div class="col-md-12">
                 <input formControlName="divName" class="form-control FirstLetterCapital" maxlength="50" type="text"
                   placeholder="Enter Division Name">
@@ -76,8 +76,8 @@
               <div class="col-md-12">
                 <input formControlName="phoneNumber" (keypress)="keyPress($event)" minlength=10 maxlength=14 class="form-control"
                   type="text" placeholder="Enter Contact Number">
-                <mat-error *ngIf="divisionform.controls.phoneNumber.errors?.required && divisionform.controls.phoneNumber.touched">Contact
-                  Number is required</mat-error>
+                <!-- <mat-error *ngIf="divisionform.controls.phoneNumber.errors?.required && divisionform.controls.phoneNumber.touched">Contact
+                  Number is required</mat-error>-->
                 <mat-error *ngIf="divisionform.controls.phoneNumber.hasError('minlength') && divisionform.controls.phoneNumber.touched">Contact
                   Number isn't valid</mat-error>
               </div>
@@ -87,8 +87,8 @@
               <div class="col-md-12">
                 <textarea formControlName="address" class="form-control" maxlength="500" cols="15" id="updatevcDesc"
                   name="firmDivisionDesc" placeholder="Address" rows="5"></textarea>
-                <mat-error *ngIf="divisionform.controls.address.errors?.required && divisionform.controls.address.touched">
-                  Division Address is required</mat-error>
+                <!-- <mat-error *ngIf="divisionform.controls.address.errors?.required && divisionform.controls.address.touched">
+                  Division Address is required</mat-error> -->
               </div>
             </div>
 
@@ -99,11 +99,6 @@
             <div *ngIf="allforms == 'updatedivision'" class="pull-right" style="margin-top: 25px;">
               <button [disabled]="!divisionupsertform.form.valid" class="btn btn-success marginbtn" id="btnupdateFimrDiv"
                 type="submit">Update</button>
-              <!-- <button (click)="onDeleteDivision(divisionform.value)" type="button" id="btn_firmdiv" class="btn btn-danger marginbtn"
-                data-toggle="modal" data-target="#Mymodel-FirmDivDelete" data-tooltip="tooltip" data-placement="top"
-                title="" value="" data-original-title="Delete">
-                <i class="fa fa-trash"></i>
-              </button> -->
               <button type="button" mwlConfirmationPopover [popoverTitle]="popoverTitle" [confirmText]="confirmText"
                 [cancelText]="cancelText" [popoverMessage]="popoverMessage" placement="left" (confirm)="onDeleteDivision(divisionform.value)"
                 class="btn btn-danger marginbtn" data-toggle="modal" data-tooltip="tooltip" data-original-title="Delete">
@@ -129,7 +124,7 @@
           <br>
           <div class="col-xs-12">
             <div class="form-group">
-              <label class="col-md-12 lblfnt">Country</label>
+              <label class="col-md-12 lblfnt required">Country</label>
               <div class="col-md-12">
                 <mat-select placeholder='Select Country' formControlName='countryId' [ngClass]="{'disablecustom': allforms=='updatelocation'}"
                   class="form-control" (selectionChange)="onCountrySelect($event.value)">
@@ -144,8 +139,8 @@
               <div class="col-md-12">
                 <textarea formControlName='description' maxlength="500" class="form-control" cols="20" id="updatevcDesc"
                   name="firmDivisionDesc" placeholder="Description" rows="5"></textarea>
-                <mat-error *ngIf="locationform.controls.description.errors?.required && locationform.controls.description.touched">
-                  Location Description is required</mat-error>
+                <!-- <mat-error *ngIf="locationform.controls.description.errors?.required && locationform.controls.description.touched">
+                  Location Description is required</mat-error> -->
               </div>
             </div>
 
@@ -178,7 +173,7 @@
           </h4>
           <br>
           <div class="form-group">
-            <label class="col-md-12 add-member-label add-member-input col-md-12 lblfnt">Entity Name</label>
+            <label class="col-md-12 lblfnt required">Entity Name</label>
             <div class="col-md-12">
               <input formControlName="entityName" class="form-control" maxlength="50" type="text" placeholder="Enter Entity Name">
               <mat-error *ngIf="entityform.controls.entityName.errors?.required && entityform.controls.entityName.touched">
@@ -190,14 +185,14 @@
             <div class="col-md-12">
               <input formControlName="phoneNumber" (keypress)="keyPress($event)" minlength=10 maxlength=14 class="form-control"
                 type="text" placeholder="Enter Contact Number">
-              <mat-error *ngIf="entityform.controls.phoneNumber.errors?.required && entityform.controls.phoneNumber.touched">Phone
-                Number is required</mat-error>
+              <!-- <mat-error *ngIf="entityform.controls.phoneNumber.errors?.required && entityform.controls.phoneNumber.touched">Phone
+                Number is required</mat-error>-->
               <mat-error *ngIf="entityform.controls.phoneNumber.hasError('minlength') && entityform.controls.phoneNumber.touched">Contact
-                Number isn't valid</mat-error>
+                Number isn't valid</mat-error> 
             </div>
           </div>
           <div class="form-group">
-            <label class="col-md-12 add-member-label add-member-input col-md-12 lblfnt">State</label>
+            <label class="col-md-12 lblfnt required">State</label>
             <div class="col-md-12">
               <mat-select placeholder='Select State' formControlName='stateId' class="form-control" (selectionChange)="onStateSelect($event.value)">
                 <mat-option *ngFor="let value of states" [value]="value['stateId']">{{value['stateName']}}</mat-option>
@@ -207,7 +202,7 @@
             </div>
           </div>
           <div *ngIf="cities != 0" class="form-group">
-            <label class="col-md-12 add-member-label add-member-input col-md-12 lblfnt">City</label>
+            <label class="col-md-12 lblfnt required">City</label>
             <div class="col-md-12">
               <mat-select placeholder='Select City' formControlName='cityId' class="form-control">
                 <mat-option *ngFor="let city of cities" [value]="city['cityId']">{{city['cityName']}}</mat-option>
@@ -217,16 +212,16 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-md-12 add-member-label add-member-input col-md-12 lblfnt">Address</label>
+            <label class="col-md-12 lblfnt">Address</label>
             <div class="col-md-12">
               <textarea formControlName="address" class="form-control" cols="20" maxlength="500" placeholder="Address"
                 rows="5"></textarea>
-              <mat-error *ngIf="entityform.controls.address.errors?.required && entityform.controls.address.touched">
-                Entity is required</mat-error>
+              <!-- <mat-error *ngIf="entityform.controls.address.errors?.required && entityform.controls.address.touched">
+                Entity is required</mat-error> -->
             </div>
           </div>
-          <a class="pull-right btn btn-primary" (click)=selectDimension(1)>Select Dimensions
-          </a>
+          <a class="pull-right btn btn-primary" (click)=selectDimension(1)>Select Dimensions</a>
+          
 
           <div *ngIf="allforms == 'addEntity'" class="pull-right" style="margin-top: 25px;">
             <button [disabled]="!entityupsertform.form.valid" class="btn btn-success pull-right" id="btnupdateFimrDiv"

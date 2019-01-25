@@ -58,7 +58,7 @@ export class SetupComponent implements OnInit {
     this.analyticsform = this.fb.group({
       'analyticsId': null,
       'analyticsName': [null, Validators.compose([Validators.required])],
-      'analyticsDescription': [null, Validators.compose([Validators.required])],
+      'analyticsDescription': [null],
       'modifiedBy': this.sessionUser['user_id']
     });
 
@@ -78,7 +78,7 @@ export class SetupComponent implements OnInit {
     this.KRAform = this.fb.group({
       'KRAId': null,
       'KRAName': [null, Validators.compose([Validators.required])],
-      'description': [null, Validators.compose([Validators.required])],
+      'description': [null],
       'modifiedBy': this.sessionUser['user_id'],
       'createdBy': this.sessionUser['user_id'],
       'dimensionId': null
@@ -88,7 +88,7 @@ export class SetupComponent implements OnInit {
     this.KPIform = this.fb.group({
       'KPIId': null,
       'KPIName': [null, Validators.compose([Validators.required])],
-      'KPICode': [null, Validators.compose([Validators.required])],
+      'KPICode': [null],
       'higherIsBetter': [null, Validators.compose([Validators.required])],
       'dataType': [null, Validators.compose([Validators.required])],
       'modifiedBy': this.sessionUser['user_id'],
