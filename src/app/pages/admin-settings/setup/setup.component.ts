@@ -148,13 +148,13 @@ export class SetupComponent implements OnInit {
       //Send Form values to Form Data
       value['dimensionId'] != null ? dimdata.append('dimensionId', value['dimensionId']) : dimdata.append('dimensionId', '0');
       dimdata.append('dimensionName', value['dimensionName'])
-      value['scopeName'] != null ? dimdata.append('scopeName', this.fileScope, this.todaysDate + "@#$" + this.fileScope.name) : dimdata.append('scopeName',"")
+      value['scopeName'] != null ? dimdata.append('scopeName', this.fileScope, this.todaysDate + "@#$" + this.fileScope.name) : dimdata.append('scopeName', "")
       value['scopeApplicable'] != null ? dimdata.append('scopeApplicable', value['scopeApplicable']) : dimdata.append('scopeApplicable', "false");
       dimdata.append('frequencyId', value['frequencyId'])
       dimdata.append('analyticsId', value['analyticsId'])
       dimdata.append('createdBy', value['createdBy'])
       dimdata.append('modifiedBy', value['modifiedBy'])
-      value['scopeName'] != null ? dimdata.append("fileName", this.fileScope['name']):dimdata.append("fileName", "");
+      value['scopeName'] != null ? dimdata.append("fileName", this.fileScope['name']) : dimdata.append("fileName", "");
       console.log(dimdata.get('scopeName')['name'])
     }
     //Sending Form Data Values to Service
@@ -202,6 +202,7 @@ export class SetupComponent implements OnInit {
             panelClass: ['greenSnackbar']
           });
         }
+        this.router.navigate(['/adminsettings/setup']);
       },
       error => {
         console.log(error);
