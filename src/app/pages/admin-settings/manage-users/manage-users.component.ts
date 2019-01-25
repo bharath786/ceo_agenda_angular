@@ -50,7 +50,11 @@ export class ManageUsersComponent implements OnInit {
       'createdBy': null,
       'modifiedBy': null
     });
-
+  }
+  
+  ngOnInit() {
+    //Users List
+    this.userslist();
   }
 
   @ViewChild('addUserModal') public addUserModal: ModalDirective;
@@ -240,10 +244,6 @@ export class ManageUsersComponent implements OnInit {
       );
   }
 
-  ngOnInit() {
-    //Users List
-    this.userslist();
-  }
 
 
 }

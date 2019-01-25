@@ -17,7 +17,8 @@ import { DataFilterPipe } from 'src/app/data-filter.pipe';
 import { AdminsettingsService } from './adminsettings.service';
 import { ConfirmationPopoverModule } from 'angular-confirmation-popover';
 import { DownloadExcelService } from '../download-excel.service';
-import { CheckboxModule } from 'primeng/checkbox';
+import { TooltipModule } from 'ngx-bootstrap';
+
 
 
 export const routes :Routes = [
@@ -42,7 +43,7 @@ export const routes :Routes = [
     BsDatepickerModule.forRoot(),
     DatepickerModule.forRoot(),
     DataTableModule,
-    CheckboxModule,
+    TooltipModule.forRoot(),
     ConfirmationPopoverModule.forRoot({
       confirmButtonType: 'danger' // set defaults here
     })

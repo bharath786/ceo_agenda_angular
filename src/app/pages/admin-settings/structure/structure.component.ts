@@ -48,7 +48,7 @@ export class StructureComponent implements OnInit {
   dimensionForm: any;
   checkedValueDimension: any[] = [];
   arrayForBinding: any[] = [];
-  finaldimensionId: any[] =[];
+  finaldimensionId: any[] = [];
 
   constructor(private structureservice: AdminsettingsService, public router: Router, public fb: FormBuilder, public snackBar: MatSnackBar) {
 
@@ -124,8 +124,8 @@ export class StructureComponent implements OnInit {
     e.forEach(element => {
       dimension.push(element.value);
     });
-    dimension = dimension.filter(dimension=>dimension.btdimId == true);
-    dimension.forEach(element=>{
+    dimension = dimension.filter(dimension => dimension.btdimId == true);
+    dimension.forEach(element => {
       this.finaldimensionId.push(element.dimensionId)
       console.log(this.finaldimensionId)
       this.getBack();
@@ -305,6 +305,7 @@ export class StructureComponent implements OnInit {
   }
 
   getDimensionEntity(entityId) {
+
     this.structureservice.getDimensionEntity(entityId).subscribe(
       data => {
         this.dimensionsEntityBased = data['data'];

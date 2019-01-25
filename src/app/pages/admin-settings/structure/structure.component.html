@@ -188,7 +188,7 @@
               <!-- <mat-error *ngIf="entityform.controls.phoneNumber.errors?.required && entityform.controls.phoneNumber.touched">Phone
                 Number is required</mat-error>-->
               <mat-error *ngIf="entityform.controls.phoneNumber.hasError('minlength') && entityform.controls.phoneNumber.touched">Contact
-                Number isn't valid</mat-error> 
+                Number isn't valid</mat-error>
             </div>
           </div>
           <div class="form-group">
@@ -221,7 +221,7 @@
             </div>
           </div>
           <a class="pull-right btn btn-primary" (click)=selectDimension(1)>Select Dimensions</a>
-          
+
 
           <div *ngIf="allforms == 'addEntity'" class="pull-right" style="margin-top: 25px;">
             <button [disabled]="!entityupsertform.form.valid" class="btn btn-success pull-right" id="btnupdateFimrDiv"
@@ -249,14 +249,14 @@
 
 
     <div class="" *ngIf="allforms == 'dimensiondata'">
-        <form [formGroup]="dimensionForm" (ngSubmit)="onSubmitDIMENSION(dimensionForm['controls']['dimensionValues']['controls'])"
+      <form [formGroup]="dimensionForm" (ngSubmit)="onSubmitDIMENSION(dimensionForm['controls']['dimensionValues']['controls'])"
         #dimform="ngForm">
-      <div class="col-sm-12 clearfix gridrole" style="border: 1px solid rgb(204, 204, 204); padding: 20px; border-radius: 3px;">
-        <h4 class="modal-title"><span style="padding-left: 13px;" class="bold">Dimension Details</span>
-          <button class="pull-right btn btn-primary" type="submit">Go Back
-          </button>
-        </h4>
-        <br>
+        <div class="col-sm-12 clearfix gridrole" style="border: 1px solid rgb(204, 204, 204); padding: 20px; border-radius: 3px;">
+          <h4 class="modal-title"><span style="padding-left: 13px;" class="bold">Dimension Details</span>
+            <button class="pull-right btn btn-primary" type="submit">Go Back
+            </button>
+          </h4>
+          <br>
 
           <!-- <mat-checkbox *ngFor="let item of dimensionsEntityBased" value="item.dimensionId" formControlName="dimensionValue" [(ngModel)]="item.value" class="example-margin">
             {{item.dimensionName}} 
@@ -270,8 +270,8 @@
             </div>
           </div>
           <!-- <button class="btn btn-success marginbtn pull-right" >Update</button> -->
-      </div>
-    </form>
+        </div>
+      </form>
     </div>
   </div>
 </div>

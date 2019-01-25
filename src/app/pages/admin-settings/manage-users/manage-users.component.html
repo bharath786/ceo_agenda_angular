@@ -44,7 +44,7 @@
         <tbody>
             <tr *ngFor="let data of mf.data" [ngClass]="{'disablerow': data.firstName=='Admin'}">
                 <td>{{data.firstName}}  {{data.lastName}} </td>
-                <td>{{data.email}}</td>
+                <td>{{data.email}} <i *ngIf="data.verified==true" class="fa fa-check green" tooltip="Email is Verified" placement="right"></i><i *ngIf="data.verified==false" class="fa fa-times red" tooltip="Email is not verified. Click here to resend verification mail" placement="right"></i> </td>
                 <td>{{data.phoneNo}}</td>
                 <td>
                     <a title="Click to Assign Permissions" (click)="permissionModal1Toggle(1)">11/24</a>
