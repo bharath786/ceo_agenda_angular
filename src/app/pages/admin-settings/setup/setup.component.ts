@@ -167,7 +167,7 @@ export class SetupComponent implements OnInit {
           });
         }
         else {
-          this.getSetup();
+          this.getSetup(); 
           this.snackBar.open(data['message'], 'OK', {
             duration: 7000,
             panelClass: ['greenSnackbar']
