@@ -68,6 +68,7 @@ export class HorizontalMenuComponent implements OnInit {
         data['data'].forEach((element) => {
           this.horizontalMenuItems.push(new Menu(element['dimensionId'], element['dimensionName'], '/analytics/highlights', null, '', null, false, element['analyticsId']))
         });
+
         this.menuItems = this.horizontalMenuItems;
         this.menuItems = this.menuItems.filter(item => item.parentId == this.menuParentId);
       }
