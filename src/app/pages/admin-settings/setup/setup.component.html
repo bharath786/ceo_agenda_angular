@@ -21,7 +21,7 @@
                         <a (click)='adddimension(1)' class="pull-right btn btn-primary">Add Dimension </a></h4>
                     <br>
                     <div class="form-group">
-                        <label class="col-md-12 add-member-label add-member-input lblfnt">Analytics Name</label>
+                        <label class="col-md-12 lblfnt required">Analytics Name</label>
                         <div class="col-md-12">
                             <input maxlength="50" formControlName="analyticsName" class="form-control disablecustom"
                                 type="text" placeholder="Analytics Name">
@@ -33,8 +33,8 @@
                         <label class="col-md-12 add-member-label add-member-input lblfnt">Description</label>
                         <div class="col-md-12">
                             <textarea maxlength="500" formControlName="analyticsDescription" class="form-control" placeholder="Description" cols="12" rows="5"></textarea>
-                            <mat-error *ngIf="analyticsform.controls.analyticsDescription.errors?.required && analyticsform.controls.analyticsDescription.touched">
-                                Analytics Description is required</mat-error>
+                            <!-- <mat-error *ngIf="analyticsform.controls.analyticsDescription.errors?.required && analyticsform.controls.analyticsDescription.touched">
+                                Analytics Description is required</mat-error> -->
                         </div>
                     </div>
                     <div class="pull-right" style="margin-top: 25px;">
@@ -62,7 +62,7 @@
                     <br>
                     <div class="col-xs-12">
                         <div class="form-group">
-                            <label class="col-md-12 add-member-label add-member-input lblfnt">Title</label>
+                            <label class="col-md-12 lblfnt required">Title</label>
                             <div class="col-md-12">
                                 <input maxlength="50" formControlName="dimensionName" class="form-control" type="text"
                                     placeholder="Enter Dimension Title">
@@ -71,7 +71,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-md-12 add-member-label add-member-input lblfnt">Update Frequency</label>
+                            <label class="col-md-12 lblfnt required">Update Frequency</label>
                             <div class="col-md-12">
                                 <mat-select formControlName="frequencyId" class="form-control" placeholder="Select Frequency">
                                     <mat-option *ngFor="let item of dimensionFrequency" [value]="item['lookupId']">{{item['lookupName']}}</mat-option>
@@ -129,7 +129,7 @@
                     <br>
                     <div class="col-xs-12">
                         <div class="form-group">
-                            <label class="col-md-12 add-member-label add-member-input lblfnt">Title</label>
+                            <label class="col-md-12 lblfntv required">Title</label>
                             <div class="col-md-12">
                                 <input maxlength="50" formControlName="KRAName" class="form-control" type="text"
                                     placeholder="Enter KRA Title">
@@ -138,11 +138,11 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-md-12 add-member-label add-member-input lblfnt">Remarks</label>
+                            <label class="col-md-12 lblfnt">Remarks</label>
                             <div class="col-md-12">
                                     <textarea formControlName="description" class="form-control" placeholder="Description" cols="12" rows="5"></textarea>
-                                <mat-error *ngIf="KRAform.controls.description.errors?.required && KRAform.controls.description.touched">
-                                    Please Enter Remarks</mat-error>
+                                <!-- <mat-error *ngIf="KRAform.controls.description.errors?.required && KRAform.controls.description.touched">
+                                    Please Enter Remarks</mat-error> -->
                             </div>
                         </div>
                         <div *ngIf="allforms == 'addKRA'" class="pull-right" style="margin-top: 25px;">
@@ -176,7 +176,7 @@
                     <br>
                     <div class="col-xs-12">
                         <div class="form-group">
-                            <label class="col-md-12 add-member-label add-member-input lblfnt">Title</label>
+                            <label class="col-md-12 lblfnt required">Title</label>
                             <div class="col-md-12">
                                 <input maxlength="50" formControlName="KPIName" class="form-control"
                                     type="text" placeholder="Enter KPI Title">
@@ -185,16 +185,16 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-md-12 add-member-label add-member-input lblfnt">Code</label>
+                            <label class="col-md-12 lblfnt">Code</label>
                             <div class="col-md-12">
                                 <input maxlength="50" formControlName="KPICode" class="form-control"
                                     type="text" placeholder="Enter KPI Code">
-                                <mat-error *ngIf="KPIform.controls.KPICode.errors?.required && KPIform.controls.KPICode.touched">
-                                    KPI Code is required</mat-error>
+                                <!-- <mat-error *ngIf="KPIform.controls.KPICode.errors?.required && KPIform.controls.KPICode.touched">
+                                    KPI Code is required</mat-error> -->
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-md-12 add-member-label add-member-input lblfnt">Type</label>
+                            <label class="col-md-12 lblfnt required">Type</label>
                             <div class="col-md-12">
                                 <mat-radio-group formControlName="higherIsBetter">
                                     <mat-radio-button *ngFor="let higherOrLower of KPIHigherOrLower" [value]="higherOrLower['lookupId']">{{higherOrLower['lookupName']}}
@@ -205,7 +205,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-md-12 add-member-label add-member-input lblfnt">Data Type</label>
+                            <label class="col-md-12 lblfnt required">Data Type</label>
                             <div class="col-md-12">
                                 <mat-select formControlName="dataType" class="form-control" placeholder="Select Frequency">
                                     <mat-option *ngFor="let datattypes of kpiDataType" [value]="datattypes['lookupId']">{{datattypes['lookupName']}}</mat-option>

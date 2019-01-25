@@ -191,6 +191,7 @@ export class TargetComponent implements OnInit {
     this._adminsettingservice.getTargetValue().subscribe(
       data=>{
         this.targetValue = data['data']
+        console.log(this.targetValue)
       }
     )
   }

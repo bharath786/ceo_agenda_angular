@@ -44,7 +44,7 @@ export class ManageUsersComponent implements OnInit {
       'firstName': [null, Validators.compose([Validators.required])],
       'lastName': [null, Validators.compose([Validators.required])],
       'email': [null, Validators.compose([Validators.required, emailValidator])],
-      'phoneNo': [null, Validators.compose([Validators.required, Validators.minLength(6)])],
+      'phoneNo': [null],
       'dateOfBirth': [null, Validators.compose([Validators.required])],
       'status': null,
       'createdBy': null,

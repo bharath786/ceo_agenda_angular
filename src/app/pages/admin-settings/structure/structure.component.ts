@@ -57,7 +57,7 @@ export class StructureComponent implements OnInit {
     this.organizationform = this.fb.group({
       'organizationId': null,
       'organizationName': [null, Validators.compose([Validators.required])],
-      'organizationDescription': [null, Validators.compose([Validators.required])],
+      'organizationDescription': [null],
       'modifiedBy': this.sessionUser['user_id']
     });
 
@@ -65,8 +65,8 @@ export class StructureComponent implements OnInit {
     this.divisionform = this.fb.group({
       'divId': null,
       'divName': [null, Validators.compose([Validators.required])],
-      'phoneNumber': [null, Validators.compose([Validators.required, Validators.minLength(6)])],
-      'address': [null, Validators.compose([Validators.required])],
+      'phoneNumber': [null, Validators.compose([Validators.minLength(6)])],
+      'address': [null],
       'modifiedBy': this.sessionUser['user_id'],
       'createdBy': this.sessionUser['user_id'],
       'organizationId': null
@@ -81,7 +81,7 @@ export class StructureComponent implements OnInit {
     this.locationform = this.fb.group({
       'locationId': null,
       'countryId': [null, Validators.compose([Validators.required])],
-      'description': [null, Validators.compose([Validators.required])],
+      'description': [null],
       'modifiedBy': this.sessionUser['user_id'],
       'createdBy': this.sessionUser['user_id'],
       'divisionId': null
@@ -94,8 +94,8 @@ export class StructureComponent implements OnInit {
       'countryId': [null],
       'stateId': [null, Validators.compose([Validators.required])],
       'cityId': [null, Validators.compose([Validators.required])],
-      'phoneNumber': [null, Validators.compose([Validators.required])],
-      'address': [null, Validators.compose([Validators.required])],
+      'phoneNumber': [null],
+      'address': [null],
       'modifiedBy': this.sessionUser['user_id'],
       'createdBy': this.sessionUser['user_id'],
       'locationId': null
