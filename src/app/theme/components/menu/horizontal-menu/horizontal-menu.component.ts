@@ -46,6 +46,14 @@ export class HorizontalMenuComponent implements OnInit {
   constructor(public appSettings: AppSettings, private activatedRoute: ActivatedRoute,
     public menuService: MenuService, public router: Router) {
     this.settings = this.appSettings.settings;
+    // subscribe to the router events - storing the subscription so
+    // we can unsubscribe later. 
+    this.router.events.subscribe((e: any) => {
+      // If it is a NavigationEnd event re-initalise the component
+      if (e instanceof NavigationEnd) {
+        this.DynamicMenu();
+      }
+    });
   }
 
 
@@ -54,6 +62,7 @@ export class HorizontalMenuComponent implements OnInit {
   }
 
   DynamicMenu() {
+    this.menuItems=[];
     this.menuService.getMenu().subscribe(
       data => {
         data['data'].forEach((element) => {
