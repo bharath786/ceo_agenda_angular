@@ -202,6 +202,7 @@ export class SetupComponent implements OnInit {
             panelClass: ['greenSnackbar']
           });
         }
+
         this.router.navigate(['/adminsettings/setup']);
       },
       error => {
