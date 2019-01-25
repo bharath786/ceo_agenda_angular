@@ -185,12 +185,12 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-md-12 lblfnt">Code</label>
+                            <label class="col-md-12 lblfnt required">Code</label>
                             <div class="col-md-12">
                                 <input maxlength="50" formControlName="KPICode" class="form-control"
                                     type="text" placeholder="Enter KPI Code">
-                                <!-- <mat-error *ngIf="KPIform.controls.KPICode.errors?.required && KPIform.controls.KPICode.touched">
-                                    KPI Code is required</mat-error> -->
+                                <mat-error *ngIf="KPIform.controls.KPICode.errors?.required && KPIform.controls.KPICode.touched">
+                                    KPI Code is required</mat-error>
                             </div>
                         </div>
                         <div class="form-group">

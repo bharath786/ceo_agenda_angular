@@ -65,7 +65,7 @@ export class ManageUsersComponent implements OnInit {
 
   //For Phone Number Validation
   keyPress(event: any) {
-    const pattern = /[0-9\+\-\ ]/;
+    const pattern = /[0-9\+\-\a-z\ ]/;
     let inputChar = String.fromCharCode(event.charCode);
     if (event.keyCode != 8 && !pattern.test(inputChar)) {
       event.preventDefault();
@@ -93,7 +93,7 @@ export class ManageUsersComponent implements OnInit {
         this.userslist();
         this.snackBar.open(data['message'], 'OK', {
           duration: 7000,
-          panelClass: ['greenSnackbar']
+          panelClass: ['greenSnackbar'],
         });
       },
       error => {
