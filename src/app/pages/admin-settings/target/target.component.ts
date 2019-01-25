@@ -59,6 +59,8 @@ export class TargetComponent implements OnInit {
       this.comparefiles(submittedfile);
     }
     fileReader.readAsArrayBuffer(this.file);
+    this.getTargetValue();
+    this.uploadModal.hide();
   }
 
   // comparefiles(submittedfile) {
@@ -134,7 +136,7 @@ export class TargetComponent implements OnInit {
 
             if (this.uploadTemplate[i].KPITitle == element.KPITitle && this.uploadTemplate[i].DimensionTitle == element.DimensionTitle && this.uploadTemplate[i].KRATitle == element.KRATitle) {
 
-              if (element['year'] >= this.currentYear && element['month'] >= this.currentMonth && element['target'] < 100 && element['target'] != null) {
+              if (element['year'] >= this.currentYear && element['month'] >= this.currentMonth && element['target'] <= 100 && element['target'] != null) {
                 element['KPIId'] = this.uploadTemplate[i].KPIId;
                 let sessionUser = JSON.parse(sessionStorage['Session_name'])
                 element['createdBy'] = sessionUser["user_id"];
@@ -164,15 +166,13 @@ export class TargetComponent implements OnInit {
         this._adminsettingservice.upsertTarget(testing).subscribe(
           data => {
             console.log(data)
-
+            this.getTargetValue()
           },
           error => {
             console.log(error)
           }
         )
       });
-
-    this.getTargetValue()
   }
 
   //To get all divisions for filter
@@ -187,9 +187,9 @@ export class TargetComponent implements OnInit {
     )
   }
 
-  getTargetValue(){
+  getTargetValue() {
     this._adminsettingservice.getTargetValue().subscribe(
-      data=>{
+      data => {
         this.targetValue = data['data']
       }
     )

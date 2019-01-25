@@ -95,6 +95,9 @@
             </tr>
         </thead>
         <tbody>
+            <tr *ngIf="targetValue.length == 0">
+                <td colspan="6">No record found</td>
+            </tr>
             <tr *ngFor="let item of targetValue">
                 <td>{{item.year}}</td>
                 <td>{{item.month}}</td>
