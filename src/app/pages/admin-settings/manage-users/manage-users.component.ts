@@ -31,6 +31,13 @@ export class ManageUsersComponent implements OnInit {
   maxDate: any;
   emailchange: any;
 
+ //For Confirmation
+ popoverTitle: string = 'Resend verification Mail';
+ popoverMessage: string = "Do you want to resend verification mail";
+ confirmText: string = 'Yes Resend';
+ cancelText: string = 'No';
+ confirmClicked: boolean = false;
+ cancelClicked: boolean = false;
 
   constructor(public appSettings: AppSettings, public fb: FormBuilder, public router: Router, private adminsettingsservice: AdminsettingsService, public snackBar: MatSnackBar) {
     this.settings = this.appSettings.settings;
@@ -191,6 +198,25 @@ export class ManageUsersComponent implements OnInit {
     console.log(data)
     this.addUserModal.show();
   }
+
+  resendMail(values){
+    let sessionUser = JSON.parse(sessionStorage['Session_name'])
+    if (values['userId'] == null) {
+      values['createdBy'] = sessionUser.user_id
+    }
+    else {
+      values['modifiedBy'] = sessionUser.user_id
+    }
+    this.adminsettingsservice.resendMail(values).subscribe(
+      data=>{
+        this.snackBar.open(data['message'], 'OK', {
+          duration: 7000,
+          panelClass: ['greenSnackbar']
+        });
+      }
+    )
+}
+
 
   //User Update and Create Form
   public onSubmit(values: Object): void {

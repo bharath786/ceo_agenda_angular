@@ -36,6 +36,8 @@ export class StructureComponent implements OnInit {
   locationform: any;
   entityform: any;
 
+  checkingarray: any =[];
+
   //For Confirmation
   popoverTitle: string = 'Delete?';
   popoverMessage: string = "Are You Sure ? You want to delete record, this action can't be undone.";
@@ -72,11 +74,6 @@ export class StructureComponent implements OnInit {
       'organizationId': null
     });
 
-    //Dimension Update Form
-    this.dimensionForm = this.fb.group({
-      'dimensionValues': new FormArray(this.arrayForBinding)
-    });
-
     //Location Upsert Form
     this.locationform = this.fb.group({
       'locationId': null,
@@ -109,6 +106,14 @@ export class StructureComponent implements OnInit {
     this.getStructure();
   }
 
+  checkingfunction(){
+    this.finaldimensionId=[];
+      for (let key in this.checkingarray) {
+        this.finaldimensionId.push(key)
+    }
+    console.log(this.finaldimensionId)
+    return this.finaldimensionId
+  }
   //For Phone Number Validation
   keyPress(event: any) {
     const pattern = /[0-9\+\-\a-z\ ]/;
@@ -118,19 +123,19 @@ export class StructureComponent implements OnInit {
     }
   }
 
-  onSubmitDIMENSION(e) {
-    console.log(e)
-    let dimension = []
-    e.forEach(element => {
-      dimension.push(element.value);
-    });
-    dimension = dimension.filter(dimension => dimension.btdimId == true);
-    dimension.forEach(element => {
-      this.finaldimensionId.push(element.dimensionId)
-      console.log(this.finaldimensionId)
-      this.getBack();
-    })
-  }
+  // onSubmitDIMENSION(e) {
+  //   console.log(e)
+  //   let dimension = []
+  //   e.forEach(element => {
+  //     dimension.push(element.value);
+  //   });
+  //   dimension = dimension.filter(dimension => dimension.btdimId == true);
+  //   dimension.forEach(element => {
+  //     this.finaldimensionId.push(element.dimensionId)
+  //     console.log(this.finaldimensionId)
+  //     this.getBack();
+  //   })
+  // }
 
 
   //For Getting Contries
@@ -245,10 +250,6 @@ export class StructureComponent implements OnInit {
     }
   }
 
-  getCheckboxes() {
-    console.log(this.dimensionsEntityBased.filter(x => x.value === false).map(x => x.dimensionName));
-  }
-
   getBack() {
     this.allforms = this.previousvalue;
   }
@@ -305,28 +306,26 @@ export class StructureComponent implements OnInit {
   }
 
   getDimensionEntity(entityId) {
-
     this.structureservice.getDimensionEntity(entityId).subscribe(
       data => {
         this.dimensionsEntityBased = data['data'];
-        this.dimensionsEntityBased.forEach(element => {
-          var newFormElements = new FormGroup({
-            dimensionId: new FormControl(element.dimensionId),
-            dimensionName: new FormControl(element.dimensionName),
-            btdimId: new FormControl(this.getcheckedDimensionId())
-          });
-          this.arrayForBinding.push(newFormElements)
-        });
+        this.getcheckedDimensionId();
       }
     )
+  }
+
+  dimensionSelect(e){
+  console.log(e,'EVENT')  
   }
 
   getcheckedDimensionId() {
     let heell = this.dimensionsEntityBased.filter(el => el['value'] == true)
     heell.forEach(element => {
-      this.checkedValueDimension.push(element['dimensionId'])
+      this.checkingarray[element['dimensionId']]=true;
+     // this.checkedValueDimension.push(element['dimensionId'])
     });
-    return this.checkedValueDimension[0]
+    console.log(this.checkedValueDimension)
+    return this.checkedValueDimension
   }
 
   //For Updating Organization values (value >> Service >> API)
@@ -483,7 +482,7 @@ export class StructureComponent implements OnInit {
   //For Entity Upsert values (value >> Service >> API)    
   public onSubmitEntity(value) {
     console.log(value)
-    value['dimensions'] = this.finaldimensionId;
+    value['dimensions'] = this.checkingfunction();
     this.structureservice.upsertEntity(value).subscribe(
       data => {
         if (this.cities == 0) {

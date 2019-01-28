@@ -44,7 +44,8 @@
         <tbody>
             <tr *ngFor="let data of mf.data" [ngClass]="{'disablerow': data.firstName=='Admin'}">
                 <td>{{data.firstName}}  {{data.lastName}} </td>
-                <td>{{data.email}} <i *ngIf="data.verified==true" class="fa fa-check green" tooltip="Email is Verified" placement="right"></i><i *ngIf="data.verified==false" class="fa fa-times red" tooltip="Email is not verified. Click here to resend verification mail" placement="right"></i> </td>
+                <td>{{data.email}} <i *ngIf="data.verified==true" class="fa fa-check green" tooltip="Email is Verified" placement="right"></i><i *ngIf="data.verified==false"  mwlConfirmationPopover [popoverTitle]="popoverTitle" [confirmText]="confirmText"
+                    [cancelText]="cancelText" [popoverMessage]="popoverMessage" placement="left" (confirm)="resendMail(data)" class="fa fa-times red" tooltip="Email is not verified. Click here to resend verification mail" placement="right"></i> </td>
                 <td>{{data.phoneNo}}</td>
                 <td>
                     <a title="Click to Assign Permissions" (click)="permissionModal1Toggle(1)">11/24</a>
@@ -134,7 +135,7 @@
                         <div class="col-md-8">
                             <div class="input-icon right">
                                 <i class="fa fa-envelope"></i>
-                                <input type="text" maxlength="50" formControlName="email" class="form-control" autocomplete="off" [ngClass]="{'disablerow': emailchange != null}"
+                                <input type="text" maxlength="50" formControlName="email" class="form-control" autocomplete="off"
                                     placeholder="Enter Email Address">
                                 <mat-error *ngIf="form.controls.email.errors?.required && form.controls.email.touched">Email
                                     is required</mat-error>

@@ -249,29 +249,29 @@
 
 
     <div class="" *ngIf="allforms == 'dimensiondata'">
-      <form [formGroup]="dimensionForm" (ngSubmit)="onSubmitDIMENSION(dimensionForm['controls']['dimensionValues']['controls'])"
-        #dimform="ngForm">
+ 
         <div class="col-sm-12 clearfix gridrole" style="border: 1px solid rgb(204, 204, 204); padding: 20px; border-radius: 3px;">
           <h4 class="modal-title"><span style="padding-left: 13px;" class="bold">Dimension Details</span>
-            <button class="pull-right btn btn-primary" type="submit">Go Back
+            <button class="pull-right btn btn-primary">Go Back
             </button>
           </h4>
           <br>
 
-          <!-- <mat-checkbox *ngFor="let item of dimensionsEntityBased" value="item.dimensionId" formControlName="dimensionValue" [(ngModel)]="item.value" class="example-margin">
+          <mat-checkbox *ngFor="let item of dimensionsEntityBased" value="item.dimensionId" [(ngModel)]="checkingarray[item.dimensionId]" class="example-margin">
             {{item.dimensionName}} 
-            </mat-checkbox>-->
-
+            </mat-checkbox>
+            <!-- <p-tree [value]="dimensionsEntityBased" selectionMode="checkbox" (onNodeSelect)="dimensionSelect($event)"></p-tree> -->
+<!-- 
           <div formArrayName="dimensionValues">
             <div [formGroupName]="i" *ngFor="let tech of dimensionForm.get('dimensionValues')['controls'] | keyvalue; let i = index">
               <div class="col-sm-6" style="margin-top:5px">
                 <mat-checkbox formControlName="btdimId">{{dimensionsEntityBased[i].dimensionName}}</mat-checkbox>
               </div>
             </div>
-          </div>
-          <!-- <button class="btn btn-success marginbtn pull-right" >Update</button> -->
+          </div> -->
+          <button (click)="checkingfunction()" class="btn btn-success marginbtn pull-right" >Update</button> 
         </div>
-      </form>
+   
     </div>
   </div>
 </div>
@@ -287,3 +287,4 @@
       Allow generated input field to be removed
   </div>
 </div> -->
+

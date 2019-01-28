@@ -36,6 +36,7 @@ export class AdminsettingsService {
   usersListAPI = url + "get-users";
   deleteRecordAPI = url + "user-delete";
   userSatusAPI = url + "user-status";
+  resendMailAPI = url+"send-verification-mail";
 
   //For Structure API's
   getStructureAPI = url + "get-structure";
@@ -128,6 +129,10 @@ export class AdminsettingsService {
   //For Adding New User
   userUpsert(values) {
     return this.http.post(this.userUpsertAPI, values, this.getHeaders())
+  }
+
+  resendMail(values){
+    return this.http.post(this.resendMailAPI, values, this.getHeaders())
   }
 
   //To get the list of Users
