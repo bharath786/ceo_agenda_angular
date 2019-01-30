@@ -129,9 +129,6 @@ export class SetupComponent implements OnInit {
   public onSubmitDimension(value) {
     //Creating Form Data
     const dimdata = new FormData();
-    // if (value['scopeName'] == null) {
-    //   value['scopeApplicable'] = true
-    // }
     //Making the file null if the Scope Applicable is selected
     if (value['scopeApplicable'] == true) {
       dimdata.append('scopeName', '')

@@ -48,13 +48,13 @@
 
     <!-- For Upload and Download Pills -->
     <div class="pull-right">
-        <a (click)='getTargetTemplateKPI(1)' class="btn btn-primary marginbtn" id="Quality_Upload" title="Click to Upload Document">
-            <i class="fa fa-upload"></i>&nbsp;&nbsp;Download Sample
+        <a (click)='getTargetTemplateKPI(1)' class="btn btn-primary marginbtn" id="Quality_Upload" title="Click to Download Sample Document">
+            <i class="fa fa-download"></i>&nbsp;&nbsp;Download Sample
         </a>
         <a (click)='uploadModalToggle(1)' class="btn btn-primary marginbtn" id="Quality_Upload" title="Click to Upload Document">
             <i class="fa fa-upload"></i>&nbsp;&nbsp;Upload
         </a>
-        <a class="btn btn-primary marginbtn" id="Quality_download" title="Click to Download Document">
+        <a (click)='downloadExistingData(targetValue)' class="btn btn-primary marginbtn" title="Click to Download Document">
             <i class="fa fa-download"></i>&nbsp;&nbsp;Download
         </a>
     </div>
@@ -63,27 +63,18 @@
     <div class="row">
         <div class="col-sm-12 margin-top">
             <div class="row">
-                <div class="col-md-6 col-sm-12">
-                    <div class="dataTables_length" id="Quality_table1_length">
-                        <select name="Quality_table1_length" aria-controls="Quality_table1" class="form-control input-xsmall input-inline">
-                            <option value="10">10</option>
-                            <option value="25">25</option>
-                            <option value="50">50</option>
-                            <option value="100">100</option>
-                        </select><label class="table_labels"> &nbsp;records </label>
-                    </div>
-                </div>
+        
 
                 <div class="col-md-6 col-sm-12 pull-right">
                     <div id="Quality_table1_filter" class="dataTables_filter pull-right"><label class="table_labels">Search:&nbsp;</label><input
-                            type="search" class="form-control input-small input-inline" placeholder="" aria-controls="Quality_table1"></div>
+                            type="search"  [(ngModel)]="filterQuery" class="form-control input-small input-inline" aria-controls="Quality_table1"></div>
                 </div>
             </div>
         </div>
     </div>
 
     <!-- For Table -->
-    <table class="table table-hover table-bordered table-scrollable-borderless table-striped margin-top" id="table1">
+    <table [mfData]="targetValue | dataFilter : filterQuery" #mf="mfDataTable" [mfRowsOnPage]="10" class="table table-hover table-bordered table-scrollable-borderless table-striped margin-top">
         <thead>
             <tr>
                 <th class="thblue">Year</th>
@@ -95,10 +86,10 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngIf="targetValue?.length == 0">
+            <tr *ngIf="mf.data?.length == 0">
                 <td colspan="6">No record found</td>
             </tr>
-            <tr *ngFor="let item of targetValue">
+            <tr *ngFor="let item of mf.data">
                 <td>{{item.year}}</td>
                 <td>{{item.month}}</td>
                 <td>{{item.dimensionTitle}}</td>
@@ -106,28 +97,17 @@
                 <td>{{item.KPITitle}}</td>
                 <td>{{item.target}}</td>
             </tr>
-
         </tbody>
+        <tfoot>
+                <tr class="removeborder">
+                    <td colspan="7" style="padding-right:0px !important;">
+                        <mfBootstrapPaginator class="pull-right"></mfBootstrapPaginator>
+                    </td>
+                </tr>
+            </tfoot>
     </table>
 
-    <!-- For Pagination -->
-    <div class="row">
-        <div class="col-md-5 col-sm-12">
-            <div class="dataTables_info" id="table1_info" role="status" aria-live="polite">Showing 1 to 9 of 9 entries</div>
-        </div>
-        <div class="col-md-7 col-sm-12 pull-right" style="margin-top: -15px;">
-            <div class="dataTables_paginate paging_simple_numbers pull-right" id="table1_paginate">
-                <ul class="pagination">
-                    <li class="paginate_button previous disabled" aria-controls="table1" tabindex="0" id="table1_previous"><a
-                            href="#"><i class="fa fa-angle-left"></i></a></li>
-                    <li class="paginate_button active" aria-controls="table1" tabindex="0"><a href="#">1</a></li>
-                    <li class="paginate_button next disabled" aria-controls="table1" tabindex="0" id="table1_next"><a
-                            href="#"><i class="fa fa-angle-right"></i></a></li>
-                </ul>
-            </div>
-        </div>
 
-    </div>
 
 </div>
 

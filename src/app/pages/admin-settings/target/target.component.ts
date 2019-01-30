@@ -3,6 +3,7 @@ import { ModalDirective } from 'ngx-bootstrap';
 import { AdminsettingsService } from '../adminsettings.service';
 import { DownloadExcelService } from '../../download-excel.service';
 import * as XLSX from 'xlsx';
+import { MatSnackBar } from '@angular/material';
 
 
 @Component({
@@ -30,8 +31,9 @@ export class TargetComponent implements OnInit {
   uploadTemplate: any = [];
   finalTargetFile: any = [];
   targetValue: any;
+  public filterQuery = "";
 
-  constructor(private _adminsettingservice: AdminsettingsService, private excelService: DownloadExcelService) { }
+  constructor(private _adminsettingservice: AdminsettingsService,public snackBar: MatSnackBar, private excelService: DownloadExcelService) { }
 
   ngOnInit() {
     this.getDivisions();
@@ -194,6 +196,23 @@ export class TargetComponent implements OnInit {
         console.log(this.targetValue)
       }
     )
+  }
+
+  downloadExistingData(targetValue){
+    console.log(targetValue)
+    let data= []
+    targetValue.forEach(element => {
+      delete element['KPIId'];
+      delete element['entityId'];
+      delete element['targetId']
+      delete element['targetValueId']
+      delete element['createdBy'];
+      delete element['createdDate'];
+      delete element['modifiedBy'];
+      delete element['modifiedDate'];
+      data.push(element);
+    });
+    this.excelService.exportAsExcelFile(data, 'Data');
   }
 
   getTargetTemplateKPI(i: number) {

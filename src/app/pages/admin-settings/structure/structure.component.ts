@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { TreeNode } from 'primeng/api';
 import { AdminsettingsService } from '../adminsettings.service';
 import { FormBuilder, Validators, FormControl, FormGroup, FormArray } from '@angular/forms';
@@ -6,6 +6,7 @@ import { MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
 import { CheckboxModule } from 'primeng/checkbox';
 import { element } from '@angular/core/src/render3';
+import { ModalDirective } from 'ngx-bootstrap';
 
 @Component({
   selector: 'app-structure',
@@ -35,8 +36,10 @@ export class StructureComponent implements OnInit {
   divisionform: any;
   locationform: any;
   entityform: any;
+  selectAllDimensions: any;
+  dimensionArray: any =[];
 
-  checkingarray: any =[];
+  @ViewChild('dimensionsModal') public dimensionsModal: ModalDirective;
 
   //For Confirmation
   popoverTitle: string = 'Delete?';
@@ -100,18 +103,22 @@ export class StructureComponent implements OnInit {
   }
 
 
-
   ngOnInit() {
     //Get Structure Tree
     this.getStructure();
+    
   }
 
   checkingfunction(){
     this.finaldimensionId=[];
-      for (let key in this.checkingarray) {
+      for (let key in this.dimensionArray) {
+        if(this.dimensionArray[key] == true){
         this.finaldimensionId.push(key)
+        }
     }
     console.log(this.finaldimensionId)
+
+    this.dimensionsModal.hide();
     return this.finaldimensionId
   }
   //For Phone Number Validation
@@ -120,6 +127,19 @@ export class StructureComponent implements OnInit {
     let inputChar = String.fromCharCode(event.charCode);
     if (event.keyCode != 8 && !pattern.test(inputChar)) {
       event.preventDefault();
+    }
+  }
+
+  selectAllDimension(){
+    if(this.selectAllDimensions == true){
+      this.dimensionsEntityBased.forEach(element => {
+        this.dimensionArray[element['dimensionId']]=true;
+      });
+    }
+    else{
+      this.dimensionsEntityBased.forEach(element => {
+        this.dimensionArray[element['dimensionId']]=false;
+      });
     }
   }
 
@@ -244,14 +264,14 @@ export class StructureComponent implements OnInit {
   }
 
   selectDimension(e) {
-    if (e = 1) {
-      this.previousvalue = this.allforms;
-      this.allforms = 'dimensiondata';
+    if (e == 1) {
+      this.dimensionsModal.show();
+      console.log(1)
     }
-  }
-
-  getBack() {
-    this.allforms = this.previousvalue;
+    if (e == 2) {
+      this.dimensionsModal.hide()
+      console.log(2)
+    }
   }
 
   //Tree Node Selection on Structure Tree
@@ -319,9 +339,9 @@ export class StructureComponent implements OnInit {
   }
 
   getcheckedDimensionId() {
-    let heell = this.dimensionsEntityBased.filter(el => el['value'] == true)
-    heell.forEach(element => {
-      this.checkingarray[element['dimensionId']]=true;
+    let filtereddimensions = this.dimensionsEntityBased.filter(el => el['value'] == true)
+    filtereddimensions.forEach(element => {
+      this.dimensionArray[element['dimensionId']]=true;
      // this.checkedValueDimension.push(element['dimensionId'])
     });
     console.log(this.checkedValueDimension)

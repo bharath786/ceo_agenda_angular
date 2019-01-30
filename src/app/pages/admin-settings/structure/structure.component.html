@@ -220,9 +220,13 @@
                 Entity is required</mat-error> -->
             </div>
           </div>
-          <a class="pull-right btn btn-primary" (click)=selectDimension(1)>Select Dimensions</a>
 
-
+          <div class="form-group">
+            <label class="col-md-12 lblfnt">Dimesnsions</label>
+            <div class="col-md-12">
+              <a class="btn btn-primary" (click)=selectDimension(1)>Select Dimensions</a>   
+            </div>
+          </div>
           <div *ngIf="allforms == 'addEntity'" class="pull-right" style="margin-top: 25px;">
             <button [disabled]="!entityupsertform.form.valid" class="btn btn-success pull-right" id="btnupdateFimrDiv"
               type="submit">Save</button>
@@ -248,7 +252,7 @@
     </div>
 
 
-    <div class="" *ngIf="allforms == 'dimensiondata'">
+    <!-- <div class="" *ngIf="allforms == 'dimensiondata'">
  
         <div class="col-sm-12 clearfix gridrole" style="border: 1px solid rgb(204, 204, 204); padding: 20px; border-radius: 3px;">
           <h4 class="modal-title"><span style="padding-left: 13px;" class="bold">Dimension Details</span>
@@ -257,7 +261,7 @@
           </h4>
           <br>
 
-          <mat-checkbox *ngFor="let item of dimensionsEntityBased" value="item.dimensionId" [(ngModel)]="checkingarray[item.dimensionId]" class="example-margin">
+          <mat-checkbox *ngFor="let item of dimensionsEntityBased" value="item.dimensionId" [(ngModel)]="checkingarray[item.dimensionId]" class="col-sm-6 example-margin">
             {{item.dimensionName}} 
             </mat-checkbox>
             <!-- <p-tree [value]="dimensionsEntityBased" selectionMode="checkbox" (onNodeSelect)="dimensionSelect($event)"></p-tree> -->
@@ -268,11 +272,13 @@
                 <mat-checkbox formControlName="btdimId">{{dimensionsEntityBased[i].dimensionName}}</mat-checkbox>
               </div>
             </div>
-          </div> -->
+          </div> 
           <button (click)="checkingfunction()" class="btn btn-success marginbtn pull-right" >Update</button> 
         </div>
    
-    </div>
+    </div> -->
+
+
   </div>
 </div>
 
@@ -288,3 +294,48 @@
   </div>
 </div> -->
 
+
+        <!-- For Permission Modal Popup -->
+        <div class="modal fade" bsModal #dimensionsModal="bs-modal" [config]="{backdrop: 'static'}" role="dialog">
+          <div class="modal-dialog modal-custom">
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <h4 class="modal-title titlemodal">
+                          <b>Dimensions</b> <i (click)="permissionModalToggle(2)" class="fa fa-times pull-right titlemodal"></i>
+                      </h4>
+                  </div>
+                  <div class="modal-body row">
+                      <div class="col-sm-12">
+                        <div class="col-sm-12">   
+                          
+                            <mat-checkbox [(ngModel)]="selectAllDimensions" (change)="selectAllDimension()" class="example-margin">
+                                Select All
+                             </mat-checkbox></div>
+                          <table class="table table-hover table-bordered table-scrollable-borderless col-sm-6 table-striped margin-top"
+                              id="table1">
+                              <tbody>      
+                                  <!-- <tr>
+                                     
+                                      <mat-checkbox value="all" [(ngModel)]="checkingarray" class="example-margin">
+                                          Select All
+                                          </mat-checkbox>
+                              </tr> -->
+                                  <tr *ngFor="let item of dimensionsEntityBased" class="col-sm-4" style="margin-top: 5px">
+                                     
+                                          <mat-checkbox  value="item.dimensionId" [(ngModel)]="dimensionArray[item.dimensionId]" class="example-margin">
+                                              {{item.dimensionName}} 
+                                              </mat-checkbox>
+                                  </tr>
+      
+                              </tbody>
+                          </table>
+                      </div>
+                  </div>
+                  <div class="modal-footer">
+                      <button type="submit" (click)="checkingfunction()" class="btn btn-primary"><i class="fa fa-check"></i>&nbsp;Update</button>
+                      <button type="button" class="btn btn-default" (click)="selectDimension(2)"><i class="fa fa-arrow-left"></i>&nbsp;Go
+                          Back</button>
+                  </div>
+              </div>
+          </div>
+      </div>
