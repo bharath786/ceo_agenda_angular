@@ -170,7 +170,7 @@ export class SetupComponent implements OnInit {
             panelClass: ['greenSnackbar']
           });
         }
-        this.router.navigate(['/adminsettings/setup']);
+        
       },
       error => {
         console.log(error);
@@ -200,7 +200,7 @@ export class SetupComponent implements OnInit {
           });
         }
 
-        this.router.navigate(['/adminsettings/setup']);
+        
       },
       error => {
         console.log(error);

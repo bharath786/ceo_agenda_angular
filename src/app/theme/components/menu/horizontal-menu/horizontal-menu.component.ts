@@ -5,6 +5,7 @@ import { Settings } from '../../../../app.settings.model';
 import { MenuService } from '../menu.service';
 import { MatMenuTrigger } from '@angular/material';
 import { Menu } from '../menu.model';
+import { AppService } from 'src/app/app.service';
 
 
 @Component({
@@ -28,10 +29,10 @@ export class HorizontalMenuComponent implements OnInit {
   public horizontalMenuItems = [
     //Parent tabs
     new Menu(6, 'Dashboard', '/dashboard', null, 'looks', null, false, 0),
-    new Menu(1, 'Predictive', '/predictive', null, 'multiline_chart', null, true, 0),
-    new Menu(2, 'System', '/system', null, 'pie_chart', null, true, 0),
-    new Menu(3, 'Control', '/control', null, 'insert_chart', null, true, 0),
-    new Menu(4, 'Process', '/process', null, 'equalizer', null, true, 0),
+    new Menu(1, 'Predictive', '', null, 'multiline_chart', null, true, 0),
+    new Menu(2, 'System', '', null, 'pie_chart', null, true, 0),
+    new Menu(3, 'Control', '', null, 'insert_chart', null, true, 0),
+    new Menu(4, 'Process', '', null, 'equalizer', null, true, 0),
     new Menu(5, 'Admin', '/adminsettings', null, 'portrait', null, true, 0),
     //Sub tabs in Admin
     new Menu(8, 'Setup', '/adminsettings/setup', null, 'build', null, false, 5),
@@ -44,7 +45,7 @@ export class HorizontalMenuComponent implements OnInit {
   files: any;
 
   constructor(public appSettings: AppSettings, private activatedRoute: ActivatedRoute,
-    public menuService: MenuService, public router: Router) {
+    public menuService: MenuService, public _menuservice: AppService, public router: Router) {
     this.settings = this.appSettings.settings;
     // subscribe to the router events - storing the subscription so
     // we can unsubscribe later. 
@@ -63,72 +64,21 @@ export class HorizontalMenuComponent implements OnInit {
 
   DynamicMenu() {
     this.menuItems=[];
-    this.menuService.getMenu().subscribe(
+    this._menuservice.getMenu().subscribe(
       data => {
         data['data'].forEach((element) => {
           this.horizontalMenuItems.push(new Menu(element['dimensionId'], element['dimensionName'], '/analytics/highlights', null, '', null, false, element['analyticsId']))
         });
-
         this.menuItems = this.horizontalMenuItems;
         this.menuItems = this.menuItems.filter(item => item.parentId == this.menuParentId);
       }
     )
   }
 
-  // getDimensionData(e) {
-  //   this.menuService.getDimensionData(e).subscribe(
-  //     data => {
-  //       console.log(data['data'],"data")
-  //       this.files = data['data']
-  //       if(this.files.length != 0){
 
-  //         sessionStorage.removeItem('dimensionData')
-  //         sessionStorage.setItem('dimensionData', JSON.stringify(this.files));
-  //         console.log(this.files,'CHECK')
-  //       }
-  //     },
-  //     error => {
-  //       console.log(error)
-  //     }
-  //   )
-  // }
-
-
-  // getDimensionData(e) {
-  //   this.menuService.getDimensionData(e).subscribe(
-  //     data => {
-  //       console.log(data['data'], "data")
-  //       this.files = data['data']
-  //       if (this.files.length != 0) {
-
-  //         sessionStorage.removeItem('dimensionData')
-  //         sessionStorage.setItem('dimensionData', JSON.stringify(this.files));
-  //         console.log(this.files, 'CHECK')
-  //       }
-  //     },
-  //     error => {
-  //       console.log(error)
-  //     }
-  //   )
-
-  getDimensionData(e) {
-    this.menuService.getDimensionData(e).toPromise().then(
-      data => {
-        this.files = data['data']
-        if (this.files.length != 0) {
-          sessionStorage.removeItem('dimensionData')
-          sessionStorage.setItem('dimensionData', JSON.stringify(this.files));
-          console.log(this.files, 'CHECK')
-        }
-      }
-    )
-      .catch(
-        error => {
-          console.log(error)
-        }
-      )
+  getDimensionData(menuId) {
+    this.appSettings.setMenuId(menuId);
   }
-
 
   ngAfterViewInit() {
     this.router.events.subscribe(event => {

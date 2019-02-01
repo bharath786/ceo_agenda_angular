@@ -54,13 +54,7 @@ export class MenuService {
       }
   }
   
-  getMenu(){
-    return this.http.get(url+'get-menu', this.getHeaders())
-  }
 
-  getDimensionData(dimensionId){
-    return this.http.get(url+'get-dimensiondata?dimensionId='+dimensionId, this.getHeaders())
-  }
 
   passData(data){
     return data
