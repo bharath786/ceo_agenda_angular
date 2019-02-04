@@ -221,8 +221,7 @@ export class TargetComponent implements OnInit {
       data => {
         this.TargetTemplate = data['data'];
         this.TargetTemplate.forEach(element => {
-          delete element['KPIId'];
-
+           delete element['KPIId'];
           delete element['entityId'];
 
           delete element['createdBy'];
@@ -230,7 +229,7 @@ export class TargetComponent implements OnInit {
           delete element['modifiedBy'];
           delete element['modifiedDate'];
 
-          element['year'] = null;
+           element['year'] = null;
           element['month'] = null;
           element['target'] = null;
           this.downloadData.push(element);
