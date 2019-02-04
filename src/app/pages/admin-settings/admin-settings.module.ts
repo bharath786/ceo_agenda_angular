@@ -18,6 +18,7 @@ import { AdminsettingsService } from './adminsettings.service';
 import { ConfirmationPopoverModule } from 'angular-confirmation-popover';
 import { DownloadExcelService } from '../download-excel.service';
 import { TooltipModule } from 'ngx-bootstrap';
+import { GetMonthName } from 'src/app/theme/pipes/Months.pipe';
 
 
 
@@ -49,7 +50,7 @@ export const routes :Routes = [
     })
   ],
   exports:[RouterModule],
-  declarations: [DataFilterPipe, PreferencesComponent, ManageUsersComponent, SetupComponent, StructureComponent, TargetComponent],
+  declarations: [DataFilterPipe, GetMonthName, PreferencesComponent, ManageUsersComponent, SetupComponent, StructureComponent, TargetComponent],
   providers: [AdminsettingsService, DownloadExcelService]
 
 })

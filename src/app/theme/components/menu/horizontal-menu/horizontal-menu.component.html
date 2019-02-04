@@ -1,5 +1,5 @@
 <div [fxLayout]="(menuParentId == 0) ? 'row' : 'column'" fxLayoutAlign="start center">
-    <div *ngFor="let menu of menuItems" class="horizontal-menu-item w-100">
+    <div *ngFor="let menu of  menuItems" class="horizontal-menu-item w-100">
         <a *ngIf="menu.routerLink && !menu.hasSubMenu" (click)="getDimensionData(menu.id)" mat-button fxLayout="row" [fxLayoutAlign]="(settings.menuType=='default') ? 'start center' : 'center center'"
             [routerLink]="[menu.routerLink]" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact:true}"
             [matTooltip]="menu.title" matTooltipPosition="above" [matTooltipDisabled]="(settings.menuType=='mini') ? 'false' : 'true'"
@@ -15,8 +15,7 @@
             <mat-icon class="horizontal-menu-icon">{{menu.icon}}</mat-icon>
             <span class="horizontal-menu-title">{{menu.title}}</span>
         </a>
-        <a *ngIf="menu.hasSubMenu" mat-button fxLayout="row" [routerLink]="[menu.routerLink]" routerLinkActive="active-link"
-            [fxLayoutAlign]="(settings.menuType=='default') ? 'start center' : 'center center'" [matTooltip]="menu.title"
+        <a *ngIf="menu.hasSubMenu" mat-button fxLayout="row" [routerLink]="[menu.routerLink]"              [fxLayoutAlign]="(settings.menuType=='default') ? 'start center' : 'center center'" [matTooltip]="menu.title"
             matTooltipPosition="above" [matTooltipDisabled]="(settings.menuType=='mini') ? 'false' : 'true'" [id]="'horizontal-menu-item-'+menu.id">
             <mat-icon class="horizontal-menu-icon">{{menu.icon}}</mat-icon>
             <span class="horizontal-menu-title">{{menu.title}}</span>

@@ -19,7 +19,7 @@ export class DimensionHighlightsComponent implements OnInit {
     menuId$: Observable<any>;
     // ... your class variables here
     navigationSubscription;
-    constructor(private router: Router, public appSettings: AppSettings, public menuService: AppService) {
+    constructor(private router: Router, public appSettings: AppSettings, public menuService: MenuService) {
 
 
         // subscribe to the router events - storing the subscription so
@@ -32,14 +32,6 @@ export class DimensionHighlightsComponent implements OnInit {
         });
     }
 
-    // ngOnDestroy() {
-    //     // avoid memory leaks here by cleaning up after ourselves. If we  
-    //     // don't then we will continue to run our initialiseInvites()   
-    //     // method on every navigationEnd event.
-    //     if (this.navigationSubscription) {
-    //         this.navigationSubscription.unsubscribe();
-    //     }
-    //  }
     ngOnInit() {
     }
 

@@ -5,6 +5,8 @@ import { ModalDirective } from 'ngx-bootstrap';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
+import { AppSettings } from '../../../app.settings';
+import { Menu } from 'src/app/theme/components/menu/menu.model';
 
 @Component({
   selector: 'app-setup',
@@ -51,7 +53,7 @@ export class SetupComponent implements OnInit {
   confirmClicked: boolean = false;
   cancelClicked: boolean = false;
 
-  constructor(private setupservice: AdminsettingsService, public router: Router, public fb: FormBuilder, public snackBar: MatSnackBar) {
+  constructor(private appSettings  : AppSettings, private setupservice: AdminsettingsService, public router: Router, public fb: FormBuilder, public snackBar: MatSnackBar) {
 
     this.sessionUser = JSON.parse(sessionStorage['Session_name'])
     //Analytics Update Form
@@ -67,8 +69,8 @@ export class SetupComponent implements OnInit {
       'dimensionId': null,
       'dimensionName': [null, Validators.compose([Validators.required])],
       'scopeName': [null],
-      'scopeApplicable': [false,],
-      'frequencyId': [null, Validators.compose([Validators.required])],
+      'scopeApplicable': [false],
+      'frequencyId': [4],
       'modifiedBy': this.sessionUser['user_id'],
       'createdBy': this.sessionUser['user_id'],
       'analyticsId': null
@@ -134,7 +136,6 @@ export class SetupComponent implements OnInit {
       dimdata.append('scopeName', '')
       value['dimensionId'] != null ? dimdata.append('dimensionId', value['dimensionId']) : dimdata.append('dimensionId', '0');
       dimdata.append('dimensionName', value['dimensionName'])
-      //value['scopeApplicable'] != null ? dimdata.append('scopeApplicable', value['scopeApplicable']) : dimdata.append('scopeApplicable', "false");
       dimdata.append('scopeApplicable', value['scopeApplicable'])
       dimdata.append('frequencyId', value['frequencyId'])
       dimdata.append('analyticsId', value['analyticsId'])
@@ -157,6 +158,7 @@ export class SetupComponent implements OnInit {
     //Sending Form Data Values to Service
     this.setupservice.upsertDimension(dimdata).subscribe(
       data => {
+        console.log(data);
         if (data['error'] == true) {
           this.snackBar.open(data['message'], 'OK', {
             duration: 7000,
@@ -165,6 +167,7 @@ export class SetupComponent implements OnInit {
         }
         else {
           this.getSetup();
+          this.appSettings.setMenus(new Menu(data['dimensionId'], data['dimensionName'], '/analytics/highlights', null, '', null, false, data['analyticsId']));
           this.snackBar.open(data['message'], 'OK', {
             duration: 7000,
             panelClass: ['greenSnackbar']
@@ -241,13 +244,8 @@ export class SetupComponent implements OnInit {
     )
   }
 
-
   //For Deleting KRA
   onDeleteKRA(value) {
-    // console.log(value['KRAId'], 'KRA VALUE')
-    // console.log(this.mainvalue, 'MAIN VALUE')
-    // let somevalue = this.mainvalue.filter(item=>item.KRAId == value['KRAId'])
-    // console.log(somevalue, 'Somevalue')
     this.setupservice.deleteKRA(value).subscribe(
       data => {
         if (data['error'] == true) {
@@ -352,7 +350,6 @@ export class SetupComponent implements OnInit {
       this.getDimensionFrequencies();
       if (event['node']['scopeApplicable'] == 1) {
         this.scopeInput = true;
-        //this.scopeValue = true;
       }
       else {
         this.scopeInput = false;

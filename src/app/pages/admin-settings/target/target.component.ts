@@ -3,7 +3,8 @@ import { ModalDirective } from 'ngx-bootstrap';
 import { AdminsettingsService } from '../adminsettings.service';
 import { DownloadExcelService } from '../../download-excel.service';
 import * as XLSX from 'xlsx';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar, MatOptionSelectionChange } from '@angular/material';
+import { FormBuilder, Validators } from '@angular/forms';
 
 
 @Component({
@@ -18,7 +19,7 @@ export class TargetComponent implements OnInit {
 
   currentYear = new Date().getFullYear();
   currentMonth = new Date().getMonth() + 1;
-  divisions: any;
+  divisions: any = [];
   locations: any;
   entities: any;
   TargetTemplate: any = [];
@@ -32,13 +33,82 @@ export class TargetComponent implements OnInit {
   finalTargetFile: any = [];
   targetValue: any;
   public filterQuery = "";
+  totalYears:  any = [];
+  filteredTargetValues: any;
+  YearMonths: any = [];
+  selectedYear: any;
+  selectedMonth: any;
+  selectedDivisionId: any;
+  filterForm: any;
 
-  constructor(private _adminsettingservice: AdminsettingsService,public snackBar: MatSnackBar, private excelService: DownloadExcelService) { }
+  constructor(private _adminsettingservice: AdminsettingsService,public fb: FormBuilder,public snackBar: MatSnackBar, private excelService: DownloadExcelService) { 
+
+        this.filterForm = this.fb.group({
+          'year': null,
+          'month': [null],
+          'division': [null],
+          'country': [null],
+          'entity': [null]
+        });
+
+  }
+
 
   ngOnInit() {
-    this.getDivisions();
     this.getTargetTemplateKPI(0);
     this.getTargetValue()
+  }
+
+  resetForm(){
+    this.filterForm.reset();
+    this.getTargetValue()
+  }
+  
+  onYearSelect(year){
+    this.selectedYear = year;
+    this._adminsettingservice.getTargetValue().subscribe(
+      data => {
+        this.targetValue = data['data']
+        this.targetValue = this.targetValue.filter(x=> x.year==year) 
+        this.YearMonths =[];
+        this.targetValue.forEach(element => {
+          this.YearMonths.push(element.month) 
+          this.YearMonths = Array.from(new Set(this.YearMonths));
+        }); 
+      }
+    )
+  }
+
+  onMonthSelect(month){
+    this._adminsettingservice.getTargetValue().subscribe(
+      data => {
+        this.selectedMonth = month;
+        this.targetValue = data['data']
+        this.targetValue = this.targetValue.filter(x=> x.year==this.selectedYear && x.month == month)
+        this.targetValue.forEach(element => {
+          this.divisions = [];
+        this.divisions.push({Name: element.divisionName, Id: element.divisionId}  ) 
+        this.divisions = Array.from(new Set(this.divisions));
+        }); 
+      }
+    )
+  }
+
+  onDivisionSelect(DivisionId){
+    this._adminsettingservice.getTargetValue().subscribe(
+      data => {
+        this.selectedDivisionId = DivisionId;
+        this.targetValue = data['data']
+        this.targetValue = this.targetValue.filter(x=> x.year==this.selectedYear 
+          && x.month == this.selectedMonth && x.divisionId == DivisionId)
+        this.targetValue.forEach(element => {
+          this.divisions.push(element.divisionName, element.divisionId) 
+          this.divisions = Array.from(new Set(this.divisions));
+        }); 
+      }
+    )
+    console.log(this.divisions)
+
   }
 
   incomingfile(event) {
@@ -178,22 +248,25 @@ export class TargetComponent implements OnInit {
   }
 
   //To get all divisions for filter
-  getDivisions() {
-    this._adminsettingservice.getDivisions().subscribe(
-      data => {
-        this.divisions = data['data']
-      },
-      error => {
-        console.log(error)
-      }
-    )
-  }
+  // getDivisions() {
+  //   this._adminsettingservice.getDivisions().subscribe(
+  //     data => {
+  //       this.divisions = data['data']
+  //     },
+  //     error => {
+  //       console.log(error)
+  //     }
+  //   )
+  // }
 
   getTargetValue() {
     this._adminsettingservice.getTargetValue().subscribe(
       data => {
         this.targetValue = data['data']
-        console.log(this.targetValue)
+        this.targetValue.forEach(element => {
+          this.totalYears.push(element.year)
+        });
+        this.totalYears = Array.from(new Set(this.totalYears));
       }
     )
   }
@@ -288,28 +361,4 @@ export class TargetComponent implements OnInit {
     this.excelService.exportAsExcelFile(element, 'Upload Template');
   }
 
-  years = [
-    { value: '1', viewValue: '2012' },
-    { value: '2', viewValue: '2013' },
-    { value: '3', viewValue: '2014' },
-    { value: '4', viewValue: '2015' },
-    { value: '5', viewValue: '2016' },
-    { value: '6', viewValue: '2017' },
-    { value: '7', viewValue: '2018' }
-  ];
-
-  months = [
-    { value: '1', viewValue: 'January' },
-    { value: '2', viewValue: 'February' },
-    { value: '3', viewValue: 'March' },
-    { value: '4', viewValue: 'April' },
-    { value: '5', viewValue: 'May' },
-    { value: '6', viewValue: 'June' },
-    { value: '7', viewValue: 'July' },
-    { value: '8', viewValue: 'August' },
-    { value: '9', viewValue: 'September' },
-    { value: '10', viewValue: 'October' },
-    { value: '11', viewValue: 'November' },
-    { value: '12', viewValue: 'December' }
-  ];
 }

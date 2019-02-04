@@ -121,6 +121,7 @@ export class StructureComponent implements OnInit {
     this.dimensionsModal.hide();
     return this.finaldimensionId
   }
+  
   //For Phone Number Validation
   keyPress(event: any) {
     const pattern = /[0-9\+\-\a-z\ ]/;
@@ -130,18 +131,18 @@ export class StructureComponent implements OnInit {
     }
   }
 
-  selectAllDimension(){
-    if(this.selectAllDimensions == true){
-      this.dimensionsEntityBased.forEach(element => {
-        this.dimensionArray[element['dimensionId']]=true;
-      });
-    }
-    else{
-      this.dimensionsEntityBased.forEach(element => {
-        this.dimensionArray[element['dimensionId']]=false;
-      });
-    }
-  }
+  // selectAllDimension(){
+  //   if(this.selectAllDimensions == true){
+  //     this.dimensionsEntityBased.forEach(element => {
+  //       this.dimensionArray[element['dimensionId']]=true;
+  //     });
+  //   }
+  //   else{
+  //     this.dimensionsEntityBased.forEach(element => {
+  //       this.dimensionArray[element['dimensionId']]=false;
+  //     });
+  //   }
+  // }
 
   // onSubmitDIMENSION(e) {
   //   console.log(e)

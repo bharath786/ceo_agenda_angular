@@ -24,6 +24,14 @@ export class MenuService {
     return horizontalMenuItems;
   }
 
+  getMenu(){
+    return this.http.get(url+'get-menu', this.getHeaders())
+  }
+
+  getDimensionData(dimensionId){
+    return this.http.get(url+'get-dimensiondata?dimensionId='+dimensionId, this.getHeaders())
+  }
+
     //For Headers
     getHeaders() {
       let sessionUser = JSON.parse(sessionStorage['Session_name'])

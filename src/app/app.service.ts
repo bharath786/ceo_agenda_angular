@@ -37,13 +37,7 @@ export class AppService {
   }
 
 
-    getMenu(){
-    return this.http.get(url+'get-menu', this.getHeaders())
-  }
 
-  getDimensionData(dimensionId){
-    return this.http.get(url+'get-dimensiondata?dimensionId='+dimensionId, this.getHeaders())
-  }
 
   //For Update Profile API
   profileUpdate(values) {

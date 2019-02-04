@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild, ViewEncapsulation, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, ViewEncapsulation, Output, EventEmitter, ChangeDetectorRef  } from '@angular/core';
 import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { AppSettings } from '../../../../app.settings';
 import { Settings } from '../../../../app.settings.model';
@@ -6,7 +6,8 @@ import { MenuService } from '../menu.service';
 import { MatMenuTrigger } from '@angular/material';
 import { Menu } from '../menu.model';
 import { AppService } from 'src/app/app.service';
-
+import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs';
 
 @Component({
   selector: 'app-horizontal-menu',
@@ -17,60 +18,60 @@ import { AppService } from 'src/app/app.service';
 })
 export class HorizontalMenuComponent implements OnInit {
 
-
-
   @Input('menuParentId') menuParentId;
-  public menuItems: Array<any>;
+  
+  menuItems: Array<Menu>;
   public settings: Settings;
   @ViewChild(MatMenuTrigger) trigger: MatMenuTrigger;
-
-
-
-  public horizontalMenuItems = [
-    //Parent tabs
-    new Menu(6, 'Dashboard', '/dashboard', null, 'looks', null, false, 0),
-    new Menu(1, 'Predictive', '', null, 'multiline_chart', null, true, 0),
-    new Menu(2, 'System', '', null, 'pie_chart', null, true, 0),
-    new Menu(3, 'Control', '', null, 'insert_chart', null, true, 0),
-    new Menu(4, 'Process', '', null, 'equalizer', null, true, 0),
-    new Menu(5, 'Admin', '/adminsettings', null, 'portrait', null, true, 0),
-    //Sub tabs in Admin
-    new Menu(8, 'Setup', '/adminsettings/setup', null, 'build', null, false, 5),
-    new Menu(9, 'Structure', '/adminsettings/structure', null, 'memory', null, false, 5),
-    new Menu(10, 'Manage Users', '/adminsettings/manageusers', null, 'people_outline', null, false, 5),
-    new Menu(11, 'Preferences', '/adminsettings/preferences', null, 'chat_bubble', null, false, 5),
-    new Menu(27, 'Target', '/adminsettings/target', null, 'done_all', null, false, 5),
-  ]
   componentRef: any;
   files: any;
 
   constructor(public appSettings: AppSettings, private activatedRoute: ActivatedRoute,
-    public menuService: MenuService, public _menuservice: AppService, public router: Router) {
+    public menuService: MenuService, public router: Router, private cdref: ChangeDetectorRef,) {
     this.settings = this.appSettings.settings;
-    // subscribe to the router events - storing the subscription so
-    // we can unsubscribe later. 
-    this.router.events.subscribe((e: any) => {
-      // If it is a NavigationEnd event re-initalise the component
-      if (e instanceof NavigationEnd) {
-        this.DynamicMenu();
-      }
-    });
+    
+    // // subscribe to the router events - storing the subscription so
+    // // we can unsubscribe later. 
+    // this.router.events.subscribe((e: any) => {
+    //   // If it is a NavigationEnd event re-initalise the component
+    //   if (e instanceof NavigationEnd) {
+    //     this.DynamicMenu();
+    //   }
+    // });
   }
 
 
   ngOnInit() {
-    this.DynamicMenu();
+     this.setInitialMenus();
   }
 
-  DynamicMenu() {
-    this.menuItems=[];
-    this._menuservice.getMenu().subscribe(
+  setInitialMenus() {
+    let horizontalMenuItems = [
+      new Menu(6, 'Dashboard', '/dashboard', null, 'looks', null, false, 0),
+      new Menu(1, 'Predictive', '', null, 'multiline_chart', null, true, 0),
+      new Menu(2, 'System', '', null, 'pie_chart', null, true, 0),
+      new Menu(3, 'Control', '', null, 'insert_chart', null, true, 0),
+      new Menu(4, 'Process', '', null, 'equalizer', null, true, 0),
+      new Menu(5, 'Admin', '/adminsettings', null, 'portrait', null, true, 0),
+      new Menu(8, 'Setup', '/adminsettings/setup', null, 'build', null, false, 5),
+      new Menu(9, 'Structure', '/adminsettings/structure', null, 'memory', null, false, 5),
+      new Menu(10, 'Manage Users', '/adminsettings/manageusers', null, 'people_outline', null, false, 5),
+      new Menu(11, 'Preferences', '/adminsettings/preferences', null, 'chat_bubble', null, false, 5),
+      new Menu(27, 'Target', '/adminsettings/target', null, 'done_all', null, false, 5),
+    ];
+
+    this.menuService.getMenu().subscribe(
       data => {
         data['data'].forEach((element) => {
-          this.horizontalMenuItems.push(new Menu(element['dimensionId'], element['dimensionName'], '/analytics/highlights', null, '', null, false, element['analyticsId']))
+          horizontalMenuItems.push(new Menu(element['dimensionId'], element['dimensionName'], '/analytics/highlights', null, '', null, false, element['analyticsId']))
         });
-        this.menuItems = this.horizontalMenuItems;
-        this.menuItems = this.menuItems.filter(item => item.parentId == this.menuParentId);
+        let menuItemsBeforeFilter = horizontalMenuItems;
+        let temp = of(menuItemsBeforeFilter.filter(item => item.parentId == this.menuParentId));
+        this.appSettings.initialMenus(temp);
+        this.appSettings.menuItems.subscribe(menus => {
+          this.menuItems = menus as Menu[]
+        });
+        console.log(this.menuItems);
       }
     )
   }
@@ -94,6 +95,10 @@ export class HorizontalMenuComponent implements OnInit {
         }
       }
     });
+  }
+
+  ngAfterContentChecked() {
+    this.cdref.detectChanges();
   }
 
 }
