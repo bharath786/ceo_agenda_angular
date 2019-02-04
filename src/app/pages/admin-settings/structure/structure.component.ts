@@ -55,7 +55,10 @@ export class StructureComponent implements OnInit {
   arrayForBinding: any[] = [];
   finaldimensionId: any[] = [];
 
-  constructor(private structureservice: AdminsettingsService, public router: Router, public fb: FormBuilder, public snackBar: MatSnackBar) {
+  constructor(private structureservice: AdminsettingsService, 
+              public router: Router, 
+              public fb: FormBuilder, 
+              public snackBar: MatSnackBar) {
 
     this.sessionUser = JSON.parse(sessionStorage['Session_name'])
     //Organization Update Form
@@ -65,6 +68,8 @@ export class StructureComponent implements OnInit {
       'organizationDescription': [null],
       'modifiedBy': this.sessionUser['user_id']
     });
+
+   
 
     //Division Update Form
     this.divisionform = this.fb.group({
@@ -102,6 +107,11 @@ export class StructureComponent implements OnInit {
     });
   }
 
+  fnDimensionsModal(){
+    console.log("Close Modal")
+    this.dimensionsModal.hide();
+  }
+
 
   ngOnInit() {
     //Get Structure Tree
@@ -116,7 +126,7 @@ export class StructureComponent implements OnInit {
         this.finaldimensionId.push(key)
         }
     }
-    console.log(this.finaldimensionId)
+     console.log(this.finaldimensionId)
 
     this.dimensionsModal.hide();
     return this.finaldimensionId
@@ -267,11 +277,9 @@ export class StructureComponent implements OnInit {
   selectDimension(e) {
     if (e == 1) {
       this.dimensionsModal.show();
-      console.log(1)
     }
     if (e == 2) {
       this.dimensionsModal.hide()
-      console.log(2)
     }
   }
 
@@ -332,23 +340,25 @@ export class StructureComponent implements OnInit {
         this.dimensionsEntityBased = data['data'];
         this.getcheckedDimensionId();
       }
+      
     )
   }
+
 
   dimensionSelect(e){
   console.log(e,'EVENT')  
   }
 
   getcheckedDimensionId() {
+    this.dimensionArray = [];
     let filtereddimensions = this.dimensionsEntityBased.filter(el => el['value'] == true)
     filtereddimensions.forEach(element => {
       this.dimensionArray[element['dimensionId']]=true;
-     // this.checkedValueDimension.push(element['dimensionId'])
+    //  this.dimensionArray.push(element['dimensionId'] )
     });
-    console.log(this.checkedValueDimension)
-    return this.checkedValueDimension
+    console.log(this.dimensionArray)
+    return this.dimensionArray
   }
-
   //For Updating Organization values (value >> Service >> API)
   public onSubmitOrganization(value: object) {
     this.structureservice.updateOrganization(value).subscribe(
