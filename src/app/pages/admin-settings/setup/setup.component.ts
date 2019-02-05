@@ -153,7 +153,7 @@ export class SetupComponent implements OnInit {
       dimdata.append('createdBy', value['createdBy'])
       dimdata.append('modifiedBy', value['modifiedBy'])
       value['scopeName'] != null ? dimdata.append("fileName", this.fileScope['name']) : dimdata.append("fileName", "");
-      console.log(dimdata.get('scopeName')['name'])
+     
     }
     //Sending Form Data Values to Service
     this.setupservice.upsertDimension(dimdata).subscribe(
@@ -167,7 +167,8 @@ export class SetupComponent implements OnInit {
         }
         else {
           this.getSetup();
-          this.appSettings.setMenus(new Menu(data['dimensionId'], data['dimensionName'], '/analytics/highlights', null, '', null, false, data['analyticsId']));
+          this.appSettings.setIsNewAdded(true);
+          this.router.navigate(['adminsettings/setup']);
           this.snackBar.open(data['message'], 'OK', {
             duration: 7000,
             panelClass: ['greenSnackbar']
@@ -197,6 +198,8 @@ export class SetupComponent implements OnInit {
         }
         else {
           this.getSetup();
+          this.appSettings.setIsNewAdded(true);
+          this.router.navigate(['adminsettings/setup']);
           this.snackBar.open(data['message'], 'OK', {
             duration: 7000,
             panelClass: ['greenSnackbar']

@@ -50,7 +50,7 @@ export class AdminsettingsService {
   deleteDivisionAPI = url + "delete-division";
   deleteLocationAPI = url + "delete-location";
   deleteEntityAPI = url + "delete-entity";
-  getDimensionsEntityBasedAPI = url + "   ";
+  getDimensionsEntityBasedAPI = url + "get-dimension-entity";
 
   //For Setup API's
   getSetupAPI = url + "get-setup";

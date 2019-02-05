@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Settings } from './app.settings.model';
 import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs/Observable';
-import { Menu } from './theme/components/menu/menu.model';
 import { map } from 'rxjs/operators';
 import { Input  } from '@angular/core';
 
@@ -12,9 +11,9 @@ export class AppSettings {
     @Input('menuParentId') menuParentId;
 
     private menuSelected = new Subject<any>();
-    private totalMenus = new Subject<Menu[]>();
+    private isNewAdded = new Subject<boolean>();
     menuId$: Observable<any> = this.menuSelected.asObservable();
-    menuItems: Observable<Menu[]> = this.totalMenus.asObservable();
+    newAdded$: Observable<boolean> = this.isNewAdded.asObservable();
 
 
     public setMenuId(id) {
@@ -25,22 +24,14 @@ export class AppSettings {
         return this.menuId$;
     }
 
-    public initialMenus(menuItems) {
-        this.menuItems = menuItems;
+    public setIsNewAdded(flag) {
+        this.newAdded$ = flag;
     }
 
-    public setMenus(menuItem) {
-        console.log(menuItem);
-        this.menuItems.pipe(map(menuItemList => {
-            menuItemList.push(menuItem.filter(item => item.parentId == this.menuParentId));
-            return menuItemList;
-        }));
-        console.log(this.menuItems,'Ggjg')
+    public getIsNewAdded() {
+        return this.newAdded$;
     }
 
-    public getMenus() {
-        return this.menuItems;
-    }
 
     public settings = new Settings(
         'CEO Agenda',   //theme name
