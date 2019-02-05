@@ -51,9 +51,7 @@ export class TargetComponent implements OnInit {
           'country': [null],
           'entity': [null]
         });
-
   }
-
 
   ngOnInit() {
     this.getTargetTemplateKPI(0);

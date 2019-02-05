@@ -5,7 +5,6 @@ import { Settings } from '../../../../app.settings.model';
 import { MenuService } from '../menu.service';
 import { MatMenuTrigger } from '@angular/material';
 import { Menu } from '../menu.model';
-import { AppService } from 'src/app/app.service';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs';
 
@@ -20,7 +19,8 @@ export class HorizontalMenuComponent implements OnInit {
 
   @Input('menuParentId') menuParentId;
   
-  menuItems: Array<Menu>;
+  public menuItems: Array<Menu[]>;
+  menuId$: Observable<any>;
   public settings: Settings;
   @ViewChild(MatMenuTrigger) trigger: MatMenuTrigger;
   componentRef: any;
@@ -30,23 +30,32 @@ export class HorizontalMenuComponent implements OnInit {
     public menuService: MenuService, public router: Router, private cdref: ChangeDetectorRef,) {
     this.settings = this.appSettings.settings;
     
-    // // subscribe to the router events - storing the subscription so
-    // // we can unsubscribe later. 
-    // this.router.events.subscribe((e: any) => {
-    //   // If it is a NavigationEnd event re-initalise the component
-    //   if (e instanceof NavigationEnd) {
-    //     this.DynamicMenu();
-    //   }
-    // });
+    // subscribe to the router events - storing the subscription so
+    // we can unsubscribe later. 
+    this.router.events.subscribe((e: any) => {
+      // If it is a NavigationEnd event re-initalise the component
+      if (e instanceof NavigationEnd) {
+        if(this.appSettings.getIsNewAdded()) {
+          this.setInitialMenus();
+          this.appSettings.setIsNewAdded(false);
+        }
+      }
+    });
   }
 
+  getDynamicMenu(){
+
+  }
 
   ngOnInit() {
-     this.setInitialMenus();
+    this.appSettings.setIsNewAdded(false);
+    this.setInitialMenus();
   }
 
+
   setInitialMenus() {
-    let horizontalMenuItems = [
+    let horizontalMenuItems = []
+     horizontalMenuItems = [
       new Menu(6, 'Dashboard', '/dashboard', null, 'looks', null, false, 0),
       new Menu(1, 'Predictive', '', null, 'multiline_chart', null, true, 0),
       new Menu(2, 'System', '', null, 'pie_chart', null, true, 0),
@@ -64,14 +73,12 @@ export class HorizontalMenuComponent implements OnInit {
       data => {
         data['data'].forEach((element) => {
           horizontalMenuItems.push(new Menu(element['dimensionId'], element['dimensionName'], '/analytics/highlights', null, '', null, false, element['analyticsId']))
-        });
-        let menuItemsBeforeFilter = horizontalMenuItems;
-        let temp = of(menuItemsBeforeFilter.filter(item => item.parentId == this.menuParentId));
-        this.appSettings.initialMenus(temp);
-        this.appSettings.menuItems.subscribe(menus => {
-          this.menuItems = menus as Menu[]
-        });
-        console.log(this.menuItems);
+      });
+      let menuItemsBeforeFilter = horizontalMenuItems;
+      let temp = menuItemsBeforeFilter.filter(item => item.parentId == this.menuParentId);
+      this.menuItems = temp;
+        // this.menuItems = horizontalMenuItems;
+        // this.menuItems = this.menuItems.filter(item => item.parentId == this.menuParentId);
       }
     )
   }
@@ -95,6 +102,7 @@ export class HorizontalMenuComponent implements OnInit {
         }
       }
     });
+    
   }
 
   ngAfterContentChecked() {
