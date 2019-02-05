@@ -40,11 +40,12 @@ export class TargetComponent implements OnInit {
   selectedMonth: any;
   selectedDivisionId: any;
   filterForm: any;
+  SelectedLocations: any =[];
 
   constructor(private _adminsettingservice: AdminsettingsService,public fb: FormBuilder,public snackBar: MatSnackBar, private excelService: DownloadExcelService) { 
 
         this.filterForm = this.fb.group({
-          'year': null,
+          'year': [null],
           'month': [null],
           'division': [null],
           'country': [null],
@@ -102,8 +103,9 @@ export class TargetComponent implements OnInit {
         this.targetValue = this.targetValue.filter(x=> x.year==this.selectedYear 
           && x.month == this.selectedMonth && x.divisionId == DivisionId)
         this.targetValue.forEach(element => {
-          this.divisions.push(element.divisionName, element.divisionId) 
-          this.divisions = Array.from(new Set(this.divisions));
+          this.SelectedLocations =[];
+          this.SelectedLocations.push({LocationId : element.locationId, LocationName : element.countryName}) 
+          this.SelectedLocations = Array.from(new Set(this.SelectedLocations));
         }); 
       }
     )
@@ -134,62 +136,6 @@ export class TargetComponent implements OnInit {
     this.getTargetValue();
     this.uploadModal.hide();
   }
-
-  // comparefiles(submittedfile) {
-  //   console.log(submittedfile, 'submitted file')
-
-  //   this._adminsettingservice.getTargetTemplate().subscribe(
-  //     data => {
-  //       console.log(data['data'], "main data");
-  //       console.log(this.currentMonth);
-  //       this.uploadTemplate = data['data'];
-  //       submittedfile.forEach(element => {
-  //         for (var i = 0; i < this.uploadTemplate.length; i++) {
-  //           if (this.uploadTemplate[i].KPITitle == element.KPITitle
-  //             && this.uploadTemplate[i].DimensionTitle == element.DimensionTitle
-  //             && this.uploadTemplate[i].KRATitle == element.KRATitle) {
-  //             if (element['year'] != 0 && element['year'] >= this.currentYear) {
-
-  //               if (element['month'] != 0 && element['month'] >= this.currentMonth && element['month'] < 12) {
-
-  //                 if (element['target'] != null && element['target'] < 100) {
-  //                   element['KPIId'] = this.uploadTemplate[i].KPIId;
-  //                   element['entityId'] = 1;
-
-  //                   console.log("zzzzzzzzzz");
-  //                 }
-  //                 else {
-  //                   console.log('Error on Target')
-  //                 }
-  //               }
-  //               else {
-  //                 console.log('Error on Month')
-  //               }
-  //             }
-  //             else {
-  //               console.log('Error  on Year')
-  //             }
-  //           }
-  //           else {
-  //             console.log('Matching Error')
-  //           }
-  //         }
-  //         // this.finalTargetFile.push(element)
-  //       });
-  //       // console.log(this.finalTargetFile)
-  //       // this._adminsettingservice.upsertTarget(this.finalTargetFile).subscribe(
-  //       //   data=>{
-  //       //     console.log(data)
-  //       //   },
-  //       //   error=>{
-  //       //     console.log(error)
-  //       //   }
-  //       // )
-  //     });
-
-
-  // }
-
 
 
   /*  testing */
@@ -246,18 +192,6 @@ export class TargetComponent implements OnInit {
         )
       });
   }
-
-  //To get all divisions for filter
-  // getDivisions() {
-  //   this._adminsettingservice.getDivisions().subscribe(
-  //     data => {
-  //       this.divisions = data['data']
-  //     },
-  //     error => {
-  //       console.log(error)
-  //     }
-  //   )
-  // }
 
   getTargetValue() {
     this._adminsettingservice.getTargetValue().subscribe(
