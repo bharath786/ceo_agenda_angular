@@ -45,7 +45,7 @@ export class TargetComponent implements OnInit {
   constructor(private _adminsettingservice: AdminsettingsService,public fb: FormBuilder,public snackBar: MatSnackBar, private excelService: DownloadExcelService) { 
 
         this.filterForm = this.fb.group({
-          'year': null,
+          'year': [null],
           'month': [null],
           'division': [null],
           'country': [null],
@@ -199,7 +199,6 @@ export class TargetComponent implements OnInit {
         )
       });
   }
-
 
   getTargetValue() {
     this._adminsettingservice.getTargetValue().subscribe(
