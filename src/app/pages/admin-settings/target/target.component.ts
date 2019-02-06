@@ -71,7 +71,7 @@ export class TargetComponent implements OnInit {
         this.targetValue = this.targetValue.filter(x=> x.year==year) 
         this.YearMonths =[];
         this.targetValue.forEach(element => {
-          this.YearMonths.push(element.month) 
+          this.YearMonths.push(element.month);
           this.YearMonths = Array.from(new Set(this.YearMonths));
         }); 
       }
@@ -86,7 +86,7 @@ export class TargetComponent implements OnInit {
         this.targetValue = this.targetValue.filter(x=> x.year==this.selectedYear && x.month == month)
         this.targetValue.forEach(element => {
           this.divisions = [];
-        this.divisions.push({Name: element.divisionName, Id: element.divisionId}  ) 
+        this.divisions.push({Name: element.divisionName, Id: element.divisionId});
         this.divisions = Array.from(new Set(this.divisions));
         }); 
       }
@@ -102,9 +102,10 @@ export class TargetComponent implements OnInit {
         this.targetValue = this.targetValue.filter(x=> x.year==this.selectedYear 
           && x.month == this.selectedMonth && x.divisionId == this.selectedDivisionId)
         this.targetValue.forEach(element => {
-          this.locations.push({countryName:element.countryName, countryId: element.countryId}) 
+          this.locations = [];
+          this.locations.push({countryName:element.countryName, countryId: element.countryId});
           this.locations = Array.from(new Set(this.locations));
-          console.log(this.locations)
+          console.log(this.locations);
         }); 
       }
     )
@@ -119,7 +120,8 @@ export class TargetComponent implements OnInit {
         this.targetValue = this.targetValue.filter(x=> x.year==this.selectedYear 
           && x.month == this.selectedMonth && x.divisionId == this.selectedDivisionId && x.countryId == countryId)
         this.targetValue.forEach(element => {
-          this.entities.push({entityId: element.entityId, entityName: element.entityName}) 
+          this.entities =[];
+          this.entities.push({entityId: element.entityId, entityName: element.entityName});
           this.entities = Array.from(new Set(this.entities));
         }); 
       }

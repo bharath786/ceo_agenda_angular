@@ -6,6 +6,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
 import { AppSettings } from '../../../app.settings';
+import * as XLSX from 'xlsx';
 import { Menu } from 'src/app/theme/components/menu/menu.model';
 
 @Component({
@@ -52,6 +53,8 @@ export class SetupComponent implements OnInit {
   cancelText: string = 'No <i class="glyphicon glyphicon-remove"></i>';
   confirmClicked: boolean = false;
   cancelClicked: boolean = false;
+  arrayBuffer: any;
+  submittedfile: any;
 
   constructor(private appSettings  : AppSettings, private setupservice: AdminsettingsService, public router: Router, public fb: FormBuilder, public snackBar: MatSnackBar) {
 
@@ -68,7 +71,6 @@ export class SetupComponent implements OnInit {
     this.dimensionform = this.fb.group({
       'dimensionId': null,
       'dimensionName': [null, Validators.compose([Validators.required])],
-      'scopeName': [null],
       'scopeApplicable': [false],
       'frequencyId': [4],
       'modifiedBy': this.sessionUser['user_id'],
@@ -122,11 +124,31 @@ export class SetupComponent implements OnInit {
 
   //For File Upload
   handleFileSelect(event) {
-    var target: HTMLInputElement = event.target as HTMLInputElement;
-    for (var i = 0; i < target.files.length; i++) {
-      this.fileScope = target.files[i];
-    }
+    // var target: HTMLInputElement = event.target as HTMLInputElement;
+    // for (var i = 0; i < target.files.length; i++) {
+    //   this.fileScope = target.files[i];
+    // }
+    this.fileScope = event.target.files[0];
+    this.Upload()
   }
+
+  Upload() {
+    let fileReader = new FileReader();
+    fileReader.onload = (e) => {
+      this.arrayBuffer = fileReader.result;
+      var data = new Uint8Array(this.arrayBuffer);
+      var arr = new Array();
+      for (var i = 0; i != data.length; ++i) arr[i] = String.fromCharCode(data[i]);
+      var bstr = arr.join("");
+      var workbook = XLSX.read(bstr, { type: "binary" });
+      var first_sheet_name = workbook.SheetNames[0];
+      var worksheet = workbook.Sheets[first_sheet_name];
+      console.log(XLSX.utils.sheet_to_json(worksheet, { raw: true }));
+      this.submittedfile = XLSX.utils.sheet_to_json(worksheet, { raw: true })
+    }
+    fileReader.readAsArrayBuffer(this.fileScope);
+  }
+
   //For Dimesion Upsert
   public onSubmitDimension(value) {
     //Creating Form Data
@@ -146,17 +168,18 @@ export class SetupComponent implements OnInit {
       //Send Form values to Form Data
       value['dimensionId'] != null ? dimdata.append('dimensionId', value['dimensionId']) : dimdata.append('dimensionId', '0');
       dimdata.append('dimensionName', value['dimensionName'])
-      value['scopeName'] != null ? dimdata.append('scopeName', this.fileScope, this.todaysDate + "@#$" + this.fileScope.name) : dimdata.append('scopeName', "")
+      //value['scopeName'] != null ? dimdata.append('scopeName', this.fileScope, this.todaysDate + "@#$" + this.fileScope.name) : dimdata.append('scopeName', "")
       value['scopeApplicable'] != null ? dimdata.append('scopeApplicable', value['scopeApplicable']) : dimdata.append('scopeApplicable', "false");
+      dimdata.append('scope', this.submittedfile)
       dimdata.append('frequencyId', value['frequencyId'])
       dimdata.append('analyticsId', value['analyticsId'])
       dimdata.append('createdBy', value['createdBy'])
       dimdata.append('modifiedBy', value['modifiedBy'])
-      value['scopeName'] != null ? dimdata.append("fileName", this.fileScope['name']) : dimdata.append("fileName", "");
-     
+     // value['scopeName'] != null ? dimdata.append("fileName", this.fileScope['name']) : dimdata.append("fileName", "");
     }
     //Sending Form Data Values to Service
     this.setupservice.upsertDimension(dimdata).subscribe(
+
       data => {
         console.log(data);
         if (data['error'] == true) {
@@ -356,7 +379,7 @@ export class SetupComponent implements OnInit {
       }
       else {
         this.scopeInput = false;
-        this.dimensionform.controls['scopeName'].setValue('');
+        // this.dimensionform.controls['scopeName'].setValue('');
         this.scopeValue = false;
       }
       if (event['node']['scopeName'] != null) {

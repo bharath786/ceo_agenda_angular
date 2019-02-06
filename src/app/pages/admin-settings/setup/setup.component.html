@@ -52,7 +52,7 @@
         <!-- For Dimension Update and Insert -->
         <div class="" *ngIf="allforms=='adddimension' || allforms == 'updatedimension'">
             <form [formGroup]="dimensionform" (ngSubmit)="onSubmitDimension(dimensionform.value)" #dimensionupsertform="ngForm"
-                class="form-horizontal" enctype="multipart/form-data" novalidate>
+                class="form-horizontal">
                 <div class="col-sm-12 clearfix gridrole" style="border: 1px solid rgb(204, 204, 204); padding: 20px; border-radius: 4px !important;">
                     <h4 class="modal-title"><span style="padding-left: 13px;" class="bold">{{ allforms ==
                             'adddimension' ? 'Add
@@ -86,7 +86,7 @@
                             <div class="input-icon right">
                                             <i class="fa fa-file-excel-o"></i>
                                 <input accept=".csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
-                                    maxlength="50" formControlName="scopeName" class="form-control" type="file"
+                                    maxlength="50" class="form-control" type="file"
                                     [ngClass]="{'disablecustom': scopeValue}" (change)="handleFileSelect($event)">
                                 <label *ngIf="fileName!=null" class="lblfnt">Existing File:&nbsp;</label> <span>{{fileName}}
                                 </span>
@@ -100,7 +100,7 @@
                             </div>
                         </div>
                         <div *ngIf="allforms == 'adddimension'" class="pull-right">
-                            <button [disabled]="!dimensionupsertform.form.valid" class="btn btn-success" id="btnupdateFimrDiv"
+                            <button [disabled]="!dimensionupsertform.form.valid" class="btn btn-success"
                                 type="submit">Save</button>
                         </div>
                         <div *ngIf="allforms == 'updatedimension'" class="pull-right">
