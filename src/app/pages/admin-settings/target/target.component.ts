@@ -20,8 +20,8 @@ export class TargetComponent implements OnInit {
   currentYear = new Date().getFullYear();
   currentMonth = new Date().getMonth() + 1;
   divisions: any = [];
-  locations: any;
-  entities: any;
+  locations: any = [];
+  entities: any = [];
   TargetTemplate: any = [];
   downloadData: any = [];
   datatemplate: any = [];
@@ -40,6 +40,7 @@ export class TargetComponent implements OnInit {
   selectedMonth: any;
   selectedDivisionId: any;
   filterForm: any;
+  selectedlocationId: any;
 
   constructor(private _adminsettingservice: AdminsettingsService,public fb: FormBuilder,public snackBar: MatSnackBar, private excelService: DownloadExcelService) { 
 
@@ -93,20 +94,36 @@ export class TargetComponent implements OnInit {
   }
 
   onDivisionSelect(DivisionId){
+    console.log(DivisionId)
     this._adminsettingservice.getTargetValue().subscribe(
       data => {
         this.selectedDivisionId = DivisionId;
-        this.targetValue = data['data']
+              this.targetValue = data['data']
         this.targetValue = this.targetValue.filter(x=> x.year==this.selectedYear 
-          && x.month == this.selectedMonth && x.divisionId == DivisionId)
+          && x.month == this.selectedMonth && x.divisionId == this.selectedDivisionId)
         this.targetValue.forEach(element => {
-          this.divisions.push(element.divisionName, element.divisionId) 
-          this.divisions = Array.from(new Set(this.divisions));
+          this.locations.push({countryName:element.countryName, countryId: element.countryId}) 
+          this.locations = Array.from(new Set(this.locations));
+          console.log(this.locations)
         }); 
       }
     )
-    console.log(this.divisions)
 
+  }
+
+  onLocationSelect(countryId){
+    this._adminsettingservice.getTargetValue().subscribe(
+      data => {
+        this.selectedlocationId = countryId;
+        this.targetValue = data['data']
+        this.targetValue = this.targetValue.filter(x=> x.year==this.selectedYear 
+          && x.month == this.selectedMonth && x.divisionId == this.selectedDivisionId && x.countryId == countryId)
+        this.targetValue.forEach(element => {
+          this.entities.push({entityId: element.entityId, entityName: element.entityName}) 
+          this.entities = Array.from(new Set(this.entities));
+        }); 
+      }
+    )
   }
 
   incomingfile(event) {
@@ -133,79 +150,17 @@ export class TargetComponent implements OnInit {
     this.uploadModal.hide();
   }
 
-  // comparefiles(submittedfile) {
-  //   console.log(submittedfile, 'submitted file')
 
-  //   this._adminsettingservice.getTargetTemplate().subscribe(
-  //     data => {
-  //       console.log(data['data'], "main data");
-  //       console.log(this.currentMonth);
-  //       this.uploadTemplate = data['data'];
-  //       submittedfile.forEach(element => {
-  //         for (var i = 0; i < this.uploadTemplate.length; i++) {
-  //           if (this.uploadTemplate[i].KPITitle == element.KPITitle
-  //             && this.uploadTemplate[i].DimensionTitle == element.DimensionTitle
-  //             && this.uploadTemplate[i].KRATitle == element.KRATitle) {
-  //             if (element['year'] != 0 && element['year'] >= this.currentYear) {
-
-  //               if (element['month'] != 0 && element['month'] >= this.currentMonth && element['month'] < 12) {
-
-  //                 if (element['target'] != null && element['target'] < 100) {
-  //                   element['KPIId'] = this.uploadTemplate[i].KPIId;
-  //                   element['entityId'] = 1;
-
-  //                   console.log("zzzzzzzzzz");
-  //                 }
-  //                 else {
-  //                   console.log('Error on Target')
-  //                 }
-  //               }
-  //               else {
-  //                 console.log('Error on Month')
-  //               }
-  //             }
-  //             else {
-  //               console.log('Error  on Year')
-  //             }
-  //           }
-  //           else {
-  //             console.log('Matching Error')
-  //           }
-  //         }
-  //         // this.finalTargetFile.push(element)
-  //       });
-  //       // console.log(this.finalTargetFile)
-  //       // this._adminsettingservice.upsertTarget(this.finalTargetFile).subscribe(
-  //       //   data=>{
-  //       //     console.log(data)
-  //       //   },
-  //       //   error=>{
-  //       //     console.log(error)
-  //       //   }
-  //       // )
-  //     });
-
-
-  // }
-
-
-
-  /*  testing */
   comparefiles(submittedfile) {
     console.log(submittedfile, 'submitted file');
-
     var testing = [];
-
     this._adminsettingservice.getTargetTemplate().subscribe(
       data => {
         console.log(data['data'], "main data");
         this.uploadTemplate = data['data'];
-
         submittedfile.forEach(element => {
           for (var i = 0; i < this.uploadTemplate.length; i++) {
-
             if (this.uploadTemplate[i].KPITitle == element.KPITitle && this.uploadTemplate[i].DimensionTitle == element.DimensionTitle && this.uploadTemplate[i].KRATitle == element.KRATitle) {
-
               if (element['year'] >= this.currentYear && element['month'] >= this.currentMonth && element['target'] <= 100 && element['target'] != null) {
                 element['KPIId'] = this.uploadTemplate[i].KPIId;
                 let sessionUser = JSON.parse(sessionStorage['Session_name'])
@@ -245,17 +200,6 @@ export class TargetComponent implements OnInit {
       });
   }
 
-  //To get all divisions for filter
-  // getDivisions() {
-  //   this._adminsettingservice.getDivisions().subscribe(
-  //     data => {
-  //       this.divisions = data['data']
-  //     },
-  //     error => {
-  //       console.log(error)
-  //     }
-  //   )
-  // }
 
   getTargetValue() {
     this._adminsettingservice.getTargetValue().subscribe(
@@ -314,27 +258,6 @@ export class TargetComponent implements OnInit {
     )
   }
 
-  getLocations(divisionId) {
-    this._adminsettingservice.getLocations(divisionId).subscribe(
-      data => {
-        this.locations = data['data']
-      },
-      error => {
-        console.log(error)
-      }
-    )
-  }
-
-  getEntities(locationId) {
-    this._adminsettingservice.getEntities(locationId).subscribe(
-      data => {
-        this.entities = data['data']
-      },
-      error => {
-        console.log(error)
-      }
-    )
-  }
 
   downloadModalToggle(e) {
     if (e == 1) {
