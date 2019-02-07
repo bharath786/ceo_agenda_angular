@@ -124,12 +124,13 @@ export class SetupComponent implements OnInit {
 
   //For File Upload
   handleFileSelect(event) {
-    // var target: HTMLInputElement = event.target as HTMLInputElement;
-    // for (var i = 0; i < target.files.length; i++) {
-    //   this.fileScope = target.files[i];
-    // }
-    this.fileScope = event.target.files[0];
+    var target: HTMLInputElement = event.target as HTMLInputElement;
+    for (var i = 0; i < target.files.length; i++) {
+      this.fileScope = target.files[i];
+    }
+    // this.fileScope = event.target.files[0];
     this.Upload()
+    console.log(this.fileScope.name)
   }
 
   Upload() {
@@ -168,17 +169,18 @@ export class SetupComponent implements OnInit {
       //Send Form values to Form Data
       value['dimensionId'] != null ? dimdata.append('dimensionId', value['dimensionId']) : dimdata.append('dimensionId', '0');
       dimdata.append('dimensionName', value['dimensionName'])
-      //value['scopeName'] != null ? dimdata.append('scopeName', this.fileScope, this.todaysDate + "@#$" + this.fileScope.name) : dimdata.append('scopeName', "")
+      value['scopeName'] != null ? dimdata.append('scopeName',this.todaysDate + "@#$" + this.fileScope.name) : dimdata.append('scopeName', "")
       value['scopeApplicable'] != null ? dimdata.append('scopeApplicable', value['scopeApplicable']) : dimdata.append('scopeApplicable', "false");
       dimdata.append('scope', this.submittedfile)
       dimdata.append('frequencyId', value['frequencyId'])
       dimdata.append('analyticsId', value['analyticsId'])
       dimdata.append('createdBy', value['createdBy'])
       dimdata.append('modifiedBy', value['modifiedBy'])
+      value["scopeData"] = this.submittedfile;
      // value['scopeName'] != null ? dimdata.append("fileName", this.fileScope['name']) : dimdata.append("fileName", "");
     }
     //Sending Form Data Values to Service
-    this.setupservice.upsertDimension(dimdata).subscribe(
+    this.setupservice.upsertDimension(value).subscribe(
 
       data => {
         console.log(data);
