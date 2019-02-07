@@ -57,10 +57,10 @@ export class HorizontalMenuComponent implements OnInit {
     let horizontalMenuItems = []
      horizontalMenuItems = [
       new Menu(6, 'Dashboard', '/dashboard', null, 'looks', null, false, 0),
-      new Menu(1, 'Predictive', '', null, 'multiline_chart', null, true, 0),
-      new Menu(2, 'System', '', null, 'pie_chart', null, true, 0),
-      new Menu(3, 'Control', '', null, 'insert_chart', null, true, 0),
-      new Menu(4, 'Process', '', null, 'equalizer', null, true, 0),
+      new Menu(1, 'Predictive', ' ', null, 'multiline_chart', null, true, 0),
+      new Menu(2, 'System', ' ', null, 'pie_chart', null, true, 0),
+      new Menu(3, 'Control', ' ', null, 'insert_chart', null, true, 0),
+      new Menu(4, 'Process', ' ', null, 'equalizer', null, true, 0),
       new Menu(5, 'Admin', '/adminsettings', null, 'portrait', null, true, 0),
       new Menu(8, 'Setup', '/adminsettings/setup', null, 'build', null, false, 5),
       new Menu(9, 'Structure', '/adminsettings/structure', null, 'memory', null, false, 5),
