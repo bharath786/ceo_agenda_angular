@@ -8,6 +8,7 @@ import { emailValidator } from 'src/app/theme/utils/app-validators';
 import { MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
 import { formatDate } from '@angular/common';
+import { TreeNode } from 'primeng/api';
 
 
 @Component({
@@ -30,16 +31,30 @@ export class ManageUsersComponent implements OnInit {
   todaysdate: any;
   maxDate: any;
   emailchange: any;
+  //For Tree
+  entitiesList: TreeNode[] = [];
+  //For Default Selection
+  selectedFile: TreeNode[];
+  assignedLocations : TreeNode[];
+  assignedEntities: TreeNode[];
 
- //For Confirmation
- popoverTitle: string = 'Resend verification Mail';
- popoverMessage: string = "Do you want to resend verification mail";
- confirmText: string = 'Yes Resend';
- cancelText: string = 'No';
- confirmClicked: boolean = false;
- cancelClicked: boolean = false;
+  //For Confirmation
+  popoverTitle: string = 'Resend verification Mail';
+  popoverMessage: string = "Do you want to resend verification mail";
+  confirmText: string = 'Yes Resend';
+  cancelText: string = 'No';
+  confirmClicked: boolean = false;
+  cancelClicked: boolean = false;
+  divisiondata: any = [];
+  entityarray: any = [];
+  locationdata: any = [];
+  entityIds: any = [];
+  userId: any;
 
-  constructor(public appSettings: AppSettings, public fb: FormBuilder, public router: Router, private adminsettingsservice: AdminsettingsService, public snackBar: MatSnackBar) {
+  constructor(public appSettings: AppSettings, public fb: FormBuilder,
+    public router: Router, private adminsettingsservice: AdminsettingsService,
+    public snackBar: MatSnackBar) {
+
     this.settings = this.appSettings.settings;
 
     this.maxDate = new Date();
@@ -58,17 +73,84 @@ export class ManageUsersComponent implements OnInit {
       'modifiedBy': null
     });
   }
-  
+
   ngOnInit() {
     //Users List
     this.userslist();
+
+    //To get all Entities
+    this.getEntitiesList();
   }
 
   @ViewChild('addUserModal') public addUserModal: ModalDirective;
   @ViewChild('deleteModal') public deleteModal: ModalDirective;
   @ViewChild('permissionModal') public permissionModal: ModalDirective;
   @ViewChild('permissionModal1') public permissionModal1: ModalDirective;
+  @ViewChild('entitiesModal') public entitiesModal: ModalDirective;
 
+
+  entitiesnModalToggle(e) {
+    if (e == null) {
+      this.entitiesModal.hide();
+    }
+    else {
+      this.adminsettingsservice.getUserRelatedEntities(e).subscribe(
+        data => {
+          console.log(data);
+          this.assignedEntities = data['EntityIds'];
+          console.log( this.assignedEntities, 'ddddd')
+          // this.assignedLocations = 
+          // this.selectedFile = 
+
+
+         // this.selectedFile = this.entitiesList.filter(element=>element.children.filter(entity=>entity==[2,3]));
+        }
+      )
+      console.log(this.entitiesList['0'])
+      this.selectedFile = this.entitiesList['0'];
+      this.userId = e;
+      this.entitiesModal.show();
+    }
+  }
+
+  //Tree Node Selection on Entity Tree
+  nodeSelect(event) {
+    console.log(event['node'])
+    this.entityIds.push(event['node']['entityId']);
+    console.log(this.entityIds);
+    // this.entityarray = this.selectedEntity.filter(item => this.unSelectedEntities.indexOf(item) < 0);
+    // console.log(this.entityarray);
+
+
+    // let data = event['node'];
+    // let elements = [];
+    // if (data != null) {
+    //   data = data.children;
+    //   if (data != null) {
+    //     data.forEach(element => {
+    //       if (element != null) {
+    //         elements.push(element);
+    //       }
+    //     });
+    //    data = data.children;
+    //   } else {
+    //     let child = data;
+    //     if (data.parent() != null) {
+    //       data = data.parent();
+    //       if (data.parent() != null) {
+    //         elements.push(child);
+    //       }
+    //     }
+    //   }
+    // }
+    // console.log(elements);
+
+  }
+
+  nodeUnselect(event) {
+    this.entityIds = this.entityIds.filter(item => item != event['node']['entityId']);
+    console.log(this.entityIds);
+  }
 
   getstatus(e) {
     this.status = e;
@@ -93,6 +175,18 @@ export class ManageUsersComponent implements OnInit {
       console.log(this.deleteId)
       this.deleteModal.show();
     }
+  }
+
+  getEntitiesList() {
+    this.adminsettingsservice.getAllEntities().subscribe(
+      data => {
+        console.log(data['data'], 'Entities List')
+        this.entitiesList = data['data']
+      },
+      error => {
+        console.log(error)
+      }
+    )
   }
 
   //For User delete
@@ -147,7 +241,6 @@ export class ManageUsersComponent implements OnInit {
     }
     else {
       this.permissionModal1.hide();
-
     }
   }
 
@@ -199,7 +292,7 @@ export class ManageUsersComponent implements OnInit {
     this.addUserModal.show();
   }
 
-  resendMail(values){
+  resendMail(values) {
     let sessionUser = JSON.parse(sessionStorage['Session_name'])
     if (values['userId'] == null) {
       values['createdBy'] = sessionUser.user_id
@@ -208,14 +301,32 @@ export class ManageUsersComponent implements OnInit {
       values['modifiedBy'] = sessionUser.user_id
     }
     this.adminsettingsservice.resendMail(values).subscribe(
-      data=>{
+      data => {
         this.snackBar.open(data['message'], 'OK', {
           duration: 7000,
           panelClass: ['greenSnackbar']
         });
       }
     )
-}
+  }
+
+  //Assign the entities to the user
+
+  assignEntities() {
+    let data = {
+      EntityIds: this.entityIds, userId: this.userId,
+      createdBy: JSON.parse(sessionStorage['Session_name']).user_id,
+      modifiedBy: JSON.parse(sessionStorage['Session_name']).user_id
+    }
+    this.adminsettingsservice.insertUserEntities(data).subscribe(
+      data => {
+        console.log(data['data']);
+      },
+      error => {
+        console.log(error)
+      }
+    )
+  }
 
 
   //User Update and Create Form
