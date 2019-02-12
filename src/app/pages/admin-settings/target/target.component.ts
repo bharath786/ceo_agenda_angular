@@ -20,8 +20,8 @@ export class TargetComponent implements OnInit {
   currentYear = new Date().getFullYear();
   currentMonth = new Date().getMonth() + 1;
   divisions: any = [];
-  locations: any = [];
-  entities: any = [];
+  locations: any;
+  entities: any;
   TargetTemplate: any = [];
   downloadData: any = [];
   datatemplate: any = [];
@@ -40,9 +40,11 @@ export class TargetComponent implements OnInit {
   selectedMonth: any;
   selectedDivisionId: any;
   filterForm: any;
-  selectedlocationId: any;
+  SelectedLocations: any =[];
 
-  constructor(private _adminsettingservice: AdminsettingsService,public fb: FormBuilder,public snackBar: MatSnackBar, private excelService: DownloadExcelService) { 
+  constructor(private _adminsettingservice: AdminsettingsService,
+    public fb: FormBuilder,public snackBar: MatSnackBar, 
+    private excelService: DownloadExcelService) { 
 
         this.filterForm = this.fb.group({
           'year': [null],
@@ -71,7 +73,7 @@ export class TargetComponent implements OnInit {
         this.targetValue = this.targetValue.filter(x=> x.year==year) 
         this.YearMonths =[];
         this.targetValue.forEach(element => {
-          this.YearMonths.push(element.month);
+          this.YearMonths.push(element.month) 
           this.YearMonths = Array.from(new Set(this.YearMonths));
         }); 
       }
@@ -86,7 +88,7 @@ export class TargetComponent implements OnInit {
         this.targetValue = this.targetValue.filter(x=> x.year==this.selectedYear && x.month == month)
         this.targetValue.forEach(element => {
           this.divisions = [];
-        this.divisions.push({Name: element.divisionName, Id: element.divisionId});
+        this.divisions.push({Name: element.divisionName, Id: element.divisionId}  ) 
         this.divisions = Array.from(new Set(this.divisions));
         }); 
       }
@@ -94,38 +96,21 @@ export class TargetComponent implements OnInit {
   }
 
   onDivisionSelect(DivisionId){
-    console.log(DivisionId)
     this._adminsettingservice.getTargetValue().subscribe(
       data => {
         this.selectedDivisionId = DivisionId;
-              this.targetValue = data['data']
-        this.targetValue = this.targetValue.filter(x=> x.year==this.selectedYear 
-          && x.month == this.selectedMonth && x.divisionId == this.selectedDivisionId)
-        this.targetValue.forEach(element => {
-          this.locations = [];
-          this.locations.push({countryName:element.countryName, countryId: element.countryId});
-          this.locations = Array.from(new Set(this.locations));
-          console.log(this.locations);
-        }); 
-      }
-    )
-
-  }
-
-  onLocationSelect(countryId){
-    this._adminsettingservice.getTargetValue().subscribe(
-      data => {
-        this.selectedlocationId = countryId;
         this.targetValue = data['data']
         this.targetValue = this.targetValue.filter(x=> x.year==this.selectedYear 
-          && x.month == this.selectedMonth && x.divisionId == this.selectedDivisionId && x.countryId == countryId)
+          && x.month == this.selectedMonth && x.divisionId == DivisionId)
         this.targetValue.forEach(element => {
-          this.entities =[];
-          this.entities.push({entityId: element.entityId, entityName: element.entityName});
-          this.entities = Array.from(new Set(this.entities));
+          this.SelectedLocations =[];
+          this.SelectedLocations.push({LocationId : element.locationId, LocationName : element.countryName}) 
+          this.SelectedLocations = Array.from(new Set(this.SelectedLocations));
         }); 
       }
     )
+    console.log(this.divisions)
+
   }
 
   incomingfile(event) {
@@ -153,16 +138,22 @@ export class TargetComponent implements OnInit {
   }
 
 
+  /*  testing */
   comparefiles(submittedfile) {
     console.log(submittedfile, 'submitted file');
+
     var testing = [];
+
     this._adminsettingservice.getTargetTemplate().subscribe(
       data => {
         console.log(data['data'], "main data");
         this.uploadTemplate = data['data'];
+
         submittedfile.forEach(element => {
           for (var i = 0; i < this.uploadTemplate.length; i++) {
+
             if (this.uploadTemplate[i].KPITitle == element.KPITitle && this.uploadTemplate[i].DimensionTitle == element.DimensionTitle && this.uploadTemplate[i].KRATitle == element.KRATitle) {
+
               if (element['year'] >= this.currentYear && element['month'] >= this.currentMonth && element['target'] <= 100 && element['target'] != null) {
                 element['KPIId'] = this.uploadTemplate[i].KPIId;
                 let sessionUser = JSON.parse(sessionStorage['Session_name'])
@@ -259,6 +250,27 @@ export class TargetComponent implements OnInit {
     )
   }
 
+  getLocations(divisionId) {
+    this._adminsettingservice.getLocations(divisionId).subscribe(
+      data => {
+        this.locations = data['data']
+      },
+      error => {
+        console.log(error)
+      }
+    )
+  }
+
+  getEntities(locationId) {
+    this._adminsettingservice.getEntities(locationId).subscribe(
+      data => {
+        this.entities = data['data']
+      },
+      error => {
+        console.log(error)
+      }
+    )
+  }
 
   downloadModalToggle(e) {
     if (e == 1) {

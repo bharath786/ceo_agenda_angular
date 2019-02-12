@@ -159,7 +159,7 @@ export class AdminsettingsService {
     this.sessionuser = sessionUser.user_id;
     const httpOptions = {
       headers: new HttpHeaders({
-        'enctype': 'multipart/form-data;',
+        //'enctype': 'multipart/form-data;',
         'Authorisation': this.sessiontoken,
         'Userid': this.sessionuser
       })

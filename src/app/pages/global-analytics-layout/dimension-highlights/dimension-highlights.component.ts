@@ -77,7 +77,4 @@ export class DimensionHighlightsComponent implements OnInit {
             this.expandRecursive(node, false);
         });
     }
-
-
-
 }

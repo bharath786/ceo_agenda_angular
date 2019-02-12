@@ -46,15 +46,15 @@ export const routes :Routes = [
     DataTableModule,
     TooltipModule.forRoot(),
     ConfirmationPopoverModule.forRoot({
-      confirmButtonType: 'danger' // set defaults here
+    confirmButtonType: 'danger' // set defaults here
     })
   ],
   exports:[RouterModule],
-  declarations: [DataFilterPipe, GetMonthName, PreferencesComponent, ManageUsersComponent, SetupComponent, StructureComponent, TargetComponent],
+  declarations: [DataFilterPipe, GetMonthName, PreferencesComponent, 
+    ManageUsersComponent, SetupComponent, StructureComponent, TargetComponent],
   providers: [AdminsettingsService, DownloadExcelService]
 
 })
 export class AdminSettingsModule { 
-
 
 }
