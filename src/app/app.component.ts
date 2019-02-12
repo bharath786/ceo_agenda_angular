@@ -8,7 +8,7 @@ import { UserIdleService } from 'angular-user-idle';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
   public settings: Settings;

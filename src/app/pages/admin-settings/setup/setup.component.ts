@@ -507,6 +507,7 @@ export class SetupComponent implements OnInit {
         files => {
           this.files = files['data'];
           this.selectedFile = files['data']['0'];
+          console.log(files['data']['0'])
           this.nodeSelect({ "node": this.selectedFile });
           this.fileName = null;
         },

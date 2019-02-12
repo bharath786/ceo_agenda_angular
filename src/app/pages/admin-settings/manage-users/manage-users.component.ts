@@ -8,14 +8,14 @@ import { emailValidator } from 'src/app/theme/utils/app-validators';
 import { MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
 import { formatDate } from '@angular/common';
-
+import { TreeNode } from 'primeng/api';
+import * as _ from 'lodash'; 
 
 @Component({
   selector: 'app-manage-users',
   templateUrl: './manage-users.component.html',
   styleUrls: ['./manage-users.component.scss']
 })
-
 
 export class ManageUsersComponent implements OnInit {
   deleteId: number;
@@ -30,16 +30,29 @@ export class ManageUsersComponent implements OnInit {
   todaysdate: any;
   maxDate: any;
   emailchange: any;
+  //For Tree
+  entitiesList: any[] = [];
+  //For Default Selection
 
- //For Confirmation
- popoverTitle: string = 'Resend verification Mail';
- popoverMessage: string = "Do you want to resend verification mail";
- confirmText: string = 'Yes Resend';
- cancelText: string = 'No';
- confirmClicked: boolean = false;
- cancelClicked: boolean = false;
+  entityform: any;
 
-  constructor(public appSettings: AppSettings, public fb: FormBuilder, public router: Router, private adminsettingsservice: AdminsettingsService, public snackBar: MatSnackBar) {
+  //For Confirmation
+  popoverTitle: string = 'Resend verification Mail';
+  popoverMessage: string = "Do you want to resend verification mail";
+  confirmText: string = 'Yes Resend';
+  cancelText: string = 'No';
+  confirmClicked: boolean = false;
+  cancelClicked: boolean = false;
+  divisiondata: any = [];
+  entityarray: any = [];
+  locationdata: any = [];
+  userId: any;
+
+
+  constructor(public appSettings: AppSettings, public fb: FormBuilder,
+    public router: Router, private adminsettingsservice: AdminsettingsService,
+    public snackBar: MatSnackBar) {
+
     this.settings = this.appSettings.settings;
 
     this.maxDate = new Date();
@@ -49,7 +62,7 @@ export class ManageUsersComponent implements OnInit {
     this.form = this.fb.group({
       'userId': null,
       'firstName': [null, Validators.compose([Validators.required])],
-      'lastName': [null, Validators.compose([Validators.required])],
+      'lastName': [null, Validators.compose([ Validators.required])],
       'email': [null, Validators.compose([Validators.required, emailValidator])],
       'phoneNo': [null],
       'dateOfBirth': [null, Validators.compose([Validators.required])],
@@ -57,17 +70,68 @@ export class ManageUsersComponent implements OnInit {
       'createdBy': null,
       'modifiedBy': null
     });
+
+    this.entityform = this.fb.group({
+      'divId': null,
+      'locationId': null,
+      'entityId' : null
+    });
   }
-  
+
   ngOnInit() {
     //Users List
     this.userslist();
+    this.getEntitiesList();
   }
+
+
 
   @ViewChild('addUserModal') public addUserModal: ModalDirective;
   @ViewChild('deleteModal') public deleteModal: ModalDirective;
   @ViewChild('permissionModal') public permissionModal: ModalDirective;
   @ViewChild('permissionModal1') public permissionModal1: ModalDirective;
+  @ViewChild('entitiesModal') public entitiesModal: ModalDirective;
+
+
+  entitiesnModalToggle(e) {
+    if (e == null) {
+      this.entitiesModal.hide();
+      this.entityform.reset();
+    }
+    else {
+      this.userId = e;
+      this.adminsettingsservice.getUserRelatedEntities(e).subscribe(
+        data => {
+          console.log(data);
+          let selectedDivisions = data['DivisionIds'];
+         selectedDivisions = Array.from(new Set(selectedDivisions));
+         let selectedLocations = data['CountryIds'];
+         selectedLocations = Array.from(new Set(selectedLocations));
+         let selectedEntities = data['EntityIds'];
+         selectedEntities = Array.from(new Set(selectedEntities));
+
+          if(selectedDivisions != null){
+            console.log(selectedDivisions,'select div')
+            this.onDivisionSelect(selectedDivisions)
+          }
+          if(selectedLocations != null){
+            this.onLocationSelect(selectedLocations)
+          }
+
+      this.entityform.controls['divId'].setValue(selectedDivisions);
+      this.entityform.controls['locationId'].setValue(selectedLocations);
+      this.entityform.controls['entityId'].setValue(selectedEntities);
+      this.getEntitiesList();
+        }
+      )
+      this.entitiesModal.show();
+    }
+  }
+
+  onEntitySubmit(formvalues){
+
+    this.assignEntities(formvalues['entityId'])
+  }
 
 
   getstatus(e) {
@@ -94,6 +158,65 @@ export class ManageUsersComponent implements OnInit {
       this.deleteModal.show();
     }
   }
+
+  getEntitiesList() {
+    this.adminsettingsservice.getAllEntities().subscribe(
+      data => {
+        this.divisiondata =[]
+        this.entitiesList = data['data']
+        console.log(this.entitiesList)
+        this.entitiesList.forEach(element=>{
+          this.divisiondata.push({divisonId:element.divisionId, divisionName: element.divisionName})
+        }
+          )
+        this.divisiondata = this.multiDimensionalUnique(this.divisiondata)
+      },
+      error => {
+        console.log(error)
+      }
+    )
+  }
+
+  onDivisionSelect(divisionId){
+    console.log(divisionId,'DivisionIds')
+    this.locationdata =[]
+    divisionId.forEach(element => {
+      this.entitiesList.filter((x)=>{
+        if(x.divisionId == element){
+          console.log('fff')
+          this.locationdata.push({countryId:x.countryId, countryName:x.countryName})
+        }
+      })
+    });
+    console.log(this.locationdata)    
+    this.locationdata = this.multiDimensionalUnique(this.locationdata)
+    console.log(this.locationdata)
+  }
+
+  onLocationSelect(countryId){
+    this.entityarray =[]
+    countryId.forEach(element => {
+      this.entitiesList.filter((x)=>{
+        if(x.countryId == element){
+          this.entityarray.push({entityId:x.entityId, entityName:x.entityName})
+        }
+      })
+    });
+    this.entityarray = this.multiDimensionalUnique(this.entityarray)
+    console.log(this.locationdata)
+  }
+
+  multiDimensionalUnique(arr) {
+    var uniques = [];
+    var itemsFound = {};
+    for(var i = 0, l = arr.length; i < l; i++) {
+        var stringified = JSON.stringify(arr[i]);
+        if(itemsFound[stringified]) { continue; }
+        uniques.push(arr[i]);
+        itemsFound[stringified] = true;
+    }
+    return uniques;
+}
 
   //For User delete
   deleteUser() {
@@ -147,7 +270,6 @@ export class ManageUsersComponent implements OnInit {
     }
     else {
       this.permissionModal1.hide();
-
     }
   }
 
@@ -199,7 +321,7 @@ export class ManageUsersComponent implements OnInit {
     this.addUserModal.show();
   }
 
-  resendMail(values){
+  resendMail(values) {
     let sessionUser = JSON.parse(sessionStorage['Session_name'])
     if (values['userId'] == null) {
       values['createdBy'] = sessionUser.user_id
@@ -208,14 +330,34 @@ export class ManageUsersComponent implements OnInit {
       values['modifiedBy'] = sessionUser.user_id
     }
     this.adminsettingsservice.resendMail(values).subscribe(
-      data=>{
+      data => {
         this.snackBar.open(data['message'], 'OK', {
           duration: 7000,
           panelClass: ['greenSnackbar']
         });
       }
     )
-}
+  }
+
+  //Assign the entities to the user
+
+  assignEntities(entityIds) {
+    let data = {
+      EntityIds: entityIds, userId: this.userId,
+      createdBy: JSON.parse(sessionStorage['Session_name']).user_id,
+      modifiedBy: JSON.parse(sessionStorage['Session_name']).user_id
+    }
+    this.adminsettingsservice.insertUserEntities(data).subscribe(
+      data => {
+        console.log(data['data']);
+        this.entitiesModal.hide();
+        this.userslist();
+      },
+      error => {
+        console.log(error)
+      }
+    )
+  }
 
 
   //User Update and Create Form

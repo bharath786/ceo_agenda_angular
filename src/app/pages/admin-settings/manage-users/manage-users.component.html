@@ -34,6 +34,9 @@
                     Permissions
                 </th>
                 <th class="thblue">
+                    Assign Entity
+                </th>
+                <th class="thblue">
                     Status
                 </th>
                 <th class="text-center thblue">
@@ -52,6 +55,9 @@
                 <td>{{data.phoneNo}}</td>
                 <td>
                     <a title="Click to Assign Permissions" (click)="permissionModal1Toggle(1)">11/24</a>
+                </td>
+                <td>
+                    <a title="Click to Assign Permissions" (click)="entitiesnModalToggle(data.userId)">{{data.AssignedEntitiesCount}}/{{data.TotalEntitiesCount}}</a>
                 </td>
                 <td>
                     <a (click)="changeStatus(data)">{{ data.status ? '&nbsp;&nbsp;&nbsp;Active'
@@ -199,6 +205,68 @@
         </div>
     </div>
 </div>
+
+
+<!-- For Entities List Modal Popup -->
+<div class="modal fade" bsModal #entitiesModal="bs-modal" [config]="{backdrop: 'static'}" role="dialog">
+    <form [formGroup]="entityform" (ngSubmit)="onEntitySubmit(entityform.value)" #enityUpsertForm="ngForm" class="form-horizontal">    
+    <div class="modal-dialog modal-custom">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title titlemodal">
+                    <b>Assign Entity</b> <i (click)="entitiesnModalToggle(null)" class="fa fa-times pull-right titlemodal"></i>
+                </h4>
+            </div>
+            <div class="modal-body row">
+                <div class="col-sm-12">
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">Division&nbsp;:</label>
+                            <div class="col-md-8">
+                                <mat-select (selectionChange)="onDivisionSelect($event.value)" formControlName="divId" placeholder="Division" class="col-sm-10 form-control marginbtn" multiple>
+                                    <mat-option *ngFor="let division of divisiondata" [value]="division.divisonId">
+                                        {{division.divisionName}}
+                                    </mat-option>
+                                </mat-select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label"> Location&nbsp;:</label>
+                            <div class="col-md-8">
+                                <mat-select (selectionChange)="onLocationSelect($event.value)" formControlName="locationId" placeholder="Location" class="col-sm-10 form-control marginbtn" multiple>
+                                    <mat-option *ngFor="let location of locationdata" [value]="location.countryId">
+                                        {{location.countryName}}
+                                    </mat-option>
+                                </mat-select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">Entity&nbsp;:</label>
+                            <div class="col-md-8">
+                                <mat-select placeholder="Entity" formControlName="entityId" class="col-sm-10 form-control marginbtn" multiple>
+                                    <mat-option *ngFor="let entity of entityarray" [value]="entity.entityId">
+                                        {{entity.entityName}}
+                                    </mat-option>
+                                </mat-select>
+                            </div>
+                          
+                        </div>
+                        
+  
+                </div>
+            </div>
+            <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary"><i class="fa fa-check"></i>&nbsp;Save</button>
+                <!-- <button type="submit" (click)="assignEntities()" class="btn btn-primary"><i class="fa fa-check"></i>&nbsp;Save</button> -->
+                <button type="button" class="btn btn-default" (click)="entitiesnModalToggle(null)"><i class="fa fa-times"></i>&nbsp;Close
+                </button>
+            </div>
+        </div>
+    </div>
+    </form>
+</div>
+
+
 
 <!-- For Permission Modal Popup -->
 <div class="modal fade" bsModal #permissionModal="bs-modal" [config]="{backdrop: 'static'}" role="dialog">
@@ -601,3 +669,5 @@
         </div>
     </div>
 </div>
+
+

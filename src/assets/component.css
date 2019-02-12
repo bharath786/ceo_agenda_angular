@@ -2646,19 +2646,20 @@ Forms
     font-weight: normal;
     color: #333;
     background-color: #fff;
-    border: 1px solid #e5e5e5;
+    border: 1px solid #c4c2c2;
     -webkit-box-shadow: none;
     box-shadow: none;
+    border-radius: 3px !important;
     -webkit-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
     transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
 }
 
-    .form-control:focus {
-        border-color: #999;
-        outline: 0;
+    /* .form-control:focus {
+        border-color: #729ade;
+        outline: -2px;
+        box-shadow: 2px !important;
         -webkit-box-shadow: none;
-        box-shadow: none;
-    }
+    } */
 
     .form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {
         cursor: not-allowed;

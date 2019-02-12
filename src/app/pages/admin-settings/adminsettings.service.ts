@@ -14,13 +14,6 @@ export interface Element {
   Status: boolean;
 }
 
-
-const data: Element[] = [
-  { Id: 1, Username: 'Oliver', EmailID: 'Oliver@gmail.com', PhoneNumber: '989-999-9999', Permissions: '2/5', Status: true },
-  { Id: 2, Username: 'Harry', EmailID: 'Harry@gmail.com', PhoneNumber: '989-999-9999', Permissions: '4/5', Status: true },
-  { Id: 3, Username: 'Cooper', EmailID: 'Cooper@gmail.com', PhoneNumber: '989-999-9999', Permissions: '3/5', Status: true },
-];
-
 @Injectable({
   providedIn: 'root'
 })
@@ -35,8 +28,11 @@ export class AdminsettingsService {
   userUpsertAPI = url + "upsert";
   usersListAPI = url + "get-users";
   deleteRecordAPI = url + "user-delete";
-  userSatusAPI = url + "user-status";
+  userStatusAPI = url + "user-status";
+  getEntiesListAPI = url + "get-divisions";
   resendMailAPI = url+"send-verification-mail";
+  insertUserEntitiesAPI = url+"Insert-user-entity-assignment";
+  getUserRelatedEntitiesAPI = url+"Get-user-assigned-entities";
 
   //For Structure API's
   getStructureAPI = url + "get-structure";
@@ -125,7 +121,12 @@ export class AdminsettingsService {
   }
 
   //Manage Users Methods
-
+  insertUserEntities(data){
+    return this.http.post(this.insertUserEntitiesAPI, data, this.getHeaders())
+  }
+getUserRelatedEntities(userId){
+  return this.http.get(this.getUserRelatedEntitiesAPI+'?UserId='+userId, this.getHeaders())
+}
   //For Adding New User
   userUpsert(values) {
     return this.http.post(this.userUpsertAPI, values, this.getHeaders())
@@ -140,9 +141,13 @@ export class AdminsettingsService {
     return this.http.get(this.usersListAPI, this.getHeaders())
   }
 
+  getAllEntities(){
+    return this.http.get(this.getEntiesListAPI,this.getHeaders())
+  }
+
   //Status value
   userStatus(values) {
-    return this.http.post(this.userSatusAPI, values, this.getHeaders())
+    return this.http.post(this.userStatusAPI, values, this.getHeaders())
   }
   // delete User
   deleteUser(Id) {

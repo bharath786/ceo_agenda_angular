@@ -24,6 +24,20 @@
   }
 }
 
+::ng-deep .mat-pseudo-checkbox-checked::after {
+    top: 2.4px;
+    left: 1px;
+    width: 8px;
+    height: 3px;
+    border-left: 2px solid currentColor;
+    transform: rotate(-45deg);
+    opacity: 1;
+    box-sizing: content-box;
+}
+
+::ng-deep .app.indigo-light .mat-pseudo-checkbox-checked, .app.indigo-light .mat-pseudo-checkbox-indeterminate, .app.indigo-light .mat-accent .mat-pseudo-checkbox-checked, .app.indigo-light .mat-accent .mat-pseudo-checkbox-indeterminate {
+  background: #1b8ef1 !important;
+}
 
 
 .removeborder:hover{
