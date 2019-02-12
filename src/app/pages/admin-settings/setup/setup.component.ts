@@ -93,7 +93,7 @@ export class SetupComponent implements OnInit {
       'KPIId': null,
       'KPIName': [null, Validators.compose([Validators.required])],
       'KPICode': [null, Validators.compose([Validators.required])],
-      'higherIsBetter': [null, Validators.compose([Validators.required])],
+      'PriorityType': [null, Validators.compose([Validators.required])],
       'dataType': [null, Validators.compose([Validators.required])],
       'modifiedBy': this.sessionUser['user_id'],
       'createdBy': this.sessionUser['user_id'],
@@ -414,7 +414,7 @@ export class SetupComponent implements OnInit {
       this.KPIform.controls['KPIId'].setValue(event['node']['KPIId']);
       this.KPIform.controls['KPIName'].setValue(event['node']['KPIName']);
       this.KPIform.controls['KPICode'].setValue(event['node']['KPICode']);
-      this.KPIform.controls['higherIsBetter'].setValue(event['node']['higherIsBetter']);
+      this.KPIform.controls['PriorityType'].setValue(event['node']['PriorityType']);
       this.KPIform.controls['dataType'].setValue(event['node']['dataType']);
       this.KPIform.controls['KRAId'].setValue(event['node']['KRAId']);
       this.allforms = 'updateKPI';
