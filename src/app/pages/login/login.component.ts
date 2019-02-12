@@ -44,6 +44,7 @@ export class LoginComponent {
       this.login.loginAuth(values)
         .subscribe(
           data => {
+            console.log(data,'Main Login details')
             if (data['responseType']['error'] == false) {
               // let config = new MatSnackBarConfig();
               // config.panelClass = ['test'];

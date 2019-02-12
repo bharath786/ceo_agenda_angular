@@ -129,7 +129,6 @@ export class ManageUsersComponent implements OnInit {
   }
 
   onEntitySubmit(formvalues){
-
     this.assignEntities(formvalues['entityId'])
   }
 
@@ -178,6 +177,7 @@ export class ManageUsersComponent implements OnInit {
   }
 
   onDivisionSelect(divisionId){
+   // this.entityform.controls['entityId'].setValue(null);
     console.log(divisionId,'DivisionIds')
     this.locationdata =[]
     divisionId.forEach(element => {
@@ -191,6 +191,9 @@ export class ManageUsersComponent implements OnInit {
     console.log(this.locationdata)    
     this.locationdata = this.multiDimensionalUnique(this.locationdata)
     console.log(this.locationdata)
+    if(this.locationdata.length == 0){
+     this.onLocationSelect([])
+    }
   }
 
   onLocationSelect(countryId){
@@ -340,7 +343,6 @@ export class ManageUsersComponent implements OnInit {
   }
 
   //Assign the entities to the user
-
   assignEntities(entityIds) {
     let data = {
       EntityIds: entityIds, userId: this.userId,
@@ -349,7 +351,10 @@ export class ManageUsersComponent implements OnInit {
     }
     this.adminsettingsservice.insertUserEntities(data).subscribe(
       data => {
-        console.log(data['data']);
+        this.snackBar.open(data['responseType']['message'], 'OK', {
+          duration: 7000,
+          panelClass: ['greenSnackbar']
+        });
         this.entitiesModal.hide();
         this.userslist();
       },
@@ -363,7 +368,6 @@ export class ManageUsersComponent implements OnInit {
   //User Update and Create Form
   public onSubmit(values: Object): void {
     let sessionUser = JSON.parse(sessionStorage['Session_name'])
-
     if (this.form.valid) {
       if (values['userId'] == null) {
         values['createdBy'] = sessionUser.user_id
