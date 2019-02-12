@@ -100,7 +100,7 @@ export class UserMenuComponent implements OnInit {
       var value = { userId: session_values.user_id }
       this.appservice.profileUpdate(value).subscribe(
         data => {
-          this.name = data['firstName']+' '+data['lastName'];
+          this.name = data["Data"][0]['firstName']+' '+data["Data"][0]['lastName'];
         },
         error => {
           console.log(error);

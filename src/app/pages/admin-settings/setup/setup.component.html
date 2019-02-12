@@ -196,11 +196,11 @@
                         <div class="form-group">
                             <label class="col-md-12 lblfnt required">Type</label>
                             <div class="col-md-12">
-                                <mat-radio-group formControlName="higherIsBetter">
+                                <mat-radio-group formControlName="PriorityType">
                                     <mat-radio-button *ngFor="let higherOrLower of KPIHigherOrLower" [value]="higherOrLower['lookupId']">{{higherOrLower['lookupName']}}
                                         &nbsp; &nbsp;</mat-radio-button>
                                 </mat-radio-group>
-                                <mat-error *ngIf="KPIform.controls.higherIsBetter.errors?.required && KPIform.controls.higherIsBetter.touched">
+                                <mat-error *ngIf="KPIform.controls.PriorityType.errors?.required && KPIform.controls.PriorityType.touched">
                                     Please Select Type</mat-error>
                             </div>
                         </div>
