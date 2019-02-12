@@ -9,14 +9,13 @@ import { MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
 import { formatDate } from '@angular/common';
 import { TreeNode } from 'primeng/api';
-
+import * as _ from 'lodash'; 
 
 @Component({
   selector: 'app-manage-users',
   templateUrl: './manage-users.component.html',
   styleUrls: ['./manage-users.component.scss']
 })
-
 
 export class ManageUsersComponent implements OnInit {
   deleteId: number;
@@ -32,11 +31,10 @@ export class ManageUsersComponent implements OnInit {
   maxDate: any;
   emailchange: any;
   //For Tree
-  entitiesList: TreeNode[] = [];
+  entitiesList: any[] = [];
   //For Default Selection
-  selectedFile: TreeNode[];
-  assignedLocations : TreeNode[];
-  assignedEntities: TreeNode[];
+
+  entityform: any;
 
   //For Confirmation
   popoverTitle: string = 'Resend verification Mail';
@@ -48,8 +46,8 @@ export class ManageUsersComponent implements OnInit {
   divisiondata: any = [];
   entityarray: any = [];
   locationdata: any = [];
-  entityIds: any = [];
   userId: any;
+
 
   constructor(public appSettings: AppSettings, public fb: FormBuilder,
     public router: Router, private adminsettingsservice: AdminsettingsService,
@@ -64,7 +62,7 @@ export class ManageUsersComponent implements OnInit {
     this.form = this.fb.group({
       'userId': null,
       'firstName': [null, Validators.compose([Validators.required])],
-      'lastName': [null, Validators.compose([Validators.required])],
+      'lastName': [null, Validators.compose([ Validators.required])],
       'email': [null, Validators.compose([Validators.required, emailValidator])],
       'phoneNo': [null],
       'dateOfBirth': [null, Validators.compose([Validators.required])],
@@ -72,15 +70,21 @@ export class ManageUsersComponent implements OnInit {
       'createdBy': null,
       'modifiedBy': null
     });
+
+    this.entityform = this.fb.group({
+      'divId': null,
+      'locationId': null,
+      'entityId' : null
+    });
   }
 
   ngOnInit() {
     //Users List
     this.userslist();
-
-    //To get all Entities
     this.getEntitiesList();
   }
+
+
 
   @ViewChild('addUserModal') public addUserModal: ModalDirective;
   @ViewChild('deleteModal') public deleteModal: ModalDirective;
@@ -92,65 +96,43 @@ export class ManageUsersComponent implements OnInit {
   entitiesnModalToggle(e) {
     if (e == null) {
       this.entitiesModal.hide();
+      this.entityform.reset();
     }
     else {
+      this.userId = e;
       this.adminsettingsservice.getUserRelatedEntities(e).subscribe(
         data => {
           console.log(data);
-          this.assignedEntities = data['EntityIds'];
-          console.log( this.assignedEntities, 'ddddd')
-          // this.assignedLocations = 
-          // this.selectedFile = 
+          let selectedDivisions = data['DivisionIds'];
+         selectedDivisions = Array.from(new Set(selectedDivisions));
+         let selectedLocations = data['CountryIds'];
+         selectedLocations = Array.from(new Set(selectedLocations));
+         let selectedEntities = data['EntityIds'];
+         selectedEntities = Array.from(new Set(selectedEntities));
 
+          if(selectedDivisions != null){
+            console.log(selectedDivisions,'select div')
+            this.onDivisionSelect(selectedDivisions)
+          }
+          if(selectedLocations != null){
+            this.onLocationSelect(selectedLocations)
+          }
 
-         // this.selectedFile = this.entitiesList.filter(element=>element.children.filter(entity=>entity==[2,3]));
+      this.entityform.controls['divId'].setValue(selectedDivisions);
+      this.entityform.controls['locationId'].setValue(selectedLocations);
+      this.entityform.controls['entityId'].setValue(selectedEntities);
+      this.getEntitiesList();
         }
       )
-      console.log(this.entitiesList['0'])
-      this.selectedFile = this.entitiesList['0'];
-      this.userId = e;
       this.entitiesModal.show();
     }
   }
 
-  //Tree Node Selection on Entity Tree
-  nodeSelect(event) {
-    console.log(event['node'])
-    this.entityIds.push(event['node']['entityId']);
-    console.log(this.entityIds);
-    // this.entityarray = this.selectedEntity.filter(item => this.unSelectedEntities.indexOf(item) < 0);
-    // console.log(this.entityarray);
+  onEntitySubmit(formvalues){
 
-
-    // let data = event['node'];
-    // let elements = [];
-    // if (data != null) {
-    //   data = data.children;
-    //   if (data != null) {
-    //     data.forEach(element => {
-    //       if (element != null) {
-    //         elements.push(element);
-    //       }
-    //     });
-    //    data = data.children;
-    //   } else {
-    //     let child = data;
-    //     if (data.parent() != null) {
-    //       data = data.parent();
-    //       if (data.parent() != null) {
-    //         elements.push(child);
-    //       }
-    //     }
-    //   }
-    // }
-    // console.log(elements);
-
+    this.assignEntities(formvalues['entityId'])
   }
 
-  nodeUnselect(event) {
-    this.entityIds = this.entityIds.filter(item => item != event['node']['entityId']);
-    console.log(this.entityIds);
-  }
 
   getstatus(e) {
     this.status = e;
@@ -180,14 +162,61 @@ export class ManageUsersComponent implements OnInit {
   getEntitiesList() {
     this.adminsettingsservice.getAllEntities().subscribe(
       data => {
-        console.log(data['data'], 'Entities List')
+        this.divisiondata =[]
         this.entitiesList = data['data']
+        console.log(this.entitiesList)
+        this.entitiesList.forEach(element=>{
+          this.divisiondata.push({divisonId:element.divisionId, divisionName: element.divisionName})
+        }
+          )
+        this.divisiondata = this.multiDimensionalUnique(this.divisiondata)
       },
       error => {
         console.log(error)
       }
     )
   }
+
+  onDivisionSelect(divisionId){
+    console.log(divisionId,'DivisionIds')
+    this.locationdata =[]
+    divisionId.forEach(element => {
+      this.entitiesList.filter((x)=>{
+        if(x.divisionId == element){
+          console.log('fff')
+          this.locationdata.push({countryId:x.countryId, countryName:x.countryName})
+        }
+      })
+    });
+    console.log(this.locationdata)    
+    this.locationdata = this.multiDimensionalUnique(this.locationdata)
+    console.log(this.locationdata)
+  }
+
+  onLocationSelect(countryId){
+    this.entityarray =[]
+    countryId.forEach(element => {
+      this.entitiesList.filter((x)=>{
+        if(x.countryId == element){
+          this.entityarray.push({entityId:x.entityId, entityName:x.entityName})
+        }
+      })
+    });
+    this.entityarray = this.multiDimensionalUnique(this.entityarray)
+    console.log(this.locationdata)
+  }
+
+  multiDimensionalUnique(arr) {
+    var uniques = [];
+    var itemsFound = {};
+    for(var i = 0, l = arr.length; i < l; i++) {
+        var stringified = JSON.stringify(arr[i]);
+        if(itemsFound[stringified]) { continue; }
+        uniques.push(arr[i]);
+        itemsFound[stringified] = true;
+    }
+    return uniques;
+}
 
   //For User delete
   deleteUser() {
@@ -312,15 +341,17 @@ export class ManageUsersComponent implements OnInit {
 
   //Assign the entities to the user
 
-  assignEntities() {
+  assignEntities(entityIds) {
     let data = {
-      EntityIds: this.entityIds, userId: this.userId,
+      EntityIds: entityIds, userId: this.userId,
       createdBy: JSON.parse(sessionStorage['Session_name']).user_id,
       modifiedBy: JSON.parse(sessionStorage['Session_name']).user_id
     }
     this.adminsettingsservice.insertUserEntities(data).subscribe(
       data => {
         console.log(data['data']);
+        this.entitiesModal.hide();
+        this.userslist();
       },
       error => {
         console.log(error)
