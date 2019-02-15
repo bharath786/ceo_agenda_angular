@@ -251,7 +251,8 @@
                         </mat-slide-toggle>
                     
                         <div *ngIf="isScopeApplicable==true" class="form-group" style="margin-top:4px;">
-                            <label class="col-md-12 add-member-label add-member-input lblfnt">Scope</label>
+                            <label class="col-md-12 add-member-label add-member-input lblfnt">Scope <a class="pull-right" (click)="downloadScopesample()">Download Sample</a></label>
+                            
                             <div class="col-md-12">
                                 <div class="input-icon right">
                                     <i class="fa fa-file-excel-o"></i>

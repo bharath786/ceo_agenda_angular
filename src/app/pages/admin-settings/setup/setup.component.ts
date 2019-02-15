@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { AppSettings } from '../../../app.settings';
 import * as XLSX from 'xlsx';
 import { Menu } from 'src/app/theme/components/menu/menu.model';
+import { DownloadExcelService } from '../../download-excel.service';
 
 @Component({
   selector: 'app-setup',
@@ -55,7 +56,7 @@ export class SetupComponent implements OnInit {
   arrayBuffer: any;
   submittedfile: any;
 
-  constructor(private appSettings  : AppSettings, private setupservice: AdminsettingsService, public router: Router, public fb: FormBuilder, public snackBar: MatSnackBar) {
+  constructor(private appSettings:AppSettings,private excelService: DownloadExcelService, private setupservice: AdminsettingsService, public router: Router, public fb: FormBuilder, public snackBar: MatSnackBar) {
 
     this.sessionUser = JSON.parse(sessionStorage['Session_name'])
     //Analytics Update Form
@@ -306,6 +307,14 @@ export class SetupComponent implements OnInit {
         }
       }
     )
+  }
+
+  downloadScopesample(){
+    let scope = [];
+    scope.push({'Scope Name':'', 'Scope Code':''})
+
+    console.log(scope)
+   this.excelService.exportAsExcelFile(scope, 'ScopeSample');
   }
 
   //For Deleting KPI
