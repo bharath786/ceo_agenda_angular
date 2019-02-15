@@ -46,10 +46,9 @@ export class LoginComponent {
           data => {
             console.log(data,'Main Login details')
             if (data['responseType']['error'] == false) {
-              // let config = new MatSnackBarConfig();
-              // config.panelClass = ['test'];
               //Storing user values in session
               sessionStorage.setItem('Session_name', JSON.stringify({ token: data['loginData']['accessToken'], user_id: data['loginData']['userId'] }));
+              sessionStorage.setItem('EntityDetails', JSON.stringify({ assignedEntities: data['AssignedEntitesCount'], defaultCountryId: data['DefaultCountryId'], defaultDivisionId: data['DefaultDivisionId'], defaultEntityId: data['DefaultEntityId'] }));              
               //Sending message to Snackbar
               this.snackBar.open(data['responseType']['message'], 'OK', {
                 duration: 5000,

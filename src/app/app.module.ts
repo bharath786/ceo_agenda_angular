@@ -1,7 +1,7 @@
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { ModalModule } from 'ngx-bootstrap';
 import { TreeModule } from 'primeng/tree';
-import { AdminDashboardComponent } from './pages/admin-dashboard/admin-dashboard.component';
+import { AdminDashboardComponent, NoPermsisionModal, selectEntity } from './pages/admin-dashboard/admin-dashboard.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -82,10 +82,12 @@ import { AppService } from './app.service';
     MessagesComponent,
     UserMenuComponent,
     AdminDashboardComponent,
-    FooterComponent
+    FooterComponent,
+    NoPermsisionModal,
+    selectEntity
   ],
   entryComponents: [
-    VerticalMenuComponent
+    VerticalMenuComponent,NoPermsisionModal,selectEntity
   ],
   providers: [
     AppSettings,

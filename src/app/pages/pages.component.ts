@@ -5,7 +5,7 @@ import { AppSettings } from '../app.settings';
 import { Settings } from '../app.settings.model';
 import { MenuService } from '../theme/components/menu/menu.service';
 import { UserIdleService } from 'angular-user-idle';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar, MatDialog } from '@angular/material';
 import { AppService } from '../app.service';
 
 @Component({
@@ -29,7 +29,7 @@ export class PagesComponent implements OnInit {
   public toggleSearchBar:boolean = false;
   private defaultMenu:string; //declared for return default menu when window resized 
 
-  constructor(public appSettings:AppSettings, public router:Router, private appservice: AppService,private menuService: MenuService, private userIdle: UserIdleService, public snackBar:MatSnackBar){        
+  constructor(public appSettings:AppSettings, public dialog: MatDialog, public router:Router, private appservice: AppService,private menuService: MenuService, private userIdle: UserIdleService, public snackBar:MatSnackBar){        
     this.settings = this.appSettings.settings;
   }
   
@@ -61,6 +61,7 @@ export class PagesComponent implements OnInit {
         )
         sessionStorage.clear();
         this.router.navigate(['/login']);
+        this.dialog.closeAll()
         this.snackBar.open('Session Timed Out', 'OK');
       },
       error=>{

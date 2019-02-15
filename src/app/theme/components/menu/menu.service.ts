@@ -25,7 +25,8 @@ export class MenuService {
   }
 
   getMenu(){
-    return this.http.get(url+'get-menu', this.getHeaders())
+    var EntityDetails = JSON.parse(sessionStorage['EntityDetails'])
+    return this.http.get(url+'get-menu'+'?entityId='+EntityDetails.defaultEntityId, this.getHeaders())
   }
 
   getDimensionData(dimensionId){

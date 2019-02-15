@@ -285,7 +285,6 @@ export class ManageUsersComponent implements OnInit {
       values.modifiedBy = sessionUser.user_id
       this.adminsettingsservice.userStatus(values).subscribe(
         data => {
-
           this.userslist();
           this.snackBar.open(data['message'], 'OK', {
             duration: 7000,

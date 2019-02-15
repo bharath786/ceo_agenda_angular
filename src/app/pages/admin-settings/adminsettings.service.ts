@@ -33,6 +33,8 @@ export class AdminsettingsService {
   resendMailAPI = url+"send-verification-mail";
   insertUserEntitiesAPI = url+"Insert-user-entity-assignment";
   getUserRelatedEntitiesAPI = url+"Get-user-assigned-entities";
+  getUserEntitiesListAPI = url + "Get-user-assigned-entities-names";
+  getEntityDataAPI = url+ "get-entity-data"
 
   //For Structure API's
   getStructureAPI = url + "get-structure";
@@ -87,7 +89,10 @@ export class AdminsettingsService {
 
   upsertTarget(targetvalues){
     return this.http.post(this.upsertTargetAPI, targetvalues, this.getHeaders())
+  }
 
+  getUserEntitiesList(encryptUserId){
+    return this.http.get(this.getUserEntitiesListAPI + '/?UserId='+encryptUserId, this.getHeaders() )
   }
 
   //For all locations based on divison
@@ -101,6 +106,10 @@ export class AdminsettingsService {
 
   getTargetValue(){
     return this.http.get(this.getTargetValueAPI, this.getHeaders())
+  }
+
+  getEntityData(data){
+    return this.http.post(this.getEntityDataAPI,data, this.getHeaders())
   }
 
 
@@ -124,9 +133,9 @@ export class AdminsettingsService {
   insertUserEntities(data){
     return this.http.post(this.insertUserEntitiesAPI, data, this.getHeaders())
   }
-getUserRelatedEntities(userId){
+  getUserRelatedEntities(userId){
   return this.http.get(this.getUserRelatedEntitiesAPI+'?UserId='+userId, this.getHeaders())
-}
+  }
   //For Adding New User
   userUpsert(values) {
     return this.http.post(this.userUpsertAPI, values, this.getHeaders())
@@ -198,7 +207,9 @@ getUserRelatedEntities(userId){
   }
   // For Setup Tree
   public getSetup(): Observable<any> {
-    return this.http.get(this.getSetupAPI, this.getHeaders())
+    var EntityDetails = JSON.parse(sessionStorage['EntityDetails'])
+    
+    return this.http.get(this.getSetupAPI+'?entityId='+EntityDetails.defaultEntityId, this.getHeaders())
   }
 
   //For deleting Dimension

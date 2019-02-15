@@ -1,7 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import * as moment from 'moment';
 import * as jQuery from 'jquery';
 import 'rxjs/add/operator/map';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { Router, RouterModule, NavigationEnd } from '@angular/router';
+import { AdminsettingsService } from '../admin-settings/adminsettings.service';
+import { FormBuilder } from '@angular/forms';
 
 
 @Component({
@@ -14,213 +18,215 @@ export class AdminDashboardComponent implements OnInit {
     start_date: any;
 
     end_date: any;
-    constructor(){ }
-  
-    ngOnInit() {
-      this.start_date = moment().subtract(29, 'days');
-  
-      this.end_date = moment();
-  
-  
-  
-  
-      jQuery('.daterange').daterangepicker({
-          ranges: {
-              'Today': [moment(), moment()],
-              'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-              'Last 7 Days': [moment().subtract(6, 'days'), moment()],
-              'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-              'This Month': [moment().startOf('month'), moment().endOf('month')],
-              'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
-          },
-          opens: 'left',
-          startDate: moment().subtract(29, 'days'),
-          endDate: moment()
-      }, function (x: any, y: any) {
-  
-          console.log(x);
-          this.start_date = x;
-          this.end_date = y;
-          // window.alert('You chose:  ' + this.start.format('MMMM D, YYYY') + ' - ' + this.end.format('MMMM D, YYYY'));
-      });
-  
-      // Starts here
+    constructor(public dialog: MatDialog, public router: Router) {
+        var EntityDetails = JSON.parse(sessionStorage['EntityDetails'])
+        if (EntityDetails.assignedEntities < 1) {
+            this.openDialog()
+        }
+        if (EntityDetails.assignedEntities == 1) {
+
+        }
+        if (EntityDetails.assignedEntities > 1) {
+            if (EntityDetails.defaultEntityId == null) {
+                this.openDialog1();
+            }
+            else {
+
+            }
+        }
     }
 
-    // dimensionsummarychart = new Chart({
-    //     yAxis: {
-    //         title: {
-    //             text: null
-    //         }
-    //     },
+    openDialog1() {
+        const dialogRef = this.dialog.open(selectEntity, {
+            width: '500px',
+            disableClose: true
+        }
+        );
 
-    //     title: {
-    //         text: 'Dimension Summary',
-    //         align: 'left',
-    //         x: 65,
-    //         y: 20
-    //     },
-    //     chart: {
-    //         type: 'area'
-    //     },
-    //     credits: {
-    //         enabled: false
-    //     },
-    //     tooltip: {
-    //         pointFormat: ' <b>{point.y}</b>'
-    //     },
-    //     xAxis: {
-    //         categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-           
+        dialogRef.afterClosed().subscribe(result => {
+            console.log(`Dialog result: ${result}`);
+        });
+    }
 
-    //     },
-    //     legend: {
-    //         enabled: false
-    //     },
-    //     series: [{
+    openDialog() {
+        const dialogRef = this.dialog.open(NoPermsisionModal, {
+            disableClose: true
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            console.log(`Dialog result: ${result}`);
+        });
+    }
 
-    //         data: [150, 250, 170, 180, 150, 230, 150, 130, 170, 200, 190,170],
-    //         color: '#e49f9f'
-    //     }]
-    // });
-
-
-
-    // kpisummarychart = new Chart({
-    //     title: {
-    //         text: 'KPI Summary',
-    //         align: 'left',
-    //         x: 70,
-    //         y: 30
-    //     },
-    //     legend: {
-    //         enabled: false
-    //     },
-
-    //     credits: {
-    //         enabled: false
-    //     },
-    //     tooltip: {
-    //         headerFormat: '{point.x}<br />',
-    //         pointFormat: 'KPI: <b>{point.y}</b>'
-    //     },
-    //     xAxis: {
-    //         categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-    //         title: {
-    //             text: ''
-    //         }
-    //     },
-    //     yAxis: {
-    //         title: {
-    //             text: ''
-    //         }
-    //     },
-    //     series: [{
-    //         name: '',
-    //         data: [15, 35, 25, 66, 33, 80, 59, 29, 42, 59, 45, 62],
-
-    //     }]
-    // });
-
-    // krasummarychart = new Chart({
-    //     yAxis: {
-    //         title: {
-    //             text: ''
-    //         }
-    //     },
-
-    //     title: {
-    //         text: 'KRA Summary',
-    //         align: 'left',
-    //         x: 65,
-    //         y: 20
-    //     },
-    //     chart: {
-    //         type: 'area'
-    //     },
-    //     credits: {
-    //         enabled: false
-    //     },
-    //     tooltip: {
-    //         pointFormat: ' <b>{point.y}</b> '
-    //     },
-    //     xAxis: {
-    //         categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-          
-
-    //     },
-    //     legend: {
-    //         enabled: false
-    //     },
-    //     series: [{
-
-    //         data: [300, 600, 900, 600, 650, 700, 650,800, 900, 600,500, 800],
-    //         color: '#8bc6e9'
-    //     }]
-
-    // })
-
-    // exceptionschart = new Chart({
-    //     chart: {
-    //         type: 'column'
-    //     },
-    //     title: {
-    //         text: 'KPI Exceptions',
-    //         align: 'left',
-    //         x: 65,
-    //         y: 20
-    //     },
-    //     credits: {
-    //         enabled: false
-    //     },
-    //     legend: {
-    //         enabled: false
-    //     },  
-
-    //     xAxis: {
-    //         categories: [
-    //             'Jan',
-    //             'Feb',
-    //             'Mar',
-    //             'Apr',
-    //             'May',
-    //             'Jun',
-    //             'Jul',
-    //             'Aug',
-    //             'Sep',
-    //             'Oct',
-    //             'Nov',
-    //             'Dec'
-    //         ],
-    //         crosshair: true
-    //     },
-    //     yAxis: {
-    //         min: 0,
-    //         title: {
-
-    //             text: null           }
-    //     },
-    //     tooltip: {
-    //         headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-    //         pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-    //             '<td style="padding:0"><b>{point.y:.1f} </b></td></tr>',
-    //         footerFormat: '</table>',
-    //         shared: true,
-    //         useHTML: true
-    //     },
-    //     plotOptions: {
-    //         column: {
-    //             pointPadding: 0.2,
-    //             borderWidth: 0
-    //         }
-    //     },
-    //     series: [
-    //         {
-    //         name: 'Exceptions',
-    //         data: [2, 4, 1, 3, 5, 4, 3, 4, 1, 1, 2, 3]
-
-    //     }, 
-        
-    // ]
-    // });
+    ngOnInit() {
+        this.router.events.subscribe((res) => {
+        })
+        if (this.router.url == '/login') {
+            this.dialog.closeAll()
+        }
+    }
 }
+
+//No Permission Component for Modal PopUp
+
+@Component({
+    selector: 'NoPermsisionModalPopup',
+    templateUrl: 'no-permission.html',
+})
+export class NoPermsisionModal {
+    constructor(public dialog: MatDialog, public router: Router) { }
+    logout() {
+        this.dialog.closeAll()
+        sessionStorage.clear()
+        this.router.navigate(['/login'])
+    }
+}
+
+//Ends here
+
+
+
+//For Select Entity Component for Modal PopUp
+@Component({
+    selector: 'Select-Entity',
+    templateUrl: 'select-entity.html',
+})
+export class selectEntity {
+    divisiondata: any[];
+    entitiesList: any = [];
+    locationdata: any[];
+    entityarray: any[];
+    userSelectedEntities: any;
+    filteredEntities: any = [];
+    entityform: any;
+    sessionUser: any;
+
+    constructor(public dialog: MatDialog,
+        @Inject(MAT_DIALOG_DATA) public EntityDetails,
+        public fb: FormBuilder,
+        public router: Router,
+        public adminsettingsservice: AdminsettingsService) {
+        //this.getEntitiesList();
+        this.entityform = this.fb.group({
+            'divId': [null],
+            'locationId': [null],
+            'entityId': null,
+            'isDefault': false
+        });
+    }
+
+    ngOnInit() {
+        this.selectedEntities();
+        if (this.EntityDetails != null) {
+            this.entityform.controls['divId'].setValue(this.EntityDetails['defaultDivisionId']);
+            this.entityform.controls['locationId'].setValue(this.EntityDetails['defaultCountryId']);
+            this.entityform.controls['entityId'].setValue(this.EntityDetails['defaultEntityId']);
+        }
+    }
+
+    onEntitySubmit(values) {
+        var EntityDetails = JSON.parse(sessionStorage['EntityDetails'])
+        sessionStorage.setItem('EntityDetails',
+            JSON.stringify({ assignedEntities: EntityDetails.assignedEntities,
+                 defaultCountryId: values['locationId'], defaultDivisionId: values['divId'], 
+                 defaultEntityId: values['entityId'] }));
+        let sessionUser = JSON.parse(sessionStorage['Session_name'])
+        values['userId'] = sessionUser.user_id;
+        this.adminsettingsservice.getEntityData(values).subscribe(
+            data => {
+                console.log(data, 'EntityData')
+                this.dialog.closeAll()
+                window.location.reload();
+            }
+            
+        )
+                       
+    }
+
+    getEntitiesList() {
+        //this.entitiesList = []
+        this.adminsettingsservice.getAllEntities().subscribe(
+            data => {
+                this.entitiesList = data['data']
+                if (this.entitiesList.length < 1) {
+                    console.log('no data')
+                }
+                console.log(this.entitiesList)
+            },
+            error => {
+                console.log(error)
+            }
+        )
+
+        return this.entitiesList;
+    }
+
+
+
+    selectedEntities() {
+        let sessionUser = JSON.parse(sessionStorage['Session_name'])
+        this.entitiesList = this.getEntitiesList();
+        this.adminsettingsservice.getUserEntitiesList(sessionUser.user_id).subscribe(
+            data => {
+                this.userSelectedEntities = data['EntityIds'];
+                //console.log(this.userSelectedEntities)
+                var temprecords = [];
+                console.log(this.entitiesList, 'List')
+                this.userSelectedEntities.forEach(element => {
+                    this.entitiesList.filter((x) => {
+                        if (x.entityId == element) {
+                            temprecords.push(x)
+                        }
+                    }
+                    )
+                });
+
+                this.getDivisionofSelected(temprecords)
+                console.log(temprecords)
+            }
+        )
+    }
+
+    getDivisionofSelected(selectedEntities: any[]) {
+        this.divisiondata = [];
+        this.filteredEntities = selectedEntities
+        selectedEntities.forEach(element => {
+            this.divisiondata.push({ divisonId: element.divisionId, divisionName: element.divisionName })
+        }
+        )
+        this.divisiondata = this.multiDimensionalUnique(this.divisiondata)
+    }
+
+    onDivisionSelect(divisionId) {
+        this.locationdata = []
+        this.filteredEntities.filter((x) => {
+            if (x.divisionId == divisionId) {
+                this.locationdata.push({ countryId: x.countryId, countryName: x.countryName })
+            }
+        })
+        this.locationdata = this.multiDimensionalUnique(this.locationdata)
+    }
+
+    onLocationSelect(countryId) {
+        this.entityarray = []
+        this.filteredEntities.filter((x) => {
+            if (x.countryId == countryId) {
+                this.entityarray.push({ entityId: x.entityId, entityName: x.entityName })
+            }
+        })
+        this.entityarray = this.multiDimensionalUnique(this.entityarray)
+    }
+
+    multiDimensionalUnique(arr: any[]) {
+        var uniques = [];
+        var itemsFound = {};
+        for (var i = 0, l = arr.length; i < l; i++) {
+            var stringified = JSON.stringify(arr[i]);
+            if (itemsFound[stringified]) { continue; }
+            uniques.push(arr[i]);
+            itemsFound[stringified] = true;
+        }
+        return uniques;
+    }
+}
+
+  //Ends Here

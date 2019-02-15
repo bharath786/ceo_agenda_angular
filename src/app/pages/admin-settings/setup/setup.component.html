@@ -81,6 +81,12 @@
                             </div>
                         </div>
                         <div class="form-group">
+                            <label class="col-md-12 add-member-label add-member-input lblfnt">Description</label>
+                            <div class="col-md-12">
+                                <textarea maxlength="500" formControlName="description" class="form-control" placeholder="Description" cols="12" rows="5"></textarea>
+                            </div>
+                        </div>
+                        <!-- <div class="form-group">
                             <label class="col-md-12 add-member-label add-member-input lblfnt">Scope</label>
                             <div class="col-md-12">
                             <div class="input-icon right">
@@ -92,13 +98,13 @@
                                 </span>
                             </div>
                             </div>
-                        </div>
-                        <div class="form-group">
+                        </div> -->
+                        <!-- <div class="form-group">
                             <div class="col-md-12">
                                 <mat-checkbox formControlName="scopeApplicable" [(ngModel)]="scopeValue">Select if
                                     scope is not applicable</mat-checkbox>
                             </div>
-                        </div>
+                        </div> -->
                         <div *ngIf="allforms == 'adddimension'" class="pull-right">
                             <button [disabled]="!dimensionupsertform.form.valid" class="btn btn-success"
                                 type="submit">Save</button>

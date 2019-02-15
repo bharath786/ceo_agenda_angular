@@ -46,7 +46,6 @@ export class SetupComponent implements OnInit {
   fileName: any = null;
 
   //For Confirmation
-
   popoverTitle: string = 'Delete?';
   popoverMessage: string = "Are You Sure ? You want to delete record, this action can't be undone.";
   confirmText: string = 'Delete <i class="glyphicon glyphicon-ok"></i>';
@@ -71,7 +70,7 @@ export class SetupComponent implements OnInit {
     this.dimensionform = this.fb.group({
       'dimensionId': null,
       'dimensionName': [null, Validators.compose([Validators.required])],
-      'scopeApplicable': [false],
+      'description':null,
       'frequencyId': [4],
       'modifiedBy': this.sessionUser['user_id'],
       'createdBy': this.sessionUser['user_id'],
@@ -93,14 +92,13 @@ export class SetupComponent implements OnInit {
       'KPIId': null,
       'KPIName': [null, Validators.compose([Validators.required])],
       'KPICode': [null, Validators.compose([Validators.required])],
-      'higherIsBetter': [null, Validators.compose([Validators.required])],
+      'PriorityType': [null, Validators.compose([Validators.required])],
       'dataType': [null, Validators.compose([Validators.required])],
       'modifiedBy': this.sessionUser['user_id'],
       'createdBy': this.sessionUser['user_id'],
       'KRAId': null
     });
   }
-
 
   //For Updating Analytics
   public onSubmitAnalytics(value: object) {
@@ -152,34 +150,8 @@ export class SetupComponent implements OnInit {
 
   //For Dimesion Upsert
   public onSubmitDimension(value) {
-    //Creating Form Data
-    const dimdata = new FormData();
-    //Making the file null if the Scope Applicable is selected
-    if (value['scopeApplicable'] == true) {
-      dimdata.append('scopeName', '')
-      value['dimensionId'] != null ? dimdata.append('dimensionId', value['dimensionId']) : dimdata.append('dimensionId', '0');
-      dimdata.append('dimensionName', value['dimensionName'])
-      dimdata.append('scopeApplicable', value['scopeApplicable'])
-      dimdata.append('frequencyId', value['frequencyId'])
-      dimdata.append('analyticsId', value['analyticsId'])
-      dimdata.append('createdBy', value['createdBy'])
-      dimdata.append('modifiedBy', value['modifiedBy'])
-    }
-    else {
-      //Send Form values to Form Data
-      value['dimensionId'] != null ? dimdata.append('dimensionId', value['dimensionId']) : dimdata.append('dimensionId', '0');
-      dimdata.append('dimensionName', value['dimensionName'])
-      value['scopeName'] != null ? dimdata.append('scopeName',this.todaysDate + "@#$" + this.fileScope.name) : dimdata.append('scopeName', "")
-      value['scopeApplicable'] != null ? dimdata.append('scopeApplicable', value['scopeApplicable']) : dimdata.append('scopeApplicable', "false");
-      dimdata.append('scope', this.submittedfile)
-      dimdata.append('frequencyId', value['frequencyId'])
-      dimdata.append('analyticsId', value['analyticsId'])
-      dimdata.append('createdBy', value['createdBy'])
-      dimdata.append('modifiedBy', value['modifiedBy'])
-      value["scopeData"] = this.submittedfile;
-     // value['scopeName'] != null ? dimdata.append("fileName", this.fileScope['name']) : dimdata.append("fileName", "");
-    }
-    //Sending Form Data Values to Service
+    let EntityDetails = JSON.parse(sessionStorage['EntityDetails']);
+    value['entityId'] = EntityDetails.defaultEntityId;
     this.setupservice.upsertDimension(value).subscribe(
 
       data => {
@@ -302,7 +274,6 @@ export class SetupComponent implements OnInit {
 
   //For KPI Upsert
   public onSubmitKPI(value: object) {
-
     this.setupservice.upsertKPI(value).subscribe(
       data => {
         if (data['error'] == true) {
@@ -376,26 +347,10 @@ export class SetupComponent implements OnInit {
     if (this.dimensionId != null) {
       //Calling Dimension Frequencies function
       this.getDimensionFrequencies();
-      if (event['node']['scopeApplicable'] == 1) {
-        this.scopeInput = true;
-      }
-      else {
-        this.scopeInput = false;
-        // this.dimensionform.controls['scopeName'].setValue('');
-        this.scopeValue = false;
-      }
-      if (event['node']['scopeName'] != null) {
-        let nameoffile = event['node']['scopeName'].split("@#$");
-        this.fileName = nameoffile[1];
-        this.scopeValue = false;
-      }
-      else {
-        this.fileName = null;
-      }
       this.dimensionform.controls['dimensionId'].setValue(event['node']['dimensionId']);
       this.dimensionform.controls['dimensionName'].setValue(event['node']['dimensionName']);
-      this.dimensionform.controls['frequencyId'].setValue(event['node']['frequencyId']);
-      this.dimensionform.controls['scopeApplicable'].setValue(event['node']['scopeApplicable']);
+       this.dimensionform.controls['frequencyId'].setValue(event['node']['frequencyId']);
+   //   this.dimensionform.controls['scopeApplicable'].setValue(event['node']['scopeApplicable']);
       this.dimensionform.controls['analyticsId'].setValue(event['node']['analyticsId']);
       this.allforms = 'updatedimension';
 
@@ -414,7 +369,7 @@ export class SetupComponent implements OnInit {
       this.KPIform.controls['KPIId'].setValue(event['node']['KPIId']);
       this.KPIform.controls['KPIName'].setValue(event['node']['KPIName']);
       this.KPIform.controls['KPICode'].setValue(event['node']['KPICode']);
-      this.KPIform.controls['higherIsBetter'].setValue(event['node']['PriorityType']);
+      this.KPIform.controls['PriorityType'].setValue(event['node']['PriorityType']);
       this.KPIform.controls['dataType'].setValue(event['node']['dataType']);
       this.KPIform.controls['KRAId'].setValue(event['node']['KRAId']);
       this.allforms = 'updateKPI';
@@ -486,6 +441,7 @@ export class SetupComponent implements OnInit {
   getKpiDataType() {
     this.setupservice.getKpiDatatType().subscribe(
       data => {
+        console.log(data,'Data Type')
         //Assigning the values to the KPI Datatype variable
         this.kpiDataType = data['data']
         this.KPIHigherOrLower = data['data1']
