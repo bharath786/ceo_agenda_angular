@@ -7,13 +7,15 @@
                 <i class="fa fa-cogs"></i>&nbsp;&nbsp;Dimensions Setup
             </div>
         </div>
-        <p-tree [value]="files" selectionMode="single" [(selection)]="selectedFile" [propagateSelectionUp]="true" (onNodeSelect)="nodeSelect($event)"></p-tree>
+        <p-tree [value]="files" selectionMode="single" [(selection)]="selectedFile" [propagateSelectionUp]="true"
+            (onNodeSelect)="nodeSelect($event)"></p-tree>
     </div>
 
     <!-- For Setup Tree data -->
     <div class="col-sm-8">
         <!-- For Analytics Update -->
-        <div *ngIf="allforms == 'updateanalytics'" class="gridrole col-sm-12 clearfix" style="border: 1px solid rgb(204, 204, 204); padding: 20px; border-radius: 4px !important;">
+        <div *ngIf="allforms == 'updateanalytics'" class="gridrole col-sm-12 clearfix"
+            style="border: 1px solid rgb(204, 204, 204); padding: 20px; border-radius: 4px !important;">
             <div class="col-sm-12">
                 <form [formGroup]="analyticsform" (ngSubmit)="onSubmitAnalytics(analyticsform.value)"
                     #analyticsupdateform="ngForm" class="form-horizontal">
@@ -25,21 +27,23 @@
                         <div class="col-md-12">
                             <input maxlength="50" formControlName="analyticsName" class="form-control disablecustom"
                                 type="text" placeholder="Analytics Name">
-                            <mat-error *ngIf="analyticsform.controls.analyticsName.errors?.required && analyticsform.controls.analyticsName.touched">
+                            <mat-error
+                                *ngIf="analyticsform.controls.analyticsName.errors?.required && analyticsform.controls.analyticsName.touched">
                                 Analytics Name is required</mat-error>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-md-12 add-member-label add-member-input lblfnt">Description</label>
                         <div class="col-md-12">
-                            <textarea maxlength="500" formControlName="analyticsDescription" class="form-control" placeholder="Description" cols="12" rows="5"></textarea>
+                            <textarea maxlength="500" formControlName="analyticsDescription" class="form-control"
+                                placeholder="Description" cols="12" rows="5"></textarea>
                             <!-- <mat-error *ngIf="analyticsform.controls.analyticsDescription.errors?.required && analyticsform.controls.analyticsDescription.touched">
                                 Analytics Description is required</mat-error> -->
                         </div>
                     </div>
                     <div class="pull-right" style="margin-top: 25px;">
-                        <button [disabled]="!analyticsupdateform.form.valid" class="btn btn-success" id="btnupdateFimrDiv"
-                            type="submit">Update</button>
+                        <button [disabled]="!analyticsupdateform.form.valid" class="btn btn-success"
+                            id="btnupdateFimrDiv" type="submit">Update</button>
                         <button type="button" id="btn_firmdiv" class="btn btn-danger hide" data-toggle="modal"
                             data-target="#Mymodel-FirmDivDelete" data-tooltip="tooltip" data-placement="top" title=""
                             value="" data-original-title="Delete">
@@ -51,13 +55,15 @@
         </div>
         <!-- For Dimension Update and Insert -->
         <div class="" *ngIf="allforms=='adddimension' || allforms == 'updatedimension'">
-            <form [formGroup]="dimensionform" (ngSubmit)="onSubmitDimension(dimensionform.value)" #dimensionupsertform="ngForm"
-                class="form-horizontal">
-                <div class="col-sm-12 clearfix gridrole" style="border: 1px solid rgb(204, 204, 204); padding: 20px; border-radius: 4px !important;">
+            <form [formGroup]="dimensionform" (ngSubmit)="onSubmitDimension(dimensionform.value)"
+                #dimensionupsertform="ngForm" class="form-horizontal">
+                <div class="col-sm-12 clearfix gridrole"
+                    style="border: 1px solid rgb(204, 204, 204); padding: 20px; border-radius: 4px !important;">
                     <h4 class="modal-title"><span style="padding-left: 13px;" class="bold">{{ allforms ==
                             'adddimension' ? 'Add
                             Dimension' : 'Edit Dimension Details'}}</span>
-                        <a *ngIf="allforms == 'updatedimension'" (click)='addKRA(1)' class="pull-right btn btn-primary">Add
+                        <a *ngIf="allforms == 'updatedimension'" (click)='addKRA(1)'
+                            class="pull-right btn btn-primary">Add
                             KRA </a></h4>
                     <br>
                     <div class="col-xs-12">
@@ -66,24 +72,29 @@
                             <div class="col-md-12">
                                 <input maxlength="50" formControlName="dimensionName" class="form-control" type="text"
                                     placeholder="Enter Dimension Title">
-                                <mat-error *ngIf="dimensionform.controls.dimensionName.errors?.required && dimensionform.controls.dimensionName.touched">
+                                <mat-error
+                                    *ngIf="dimensionform.controls.dimensionName.errors?.required && dimensionform.controls.dimensionName.touched">
                                     Dimension Title is required</mat-error>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-md-12 lblfnt required">Update Frequency</label>
                             <div class="col-md-12">
-                                <mat-select formControlName="frequencyId" class="form-control" placeholder="Select Frequency">
-                                    <mat-option *ngFor="let item of dimensionFrequency" [value]="item['lookupId']">{{item['lookupName']}}</mat-option>
+                                <mat-select formControlName="frequencyId" class="form-control"
+                                    placeholder="Select Frequency">
+                                    <mat-option *ngFor="let item of dimensionFrequency" [value]="item['lookupId']">
+                                        {{item['lookupName']}}</mat-option>
                                 </mat-select>
-                                <mat-error *ngIf="dimensionform.controls.frequencyId.errors?.required && dimensionform.controls.frequencyId.touched">
+                                <mat-error
+                                    *ngIf="dimensionform.controls.frequencyId.errors?.required && dimensionform.controls.frequencyId.touched">
                                     Update Frequency is required</mat-error>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-md-12 add-member-label add-member-input lblfnt">Description</label>
                             <div class="col-md-12">
-                                <textarea maxlength="500" formControlName="description" class="form-control" placeholder="Description" cols="12" rows="5"></textarea>
+                                <textarea maxlength="500" formControlName="description" class="form-control"
+                                    placeholder="Description" cols="12" rows="5"></textarea>
                             </div>
                         </div>
                         <!-- <div class="form-group">
@@ -110,9 +121,11 @@
                                 type="submit">Save</button>
                         </div>
                         <div *ngIf="allforms == 'updatedimension'" class="pull-right">
-                            <button [disabled]="!dimensionupsertform.form.valid" class="btn btn-success marginbtn" type="submit">Update</button>
-                            <button type="button" mwlConfirmationPopover [popoverTitle]="popoverTitle" [confirmText]="confirmText"
-                                [cancelText]="cancelText" [popoverMessage]="popoverMessage" placement="left" (confirm)="onDeleteDimension(dimensionform.value)"
+                            <button [disabled]="!dimensionupsertform.form.valid" class="btn btn-success marginbtn"
+                                type="submit">Update</button>
+                            <button type="button" mwlConfirmationPopover [popoverTitle]="popoverTitle"
+                                [confirmText]="confirmText" [cancelText]="cancelText" [popoverMessage]="popoverMessage"
+                                placement="left" (confirm)="onDeleteDimension(dimensionform.value)"
                                 class="btn btn-danger marginbtn" data-toggle="modal" data-tooltip="tooltip"
                                 data-original-title="Delete">
                                 <i class="fa fa-trash"></i>
@@ -124,8 +137,10 @@
         </div>
         <!--For Adding and Updating KRA  -->
         <div class="" *ngIf="allforms=='addKRA' || allforms=='updateKRA'">
-            <form [formGroup]="KRAform" (ngSubmit)="onSubmitKRA(KRAform.value)" #KRAupsertform="ngForm" class="form-horizontal">
-                <div class="col-sm-12 clearfix gridrole" style="border: 1px solid rgb(204, 204, 204); padding: 20px; border-radius: 4px !important;">
+            <form [formGroup]="KRAform" (ngSubmit)="onSubmitKRA(KRAform.value)" #KRAupsertform="ngForm"
+                class="form-horizontal">
+                <div class="col-sm-12 clearfix gridrole"
+                    style="border: 1px solid rgb(204, 204, 204); padding: 20px; border-radius: 4px !important;">
                     <h4 class="modal-title"><span style="padding-left: 13px;" class="bold">{{ allforms == 'addKRA' ?
                             'Add
                             KRA'
@@ -139,14 +154,16 @@
                             <div class="col-md-12">
                                 <input maxlength="50" formControlName="KRAName" class="form-control" type="text"
                                     placeholder="Enter KRA Title">
-                                <mat-error *ngIf="KRAform.controls.KRAName.errors?.required && KRAform.controls.KRAName.touched">
+                                <mat-error
+                                    *ngIf="KRAform.controls.KRAName.errors?.required && KRAform.controls.KRAName.touched">
                                     KRA Title is required</mat-error>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-md-12 lblfnt">Remarks</label>
                             <div class="col-md-12">
-                                    <textarea formControlName="description" class="form-control" placeholder="Description" cols="12" rows="5"></textarea>
+                                <textarea formControlName="description" class="form-control" placeholder="Description"
+                                    cols="12" rows="5"></textarea>
                                 <!-- <mat-error *ngIf="KRAform.controls.description.errors?.required && KRAform.controls.description.touched">
                                     Please Enter Remarks</mat-error> -->
                             </div>
@@ -156,15 +173,16 @@
                                 type="submit">Save</button>
                         </div>
                         <div *ngIf="allforms == 'updateKRA'" class="pull-right" style="margin-top: 25px;">
-                            <button [disabled]="!KRAupsertform.form.valid" class="btn btn-success marginbtn" type="submit">Update</button>
+                            <button [disabled]="!KRAupsertform.form.valid" class="btn btn-success marginbtn"
+                                type="submit">Update</button>
                             <!-- <button type="button" (click)="onDeleteKRA(KRAform.value)" class="btn btn-danger marginbtn" data-toggle="modal" data-tooltip="tooltip" data-placement="top" title=""
                              data-original-title="Delete">
                             <i class="fa fa-trash"></i>
                         </button> -->
-                            <button type="button" mwlConfirmationPopover [popoverTitle]="popoverTitle" [confirmText]="confirmText"
-                                [cancelText]="cancelText" [popoverMessage]="popoverMessage" placement="left" (confirm)="onDeleteKRA(KRAform.value)"
-                                class="btn btn-danger marginbtn" data-toggle="modal" data-tooltip="tooltip"
-                                data-original-title="Delete">
+                            <button type="button" mwlConfirmationPopover [popoverTitle]="popoverTitle"
+                                [confirmText]="confirmText" [cancelText]="cancelText" [popoverMessage]="popoverMessage"
+                                placement="left" (confirm)="onDeleteKRA(KRAform.value)" class="btn btn-danger marginbtn"
+                                data-toggle="modal" data-tooltip="tooltip" data-original-title="Delete">
                                 <i class="fa fa-trash"></i>
                             </button>
                         </div>
@@ -174,8 +192,10 @@
         </div>
         <!-- For KPI Adding and Updating -->
         <div class="" *ngIf="allforms == 'addKPI' || allforms == 'updateKPI'">
-            <form [formGroup]="KPIform" (ngSubmit)="onSubmitKPI(KPIform.value)" #KPIupsertform="ngForm" class="form-horizontal">
-                <div class="col-sm-12 clearfix gridrole" style="border: 1px solid rgb(204, 204, 204); padding: 20px; border-radius: 4px !important;">
+            <form [formGroup]="KPIform" (ngSubmit)="onSubmitKPI(KPIform.value)" #KPIupsertform="ngForm"
+                class="form-horizontal">
+                <div class="col-sm-12 clearfix gridrole"
+                    style="border: 1px solid rgb(204, 204, 204); padding: 20px; border-radius: 4px !important;">
                     <h4 class="modal-title">
                         <span style="padding-left: 13px;" class="bold">{{ allforms == 'addKPI' ? 'Add KPI':'Edit KPI
                             Details'}}</span></h4>
@@ -184,55 +204,82 @@
                         <div class="form-group">
                             <label class="col-md-12 lblfnt required">Title</label>
                             <div class="col-md-12">
-                                <input maxlength="50" formControlName="KPIName" class="form-control"
-                                    type="text" placeholder="Enter KPI Title">
-                                <mat-error *ngIf="KPIform.controls.KPIName.errors?.required && KPIform.controls.KPIName.touched">
+                                <input maxlength="50" formControlName="KPIName" class="form-control" type="text"
+                                    placeholder="Enter KPI Title">
+                                <mat-error
+                                    *ngIf="KPIform.controls.KPIName.errors?.required && KPIform.controls.KPIName.touched">
                                     KPI Title is required</mat-error>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-md-12 lblfnt required">Code</label>
                             <div class="col-md-12">
-                                <input maxlength="50" formControlName="KPICode" class="form-control"
-                                    type="text" placeholder="Enter KPI Code">
-                                <mat-error *ngIf="KPIform.controls.KPICode.errors?.required && KPIform.controls.KPICode.touched">
+                                <input maxlength="50" formControlName="KPICode" class="form-control" type="text"
+                                    placeholder="Enter KPI Code">
+                                <mat-error
+                                    *ngIf="KPIform.controls.KPICode.errors?.required && KPIform.controls.KPICode.touched">
                                     KPI Code is required</mat-error>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-12 lblfnt required">Data Type</label>
+                            <div class="col-md-12">
+                                <mat-select formControlName="dataType" class="form-control"
+                                    placeholder="Select Frequency">
+                                    <mat-option *ngFor="let datattypes of kpiDataType" [value]="datattypes['lookupId']">
+                                        {{datattypes['lookupName']}}</mat-option>
+                                </mat-select>
+                                <mat-error
+                                    *ngIf="KPIform.controls.dataType.errors?.required && KPIform.controls.dataType.touched">
+                                    Data Type is required</mat-error>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-md-12 lblfnt required">Type</label>
                             <div class="col-md-12">
                                 <mat-radio-group formControlName="PriorityType">
-                                    <mat-radio-button *ngFor="let higherOrLower of KPIHigherOrLower" [value]="higherOrLower['lookupId']">{{higherOrLower['lookupName']}}
+                                    <mat-radio-button *ngFor="let higherOrLower of KPIHigherOrLower"
+                                        [value]="higherOrLower['lookupId']">{{higherOrLower['lookupName']}}
                                         &nbsp; &nbsp;</mat-radio-button>
                                 </mat-radio-group>
-                                <mat-error *ngIf="KPIform.controls.PriorityType.errors?.required && KPIform.controls.PriorityType.touched">
+                                <mat-error
+                                    *ngIf="KPIform.controls.PriorityType.errors?.required && KPIform.controls.PriorityType.touched">
                                     Please Select Type</mat-error>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label class="col-md-12 lblfnt required">Data Type</label>
+                        <mat-slide-toggle formControlName="isScope" [(ngModel)]="isScopeApplicable">Is Scope Applicable
+                        </mat-slide-toggle>
+                    
+                        <div *ngIf="isScopeApplicable==true" class="form-group" style="margin-top:4px;">
+                            <label class="col-md-12 add-member-label add-member-input lblfnt">Scope</label>
                             <div class="col-md-12">
-                                <mat-select formControlName="dataType" class="form-control" placeholder="Select Frequency">
-                                    <mat-option *ngFor="let datattypes of kpiDataType" [value]="datattypes['lookupId']">{{datattypes['lookupName']}}</mat-option>
-                                </mat-select>
-                                <mat-error *ngIf="KPIform.controls.dataType.errors?.required && KPIform.controls.dataType.touched">
-                                    Data Type is required</mat-error>
+                                <div class="input-icon right">
+                                    <i class="fa fa-file-excel-o"></i>
+                                    <input
+                                        accept=".csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+                                        maxlength="50" class="form-control" type="file"
+                                        [ngClass]="{'disablecustom': scopeValue}" (change)="handleFileSelect($event)">
+                                    <label *ngIf="fileName!=null" class="lblfnt">Existing File:&nbsp;</label>
+                                    <span>{{fileName}}
+                                    </span>
+                                </div>
                             </div>
                         </div>
                         <div *ngIf="allforms == 'addKPI'" class="pull-right" style="margin-top: 25px;">
-                            <button [disabled]="!KPIupsertform.form.valid" class="btn btn-success" type="submit">Save</button>
+                            <button [disabled]="!KPIupsertform.form.valid" class="btn btn-success"
+                                type="submit">Save</button>
                         </div>
                         <div *ngIf="allforms == 'updateKPI'" class="pull-right" style="margin-top: 25px;">
-                            <button [disabled]="!KPIupsertform.form.valid" class="btn btn-success marginbtn" type="submit">Update</button>
+                            <button [disabled]="!KPIupsertform.form.valid" class="btn btn-success marginbtn"
+                                type="submit">Update</button>
                             <!-- <button type="button" (click)="onDeleteKPI(KPIform.value)" class="btn btn-danger marginbtn" data-toggle="modal" data-tooltip="tooltip" data-placement="top" title=""
                          data-original-title="Delete">
                             <i class="fa fa-trash"></i>
                         </button> -->
-                            <button type="button" mwlConfirmationPopover [popoverTitle]="popoverTitle" [confirmText]="confirmText"
-                                [cancelText]="cancelText" [popoverMessage]="popoverMessage" placement="left" (confirm)="onDeleteKPI(KPIform.value)"
-                                class="btn btn-danger marginbtn" data-toggle="modal" data-tooltip="tooltip"
-                                data-original-title="Delete">
+                            <button type="button" mwlConfirmationPopover [popoverTitle]="popoverTitle"
+                                [confirmText]="confirmText" [cancelText]="cancelText" [popoverMessage]="popoverMessage"
+                                placement="left" (confirm)="onDeleteKPI(KPIform.value)" class="btn btn-danger marginbtn"
+                                data-toggle="modal" data-tooltip="tooltip" data-original-title="Delete">
                                 <i class="fa fa-trash"></i>
                             </button>
                         </div>
@@ -263,5 +310,3 @@
                 </div>
             </div>
         </div> -->
-
-

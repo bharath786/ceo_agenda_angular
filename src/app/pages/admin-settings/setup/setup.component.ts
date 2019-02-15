@@ -44,7 +44,7 @@ export class SetupComponent implements OnInit {
   fileScope: File;
   todaysDate: number = Date.now();
   fileName: any = null;
-
+  isScopeApplicable : boolean = false;
   //For Confirmation
   popoverTitle: string = 'Delete?';
   popoverMessage: string = "Are You Sure ? You want to delete record, this action can't be undone.";
@@ -96,9 +96,16 @@ export class SetupComponent implements OnInit {
       'dataType': [null, Validators.compose([Validators.required])],
       'modifiedBy': this.sessionUser['user_id'],
       'createdBy': this.sessionUser['user_id'],
+      'isScope': null,
       'KRAId': null
     });
   }
+
+  ngOnInit() {
+    //For Loading setup Tree On Load
+    this.getSetup();
+  }
+
 
   //For Updating Analytics
   public onSubmitAnalytics(value: object) {
@@ -274,6 +281,7 @@ export class SetupComponent implements OnInit {
 
   //For KPI Upsert
   public onSubmitKPI(value: object) {
+    value['scopeFile'] = this.submittedfile
     this.setupservice.upsertKPI(value).subscribe(
       data => {
         if (data['error'] == true) {
@@ -406,11 +414,7 @@ export class SetupComponent implements OnInit {
     this.allforms = 'addKPI'
   }
 
-  ngOnInit() {
-    //For Loading setup Tree On Load
-    this.getSetup();
-  }
-
+  
   createNewUploadFilesObject() {
     // Create a new BasicInfo
     let newUploadFilesObject = {
