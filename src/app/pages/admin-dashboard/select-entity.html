@@ -9,8 +9,8 @@
                 <div class="col-md-8">
                     <mat-select formControlName="divId" (selectionChange)="onDivisionSelect($event.value)"
                         placeholder="Division" class="col-sm-10 form-control marginbtn">
-                        <mat-option *ngFor="let division of divisiondata" [value]="division.divisonId">
-                            {{division.divisionName}}
+                        <mat-option *ngFor="let division of selectedDivisions" [value]="division.DivisionId">
+                            {{division.DivisionName}}
                         </mat-option>
                     </mat-select>
                 </div>
@@ -20,8 +20,8 @@
                 <div class="col-md-8">
                     <mat-select formControlName="locationId" (selectionChange)="onLocationSelect($event.value)"
                         placeholder="Location" class="col-sm-10 form-control marginbtn">
-                        <mat-option *ngFor="let location of locationdata" [value]="location.countryId">
-                            {{location.countryName}}
+                        <mat-option *ngFor="let location of selectedCountries" [value]="location.CountryId">
+                            {{location.CountryName}}
                         </mat-option>
                     </mat-select>
                 </div>
@@ -32,8 +32,8 @@
                 <div class="col-md-8">
                     <mat-select formControlName="entityId" placeholder="Entity"
                         class="col-sm-10 form-control marginbtn">
-                        <mat-option *ngFor="let entity of entityarray" [value]="entity.entityId">
-                            {{entity.entityName}}
+                        <mat-option *ngFor="let entity of selectedEntity" [value]="entity.EntityId">
+                            {{entity.EntityName}}
                         </mat-option>
                     </mat-select>
                 </div>

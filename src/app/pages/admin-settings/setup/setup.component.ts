@@ -282,7 +282,7 @@ export class SetupComponent implements OnInit {
 
   //For KPI Upsert
   public onSubmitKPI(value: object) {
-    value['scopeFile'] = this.submittedfile
+    value['scope'] = this.submittedfile
     this.setupservice.upsertKPI(value).subscribe(
       data => {
         if (data['error'] == true) {
@@ -311,7 +311,7 @@ export class SetupComponent implements OnInit {
 
   downloadScopesample(){
     let scope = [];
-    scope.push({'Scope Name':'', 'Scope Code':''})
+    scope.push({'ScopeValue':'', 'ScopeCode':''})
 
     console.log(scope)
    this.excelService.exportAsExcelFile(scope, 'ScopeSample');

@@ -78,19 +78,6 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-md-12 lblfnt required">Update Frequency</label>
-                            <div class="col-md-12">
-                                <mat-select formControlName="frequencyId" class="form-control"
-                                    placeholder="Select Frequency">
-                                    <mat-option *ngFor="let item of dimensionFrequency" [value]="item['lookupId']">
-                                        {{item['lookupName']}}</mat-option>
-                                </mat-select>
-                                <mat-error
-                                    *ngIf="dimensionform.controls.frequencyId.errors?.required && dimensionform.controls.frequencyId.touched">
-                                    Update Frequency is required</mat-error>
-                            </div>
-                        </div>
-                        <div class="form-group">
                             <label class="col-md-12 add-member-label add-member-input lblfnt">Description</label>
                             <div class="col-md-12">
                                 <textarea maxlength="500" formControlName="description" class="form-control"

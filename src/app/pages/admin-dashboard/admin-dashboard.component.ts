@@ -99,6 +99,9 @@ export class selectEntity {
     filteredEntities: any = [];
     entityform: any;
     sessionUser: any;
+    selectedCountries: any;
+    selectedDivisions: any;
+    selectedEntity: any;
 
     constructor(public dialog: MatDialog,
         @Inject(MAT_DIALOG_DATA) public EntityDetails,
@@ -112,108 +115,100 @@ export class selectEntity {
             'entityId': null,
             'isDefault': false
         });
+        this.getEntitiesList();
+
+
     }
 
     ngOnInit() {
-        this.selectedEntities();
-        if (this.EntityDetails != null) {
-            this.entityform.controls['divId'].setValue(this.EntityDetails['defaultDivisionId']);
-            this.entityform.controls['locationId'].setValue(this.EntityDetails['defaultCountryId']);
-            this.entityform.controls['entityId'].setValue(this.EntityDetails['defaultEntityId']);
-        }
+
     }
 
     onEntitySubmit(values) {
         var EntityDetails = JSON.parse(sessionStorage['EntityDetails'])
         sessionStorage.setItem('EntityDetails',
-            JSON.stringify({ assignedEntities: EntityDetails.assignedEntities,
-                 defaultCountryId: values['locationId'], defaultDivisionId: values['divId'], 
-                 defaultEntityId: values['entityId'] }));
+            JSON.stringify({
+                assignedEntities: EntityDetails.assignedEntities,
+                defaultCountryId: values['locationId'], defaultDivisionId: values['divId'],
+                defaultEntityId: values['entityId'], isDefault: values['isDefault']
+            }));
         let sessionUser = JSON.parse(sessionStorage['Session_name'])
         values['userId'] = sessionUser.user_id;
         this.adminsettingsservice.getEntityData(values).subscribe(
             data => {
                 console.log(data, 'EntityData')
                 this.dialog.closeAll()
-                window.location.reload();
             }
-            
         )
-                       
     }
 
     getEntitiesList() {
-        //this.entitiesList = []
         this.adminsettingsservice.getAllEntities().subscribe(
             data => {
+                console.log(data)
                 this.entitiesList = data['data']
-                if (this.entitiesList.length < 1) {
-                    console.log('no data')
+
+                this.selectedEntities();
+                var EntityDetails = JSON.parse(sessionStorage['EntityDetails'])
+                console.log(EntityDetails)
+                if (EntityDetails != null) {
+                    this.entityform.controls['divId'].setValue(EntityDetails['defaultDivisionId']);
+                    this.onDivisionSelect(EntityDetails['defaultDivisionId'])
+                    this.entityform.controls['locationId'].setValue(EntityDetails['defaultCountryId']);
+                    this.onLocationSelect(EntityDetails['defaultCountryId'])
+                    this.entityform.controls['entityId'].setValue(EntityDetails['defaultEntityId']);
+                    this.entityform.controls['isDefault'].setValue(EntityDetails['isDefault']);
+
                 }
-                console.log(this.entitiesList)
-            },
-            error => {
-                console.log(error)
             }
         )
-
-        return this.entitiesList;
     }
 
 
 
     selectedEntities() {
         let sessionUser = JSON.parse(sessionStorage['Session_name'])
-        this.entitiesList = this.getEntitiesList();
         this.adminsettingsservice.getUserEntitiesList(sessionUser.user_id).subscribe(
             data => {
-                this.userSelectedEntities = data['EntityIds'];
-                //console.log(this.userSelectedEntities)
-                var temprecords = [];
-                console.log(this.entitiesList, 'List')
-                this.userSelectedEntities.forEach(element => {
-                    this.entitiesList.filter((x) => {
-                        if (x.entityId == element) {
-                            temprecords.push(x)
-                        }
-                    }
-                    )
-                });
+                console.log(data)
+                this.selectedDivisions = this.multiDimensionalUnique(data['DivisionIdnNames']);
 
-                this.getDivisionofSelected(temprecords)
-                console.log(temprecords)
+                // this.selectedCountries = this.multiDimensionalUnique(data['CountryIdnNames']);
+                //this.selectedEntity = this.multiDimensionalUnique(data['EntityIdnNames']);
             }
         )
     }
 
-    getDivisionofSelected(selectedEntities: any[]) {
-        this.divisiondata = [];
-        this.filteredEntities = selectedEntities
-        selectedEntities.forEach(element => {
-            this.divisiondata.push({ divisonId: element.divisionId, divisionName: element.divisionName })
-        }
-        )
-        this.divisiondata = this.multiDimensionalUnique(this.divisiondata)
-    }
+    // getDivisionofSelected(selectedEntities: any[]) {
+    //     this.selectedDivisions = [];
+    //     this.filteredEntities = selectedEntities
+    //     selectedEntities.forEach(element => {
+    //         this.selectedDivisions.push({ divisonId: element.divisionId, divisionName: element.divisionName })
+    //     }
+    //     )
+    //     this.selectedDivisions = this.multiDimensionalUnique(this.divisiondata)
+    // }
 
-    onDivisionSelect(divisionId) {
-        this.locationdata = []
-        this.filteredEntities.filter((x) => {
+    onDivisionSelect(divisionId: any) {
+        this.selectedCountries = [];
+        console.log(this.entitiesList, 'ENTTTT^')
+        this.entitiesList.filter((x) => {
             if (x.divisionId == divisionId) {
-                this.locationdata.push({ countryId: x.countryId, countryName: x.countryName })
+                this.selectedCountries.push({ CountryId: x.countryId, CountryName: x.countryName })
             }
         })
-        this.locationdata = this.multiDimensionalUnique(this.locationdata)
+        this.selectedCountries = this.multiDimensionalUnique(this.selectedCountries)
+        console.log(this.selectedCountries, 'Entites')
     }
 
     onLocationSelect(countryId) {
-        this.entityarray = []
-        this.filteredEntities.filter((x) => {
+        this.selectedEntity = []
+        this.entitiesList.filter((x) => {
             if (x.countryId == countryId) {
-                this.entityarray.push({ entityId: x.entityId, entityName: x.entityName })
+                this.selectedEntity.push({ EntityId: x.entityId, EntityName: x.entityName })
             }
         })
-        this.entityarray = this.multiDimensionalUnique(this.entityarray)
+        this.selectedEntity = this.multiDimensionalUnique(this.selectedEntity)
     }
 
     multiDimensionalUnique(arr: any[]) {
