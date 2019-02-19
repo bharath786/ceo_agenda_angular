@@ -59,6 +59,7 @@ export class SetupComponent implements OnInit {
   arrayBuffer: any;
   submittedfile: any;
   fileScopeInput : any;
+  uploadedFileFormatChecking: boolean;
 
 
 
@@ -117,7 +118,7 @@ export class SetupComponent implements OnInit {
   customValidation(){
     if(this.isScopeApplicable == true){
       // this.KPIform.controls['scopeAlias'].setValidators([Validators.required])
-      if (this.fileScopeInput == null || this.fileScopeInput == ''){
+      if (this.fileScopeInput == null || this.fileScopeInput == '' || this.uploadedFileFormatChecking == false){
         return false;
       }
       else{
@@ -180,7 +181,25 @@ export class SetupComponent implements OnInit {
       var worksheet = workbook.Sheets[first_sheet_name];
       console.log(XLSX.utils.sheet_to_json(worksheet, { raw: true }));
       this.submittedfile = XLSX.utils.sheet_to_json(worksheet, { raw: true })
+
+      console.log(this.submittedfile)
+if(this.submittedfile.length > 0){
+      console.log(this.submittedfile[0].ScopeCode)
+      console.log(this.submittedfile[0].ScopeValue)
+
+      if(this.submittedfile[0].ScopeCode == undefined || this.submittedfile[0].ScopeValue == undefined){
+        console.log("Please upload relavent data")
+        this.uploadedFileFormatChecking = false;
+        this.snackBar.open("Uploaded file is invalid, please refer to download sample","OK", {
+          panelClass: ['redSnackbar']
+        });
+      }
+      else{
+        this.uploadedFileFormatChecking = true;
+      }
+
     }
+  }
     fileReader.readAsArrayBuffer(this.fileScope);
   }
 
