@@ -19,6 +19,7 @@ export class DimensionHighlightsComponent implements OnInit {
     menuId$: Observable<any>;
     // ... your class variables here
     navigationSubscription;
+    kpivalue: any;
     constructor(private router: Router, public appSettings: AppSettings, public menuService: MenuService) {
 
 
@@ -55,6 +56,10 @@ export class DimensionHighlightsComponent implements OnInit {
         // console.log(event['node']['label']);
         this.mainvalue = event['node'];
         console.log(this.mainvalue);
+        if(this.mainvalue['KPIId'] != null){
+            this.kpivalue = this.mainvalue['KPIId']
+            this.appSettings.kpiIdInput(this.mainvalue['KPIId'])
+        }
     }
 
     private expandRecursive(node: TreeNode, isExpand: boolean) {

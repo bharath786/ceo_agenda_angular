@@ -10,6 +10,7 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { HttpClientModule } from '@angular/common/http';
 import { GlobalAnalyticsLayoutComponent } from './global-analytics-layout.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {TabMenuModule} from 'primeng/tabmenu';
 
 export const routes: Routes = [
   {
@@ -29,7 +30,8 @@ export const routes: Routes = [
     HttpClientModule,
     ModalModule,
     SharedModule,
-    NgxChartsModule
+    NgxChartsModule,
+    TabMenuModule
   ],
   declarations: [DimensionDataComponent, DimensionHighlightsComponent, GlobalAnalyticsLayoutComponent],
   exports: [RouterModule]

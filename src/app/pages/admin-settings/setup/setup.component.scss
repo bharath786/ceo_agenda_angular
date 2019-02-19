@@ -68,11 +68,24 @@
     background-color: #167ed6 !important;
 }
 
-::ng-deep  :focus {
+::ng-deep :focus {
   outline: -webkit-focus-ring-color auto 0px;
 }
 
+::ng-deep body .ui-slider.ui-slider-horizontal {
+    height: 0.286em;
+    border: 0px !important;
+    margin-left: 10px;
 
+}
+
+.customDisabled{
+    background-color: #45B6AF;
+    border-color: #3ea49d;
+    cursor: not-allowed;
+    pointer-events:none !important;
+    opacity: .65;
+}
 
 .no-padding{
     padding: 0;

@@ -37,15 +37,13 @@ export class HorizontalMenuComponent implements OnInit {
       if (e instanceof NavigationEnd) {
         if(this.appSettings.getIsNewAdded()) {
           this.setInitialMenus();
+          console.log('Success')
           this.appSettings.setIsNewAdded(false);
         }
       }
     });
   }
 
-  getDynamicMenu(){
-
-  }
 
   ngOnInit() {
     this.appSettings.setIsNewAdded(false);

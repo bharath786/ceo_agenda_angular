@@ -19,6 +19,8 @@ import { ConfirmationPopoverModule } from 'angular-confirmation-popover';
 import { DownloadExcelService } from '../download-excel.service';
 import { TooltipModule } from 'ngx-bootstrap';
 import { GetMonthName } from 'src/app/theme/pipes/Months.pipe';
+import {SliderModule} from 'primeng/slider';
+
 
 
 
@@ -34,6 +36,7 @@ export const routes :Routes = [
 @NgModule({
   imports: [
     CommonModule,
+    SliderModule,
     RouterModule.forChild(routes),
     ModalModule.forRoot(),
     FormsModule,

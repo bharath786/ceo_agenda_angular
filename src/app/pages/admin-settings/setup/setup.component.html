@@ -209,10 +209,23 @@
                             </div>
                         </div>
                         <div class="form-group">
+                                <label class="col-md-12 lblfnt required">Frequency</label>
+                                <div class="col-md-12">
+                                        <mat-select formControlName="frequency" class="form-control"
+                                        placeholder="Select Frequency">
+                                        <mat-option *ngFor="let frequency of dimensionFrequency" [value]="frequency['lookupId']">
+                                            {{frequency['lookupName']}}</mat-option>
+                                    </mat-select>
+                                    <mat-error
+                                        *ngIf="KPIform.controls.frequency.errors?.required && KPIform.controls.KPICode.touched">
+                                        KPI Frequency is required</mat-error>
+                                </div>
+                            </div>
+                        <div class="form-group">
                             <label class="col-md-12 lblfnt required">Data Type</label>
                             <div class="col-md-12">
                                 <mat-select formControlName="dataType" class="form-control"
-                                    placeholder="Select Frequency">
+                                    placeholder="Select Data Type">
                                     <mat-option *ngFor="let datattypes of kpiDataType" [value]="datattypes['lookupId']">
                                         {{datattypes['lookupName']}}</mat-option>
                                 </mat-select>
@@ -221,13 +234,24 @@
                                     Data Type is required</mat-error>
                             </div>
                         </div>
+                        <div *ngIf="KPIform.controls['dataType'].value == 7 || KPIform.controls['dataType'].value == 10" class="form-group">
+                                <label class="col-md-12 lblfnt"> Min Value:&nbsp;<span class="badge"> {{rangeValues[0]}} </span> &nbsp; Max Value:&nbsp;<span class="badge"> {{rangeValues[1]}} </span></label>
+                                <div class="col-md-12" style="margin-top: 5px;">
+                                    <p-slider [(ngModel)]="rangeValues"  formControlName="minMax"  [style]="{'width':'14em'}" [range]="true" class='noborder'></p-slider>
+                                    
+                                    <mat-error
+                                    *ngIf="KPIform.controls.minMax.errors?.required && KPIform.controls.minMax.touched">
+                                    Please Select Range</mat-error>
+                                </div>
+                            </div>
                         <div class="form-group">
-                            <label class="col-md-12 lblfnt required">Type</label>
+                            <label class="col-md-12 lblfnt required">Priority Type</label>
                             <div class="col-md-12">
                                 <mat-radio-group formControlName="PriorityType">
                                     <mat-radio-button *ngFor="let higherOrLower of KPIHigherOrLower"
                                         [value]="higherOrLower['lookupId']">{{higherOrLower['lookupName']}}
                                         &nbsp; &nbsp;</mat-radio-button>
+
                                 </mat-radio-group>
                                 <mat-error
                                     *ngIf="KPIform.controls.PriorityType.errors?.required && KPIform.controls.PriorityType.touched">
@@ -236,17 +260,32 @@
                         </div>
                         <mat-slide-toggle formControlName="isScope" [(ngModel)]="isScopeApplicable">Is Scope Applicable
                         </mat-slide-toggle>
+
                     
                         <div *ngIf="isScopeApplicable==true" class="form-group" style="margin-top:4px;">
-                            <label class="col-md-12 add-member-label add-member-input lblfnt">Scope <a class="pull-right" (click)="downloadScopesample()">Download Sample</a></label>
+                            <label class="col-md-12 required">Scope</label>
+                           <div class="col-sm-12">
+                            
+                               <div class="col-md-4 no-padding">
+                                    <input maxlength="50" class="form-control" type="text" formControlName="scopeAlias"
+                                    placeholder="Please Enter Scope Alias">
+                               </div>
+                             
+                                <div class="col-md-8 no-padding pull-right">
+                                        <a class="pull-right" style="margin-top: 20px;" (click)="downloadScopesample()">Download Sample</a>
+                                </div>
+
+                           </div>
+                          
                             
                             <div class="col-md-12">
+                                
                                 <div class="input-icon right">
                                     <i class="fa fa-file-excel-o"></i>
                                     <input
                                         accept=".csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
-                                        maxlength="50" class="form-control" type="file"
-                                        [ngClass]="{'disablecustom': scopeValue}" (change)="handleFileSelect($event)">
+                                        maxlength="50" class="form-control" type="file" formControlName="filescopeinput" [(ngModel)]="fileScopeInput"
+                                        (change)="handleFileSelect($event)">
                                     <label *ngIf="fileName!=null" class="lblfnt">Existing File:&nbsp;</label>
                                     <span>{{fileName}}
                                     </span>
@@ -254,11 +293,11 @@
                             </div>
                         </div>
                         <div *ngIf="allforms == 'addKPI'" class="pull-right" style="margin-top: 25px;">
-                            <button [disabled]="!KPIupsertform.form.valid" class="btn btn-success"
+                            <button [disabled]="!KPIupsertform.form.valid" [ngClass]="{'customDisabled': !customValidation()}" class="btn btn-success"
                                 type="submit">Save</button>
                         </div>
                         <div *ngIf="allforms == 'updateKPI'" class="pull-right" style="margin-top: 25px;">
-                            <button [disabled]="!KPIupsertform.form.valid" class="btn btn-success marginbtn"
+                            <button [disabled]="!KPIupsertform.form.valid" [ngClass]="{'customDisabled': !customValidation()}" class="btn btn-success marginbtn"
                                 type="submit">Update</button>
                             <!-- <button type="button" (click)="onDeleteKPI(KPIform.value)" class="btn btn-danger marginbtn" data-toggle="modal" data-tooltip="tooltip" data-placement="top" title=""
                          data-original-title="Delete">

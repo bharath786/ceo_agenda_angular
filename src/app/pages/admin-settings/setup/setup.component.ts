@@ -4,7 +4,7 @@ import { TreeNode } from 'primeng/api';
 import { ModalDirective } from 'ngx-bootstrap';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
-import { Router } from '@angular/router';
+import { Router, NavigationEnd } from '@angular/router';
 import { AppSettings } from '../../../app.settings';
 import * as XLSX from 'xlsx';
 import { Menu } from 'src/app/theme/components/menu/menu.model';
@@ -16,6 +16,9 @@ import { DownloadExcelService } from '../../download-excel.service';
   styleUrls: ['./setup.component.scss']
 })
 export class SetupComponent implements OnInit {
+
+
+  rangeValues: number[] = [];
 
   @ViewChild('file') fileInput;
 
@@ -39,13 +42,13 @@ export class SetupComponent implements OnInit {
   dimensionform: any;
   KRAform: any;
   KPIform: any;
-  dimensionFrequency: any;
+  dimensionFrequency: any= [];
   scopeInput: any;
   kpiDataType: any;
   fileScope: File;
   todaysDate: number = Date.now();
   fileName: any = null;
-  isScopeApplicable : boolean = false;
+  isScopeApplicable: boolean = false;
   //For Confirmation
   popoverTitle: string = 'Delete?';
   popoverMessage: string = "Are You Sure ? You want to delete record, this action can't be undone.";
@@ -55,8 +58,11 @@ export class SetupComponent implements OnInit {
   cancelClicked: boolean = false;
   arrayBuffer: any;
   submittedfile: any;
+  fileScopeInput : any;
 
-  constructor(private appSettings:AppSettings,private excelService: DownloadExcelService, private setupservice: AdminsettingsService, public router: Router, public fb: FormBuilder, public snackBar: MatSnackBar) {
+
+
+  constructor(private appSettings: AppSettings, private excelService: DownloadExcelService, private setupservice: AdminsettingsService, public router: Router, public fb: FormBuilder, public snackBar: MatSnackBar) {
 
     this.sessionUser = JSON.parse(sessionStorage['Session_name'])
     //Analytics Update Form
@@ -71,8 +77,7 @@ export class SetupComponent implements OnInit {
     this.dimensionform = this.fb.group({
       'dimensionId': null,
       'dimensionName': [null, Validators.compose([Validators.required])],
-      'description':null,
-      'frequencyId': [4],
+      'description': null,
       'modifiedBy': this.sessionUser['user_id'],
       'createdBy': this.sessionUser['user_id'],
       'analyticsId': null
@@ -98,15 +103,38 @@ export class SetupComponent implements OnInit {
       'modifiedBy': this.sessionUser['user_id'],
       'createdBy': this.sessionUser['user_id'],
       'isScope': null,
-      'KRAId': null
+      'frequency': [4],
+      'KRAId': null,
+      'minMax': [null, Validators.compose([Validators.required, Validators.minLength(2)])],
+      'filescopeinput': null,
+      'scopeAlias': null
     });
+
+  }
+
+
+
+  customValidation(){
+    if(this.isScopeApplicable == true){
+      // this.KPIform.controls['scopeAlias'].setValidators([Validators.required])
+      if (this.fileScopeInput == null || this.fileScopeInput == ''){
+        return false;
+      }
+      else{
+         return true;
+      }
+    }
+    else{
+      this.fileScopeInput = "" 
+      return true;
+    }
+
   }
 
   ngOnInit() {
     //For Loading setup Tree On Load
     this.getSetup();
   }
-
 
   //For Updating Analytics
   public onSubmitAnalytics(value: object) {
@@ -179,7 +207,7 @@ export class SetupComponent implements OnInit {
             panelClass: ['greenSnackbar']
           });
         }
-        
+
       },
       error => {
         console.log(error);
@@ -211,7 +239,7 @@ export class SetupComponent implements OnInit {
           });
         }
 
-        
+
       },
       error => {
         console.log(error);
@@ -282,6 +310,7 @@ export class SetupComponent implements OnInit {
 
   //For KPI Upsert
   public onSubmitKPI(value: object) {
+    console.log(value)
     value['scope'] = this.submittedfile
     this.setupservice.upsertKPI(value).subscribe(
       data => {
@@ -309,12 +338,12 @@ export class SetupComponent implements OnInit {
     )
   }
 
-  downloadScopesample(){
+  downloadScopesample() {
     let scope = [];
-    scope.push({'ScopeValue':'', 'ScopeCode':''})
+    scope.push({ 'ScopeValue': '', 'ScopeCode': '' })
 
     console.log(scope)
-   this.excelService.exportAsExcelFile(scope, 'ScopeSample');
+    this.excelService.exportAsExcelFile(scope, 'ScopeSample');
   }
 
   //For Deleting KPI
@@ -362,12 +391,10 @@ export class SetupComponent implements OnInit {
     }
     //If the Dimension Selected (for Binding the data to the form)
     if (this.dimensionId != null) {
-      //Calling Dimension Frequencies function
-      this.getDimensionFrequencies();
       this.dimensionform.controls['dimensionId'].setValue(event['node']['dimensionId']);
       this.dimensionform.controls['dimensionName'].setValue(event['node']['dimensionName']);
-       this.dimensionform.controls['frequencyId'].setValue(event['node']['frequencyId']);
-   //   this.dimensionform.controls['scopeApplicable'].setValue(event['node']['scopeApplicable']);
+      this.dimensionform.controls['frequencyId'].setValue(event['node']['frequencyId']);
+      //   this.dimensionform.controls['scopeApplicable'].setValue(event['node']['scopeApplicable']);
       this.dimensionform.controls['analyticsId'].setValue(event['node']['analyticsId']);
       this.allforms = 'updatedimension';
 
@@ -383,12 +410,16 @@ export class SetupComponent implements OnInit {
     //If the KPI Selected (for Binding the data to the form)
     if (this.KPIId != null) {
       this.getKpiDataType();
+      //Calling Dimension Frequencies function
+      this.getDimensionFrequencies();
       this.KPIform.controls['KPIId'].setValue(event['node']['KPIId']);
       this.KPIform.controls['KPIName'].setValue(event['node']['KPIName']);
       this.KPIform.controls['KPICode'].setValue(event['node']['KPICode']);
       this.KPIform.controls['PriorityType'].setValue(event['node']['PriorityType']);
       this.KPIform.controls['dataType'].setValue(event['node']['dataType']);
       this.KPIform.controls['KRAId'].setValue(event['node']['KRAId']);
+      // console.log(this.KPIform.controls['dataType'].value,'ss')
+
       this.allforms = 'updateKPI';
     }
   }
@@ -423,7 +454,7 @@ export class SetupComponent implements OnInit {
     this.allforms = 'addKPI'
   }
 
-  
+
   createNewUploadFilesObject() {
     // Create a new BasicInfo
     let newUploadFilesObject = {
@@ -439,6 +470,7 @@ export class SetupComponent implements OnInit {
       data => {
         //Assigning the values to the dimension frequency variable
         this.dimensionFrequency = data['data']
+        this.dimensionFrequency = this.dimensionFrequency.filter(x=>x.lookupName == "Monthly" || x.lookupName == "Weekly")
       },
       error => {
         console.log(error);
@@ -454,7 +486,7 @@ export class SetupComponent implements OnInit {
   getKpiDataType() {
     this.setupservice.getKpiDatatType().subscribe(
       data => {
-        console.log(data,'Data Type')
+        console.log(data, 'Data Type')
         //Assigning the values to the KPI Datatype variable
         this.kpiDataType = data['data']
         this.KPIHigherOrLower = data['data1']

@@ -11,7 +11,9 @@ export class AppSettings {
     @Input('menuParentId') menuParentId;
 
     private menuSelected = new Subject<any>();
+    private KpiId = new Subject<any>();
     private isNewAdded = new Subject<boolean>();
+    kpiId$: Observable<any> = this.KpiId.asObservable();
     menuId$: Observable<any> = this.menuSelected.asObservable();
     newAdded$: Observable<boolean> = this.isNewAdded.asObservable();
 
@@ -22,6 +24,15 @@ export class AppSettings {
 
     public getMenuId() {
         return this.menuId$;
+    }
+
+    public kpiIdInput(id) {
+        this.kpiId$ = id;
+    }
+
+    public kpiIdOutput() {
+        console.log(this.kpiId$)
+        return this.kpiId$;
     }
 
     public setIsNewAdded(flag) {

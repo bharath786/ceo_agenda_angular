@@ -72,9 +72,9 @@ export class ManageUsersComponent implements OnInit {
     });
 
     this.entityform = this.fb.group({
-      'divId': null,
-      'locationId': null,
-      'entityId' : null
+      'divId': [null, Validators.compose([Validators.required])],
+      'locationId': [null, Validators.compose([Validators.required])],
+      'entityId' : [null, Validators.compose([Validators.required])]
     });
   }
 
@@ -129,7 +129,17 @@ export class ManageUsersComponent implements OnInit {
   }
 
   onEntitySubmit(formvalues){
+    if (this.entityform.valid) {
+    console.log(formvalues,'Ennn')
+    if(formvalues['divId'].length == 0){
+      formvalues['entityId'] = [];
+    }
+    else if(formvalues['locationId'].length == 0){
+      formvalues['entityId'] = [];
+    }
     this.assignEntities(formvalues['entityId'])
+    console.log(formvalues,'Ennn')
+  }
   }
 
 

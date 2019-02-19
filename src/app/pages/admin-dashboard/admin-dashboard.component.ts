@@ -6,6 +6,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { Router, RouterModule, NavigationEnd } from '@angular/router';
 import { AdminsettingsService } from '../admin-settings/adminsettings.service';
 import { FormBuilder } from '@angular/forms';
+import { AppSettings } from 'src/app/app.settings';
 
 
 @Component({
@@ -104,6 +105,7 @@ export class selectEntity {
     selectedEntity: any;
 
     constructor(public dialog: MatDialog,
+        private appSettings:AppSettings,
         @Inject(MAT_DIALOG_DATA) public EntityDetails,
         public fb: FormBuilder,
         public router: Router,
@@ -121,10 +123,10 @@ export class selectEntity {
     }
 
     ngOnInit() {
-
     }
 
     onEntitySubmit(values) {
+        console.log(values)
         var EntityDetails = JSON.parse(sessionStorage['EntityDetails'])
         sessionStorage.setItem('EntityDetails',
             JSON.stringify({
@@ -138,6 +140,11 @@ export class selectEntity {
             data => {
                 console.log(data, 'EntityData')
                 this.dialog.closeAll()
+                this.appSettings.setIsNewAdded(true);
+                // this.router.events.subscribe((res) => {
+                // })
+                this.router.navigate(['/dashboard']);
+                // this.router.navigate([this.router.url]);
             }
         )
     }
@@ -147,24 +154,21 @@ export class selectEntity {
             data => {
                 console.log(data)
                 this.entitiesList = data['data']
-
                 this.selectedEntities();
                 var EntityDetails = JSON.parse(sessionStorage['EntityDetails'])
                 console.log(EntityDetails)
                 if (EntityDetails != null) {
+                     console.log(EntityDetails['defaultDivisionId'])
                     this.entityform.controls['divId'].setValue(EntityDetails['defaultDivisionId']);
                     this.onDivisionSelect(EntityDetails['defaultDivisionId'])
                     this.entityform.controls['locationId'].setValue(EntityDetails['defaultCountryId']);
                     this.onLocationSelect(EntityDetails['defaultCountryId'])
                     this.entityform.controls['entityId'].setValue(EntityDetails['defaultEntityId']);
                     this.entityform.controls['isDefault'].setValue(EntityDetails['isDefault']);
-
                 }
             }
         )
     }
-
-
 
     selectedEntities() {
         let sessionUser = JSON.parse(sessionStorage['Session_name'])

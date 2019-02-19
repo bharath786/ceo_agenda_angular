@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { fadeAnimation } from 'src/app/slideanimation';
+import { AppSettings } from 'src/app/app.settings';
+import { Observable } from 'rxjs';
+import { DimensionDataComponent } from './dimension-data/dimension-data.component';
+import { DimensionHighlightsComponent } from './dimension-highlights/dimension-highlights.component';
 
 @Component({
   selector: 'app-global-analytics-layout',
@@ -8,10 +12,17 @@ import { fadeAnimation } from 'src/app/slideanimation';
 
 })
 export class GlobalAnalyticsLayoutComponent implements OnInit {
+  kpiId$: Observable<any>;
+  kpiId: any;
 
-  constructor() { }
+  constructor(public appsettings: AppSettings) { }
 
   ngOnInit() {
+    this.kpiId$ = this.appsettings.kpiIdOutput();
+    console.log(this.kpiId$)
   }
+
+
+
 
 }
