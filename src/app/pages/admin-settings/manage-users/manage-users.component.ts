@@ -47,6 +47,7 @@ export class ManageUsersComponent implements OnInit {
   entityarray: any = [];
   locationdata: any = [];
   userId: any;
+  isUnassignEntities: boolean= false;
 
 
   constructor(public appSettings: AppSettings, public fb: FormBuilder,
@@ -93,14 +94,20 @@ export class ManageUsersComponent implements OnInit {
   @ViewChild('entitiesModal') public entitiesModal: ModalDirective;
 
 
-  entitiesnModalToggle(e) {
-    if (e == null) {
+  entitiesnModalToggle(data) {
+    if (data == null) {
       this.entitiesModal.hide();
       this.entityform.reset();
     }
     else {
-      this.userId = e;
-      this.adminsettingsservice.getUserRelatedEntities(e).subscribe(
+      if(data['AssignedEntitiesCount'] > 0){
+        this.isUnassignEntities = true;
+      }
+      else{
+        this.isUnassignEntities = false;
+      }
+      this.userId = data['userId'];
+      this.adminsettingsservice.getUserRelatedEntities(data['userId']).subscribe(
         data => {
           console.log(data);
           let selectedDivisions = data['DivisionIds'];

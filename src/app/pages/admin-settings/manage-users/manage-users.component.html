@@ -57,7 +57,7 @@
                     <a title="Click to Assign Permissions" (click)="permissionModal1Toggle(1)">11/24</a>
                 </td>
                 <td>
-                    <a title="Click to Assign Permissions" (click)="entitiesnModalToggle(data.userId)">{{data.AssignedEntitiesCount}}/{{data.TotalEntitiesCount}}</a>
+                    <a title="Click to Assign Permissions" (click)="entitiesnModalToggle(data)">{{data.AssignedEntitiesCount}}/{{data.TotalEntitiesCount}}</a>
                 </td>
                 <td>
                     <a (click)="changeStatus(data)">{{ data.status ? '&nbsp;&nbsp;&nbsp;Active'
@@ -258,6 +258,7 @@
                 <!-- <button type="submit" (click)="assignEntities()" class="btn btn-primary"><i class="fa fa-check"></i>&nbsp;Save</button> -->
                 <button type="button" class="btn btn-default" (click)="entitiesnModalToggle(null)"><i class="fa fa-times"></i>&nbsp;Close
                 </button>
+                <button *ngIf="isUnassignEntities == true" (click)="assignEntities([])" class="btn btn-danger"><i class="fa fa-times"></i>&nbsp;Unassign Entities</button>
             </div>
         </div>
     </div>
