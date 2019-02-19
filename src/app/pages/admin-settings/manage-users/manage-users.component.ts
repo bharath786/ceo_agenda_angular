@@ -48,6 +48,7 @@ export class ManageUsersComponent implements OnInit {
   locationdata: any = [];
   userId: any;
   isUnassignEntities: boolean= false;
+  locationIds: any = [];
 
 
   constructor(public appSettings: AppSettings, public fb: FormBuilder,
@@ -197,23 +198,30 @@ export class ManageUsersComponent implements OnInit {
    // this.entityform.controls['entityId'].setValue(null);
     console.log(divisionId,'DivisionIds')
     this.locationdata =[]
+    this.locationIds = []
     divisionId.forEach(element => {
       this.entitiesList.filter((x)=>{
         if(x.divisionId == element){
           console.log('fff')
           this.locationdata.push({countryId:x.countryId, countryName:x.countryName})
+          this.locationIds.push(x.countryId)
         }
       })
     });
-    console.log(this.locationdata)    
+    
+    this.onLocationSelect(this.locationIds)
     this.locationdata = this.multiDimensionalUnique(this.locationdata)
-    console.log(this.locationdata)
-    if(this.locationdata.length == 0){
+    console.log(this.locationdata,'Location Data')
+    if(this.locationdata.length > 0){
+    }
+    else{
      this.onLocationSelect([])
     }
+
   }
 
   onLocationSelect(countryId){
+    console.log(countryId,'COUNTR')
     this.entityarray =[]
     countryId.forEach(element => {
       this.entitiesList.filter((x)=>{
@@ -223,7 +231,7 @@ export class ManageUsersComponent implements OnInit {
       })
     });
     this.entityarray = this.multiDimensionalUnique(this.entityarray)
-    console.log(this.locationdata)
+    console.log(this.entityarray,'Entity Data')
   }
 
   multiDimensionalUnique(arr) {

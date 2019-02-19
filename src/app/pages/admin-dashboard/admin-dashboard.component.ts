@@ -1,11 +1,9 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import * as moment from 'moment';
-import * as jQuery from 'jquery';
 import 'rxjs/add/operator/map';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { Router, RouterModule, NavigationEnd } from '@angular/router';
 import { AdminsettingsService } from '../admin-settings/adminsettings.service';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { AppSettings } from 'src/app/app.settings';
 
 
@@ -19,15 +17,16 @@ export class AdminDashboardComponent implements OnInit {
     start_date: any;
 
     end_date: any;
-    constructor(public dialog: MatDialog, public router: Router) {
+    constructor(public appSettings: AppSettings, public dialog: MatDialog, public router: Router, public adminsettingsservice: AdminsettingsService) {
         var EntityDetails = JSON.parse(sessionStorage['EntityDetails'])
         if (EntityDetails.assignedEntities < 1) {
             this.openDialog()
         }
-        if (EntityDetails.assignedEntities == 1) {
-
+        else if (EntityDetails.assignedEntities == 1) {
+            console.log(EntityDetails,'Checking')
+            this.selectedEntities();
         }
-        if (EntityDetails.assignedEntities > 1) {
+        else if (EntityDetails.assignedEntities > 1) {
             if (EntityDetails.defaultEntityId == null) {
                 this.openDialog1();
             }
@@ -35,6 +34,25 @@ export class AdminDashboardComponent implements OnInit {
 
             }
         }
+    }
+
+    selectedEntities() {
+        let sessionUser = JSON.parse(sessionStorage['Session_name'])
+        
+        this.adminsettingsservice.getUserEntitiesList(sessionUser.user_id).subscribe(
+            data => {
+                console.log(data, "selectedEntities Data")
+            var EntityDetails = JSON.parse(sessionStorage['EntityDetails'])
+                sessionStorage.setItem('EntityDetails',
+                JSON.stringify({
+                    assignedEntities: EntityDetails.assignedEntities,
+                    defaultCountryId: data['CountryIdnNames'][0]['CountryId'], defaultDivisionId: data['DivisionIdnNames'][0]['DivisionId'],
+                    defaultEntityId: data['EntityIdnNames'][0]['EntityId'], isDefault: true
+                }));
+            this.appSettings.setIsNewAdded(true);
+
+            }
+        )
     }
 
     openDialog1() {
@@ -112,21 +130,18 @@ export class selectEntity {
         public adminsettingsservice: AdminsettingsService) {
         //this.getEntitiesList();
         this.entityform = this.fb.group({
-            'divId': [null],
-            'locationId': [null],
-            'entityId': null,
+            'divId': [null,Validators.required],
+            'locationId': [null, Validators.required],
+            'entityId': [null,Validators.required],
             'isDefault': false
         });
         this.getEntitiesList();
-
-
     }
 
     ngOnInit() {
     }
 
     onEntitySubmit(values) {
-        console.log(values)
         var EntityDetails = JSON.parse(sessionStorage['EntityDetails'])
         sessionStorage.setItem('EntityDetails',
             JSON.stringify({
@@ -172,6 +187,7 @@ export class selectEntity {
 
     selectedEntities() {
         let sessionUser = JSON.parse(sessionStorage['Session_name'])
+        
         this.adminsettingsservice.getUserEntitiesList(sessionUser.user_id).subscribe(
             data => {
                 console.log(data)
@@ -195,12 +211,15 @@ export class selectEntity {
 
     onDivisionSelect(divisionId: any) {
         this.selectedCountries = [];
-        console.log(this.entitiesList, 'ENTTTT^')
+        let locationIds = [];
+        console.log(this.entitiesList, 'ENTTTT')
         this.entitiesList.filter((x) => {
             if (x.divisionId == divisionId) {
                 this.selectedCountries.push({ CountryId: x.countryId, CountryName: x.countryName })
+                locationIds.push(x.countryId)
             }
         })
+        this.onLocationSelect(locationIds)
         this.selectedCountries = this.multiDimensionalUnique(this.selectedCountries)
         console.log(this.selectedCountries, 'Entites')
     }

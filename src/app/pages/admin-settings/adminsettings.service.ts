@@ -92,7 +92,9 @@ export class AdminsettingsService {
   }
 
   getUserEntitiesList(encryptUserId){
-    return this.http.get(this.getUserEntitiesListAPI + '/?UserId='+encryptUserId, this.getHeaders() )
+
+    //let sessionUser = JSON.parse(sessionStorage['Session_name'])
+    return this.http.get(this.getUserEntitiesListAPI +'/?userId='+ encryptUserId, this.getHeaders() )
   }
 
   //For all locations based on divison
