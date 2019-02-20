@@ -258,7 +258,7 @@
                 <!-- <button type="submit" (click)="assignEntities()" class="btn btn-primary"><i class="fa fa-check"></i>&nbsp;Save</button> -->
                 <button type="button" class="btn btn-default" (click)="entitiesnModalToggle(null)"><i class="fa fa-times"></i>&nbsp;Close
                 </button>
-                <button *ngIf="isUnassignEntities == true" (click)="assignEntities([])" class="btn btn-danger"><i class="fa fa-times"></i>&nbsp;Unassign Entities</button>
+                <button type="button" *ngIf="isUnassignEntities == true" (click)="assignEntities([])" class="btn btn-danger"><i class="fa fa-times"></i>&nbsp;Unassign Entities</button>
             </div>
         </div>
     </div>

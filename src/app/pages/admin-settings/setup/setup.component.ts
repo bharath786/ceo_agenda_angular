@@ -104,9 +104,9 @@ export class SetupComponent implements OnInit {
       'modifiedBy': this.sessionUser['user_id'],
       'createdBy': this.sessionUser['user_id'],
       'isScope': null,
-      'frequency': [4],
+      'frequencyId': [4],
       'KRAId': null,
-      'minMax': [null, Validators.compose([Validators.required, Validators.minLength(2)])],
+      'range': [null, Validators.compose([Validators.required, Validators.minLength(2)])],
       'filescopeinput': null,
       'scopeAlias': null
     });

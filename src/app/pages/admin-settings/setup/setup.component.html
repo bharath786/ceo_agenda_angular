@@ -211,13 +211,13 @@
                         <div class="form-group">
                                 <label class="col-md-12 lblfnt required">Frequency</label>
                                 <div class="col-md-12">
-                                        <mat-select formControlName="frequency" class="form-control"
+                                        <mat-select formControlName="frequencyId" class="form-control"
                                         placeholder="Select Frequency">
                                         <mat-option *ngFor="let frequency of dimensionFrequency" [value]="frequency['lookupId']">
                                             {{frequency['lookupName']}}</mat-option>
                                     </mat-select>
                                     <mat-error
-                                        *ngIf="KPIform.controls.frequency.errors?.required && KPIform.controls.KPICode.touched">
+                                        *ngIf="KPIform.controls.frequencyId.errors?.required && KPIform.controls.frequencyId.touched">
                                         KPI Frequency is required</mat-error>
                                 </div>
                             </div>
