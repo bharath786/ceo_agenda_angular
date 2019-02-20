@@ -35,7 +35,7 @@ export class UserMenuComponent implements OnInit {
       'firstName': [null, Validators.compose([Validators.required])],
       'lastName': [null, Validators.compose([Validators.required])],
       'email': [null, Validators.compose([Validators.required, emailValidator])],
-      'phoneNo': [null, Validators.compose([Validators.required, Validators.minLength(6)])],
+      'phoneNo': [null],
       'dateOfBirth': [null, Validators.compose([Validators.required])],
       'status': false,
       'createdBy': null,
@@ -100,7 +100,7 @@ export class UserMenuComponent implements OnInit {
       var value = { userId: session_values.user_id }
       this.appservice.profileUpdate(value).subscribe(
         data => {
-          this.name = data["Data"][0]['firstName']+' '+data["Data"][0]['lastName'];
+          this.name = data['Data'][0]['firstName']+' '+data['Data'][0]['lastName'];
         },
         error => {
           console.log(error);
@@ -146,7 +146,8 @@ export class UserMenuComponent implements OnInit {
       var value = { userId: session_values.user_id }
       this.appservice.profileUpdate(value).subscribe(
         data => {
-          this.changepwform.controls['email'].setValue(data['email']);
+          console.log(data)
+          this.changepwform.controls['email'].setValue(data['Data'][0]['email']);
           this.changepasswordModal.show();
         },
         error => {
@@ -193,12 +194,13 @@ export class UserMenuComponent implements OnInit {
       var value = { userId: session_values.user_id }
       this.appservice.profileUpdate(value).subscribe(
         data => {
-          this.form.controls['userId'].setValue(data['userId']);
-          this.form.controls['firstName'].setValue(data['firstName']);
-          this.form.controls['dateOfBirth'].setValue(data['dateOfBirth']);
-          this.form.controls['lastName'].setValue(data['lastName']);
-          this.form.controls['email'].setValue(data['email']);
-          this.form.controls['phoneNo'].setValue(data['phoneNo']);
+          console.log(data)
+          this.form.controls['userId'].setValue(data['Data'][0]['userId']);
+          this.form.controls['firstName'].setValue(data['Data'][0]['firstName']);
+          this.form.controls['dateOfBirth'].setValue(data['Data'][0]['dateOfBirth']);
+          this.form.controls['lastName'].setValue(data['Data'][0]['lastName']);
+          this.form.controls['email'].setValue(data['Data'][0]['email']);
+          this.form.controls['phoneNo'].setValue(data['Data'][0]['phoneNo']);
           this.profileModal.show();
         },
         error => {

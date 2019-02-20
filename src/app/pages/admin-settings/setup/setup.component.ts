@@ -412,7 +412,6 @@ if(this.submittedfile.length > 0){
     if (this.dimensionId != null) {
       this.dimensionform.controls['dimensionId'].setValue(event['node']['dimensionId']);
       this.dimensionform.controls['dimensionName'].setValue(event['node']['dimensionName']);
-      this.dimensionform.controls['frequencyId'].setValue(event['node']['frequencyId']);
       //   this.dimensionform.controls['scopeApplicable'].setValue(event['node']['scopeApplicable']);
       this.dimensionform.controls['analyticsId'].setValue(event['node']['analyticsId']);
       this.allforms = 'updatedimension';

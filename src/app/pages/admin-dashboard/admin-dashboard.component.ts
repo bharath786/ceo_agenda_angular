@@ -103,6 +103,8 @@ export class selectEntity {
     selectedCountries: any;
     selectedDivisions: any;
     selectedEntity: any;
+    selectedCountries1: any[];
+    selectedEntity1: any[];
 
     constructor(public dialog: MatDialog,
         private appSettings:AppSettings,
@@ -126,7 +128,6 @@ export class selectEntity {
     }
 
     onEntitySubmit(values) {
-        console.log(values)
         var EntityDetails = JSON.parse(sessionStorage['EntityDetails'])
         sessionStorage.setItem('EntityDetails',
             JSON.stringify({
@@ -141,8 +142,8 @@ export class selectEntity {
                 console.log(data, 'EntityData')
                 this.dialog.closeAll()
                 this.appSettings.setIsNewAdded(true);
-                // this.router.events.subscribe((res) => {
-                // })
+                this.router.events.subscribe((res) => {
+                })
                 this.router.navigate(['/dashboard']);
                 // this.router.navigate([this.router.url]);
             }
@@ -150,7 +151,8 @@ export class selectEntity {
     }
 
     getEntitiesList() {
-        this.adminsettingsservice.getAllEntities().subscribe(
+        let sessionUser = JSON.parse(sessionStorage['Session_name'])
+        this.adminsettingsservice.getUserEntitiesList(sessionUser.user_id).subscribe(
             data => {
                 console.log(data)
                 this.entitiesList = data['data']
@@ -174,11 +176,8 @@ export class selectEntity {
         let sessionUser = JSON.parse(sessionStorage['Session_name'])
         this.adminsettingsservice.getUserEntitiesList(sessionUser.user_id).subscribe(
             data => {
-                console.log(data)
-                this.selectedDivisions = this.multiDimensionalUnique(data['DivisionIdnNames']);
-
-                // this.selectedCountries = this.multiDimensionalUnique(data['CountryIdnNames']);
-                //this.selectedEntity = this.multiDimensionalUnique(data['EntityIdnNames']);
+                console.log(data['Data'], 'Check Now')
+                this.selectedDivisions = this.multiDimensionalUnique(data['Data']['DivisionIdnNames'])
             }
         )
     }

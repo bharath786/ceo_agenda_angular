@@ -210,15 +210,15 @@
 <!-- For Entities List Modal Popup -->
 <div class="modal fade" bsModal #entitiesModal="bs-modal" [config]="{backdrop: 'static'}" role="dialog">
     <form [formGroup]="entityform" (ngSubmit)="onEntitySubmit(entityform.value)" #enityUpsertForm="ngForm" class="form-horizontal">    
-    <div class="modal-dialog modal-custom">
+    <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title titlemodal">
                     <b>Assign Entity</b> <i (click)="entitiesnModalToggle(null)" class="fa fa-times pull-right titlemodal"></i>
                 </h4>
             </div>
-            <div class="modal-body row">
-                <div class="col-sm-12">
+            <div class="modal-body modalbody">
+    
                         <div class="form-group">
                             <label class="col-md-3 control-label">Division&nbsp;:</label>
                             <div class="col-md-8">
@@ -251,7 +251,7 @@
                                 </mat-select>
                             </div>
                         </div>
-                </div>
+            
             </div>
             <div class="modal-footer">
                     <button type="submit" [disabled]="!enityUpsertForm.form.valid"  class="btn btn-primary"><i class="fa fa-check"></i>&nbsp;Save</button>
