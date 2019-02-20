@@ -142,8 +142,8 @@ export class selectEntity {
                 console.log(data, 'EntityData')
                 this.dialog.closeAll()
                 this.appSettings.setIsNewAdded(true);
-                // this.router.events.subscribe((res) => {
-                // })
+                this.router.events.subscribe((res) => {
+                })
                 this.router.navigate(['/dashboard']);
                 // this.router.navigate([this.router.url]);
             }
