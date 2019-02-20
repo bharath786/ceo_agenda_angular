@@ -60,6 +60,8 @@ export class SetupComponent implements OnInit {
   submittedfile: any;
   fileScopeInput : any;
   uploadedFileFormatChecking: boolean;
+  DatatypeId: any;
+  rangeApplicableDataType: boolean;
 
 
 
@@ -114,10 +116,25 @@ export class SetupComponent implements OnInit {
   }
 
 
+  dataTypeCheck(event){
+    if(event.lookupName == "Text Numeric" ||event.lookupName == "Numeric" ){
+      this.rangeApplicableDataType = true;
+    }
+    else{
+      this.rangeApplicableDataType = false;
+    }
+  }
 
   customValidation(){
+    if(this.rangeApplicableDataType){
+      if(this.rangeValues[0] == this.rangeValues[1]){
+        return false;
+      }
+    }
+   
+
     if(this.isScopeApplicable == true){
-      // this.KPIform.controls['scopeAlias'].setValidators([Validators.required])
+
       if (this.fileScopeInput == null || this.fileScopeInput == '' || this.uploadedFileFormatChecking == false){
         return false;
       }
@@ -183,7 +200,7 @@ export class SetupComponent implements OnInit {
       this.submittedfile = XLSX.utils.sheet_to_json(worksheet, { raw: true })
 
       console.log(this.submittedfile)
-if(this.submittedfile.length > 0){
+      if(this.submittedfile.length > 0){
       console.log(this.submittedfile[0].ScopeCode)
       console.log(this.submittedfile[0].ScopeValue)
 
@@ -412,10 +429,8 @@ if(this.submittedfile.length > 0){
     if (this.dimensionId != null) {
       this.dimensionform.controls['dimensionId'].setValue(event['node']['dimensionId']);
       this.dimensionform.controls['dimensionName'].setValue(event['node']['dimensionName']);
-      //   this.dimensionform.controls['scopeApplicable'].setValue(event['node']['scopeApplicable']);
       this.dimensionform.controls['analyticsId'].setValue(event['node']['analyticsId']);
       this.allforms = 'updatedimension';
-
     }
     //If the KRA Selected (for Binding the data to the form)
     if (this.KRAId != null) {
@@ -465,6 +480,7 @@ if(this.submittedfile.length > 0){
   //For Adding New KPI
   addKPI(e) {
     this.KPIform.reset();
+    this.getDimensionFrequencies();
     this.KPIform.controls['KRAId'].setValue(this.mainvalue['KRAId']);
     this.KPIform.controls['modifiedBy'].setValue(this.sessionUser['user_id']);
     this.KPIform.controls['createdBy'].setValue(this.sessionUser['user_id']);

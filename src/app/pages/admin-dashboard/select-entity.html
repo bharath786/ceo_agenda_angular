@@ -30,7 +30,7 @@
             <div class="form-group">
                 <label class="col-md-3 control-label">Entity&nbsp;:</label>
                 <div class="col-md-8">
-                    <mat-select formControlName="entityId" placeholder="Entity"
+                    <mat-select formControlName="entityId" (selectionChange)="onEntitySelect($event.value)" [(ngModel)]="entityDefault" placeholder="Entity"
                         class="col-sm-10 form-control marginbtn">
                         <mat-option *ngFor="let entity of selectedEntity" [value]="entity.EntityId">
                             {{entity.EntityName}}

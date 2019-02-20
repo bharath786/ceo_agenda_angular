@@ -25,15 +25,13 @@ export class AdminDashboardComponent implements OnInit {
             this.openDialog()
         }
         if (EntityDetails.assignedEntities == 1) {
+            
 
         }
         if (EntityDetails.assignedEntities > 1) {
             if (EntityDetails.defaultEntityId == null) {
                 this.openDialog1();
-            }
-            else {
-
-            }
+            } 
         }
     }
 
@@ -103,8 +101,7 @@ export class selectEntity {
     selectedCountries: any;
     selectedDivisions: any;
     selectedEntity: any;
-    selectedCountries1: any[];
-    selectedEntity1: any[];
+    entityDefault: any;
 
     constructor(public dialog: MatDialog,
         private appSettings:AppSettings,
@@ -120,8 +117,6 @@ export class selectEntity {
             'isDefault': false
         });
         this.getEntitiesList();
-
-
     }
 
     ngOnInit() {
@@ -166,7 +161,13 @@ export class selectEntity {
                     this.entityform.controls['locationId'].setValue(EntityDetails['defaultCountryId']);
                     this.onLocationSelect(EntityDetails['defaultCountryId'])
                     this.entityform.controls['entityId'].setValue(EntityDetails['defaultEntityId']);
-                    this.entityform.controls['isDefault'].setValue(EntityDetails['isDefault']);
+                    var EntityDetails = JSON.parse(sessionStorage['EntityDetails'])
+                    if(this.entityDefault != data['Data']['DefaultEntityId']){
+                        this.entityform.controls['isDefault'].setValue(false);
+                    }
+                    else{
+                        this.entityform.controls['isDefault'].setValue(true);
+                    }
                 }
             }
         )
@@ -194,14 +195,18 @@ export class selectEntity {
 
     onDivisionSelect(divisionId: any) {
         this.selectedCountries = [];
-        console.log(this.entitiesList, 'ENTTTT^')
+        let selectedcoutryIds = [];
+        console.log(this.entitiesList, 'ENTTTT')
         this.entitiesList.filter((x) => {
             if (x.divisionId == divisionId) {
                 this.selectedCountries.push({ CountryId: x.countryId, CountryName: x.countryName })
+                selectedcoutryIds.push(x.countryId)
             }
         })
+        this.onLocationSelect(selectedcoutryIds)
         this.selectedCountries = this.multiDimensionalUnique(this.selectedCountries)
         console.log(this.selectedCountries, 'Entites')
+        this.entityform.controls['isDefault'].setValue(false);
     }
 
     onLocationSelect(countryId) {
@@ -212,7 +217,18 @@ export class selectEntity {
             }
         })
         this.selectedEntity = this.multiDimensionalUnique(this.selectedEntity)
+        this.entityform.controls['isDefault'].setValue(false);
     }
+    onEntitySelect(EntityId){
+        if(EntityId == this.EntityDetails['defaultEntityId']){
+            this.entityform.controls['isDefault'].setValue(true);
+        }
+        else{
+            this.entityform.controls['isDefault'].setValue(false);
+
+        }
+    }
+
 
     multiDimensionalUnique(arr: any[]) {
         var uniques = [];
