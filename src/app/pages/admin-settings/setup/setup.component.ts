@@ -101,14 +101,14 @@ export class SetupComponent implements OnInit {
       'KPIId': null,
       'KPIName': [null, Validators.compose([Validators.required])],
       'KPICode': [null, Validators.compose([Validators.required])],
-      'PriorityType': [null, Validators.compose([Validators.required])],
-      'dataType': [null, Validators.compose([Validators.required])],
+      'PriorityTypeId': [null, Validators.compose([Validators.required])],
+      'dataTypeId': [null, Validators.compose([Validators.required])],
       'modifiedBy': this.sessionUser['user_id'],
       'createdBy': this.sessionUser['user_id'],
       'isScope': null,
       'frequencyId': [4],
       'KRAId': null,
-      'range': [null, Validators.compose([Validators.required, Validators.minLength(2)])],
+      'minMax': [null, Validators.compose([Validators.required, Validators.minLength(2)])],
       'filescopeinput': null,
       'scopeAlias': null
     });
@@ -117,10 +117,12 @@ export class SetupComponent implements OnInit {
 
 
   dataTypeCheck(event){
-    if(event.lookupName == "Text Numeric" ||event.lookupName == "Numeric" ){
+    if(event == "7" || event == "10" ){
+      this.rangeValues = [];
       this.rangeApplicableDataType = true;
     }
     else{
+      this.rangeValues = [];
       this.rangeApplicableDataType = false;
     }
   }
@@ -132,7 +134,6 @@ export class SetupComponent implements OnInit {
       }
     }
    
-
     if(this.isScopeApplicable == true){
 
       if (this.fileScopeInput == null || this.fileScopeInput == '' || this.uploadedFileFormatChecking == false){
@@ -152,6 +153,14 @@ export class SetupComponent implements OnInit {
   ngOnInit() {
     //For Loading setup Tree On Load
     this.getSetup();
+   
+  }
+
+  removeScopeAlias(){
+    if(this.isScopeApplicable == false){
+      this.KPIform.controls['scopeAlias'].setValue(null);
+
+    }
   }
 
   //For Updating Analytics
@@ -346,6 +355,11 @@ export class SetupComponent implements OnInit {
 
   //For KPI Upsert
   public onSubmitKPI(value: object) {
+
+    if(this.isScopeApplicable == false){
+      this.submittedfile = null;
+      value['scopeAlias'] = null;
+    }
     console.log(value)
     value['scope'] = this.submittedfile
     this.setupservice.upsertKPI(value).subscribe(
@@ -434,6 +448,8 @@ export class SetupComponent implements OnInit {
     }
     //If the KRA Selected (for Binding the data to the form)
     if (this.KRAId != null) {
+      this.isScopeApplicable = false;
+      this.rangeApplicableDataType = false;
       this.KRAform.controls['KRAId'].setValue(event['node']['KRAId']);
       this.KRAform.controls['KRAName'].setValue(event['node']['KRAName']);
       this.KRAform.controls['description'].setValue(event['node']['description']);
@@ -443,15 +459,25 @@ export class SetupComponent implements OnInit {
     //If the KPI Selected (for Binding the data to the form)
     if (this.KPIId != null) {
       this.getKpiDataType();
+      console.log(event['node'], 'Kpi Data')
       //Calling Dimension Frequencies function
       this.getDimensionFrequencies();
       this.KPIform.controls['KPIId'].setValue(event['node']['KPIId']);
       this.KPIform.controls['KPIName'].setValue(event['node']['KPIName']);
       this.KPIform.controls['KPICode'].setValue(event['node']['KPICode']);
-      this.KPIform.controls['PriorityType'].setValue(event['node']['PriorityType']);
-      this.KPIform.controls['dataType'].setValue(event['node']['dataType']);
+      this.KPIform.controls['PriorityTypeId'].setValue(event['node']['PriorityTypeId']);
+      this.KPIform.controls['dataTypeId'].setValue(event['node']['dataTypeId']);
+      this.dataTypeCheck(event['node']['dataTypeId']);
+      this.KPIform.controls['isScope'].setValue(event['node']['isScope']);
       this.KPIform.controls['KRAId'].setValue(event['node']['KRAId']);
-      // console.log(this.KPIform.controls['dataType'].value,'ss')
+      
+      if(event['node']['isScope'] == true){
+        this.isScopeApplicable = true
+      }
+      this.KPIform.controls['frequencyId'].setValue(event['node']['frequencyId']);
+      this.KPIform.controls['minMax'].setValue(event['node']['minMax']);
+      this.rangeValues = event['node']['minMax'];
+      this.KPIform.controls['scopeAlias'].setValue(event['node']['scopeAlias']);
 
       this.allforms = 'updateKPI';
     }
@@ -480,7 +506,7 @@ export class SetupComponent implements OnInit {
   //For Adding New KPI
   addKPI(e) {
     this.KPIform.reset();
-    this.getDimensionFrequencies();
+      this.getDimensionFrequencies();
     this.KPIform.controls['KRAId'].setValue(this.mainvalue['KRAId']);
     this.KPIform.controls['modifiedBy'].setValue(this.sessionUser['user_id']);
     this.KPIform.controls['createdBy'].setValue(this.sessionUser['user_id']);
@@ -518,7 +544,7 @@ export class SetupComponent implements OnInit {
 
   //For Getting KPI Data Types for Dropdown
   getKpiDataType() {
-    this.setupservice.getKpiDatatType().subscribe(
+    this.setupservice.getKpiDataType().subscribe(
       data => {
         console.log(data, 'Data Type')
         //Assigning the values to the KPI Datatype variable

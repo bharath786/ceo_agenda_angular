@@ -224,13 +224,13 @@
                         <div class="form-group">
                             <label class="col-md-12 lblfnt required">Data Type</label>
                             <div class="col-md-12">
-                                <mat-select formControlName="dataType" class="form-control"
-                                    placeholder="Select Data Type" [(ngModel)] = "DatatypeId" (selectionChange)="dataTypeCheck($event.value)">
-                                    <mat-option *ngFor="let datattypes of kpiDataType"  [value]="datattypes">
+                                <mat-select formControlName="dataTypeId" class="form-control"
+                                    placeholder="Select Data Type" (selectionChange)="dataTypeCheck($event.value)">
+                                    <mat-option *ngFor="let datattypes of kpiDataType" [value]="datattypes['lookupId']">
                                         {{datattypes['lookupName']}}</mat-option>
                                 </mat-select>
                                 <mat-error
-                                    *ngIf="KPIform.controls.dataType.errors?.required && KPIform.controls.dataType.touched">
+                                    *ngIf="KPIform.controls.dataTypeId.errors?.required && KPIform.controls.dataTypeId.touched">
                                     Data Type is required</mat-error>
                             </div>
                         </div>
@@ -246,39 +246,30 @@
                         <div class="form-group">
                             <label class="col-md-12 lblfnt required">Priority Type</label>
                             <div class="col-md-12">
-                                <mat-radio-group formControlName="PriorityType">
+                                <mat-radio-group formControlName="PriorityTypeId">
                                     <mat-radio-button *ngFor="let higherOrLower of KPIHigherOrLower"
                                         [value]="higherOrLower['lookupId']">{{higherOrLower['lookupName']}}
                                         &nbsp; &nbsp;</mat-radio-button>
-
                                 </mat-radio-group>
                                 <mat-error
-                                    *ngIf="KPIform.controls.PriorityType.errors?.required && KPIform.controls.PriorityType.touched">
+                                    *ngIf="KPIform.controls.PriorityTypeId.errors?.required && KPIform.controls.PriorityTypeId.touched">
                                     Please Select Type</mat-error>
                             </div>
                         </div>
-                        <mat-slide-toggle formControlName="isScope" [(ngModel)]="isScopeApplicable">Is Scope Applicable
+                        <mat-slide-toggle formControlName="isScope" (change)="removeScopeAlias()" [(ngModel)]="isScopeApplicable">Is Scope Applicable
                         </mat-slide-toggle>
-
-                    
                         <div *ngIf="isScopeApplicable==true" class="form-group" style="margin-top:4px;">
                             <label class="col-md-12 required">Scope</label>
                            <div class="col-sm-12">
-                            
                                <div class="col-md-4 no-padding">
                                     <input maxlength="50" class="form-control" type="text" formControlName="scopeAlias"
                                     placeholder="Please Enter Scope Alias">
                                </div>
-                             
                                 <div class="col-md-8 no-padding pull-right">
                                         <a class="pull-right" style="margin-top: 20px;" (click)="downloadScopesample()">Download Sample</a>
                                 </div>
-
                            </div>
-                          
-                            
                             <div class="col-md-12">
-                                
                                 <div class="input-icon right">
                                     <i class="fa fa-file-excel-o"></i>
                                     <input

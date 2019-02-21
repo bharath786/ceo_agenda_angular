@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { fadeAnimation } from 'src/app/slideanimation';
 import { AppSettings } from 'src/app/app.settings';
 import { Observable } from 'rxjs';
@@ -12,17 +12,24 @@ import { DimensionHighlightsComponent } from './dimension-highlights/dimension-h
 
 })
 export class GlobalAnalyticsLayoutComponent implements OnInit {
-  kpiId$: Observable<any>;
-  kpiId: any;
+
+  kpiId: boolean = false;
 
   constructor(public appsettings: AppSettings) { }
 
   ngOnInit() {
-    this.kpiId$ = this.appsettings.kpiIdOutput();
-    console.log(this.kpiId$)
   }
 
+  checkData(){
 
+    if(sessionStorage['kpiDetails'] != null || sessionStorage['kpiDetails'] != undefined){
+      this.kpiId = true;
+    }
+    else{
+      this.kpiId = false;
+    }
+    return this.kpiId;
+  }
 
 
 }

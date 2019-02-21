@@ -1,136 +1,184 @@
 <div class="col-sm-12">
+  <mat-card class="example-card">
+    <mat-card-header>
+      <mat-card-title>{{kpiDetails.kpiName}}</mat-card-title>
+      <mat-card-subtitle>{{kpiDetails.kpiCode}}</mat-card-subtitle>
+    </mat-card-header>
+    <div class="form-group col-sm-4">
+      <label class="lblfnt">KPI Priority Type : &nbsp;</label>
+      <span>{{KPIPriorityType}}</span>
+    </div>
+    <div class="form-group col-sm-4">
+      <label class="lblfnt">KPI Frequency : &nbsp;</label>
+      <span>{{dimensionFrequency}}</span>
+    </div>
+    <div class="form-group col-sm-4">
+      <label class="lblfnt">KPI Scope : &nbsp;</label>
+      <span> {{kpiDetails.isScope == true ? "Yes" : "No" }}</span>
+      <span *ngIf="kpiDetails.isScope == true"> ({{kpiDetails.scopeAlias}})</span>
+    </div>
+    <div class="form-group col-sm-4">
+      <label class="lblfnt">KPI Data Type : &nbsp;</label>
+      <span> {{kpiDataType}}</span>
+    </div>
+    <div *ngIf="kpiDataType == 'Numeric' || kpiDataType == 'Text Numeric'" class="form-group col-sm-4">
+      <label class="lblfnt">
+        Min Value
+        <span class="badge badge-primary"> {{kpiDetails.minValue}}</span>
+        &nbsp;Max Value
+        <span class="badge badge-primary"> {{kpiDetails.maxValue}}</span>
+      </label>
+    </div>
+    <mat-card-content>
+    </mat-card-content>
+    <!-- <mat-card-actions>
+          <button mat-button>LIKE</button>
+          <button mat-button>SHARE</button>
+        </mat-card-actions> -->
+  </mat-card>
+</div>
 
+<div *ngIf="kpiDetails.isScope == false" class="col-sm-12" style="margin-top:15px">
+  <mat-card class="example-card" style="padding-bottom:0px;">
+    <mat-grid-list cols="3" rowHeight="100px">
+      <mat-grid-tile [colspan]="1">
+        <label class="lblfnt col-sm-5">{{dimensionFrequency == Monthly ? "Select Month :" : "Select Week :"}}</label>
+        <mat-select class="col-sm-3 margin-left form-control" placeholder="Select Month/Week">
+          <mat-option>January</mat-option>
+          <mat-option>Febraury</mat-option>
+          <mat-option>March</mat-option>
+          <mat-option>April</mat-option>
+        </mat-select>
+      </mat-grid-tile>
+      <mat-grid-tile [colspan]="1">
+        <label class="lblfnt col-sm-3">Value:</label>
+        <input *ngIf="kpiDataType=='Text' || kpiDataType=='Text Numeric'" type="text" placeholder="Enter Text"
+          class="col-sm-3 margin-left form-control">
+        <input *ngIf="kpiDataType=='Numeric' || kpiDataType=='Text Numeric'" type="number" placeholder="Enter Value"
+          class="col-sm-3 margin-left form-control">
+        <mat-radio-group *ngIf="kpiDataType=='Binary'">
+          <mat-radio-button value="1">Yes</mat-radio-button>
+          <mat-radio-button value="2">No</mat-radio-button>
+        </mat-radio-group>
+      </mat-grid-tile>
+      <mat-grid-tile [colspan]="1">
+        <button class="btn btn-success">Save</button>
+      </mat-grid-tile>
+    </mat-grid-list>
+    <mat-card-content>
+    </mat-card-content>
+    <!-- <mat-card-actions>
+            <button mat-button>LIKE</button>
+            <button mat-button>SHARE</button>
+          </mat-card-actions> -->
+  </mat-card>
+</div>
+
+<div *ngIf="kpiDetails.isScope == true" class="col-sm-12" style="margin-top:15px">
   <!-- For Upload and Download buttons -->
   <div class="pull-right">
+
+    <a (click)="downloadDatasample()" class="btn btn-primary marginbtn" id="Quality_download"
+      title="Click to Download Document">
+      <i class="fa fa-download"></i>&nbsp;Download Sample
+    </a>
     <a (click)='uploadModalToggle(1)' class="btn btn-primary marginbtn" title="Click to Upload Document">
       <i class="fa fa-upload"></i>&nbsp;&nbsp;Upload
     </a>
-    <a (click)="downloadModalToggle(1)" class="btn btn-primary marginbtn" id="Quality_download" title="Click to Download Document">
+    <a (click)="downloadModalToggle(1)" class="btn btn-primary marginbtn" id="Quality_download"
+      title="Click to Download Document">
       <i class="fa fa-download"></i>&nbsp;&nbsp;Download
     </a>
   </div>
-
-
-
   <div class="col-sm-12 col-xs-12" style="margin-top: 10px;">
-      <div class="row">
-
-        <div>
-          <div class="row">
-            <div class="col-md-6 col-sm-12">
-              <div>
-                <select class="form-control input-xsmall input-inline">
-                  <option value="10">10</option>
-                  <option value="25">25</option>
-                  <option value="50">50</option>
-                  <option value="100">100</option>
-                </select><label class="table_labels"> &nbsp;records </label>
-              </div>
-            </div>
-            <div class="col-md-6 col-sm-12">
-              <div class="dataTables_filter pull-right"><label class="table_labels">Search:&nbsp;</label><input type="search"
-                  class="form-control input-small input-inline" placeholder=""></div>
+    <div class="row">
+      <div>
+        <div class="row">
+          <div class="col-md-6 col-sm-12">
+            <div>
+              <select class="form-control input-xsmall input-inline">
+                <option value="10">10</option>
+                <option value="25">25</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+              </select><label class="table_labels"> &nbsp;records </label>
             </div>
           </div>
-          <div class="table-scrollable">
-            <table class="table table-responsive table-bordered dataTable no-footer">
-              <thead>
-                <tr role="row">
-                  <th class="thblue">Upload ID</th>
-                  <th class="thblue">Year</th>
-                  <th class="thblue">Month</th>
-                  <th class="thblue">Division</th>
-                  <th class="thblue">Location</th>
-                  <th class="thblue">Entity</th>
-                  <th class="thblue">Date Uploaded</th>
-                  <th class="thblue">Action</th>
-                </tr>
-              </thead>
-              <tbody>
-
-                <tr role="row" class="odd">
-                  <td>123456</td>
-                  <td>2018</td>
-                  <td>January</td>
-                  <td>Division1</td>
-                  <td>Hyderabad</td>
-                  <td>Developer</td>
-                  <td> 29/06/2018</td>
-                  <td><a class="padding_right"><i class="fa fa-pencil-square marginbtn" title="Click to edit"></i></a>
-                    <a><i class="fa fa-trash marginbtn red" title="Click to delete"></i></a></td>
-                </tr>
-              </tbody>
-            </table>
+          <div class="col-md-6 col-sm-12">
+            <div class="dataTables_filter pull-right"><label class="table_labels">Search:&nbsp;</label><input
+                type="search" class="form-control input-small input-inline" placeholder=""></div>
           </div>
-          <div class="row">
-
-            <div class="col-md-7 col-sm-12 pull-right">
-              <div class="">
-                <ul class="pagination pull-right">
-                  <li class="paginate_button previous disabled"><a><i class="fa fa-angle-left"></i></a></li>
-                  <li class="paginate_button active"><a>1</a></li>
-                  <li class="paginate_button next disabled"><a><i class="fa fa-angle-right"></i></a></li>
-                </ul>
-              </div>
+        </div>
+        <div class="table-scrollable">
+          <table class="table table-responsive table-bordered dataTable no-footer">
+            <thead>
+              <tr role="row">
+                <th class="thblue">Upload ID</th>
+                <th class="thblue">Year</th>
+                <th class="thblue">Month</th>
+                <th class="thblue">Division</th>
+                <th class="thblue">Location</th>
+                <th class="thblue">Entity</th>
+                <th class="thblue">Date Uploaded</th>
+                <th class="thblue">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr role="row" class="odd">
+                <td>123456</td>
+                <td>2018</td>
+                <td>January</td>
+                <td>Division1</td>
+                <td>Hyderabad</td>
+                <td>Developer</td>
+                <td> 29/06/2018</td>
+                <td><a class="padding_right"><i class="fa fa-pencil-square marginbtn" title="Click to edit"></i></a>
+                  <a><i class="fa fa-trash marginbtn red" title="Click to delete"></i></a></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="row">
+          <div class="col-md-7 col-sm-12 pull-right">
+            <div class="">
+              <ul class="pagination pull-right">
+                <li class="paginate_button previous disabled"><a><i class="fa fa-angle-left"></i></a></li>
+                <li class="paginate_button active"><a>1</a></li>
+                <li class="paginate_button next disabled"><a><i class="fa fa-angle-right"></i></a></li>
+              </ul>
             </div>
           </div>
         </div>
       </div>
-    </div>
-
-  <!-- For Download Modal Popup -->
-  <div class="modal fade" bsModal #downloadModal="bs-modal" [config]="{backdrop: 'static'}" role="dialog">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <b class="modal-title titlemodal">Download Data</b> <i (click)="downloadModalToggle(2)" class="fa fa-times pull-right"></i>
-        </div>
-        <div class="modal-body ">
-          <div class="row container-fluid">
-            <div class="col-sm-12 margin-left-16">
-              <a class="btn btn-primary col-sm-5 marginbtn" title="Click to download Document"><i class="fa fa-download"></i>&nbsp;&nbsp;Download
-                CSV Template&nbsp;&nbsp;</a>
-              <a class="btn btn-primary col-sm-5 marginbtn pull-right" title="Click to Download CSV Document"><i class="fa fa-download"></i>&nbsp;&nbsp;Download
-                Latest Data&nbsp;&nbsp;</a>
-            </div>
-
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" (click)='downloadModalToggle(2)' class="btn btn-default" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-
     </div>
   </div>
+</div>
 
-
-  <!-- For Upload <Modal Popup -->
-  <div class="modal fade" bsModal #uploadModal="bs-modal" [config]="{backdrop: 'static'}" role="dialog">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-
-          <b class="modal-title titlemodal">Upload Template</b><i (click)="uploadModalToggle(2)" class="fa fa-times pull-right"></i>
-        </div>
-        <div class="modal-body">
-          <div class="row">
-
-            <div class="col-sm-12 margintop10">
-              <div class="col-sm-4">
-                <label class="control-label">Select File&nbsp;:</label>
-              </div>
-              <div class="col-sm-8">
-                <input type="file" (change)="changeListener($event.target.files)" class="form-control">
-              </div>
+<!-- For Upload <Modal Popup -->
+<div class="modal fade" bsModal #uploadModal="bs-modal" [config]="{backdrop: 'static'}" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <b class="modal-title titlemodal">Upload Template</b><i (click)="uploadModalToggle(2)"
+          class="fa fa-times pull-right"></i>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-sm-12 margintop10">
+            <div class="col-sm-4">
+              <label class="control-label">Select File&nbsp;:</label>
+            </div>
+            <div class="col-sm-8">
+              <input type="file" (change)="incomingfile($event)" class="form-control">
             </div>
           </div>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-success" data-dismiss="modal"><i class="fa fa-upload"></i>&nbsp;Upload</button>
-          <button type="button" class="btn btn-default" (click)="uploadModalToggle(2)" data-dismiss="modal">Close</button>
-        </div>
+      </div>
+      <div class="modal-footer">
+        <button (click)="Upload()" type="button" class="btn btn-success" data-dismiss="modal"><i
+            class="fa fa-upload"></i>&nbsp;Upload</button>
+        <button type="button" class="btn btn-default" (click)="uploadModalToggle(2)" data-dismiss="modal">Close</button>
       </div>
     </div>
-
   </div>
+</div>

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { TreeNode } from 'primeng/api';
 import { Router, NavigationEnd } from '@angular/router';
 import { AppSettings } from 'src/app/app.settings';
@@ -36,6 +36,7 @@ export class DimensionHighlightsComponent implements OnInit {
     ngOnInit() {
     }
 
+
     getTree() {
         this.menuId$ = this.appSettings.getMenuId();
         this.menuService.getDimensionData(this.menuId$).subscribe(
@@ -52,13 +53,28 @@ export class DimensionHighlightsComponent implements OnInit {
         this.files = null;
     }
 
+
     nodeSelect(event) {
         // console.log(event['node']['label']);
         this.mainvalue = event['node'];
         console.log(this.mainvalue);
         if(this.mainvalue['KPIId'] != null){
             this.kpivalue = this.mainvalue['KPIId']
-            this.appSettings.kpiIdInput(this.mainvalue['KPIId'])
+            sessionStorage.setItem('kpiDetails', JSON.stringify({ 
+            kpiId:this.kpivalue,
+            kpiName:this.mainvalue['KPIName'],
+            kpiCode:this.mainvalue['KPICode'], 
+            frequencyId:this.mainvalue['frequencyId'], 
+            PriorityTypeId:this.mainvalue['PriorityTypeId'], 
+            dataTypeId:this.mainvalue['dataTypeId'], 
+            isScope:this.mainvalue['isScope'], 
+            scopeAlias:this.mainvalue['scopeAlias'],
+            minMax:this.mainvalue['minMax']
+        }));   
+            console.log(sessionStorage['kpiDetails'])           
+        }
+        else{
+            sessionStorage.setItem('kpiDetails', null);   
         }
     }
 

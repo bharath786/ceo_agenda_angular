@@ -6,13 +6,12 @@
       <li class="pill_bg_color" routerLinkActive='active'>
         <a class="navpills" [routerLink]="['highlights']"><i class="fa fa-list-alt"></i>&nbsp;Highlights</a>
       </li>
-      <li class="pill_bg_color" *ngIf="kpiId$ != null" routerLinkActive='active'>
+      <li class="pill_bg_color" *ngIf="checkData()" routerLinkActive='active'>
         <a class="navpills" [routerLink]="['data']"><i class="fa fa-folder"></i>&nbsp;Data</a>
       </li>
     </ul>
   </div>
-
-    
+  
 <!-- Pills div or content loads here -->
   <router-outlet></router-outlet>
 

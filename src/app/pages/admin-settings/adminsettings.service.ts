@@ -200,7 +200,7 @@ export class AdminsettingsService {
   }
 
   //For KPI Datat Type Dropdown
-  getKpiDatatType() {
+  getKpiDataType() {
     return this.http.get(this.kpiDatattypesAPI, this.getHeaders())
   }
   //Update Analytics

@@ -33,7 +33,8 @@ import {
   MatTabsModule,
   MatToolbarModule,
   MatTooltipModule,
-  MatStepperModule
+  MatStepperModule,
+  MatBadgeModule
 } from '@angular/material';
 
 @NgModule({
@@ -71,6 +72,7 @@ import {
     MatToolbarModule,
     MatTooltipModule,
     MatStepperModule,
+    MatBadgeModule
 
   ],
   exports: [

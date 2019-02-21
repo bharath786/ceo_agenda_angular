@@ -47,7 +47,7 @@ export class LoginComponent {
             console.log(data,'Main Login details')
             if (data['responseType']['error'] == false) {
               //Storing user values in session
-              sessionStorage.setItem('Session_name', JSON.stringify({ token: data['loginData']['accessToken'], user_id: data['loginData']['userId'] }));
+              sessionStorage.setItem('Session_name', JSON.stringify({ token: data['loginData']['accessToken'], user_id: data['loginData']['userId'], email: data['loginData']['email'] }));
               sessionStorage.setItem('EntityDetails', JSON.stringify({ assignedEntities: data['AssignedEntitesCount'], defaultCountryId: data['DefaultCountryId'], defaultDivisionId: data['DefaultDivisionId'], defaultEntityId: data['DefaultEntityId'] }));              
               //Sending message to Snackbar
               this.snackBar.open(data['responseType']['message'], 'OK', {

@@ -21,12 +21,16 @@ export class AdminDashboardComponent implements OnInit {
     end_date: any;
     constructor(public dialog: MatDialog, public router: Router) {
         var EntityDetails = JSON.parse(sessionStorage['EntityDetails'])
+        var userSession = JSON.parse(sessionStorage['Session_name'])
         if (EntityDetails.assignedEntities < 1) {
-            this.openDialog()
+            
+            if(userSession.email != "admin@ceo.com"){
+                this.openDialog();
+            }
+ 
         }
         if (EntityDetails.assignedEntities == 1) {
             
-
         }
         if (EntityDetails.assignedEntities > 1) {
             if (EntityDetails.defaultEntityId == null) {
@@ -35,7 +39,7 @@ export class AdminDashboardComponent implements OnInit {
         }
     }
 
-    openDialog1() {
+        openDialog1() {
         const dialogRef = this.dialog.open(selectEntity, {
             width: '500px',
             disableClose: true
