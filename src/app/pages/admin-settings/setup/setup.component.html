@@ -20,7 +20,7 @@
                 <form [formGroup]="analyticsform" (ngSubmit)="onSubmitAnalytics(analyticsform.value)"
                     #analyticsupdateform="ngForm" class="form-horizontal">
                     <h4 class="modal-title"><span class="bold">Analytics Details</span>
-                        <a (click)='adddimension(1)' class="pull-right btn btn-primary">Add Dimension </a></h4>
+                        <a (click)='adddimension(1)' class="pull-right btn btn-primary"><i class="fa fa-plus"></i> Add Dimension </a></h4>
                     <br>
                     <div class="form-group">
                         <label class="col-md-12 lblfnt required">Analytics Name</label>
@@ -63,8 +63,8 @@
                             'adddimension' ? 'Add
                             Dimension' : 'Edit Dimension Details'}}</span>
                         <a *ngIf="allforms == 'updatedimension'" (click)='addKRA(1)'
-                            class="pull-right btn btn-primary">Add
-                            KRA </a></h4>
+                            class="pull-right btn btn-primary"><i class="fa fa-plus"></i> 
+                            Add KRA </a></h4>
                     <br>
                     <div class="col-xs-12">
                         <div class="form-group">
@@ -132,7 +132,7 @@
                             'Add
                             KRA'
                             :'Edit KRA Details'}}</span>
-                        <a *ngIf="allforms=='updateKRA'" (click)='addKPI(1)' class="pull-right btn btn-primary">Add KPI
+                        <a *ngIf="allforms=='updateKRA'" (click)='addKPI(1)' class="pull-right btn btn-primary"><i class="fa fa-plus"></i> Add KPI
                         </a></h4>
                     <br>
                     <div class="col-xs-12">
@@ -234,7 +234,7 @@
                                     Data Type is required</mat-error>
                             </div>
                         </div>
-                        <div *ngIf="rangeApplicableDataType == true" class="form-group">
+                        <div *ngIf="rangeApplicableDataType" class="form-group">
                                 <label class="col-md-12 lblfnt"> Min Value:&nbsp;<span class="badge"> {{rangeValues[0]}} </span> &nbsp; Max Value:&nbsp;<span class="badge"> {{rangeValues[1]}} </span></label>
                                 <div class="col-md-12" style="margin-top: 5px;">
                                     <p-slider [(ngModel)]="rangeValues"  formControlName="minMax"  [style]="{'width':'14em'}" [range]="true" class='noborder'></p-slider>
@@ -263,7 +263,7 @@
                            <div class="col-sm-12">
                                <div class="col-md-4 no-padding">
                                     <input maxlength="50" class="form-control" type="text" formControlName="scopeAlias"
-                                    placeholder="Please Enter Scope Alias">
+                                    placeholder="Please Enter Scope Alias Name">
                                </div>
                                 <div class="col-md-8 no-padding pull-right">
                                         <a class="pull-right" style="margin-top: 20px;" (click)="downloadScopesample()">Download Sample</a>

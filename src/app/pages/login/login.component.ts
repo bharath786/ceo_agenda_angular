@@ -47,8 +47,8 @@ export class LoginComponent {
             console.log(data,'Main Login details')
             if (data['responseType']['error'] == false) {
               //Storing user values in session
-              sessionStorage.setItem('Session_name', JSON.stringify({ token: data['loginData']['accessToken'], user_id: data['loginData']['userId'], email: data['loginData']['email'] }));
-              sessionStorage.setItem('EntityDetails', JSON.stringify({ assignedEntities: data['AssignedEntitesCount'], defaultCountryId: data['DefaultCountryId'], defaultDivisionId: data['DefaultDivisionId'], defaultEntityId: data['DefaultEntityId'] }));              
+              localStorage.setItem('Session_name', JSON.stringify({ token: data['loginData']['accessToken'], user_id: data['loginData']['userId'], email: data['loginData']['email'] }));
+              localStorage.setItem('EntityDetails', JSON.stringify({ assignedEntities: data['AssignedEntitesCount'], defaultCountryId: data['DefaultCountryId'], defaultDivisionId: data['DefaultDivisionId'], defaultEntityId: data['DefaultEntityId'] }));              
               //Sending message to Snackbar
               this.snackBar.open(data['responseType']['message'], 'OK', {
                 duration: 5000,
@@ -91,7 +91,7 @@ export class LoginComponent {
     this.settings.loadingSpinner = false;
 
     //redirecting to dashboard if the session is not null when the user enters back
-    if (sessionStorage != null) {
+    if (localStorage != null) {
 
       //To check the url of the current page
       this.router.events.subscribe((res) => {

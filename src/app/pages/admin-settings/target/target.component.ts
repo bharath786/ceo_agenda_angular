@@ -156,7 +156,7 @@ export class TargetComponent implements OnInit {
 
               if (element['year'] >= this.currentYear && element['month'] >= this.currentMonth && element['target'] <= 100 && element['target'] != null) {
                 element['KPIId'] = this.uploadTemplate[i].KPIId;
-                let sessionUser = JSON.parse(sessionStorage['Session_name'])
+                let sessionUser = JSON.parse(localStorage['Session_name'])
                 element['createdBy'] = sessionUser["user_id"];
                 element['modifiedBy'] = sessionUser["user_id"];
                 element['entityId'] = 1;

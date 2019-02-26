@@ -24,8 +24,8 @@ export class DimensionDataComponent implements OnInit {
   constructor(public _adminsettindservice: AdminsettingsService, public excelService: DownloadExcelService) { }
 
   ngOnInit() {
-    if(sessionStorage['kpiDetails'] != null){
-      this.kpiDetails = JSON.parse(sessionStorage['kpiDetails']);
+    if(localStorage['kpiDetails'] != null){
+      this.kpiDetails = JSON.parse(localStorage['kpiDetails']);
       console.log(this.kpiDetails);
       this.kpiDetails['minValue'] = this.kpiDetails.minMax[0];
       this.kpiDetails['maxValue'] = this.kpiDetails.minMax[1];

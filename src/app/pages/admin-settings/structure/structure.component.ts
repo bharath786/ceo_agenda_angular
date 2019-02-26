@@ -54,13 +54,16 @@ export class StructureComponent implements OnInit {
   checkedValueDimension: any[] = [];
   arrayForBinding: any[] = [];
   finaldimensionId: any[] = [];
-
+  country: any;
+  filteredCountriesSingle: any[];
+  filteredCountriesMultiple: any[];
+  
   constructor(private structureservice: AdminsettingsService, 
               public router: Router, 
               public fb: FormBuilder, 
               public snackBar: MatSnackBar) {
 
-    this.sessionUser = JSON.parse(sessionStorage['Session_name'])
+    this.sessionUser = JSON.parse(localStorage['Session_name'])
     //Organization Update Form
     this.organizationform = this.fb.group({
       'organizationId': null,
@@ -68,9 +71,7 @@ export class StructureComponent implements OnInit {
       'organizationDescription': [null],
       'modifiedBy': this.sessionUser['user_id']
     });
-
    
-
     //Division Update Form
     this.divisionform = this.fb.group({
       'divId': null,
@@ -89,7 +90,8 @@ export class StructureComponent implements OnInit {
       'description': [null],
       'modifiedBy': this.sessionUser['user_id'],
       'createdBy': this.sessionUser['user_id'],
-      'divisionId': null
+      'divisionId': null,
+      'CountryName': null
     });
 
     //Entity Update Form
@@ -178,12 +180,34 @@ export class StructureComponent implements OnInit {
       error => {
         console.log(error)
         if (error.status == 401) {
-          sessionStorage.clear();
+          localStorage.clear();
           this.router.navigate(['/login'])
         }
       }
     )
   }
+
+  filterCountrySingle(event) {
+    let query = event.query;
+  //   this.countries.then(countries => {
+  //     this.filteredCountriesSingle = this.filterCountry(query, countries);
+  // });
+    this.filteredCountriesSingle = this.filterCountry(query, this.countries);
+}
+
+filterCountry(query, countries: any[]):any[] {
+  console.log(query, countries)
+  //in a real application, make a request to a remote url with the query and return filtered results, for demo we filter at client side
+  let filtered : any[] = [];
+  for(let i = 0; i < countries.length; i++) {
+      let country = countries[i];
+      if(country.countryName.toLowerCase().indexOf(query.toLowerCase()) == 0) {
+          filtered.push(country);
+      }
+  }
+  console.log(filtered)
+  return filtered;
+}
 
   //For Getting states based on country id
   onCountrySelect(countryId) {
@@ -194,7 +218,7 @@ export class StructureComponent implements OnInit {
       error => {
         console.log(error)
         if (error.status == 401) {
-          sessionStorage.clear();
+          localStorage.clear();
           this.router.navigate(['/login'])
         }
       }
@@ -212,7 +236,7 @@ export class StructureComponent implements OnInit {
       error => {
         console.log(error)
         if (error.status == 401) {
-          sessionStorage.clear();
+          localStorage.clear();
           this.router.navigate(['/login'])
         }
       }
@@ -234,7 +258,7 @@ export class StructureComponent implements OnInit {
         error => {
           console.log(error);
           if (error.status == 401) {
-            sessionStorage.clear();
+            localStorage.clear();
             this.router.navigate(['/login'])
           }
         });
@@ -315,6 +339,7 @@ export class StructureComponent implements OnInit {
       this.locationform.controls['countryId'].setValue(event['node']['countryId']);
       this.locationform.controls['description'].setValue(event['node']['description']);
       this.locationform.controls['divisionId'].setValue(event['node']['divisionId']);
+      this.country = [101,'India'];
       this.allforms = 'updatelocation';
     }
     //Tree node selected on Entity
@@ -372,7 +397,7 @@ export class StructureComponent implements OnInit {
       error => {
         console.log(error);
         if (error.status == 401) {
-          sessionStorage.clear();
+          localStorage.clear();
           this.router.navigate(['/login'])
         }
       }
@@ -400,7 +425,7 @@ export class StructureComponent implements OnInit {
       error => {
         console.log(error);
         if (error.status == 401) {
-          sessionStorage.clear();
+          localStorage.clear();
           this.router.navigate(['/login'])
         }
       }
@@ -428,7 +453,7 @@ export class StructureComponent implements OnInit {
       error => {
         console.log(error);
         if (error.status == 401) {
-          sessionStorage.clear();
+          localStorage.clear();
           this.router.navigate(['/login'])
         }
       }
@@ -437,6 +462,7 @@ export class StructureComponent implements OnInit {
 
   //For Location Upsert values (value >> Service >> API)  
   public onSubmitLocation(value: object) {
+    console.log(value,'nnn')
     if (value['locationId'] != null) {
       if (value['countryId'] == this.mainvalue['countryId']) {
         this.structureservice.upsertLocation(value).subscribe(
@@ -450,7 +476,7 @@ export class StructureComponent implements OnInit {
           error => {
             console.log(error);
             if (error.status == 401) {
-              sessionStorage.clear();
+              localStorage.clear();
               this.router.navigate(['/login'])
             }
           }
@@ -474,7 +500,7 @@ export class StructureComponent implements OnInit {
         error => {
           console.log(error);
           if (error.status == 401) {
-            sessionStorage.clear();
+            localStorage.clear();
             this.router.navigate(['/login'])
           }
         }
@@ -503,7 +529,7 @@ export class StructureComponent implements OnInit {
       error => {
         console.log(error);
         if (error.status == 401) {
-          sessionStorage.clear();
+          localStorage.clear();
           this.router.navigate(['/login'])
         }
       }
@@ -536,7 +562,7 @@ export class StructureComponent implements OnInit {
       error => {
         console.log(error);
         if (error.status == 401) {
-          sessionStorage.clear();
+          localStorage.clear();
           this.router.navigate(['/login'])
         }
       }
@@ -564,7 +590,7 @@ export class StructureComponent implements OnInit {
       error => {
         console.log(error);
         if (error.status == 401) {
-          sessionStorage.clear();
+          localStorage.clear();
           this.router.navigate(['/login'])
         }
       }

@@ -19,7 +19,7 @@
       #organizationupdateform="ngForm" class="form-horizontal">
       <div *ngIf="allforms == 'updateorganization'" class="col-sm-12 clearfix gridrole" style="border: 1px solid rgb(204, 204, 204); padding: 20px; border-radius: 3px;">
         <h4 class="modal-title"><span style="padding-left: 13px;" class="bold">Organization Details</span>
-          <a (click)='adddiv(1)' class="pull-right btn btn-primary">Add Division</a></h4>
+          <a (click)='adddiv(1)' class="pull-right btn btn-primary"><i class="fa fa-plus"></i> Add Division</a></h4>
         <br>
         <div class="col-xs-12">
           <div class="form-group">
@@ -58,7 +58,7 @@
           <h4 class="modal-title"><span style="padding-left: 13px;" class="bold">{{ allforms == 'adddivision' ? 'Add
               Division'
               :'Edit Division Details'}}</span>
-            <a *ngIf="allforms == 'updatedivision'" class="pull-right btn btn-primary" (click)=addLoc(1)>Add Location
+            <a *ngIf="allforms == 'updatedivision'" class="pull-right btn btn-primary" (click)=addLoc(1)><i class="fa fa-plus"></i> Add Location
             </a></h4>
           <br>
           <div class="col-xs-12">
@@ -91,8 +91,6 @@
                   Division Address is required</mat-error> -->
               </div>
             </div>
-
-
             <div *ngIf="allforms == 'adddivision'" class="pull-right" style="margin-top: 25px;">
               <button [disabled]="!divisionupsertform.form.valid" class="btn btn-success" id="btnupdateFimrDiv" type="submit">Save</button>
             </div>
@@ -118,7 +116,7 @@
           <h4 class="modal-title"><span style="padding-left: 13px;" class="bold">{{ allforms == 'addlocation' ? 'Add
               Location'
               :'Edit Location Details'}}</span>
-            <a *ngIf="allforms == 'updatelocation'" class="pull-right btn btn-primary" (click)=addEntity(1)>Add Entity
+            <a *ngIf="allforms == 'updatelocation'" class="pull-right btn btn-primary" (click)=addEntity(1)><i class="fa fa-plus"></i> Add Entity
             </a>
           </h4>
           <br>
@@ -130,10 +128,13 @@
                   class="form-control" (selectionChange)="onCountrySelect($event.value)">
                   <mat-option *ngFor="let value of countries" [value]="value['countryId']">{{value['countryName']}}</mat-option>
                 </mat-select>
-                <mat-error *ngIf="locationform.controls.countryId.errors?.required && locationform.controls.countryId.touched">
-                  Please Select your Country</mat-error>
+                <!-- <mat-error *ngIf="locationform.controls.countryId.errors?.required && locationform.controls.countryId.touched">
+                  Please Select your Country</mat-error> -->
               </div>
             </div>
+            <!-- <p-autoComplete [(ngModel)]="country" [ariaLabelledBy]="101" formControlName='CountryName' [suggestions]="filteredCountriesSingle" (completeMethod)="filterCountrySingle($event)" field="countryName" [size]="30"
+            placeholder="Countries" [minLength]="1"></p-autoComplete> -->
+            
             <div class="form-group">
               <label class="col-md-12 lblfnt">Description</label>
               <div class="col-md-12">
@@ -156,7 +157,6 @@
                 data-toggle="modal" data-tooltip="tooltip" data-original-title="Delete">
                 <i class="fa fa-trash"></i>
               </button>
-
               <button [disabled]="!locationupsertform.form.valid" class="btn btn-success marginbtn pull-right" type="submit">Update</button>
             </div>
           </div>
@@ -220,13 +220,13 @@
                 Entity is required</mat-error> -->
             </div>
           </div>
-
+<!-- 
           <div class="form-group">
             <label class="col-md-12 lblfnt">Dimensions</label>
             <div class="col-md-12">
               <a class="btn btn-primary" (click)=selectDimension(1)>Select Dimensions</a>   
             </div>
-          </div>
+          </div> -->
           <div *ngIf="allforms == 'addEntity'" class="pull-right" style="margin-top: 25px;">
             <button [disabled]="!entityupsertform.form.valid" class="btn btn-success pull-right" id="btnupdateFimrDiv"
               type="submit">Save</button>
@@ -264,7 +264,7 @@
           <mat-checkbox *ngFor="let item of dimensionsEntityBased" value="item.dimensionId" [(ngModel)]="checkingarray[item.dimensionId]" class="col-sm-6 example-margin">
             {{item.dimensionName}} 
             </mat-checkbox>
-            <!-- <p-tree [value]="dimensionsEntityBased" selectionMode="checkbox" (onNodeSelect)="dimensionSelect($event)"></p-tree> -->
+     <p-tree [value]="dimensionsEntityBased" selectionMode="checkbox" (onNodeSelect)="dimensionSelect($event)"></p-tree> -->
 <!-- 
           <div formArrayName="dimensionValues">
             <div [formGroupName]="i" *ngFor="let tech of dimensionForm.get('dimensionValues')['controls'] | keyvalue; let i = index">

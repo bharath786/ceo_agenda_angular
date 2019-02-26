@@ -8,7 +8,6 @@ import { emailValidator } from 'src/app/theme/utils/app-validators';
 import { MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
 import { formatDate } from '@angular/common';
-import { TreeNode } from 'primeng/api';
 import * as _ from 'lodash'; 
 
 @Component({
@@ -58,7 +57,7 @@ export class ManageUsersComponent implements OnInit {
     this.settings = this.appSettings.settings;
 
     this.maxDate = new Date();
-    this.maxDate.setDate(this.maxDate.getDate() + 7);
+    this.maxDate.setDate(this.maxDate.getDate());
 
     //Add User Form
     this.form = this.fb.group({
@@ -163,7 +162,14 @@ export class ManageUsersComponent implements OnInit {
       event.preventDefault();
     }
   }
-
+  //For Phone Number Validation
+  keyPressforDob(event: any) {
+    const pattern = /[]/;
+    let inputChar = String.fromCharCode(event.charCode);
+    if (event.keyCode != 8 && !pattern.test(inputChar)) {
+      event.preventDefault();
+    }
+  }
   //For delete confirmation modal
   deleteModalToggle(id) {
     if (id == 2) {
@@ -261,7 +267,7 @@ export class ManageUsersComponent implements OnInit {
       error => {
         console.log(error)
         if (error.status == 401) {
-          sessionStorage.clear();
+          localStorage.clear();
           this.router.navigate(['/login'])
         }
       }
@@ -305,7 +311,7 @@ export class ManageUsersComponent implements OnInit {
   changeStatus(values) {
     let userValue = this.users.filter(x => x.userId == values["userId"]);
     if (userValue[0]['verified'] === true) {
-      let sessionUser = JSON.parse(sessionStorage['Session_name'])
+      let sessionUser = JSON.parse(localStorage['Session_name'])
       values.status = !values.status;
       values.modifiedBy = sessionUser.user_id
       this.adminsettingsservice.userStatus(values).subscribe(
@@ -319,7 +325,7 @@ export class ManageUsersComponent implements OnInit {
         error => {
           console.log(error);
           if (error.status == 401) {
-            sessionStorage.clear();
+            localStorage.clear();
             this.router.navigate(['/login'])
           }
         }
@@ -335,7 +341,7 @@ export class ManageUsersComponent implements OnInit {
   //Update Profile values setting to form
   updateProfile(data) {
     this.emailchange = data
-    let sessionUser = JSON.parse(sessionStorage['Session_name'])
+    let sessionUser = JSON.parse(localStorage['Session_name'])
     this.form.controls['userId'].setValue(data.userId);
     this.form.controls['firstName'].setValue(data.firstName);
     let newDate = new Date(data.dateOfBirth);
@@ -349,7 +355,7 @@ export class ManageUsersComponent implements OnInit {
   }
 
   resendMail(values) {
-    let sessionUser = JSON.parse(sessionStorage['Session_name'])
+    let sessionUser = JSON.parse(localStorage['Session_name'])
     if (values['userId'] == null) {
       values['createdBy'] = sessionUser.user_id
     }
@@ -370,8 +376,8 @@ export class ManageUsersComponent implements OnInit {
   assignEntities(entityIds) {
     let data = {
       EntityIds: entityIds, userId: this.userId,
-      createdBy: JSON.parse(sessionStorage['Session_name']).user_id,
-      modifiedBy: JSON.parse(sessionStorage['Session_name']).user_id
+      createdBy: JSON.parse(localStorage['Session_name']).user_id,
+      modifiedBy: JSON.parse(localStorage['Session_name']).user_id
     }
     this.adminsettingsservice.insertUserEntities(data).subscribe(
       data => {
@@ -391,7 +397,7 @@ export class ManageUsersComponent implements OnInit {
 
   //User Update and Create Form
   public onSubmit(values: Object): void {
-    let sessionUser = JSON.parse(sessionStorage['Session_name'])
+    let sessionUser = JSON.parse(localStorage['Session_name'])
     if (this.form.valid) {
       if (values['userId'] == null) {
         values['createdBy'] = sessionUser.user_id
@@ -412,7 +418,7 @@ export class ManageUsersComponent implements OnInit {
         error => {
           console.log(error);
           if (error.status == 401) {
-            sessionStorage.clear();
+            localStorage.clear();
             this.router.navigate(['/login'])
           }
         }
@@ -433,7 +439,7 @@ export class ManageUsersComponent implements OnInit {
         },
         error => {
           if (error.status == 401) {
-            sessionStorage.clear();
+            localStorage.clear();
             this.router.navigate(['/login'])
           }
         }

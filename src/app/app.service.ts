@@ -23,7 +23,7 @@ export class AppService {
 
   //For Sending headers to API
   getHeaders() {
-    let sessionUser = JSON.parse(sessionStorage['Session_name'])
+    let sessionUser = JSON.parse(localStorage['Session_name'])
     this.sessiontoken = sessionUser.token;
     this.sessionuser = sessionUser.user_id;
     const httpOptions = {

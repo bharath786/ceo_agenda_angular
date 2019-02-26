@@ -20,7 +20,7 @@ import { DownloadExcelService } from '../download-excel.service';
 import { TooltipModule } from 'ngx-bootstrap';
 import { GetMonthName } from 'src/app/theme/pipes/Months.pipe';
 import {SliderModule} from 'primeng/slider';
-
+import {AutoCompleteModule} from 'primeng/autocomplete';
 
 
 
@@ -48,6 +48,7 @@ export const routes :Routes = [
     DatepickerModule.forRoot(),
     DataTableModule,
     TooltipModule.forRoot(),
+    AutoCompleteModule,
     ConfirmationPopoverModule.forRoot({
     confirmButtonType: 'danger' // set defaults here
     })

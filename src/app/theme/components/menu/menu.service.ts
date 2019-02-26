@@ -25,7 +25,7 @@ export class MenuService {
   }
 
   getMenu(){
-    var EntityDetails = JSON.parse(sessionStorage['EntityDetails'])
+    var EntityDetails = JSON.parse(localStorage['EntityDetails'])
     return this.http.get(url+'get-menu'+'?entityId='+EntityDetails.defaultEntityId, this.getHeaders())
   }
 
@@ -35,7 +35,7 @@ export class MenuService {
 
     //For Headers
     getHeaders() {
-      let sessionUser = JSON.parse(sessionStorage['Session_name'])
+      let sessionUser = JSON.parse(localStorage['Session_name'])
       this.sessiontoken = sessionUser.token;
       this.sessionuser = sessionUser.user_id;
       const httpOptions = {

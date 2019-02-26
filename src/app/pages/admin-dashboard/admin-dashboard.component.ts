@@ -20,8 +20,8 @@ export class AdminDashboardComponent implements OnInit {
 
     end_date: any;
     constructor(public dialog: MatDialog, public router: Router) {
-        var EntityDetails = JSON.parse(sessionStorage['EntityDetails'])
-        var userSession = JSON.parse(sessionStorage['Session_name'])
+        var EntityDetails = JSON.parse(localStorage['EntityDetails'])
+        var userSession = JSON.parse(localStorage['Session_name'])
         if (EntityDetails.assignedEntities < 1) {
             
             if(userSession.email != "admin@ceo.com"){
@@ -79,7 +79,7 @@ export class NoPermsisionModal {
     constructor(public dialog: MatDialog, public router: Router) { }
     logout() {
         this.dialog.closeAll()
-        sessionStorage.clear()
+        localStorage.clear()
         this.router.navigate(['/login'])
     }
 }
@@ -127,14 +127,14 @@ export class selectEntity {
     }
 
     onEntitySubmit(values) {
-        var EntityDetails = JSON.parse(sessionStorage['EntityDetails'])
-        sessionStorage.setItem('EntityDetails',
+        var EntityDetails = JSON.parse(localStorage['EntityDetails'])
+        localStorage.setItem('EntityDetails',
             JSON.stringify({
                 assignedEntities: EntityDetails.assignedEntities,
                 defaultCountryId: values['locationId'], defaultDivisionId: values['divId'],
                 defaultEntityId: values['entityId'], isDefault: values['isDefault']
             }));
-        let sessionUser = JSON.parse(sessionStorage['Session_name'])
+        let sessionUser = JSON.parse(localStorage['Session_name'])
         values['userId'] = sessionUser.user_id;
         this.adminsettingsservice.getEntityData(values).subscribe(
             data => {
@@ -150,13 +150,13 @@ export class selectEntity {
     }
 
     getEntitiesList() {
-        let sessionUser = JSON.parse(sessionStorage['Session_name'])
+        let sessionUser = JSON.parse(localStorage['Session_name'])
         this.adminsettingsservice.getUserEntitiesList(sessionUser.user_id).subscribe(
             data => {
                 console.log(data)
                 this.entitiesList = data['data']
                 this.selectedEntities();
-                var EntityDetails = JSON.parse(sessionStorage['EntityDetails'])
+                var EntityDetails = JSON.parse(localStorage['EntityDetails'])
                 console.log(EntityDetails)
                 if (EntityDetails != null) {
                      console.log(EntityDetails['defaultDivisionId'])
@@ -165,7 +165,7 @@ export class selectEntity {
                     this.entityform.controls['locationId'].setValue(EntityDetails['defaultCountryId']);
                     this.onLocationSelect(EntityDetails['defaultCountryId'])
                     this.entityform.controls['entityId'].setValue(EntityDetails['defaultEntityId']);
-                    var EntityDetails = JSON.parse(sessionStorage['EntityDetails'])
+                    var EntityDetails = JSON.parse(localStorage['EntityDetails'])
                     if(this.entityDefault != data['Data']['DefaultEntityId']){
                         this.entityform.controls['isDefault'].setValue(false);
                     }
@@ -178,7 +178,7 @@ export class selectEntity {
     }
 
     selectedEntities() {
-        let sessionUser = JSON.parse(sessionStorage['Session_name'])
+        let sessionUser = JSON.parse(localStorage['Session_name'])
         this.adminsettingsservice.getUserEntitiesList(sessionUser.user_id).subscribe(
             data => {
                 console.log(data['Data'], 'Check Now')

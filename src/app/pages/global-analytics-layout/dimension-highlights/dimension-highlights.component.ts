@@ -60,7 +60,7 @@ export class DimensionHighlightsComponent implements OnInit {
         console.log(this.mainvalue);
         if(this.mainvalue['KPIId'] != null){
             this.kpivalue = this.mainvalue['KPIId']
-            sessionStorage.setItem('kpiDetails', JSON.stringify({ 
+            localStorage.setItem('kpiDetails', JSON.stringify({ 
             kpiId:this.kpivalue,
             kpiName:this.mainvalue['KPIName'],
             kpiCode:this.mainvalue['KPICode'], 
@@ -71,10 +71,10 @@ export class DimensionHighlightsComponent implements OnInit {
             scopeAlias:this.mainvalue['scopeAlias'],
             minMax:this.mainvalue['minMax']
         }));   
-            console.log(sessionStorage['kpiDetails'])           
+            console.log(localStorage['kpiDetails'])           
         }
         else{
-            sessionStorage.setItem('kpiDetails', null);   
+            localStorage.setItem('kpiDetails', null);   
         }
     }
 

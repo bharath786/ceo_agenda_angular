@@ -61,13 +61,12 @@ export class SetupComponent implements OnInit {
   fileScopeInput : any;
   uploadedFileFormatChecking: boolean;
   DatatypeId: any;
-  rangeApplicableDataType: boolean;
-
-
+  rangeApplicableDataType: any;
+  datatypeType: boolean;
 
   constructor(private appSettings: AppSettings, private excelService: DownloadExcelService, private setupservice: AdminsettingsService, public router: Router, public fb: FormBuilder, public snackBar: MatSnackBar) {
 
-    this.sessionUser = JSON.parse(sessionStorage['Session_name'])
+    this.sessionUser = JSON.parse(localStorage['Session_name'])
     //Analytics Update Form
     this.analyticsform = this.fb.group({
       'analyticsId': null,
@@ -108,7 +107,7 @@ export class SetupComponent implements OnInit {
       'isScope': null,
       'frequencyId': [4],
       'KRAId': null,
-      'minMax': [null, Validators.compose([Validators.required, Validators.minLength(2)])],
+      'minMax': [null],
       'filescopeinput': null,
       'scopeAlias': null
     });
@@ -117,19 +116,30 @@ export class SetupComponent implements OnInit {
 
 
   dataTypeCheck(event){
+
     if(event == "7" || event == "10" ){
       this.rangeValues = [];
       this.rangeApplicableDataType = true;
+      this.datatypeType = true;
     }
-    else{
-      this.rangeValues = [];
-      this.rangeApplicableDataType = false;
+    
+      else{
+        this.rangeValues = [];
+        this.rangeApplicableDataType = false;
+        this.datatypeType = true;
+      
+   
     }
   }
 
   customValidation(){
+
+
     if(this.rangeApplicableDataType){
       if(this.rangeValues[0] == this.rangeValues[1]){
+        return false;
+      }
+      if(this.rangeValues.length < 2){
         return false;
       }
     }
@@ -159,7 +169,6 @@ export class SetupComponent implements OnInit {
   removeScopeAlias(){
     if(this.isScopeApplicable == false){
       this.KPIform.controls['scopeAlias'].setValue(null);
-
     }
   }
 
@@ -176,7 +185,7 @@ export class SetupComponent implements OnInit {
       error => {
         console.log(error);
         if (error.status == 401) {
-          sessionStorage.clear();
+          localStorage.clear();
           this.router.navigate(['/login'])
         }
       }
@@ -219,6 +228,7 @@ export class SetupComponent implements OnInit {
         this.snackBar.open("Uploaded file is invalid, please refer to download sample","OK", {
           panelClass: ['redSnackbar']
         });
+        this.fileScopeInput = '';
       }
       else{
         this.uploadedFileFormatChecking = true;
@@ -231,7 +241,7 @@ export class SetupComponent implements OnInit {
 
   //For Dimesion Upsert
   public onSubmitDimension(value) {
-    let EntityDetails = JSON.parse(sessionStorage['EntityDetails']);
+    let EntityDetails = JSON.parse(localStorage['EntityDetails']);
     value['entityId'] = EntityDetails.defaultEntityId;
     this.setupservice.upsertDimension(value).subscribe(
 
@@ -257,7 +267,7 @@ export class SetupComponent implements OnInit {
       error => {
         console.log(error);
         if (error.status == 401) {
-          sessionStorage.clear();
+          localStorage.clear();
           this.router.navigate(['/login'])
         }
       }
@@ -289,7 +299,7 @@ export class SetupComponent implements OnInit {
       error => {
         console.log(error);
         if (error.status == 401) {
-          sessionStorage.clear();
+          localStorage.clear();
           this.router.navigate(['/login'])
         }
       }
@@ -318,7 +328,7 @@ export class SetupComponent implements OnInit {
       error => {
         console.log(error);
         if (error.status == 401) {
-          sessionStorage.clear();
+          localStorage.clear();
           this.router.navigate(['/login'])
         }
       }
@@ -346,7 +356,7 @@ export class SetupComponent implements OnInit {
       error => {
         console.log(error);
         if (error.status == 401) {
-          sessionStorage.clear();
+          localStorage.clear();
           this.router.navigate(['/login'])
         }
       }
@@ -381,7 +391,7 @@ export class SetupComponent implements OnInit {
       error => {
         console.log(error);
         if (error.status == 401) {
-          sessionStorage.clear();
+          localStorage.clear();
           this.router.navigate(['/login'])
         }
       }
@@ -417,7 +427,7 @@ export class SetupComponent implements OnInit {
       error => {
         console.log(error);
         if (error.status == 401) {
-          sessionStorage.clear();
+          localStorage.clear();
           this.router.navigate(['/login'])
         }
       }
@@ -535,7 +545,7 @@ export class SetupComponent implements OnInit {
       error => {
         console.log(error);
         if (error.status == 401) {
-          sessionStorage.clear();
+          localStorage.clear();
           this.router.navigate(['/login'])
         }
       }
@@ -549,12 +559,13 @@ export class SetupComponent implements OnInit {
         console.log(data, 'Data Type')
         //Assigning the values to the KPI Datatype variable
         this.kpiDataType = data['data']
+        this.kpiDataType = this.kpiDataType.filter(x=>x.lookupName != 'List');
         this.KPIHigherOrLower = data['data1']
       },
       error => {
         console.log(error);
         if (error.status == 401) {
-          sessionStorage.clear();
+          localStorage.clear();
           this.router.navigate(['/login'])
         }
       }
@@ -575,7 +586,7 @@ export class SetupComponent implements OnInit {
         error => {
           console.log(error);
           if (error.status == 401) {
-            sessionStorage.clear();
+            localStorage.clear();
             this.router.navigate(['/login'])
           }
         });

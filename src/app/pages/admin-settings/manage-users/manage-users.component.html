@@ -128,7 +128,7 @@
                             <div class="input-icon right">
                                 <i class="fa fa-calendar"></i>
                                 <!-- <input type="date" max="2014-05-15" formControlName="dateOfBirth" class="form-control" placeholder="mm/dd/yyyy"> -->
-                                <input type="text" formControlName="dateOfBirth" placeholder="MM/DD/YYYY" class="form-control" bsDatepicker [bsConfig]="{ dateInputFormat: 'MM/DD/YYYY', containerClass: 'theme-dark-blue'}" [maxDate]="maxDate">
+                                <input type="text" onCopy='return false' onPaste='return false' (keypress)="keyPressforDob($event)" formControlName="dateOfBirth" placeholder="MM/DD/YYYY" class="form-control" bsDatepicker [bsConfig]="{ dateInputFormat: 'MM/DD/YYYY', containerClass: 'theme-dark-blue'}" [maxDate]="maxDate">
 <!-- 
                                  <input matInput [matDatepicker]="picker" placeholder="Choose a date">
                                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>

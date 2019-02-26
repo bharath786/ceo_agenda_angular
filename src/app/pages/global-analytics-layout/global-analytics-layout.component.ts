@@ -22,7 +22,7 @@ export class GlobalAnalyticsLayoutComponent implements OnInit {
 
   checkData(){
 
-    if(sessionStorage['kpiDetails'] != null || sessionStorage['kpiDetails'] != undefined){
+    if(localStorage['kpiDetails'] != null || localStorage['kpiDetails'] != undefined){
       this.kpiId = true;
     }
     else{

@@ -63,7 +63,7 @@ export class UserMenuComponent implements OnInit {
 
   //For Profile Update Form
   public onSubmit(values: Object): void {
-    let sessionUser = JSON.parse(sessionStorage['Session_name'])
+    let sessionUser = JSON.parse(localStorage['Session_name'])
     if (this.form.valid) {
       if (values['userId'] == null) {
         values['createdBy'] = sessionUser.user_id
@@ -82,7 +82,7 @@ export class UserMenuComponent implements OnInit {
         error => {
           console.log(error);
           if(error.status==401){
-            sessionStorage.clear();
+            localStorage.clear();
             this.router.navigate(['/login'])
           }
         }
@@ -96,7 +96,7 @@ export class UserMenuComponent implements OnInit {
   //For Profile Details
   userDetailsToggle(e){
     if (e == 1) {
-      var session_values = JSON.parse(sessionStorage['Session_name'])
+      var session_values = JSON.parse(localStorage['Session_name'])
       var value = { userId: session_values.user_id }
       this.appservice.profileUpdate(value).subscribe(
         data => {
@@ -105,7 +105,7 @@ export class UserMenuComponent implements OnInit {
         error => {
           console.log(error);
           if(error.status==401){
-            sessionStorage.clear();
+            localStorage.clear();
             this.router.navigate(['/login'])
           }
         }
@@ -116,7 +116,7 @@ export class UserMenuComponent implements OnInit {
 
   //For Change Password Form Submission
   public onSubmitPassword(values: Object): void {
-    let sessionUser = JSON.parse(sessionStorage['Session_name'])
+    let sessionUser = JSON.parse(localStorage['Session_name'])
     if (this.changepwform.valid) {
       values['modifiedBy'] = sessionUser.user_id;
       values['userId'] = sessionUser.user_id;
@@ -131,7 +131,7 @@ export class UserMenuComponent implements OnInit {
         error => {
           console.log(error)
           if(error.status==401){
-            sessionStorage.clear();
+            localStorage.clear();
             this.router.navigate(['/login'])
           }
         }
@@ -142,7 +142,7 @@ export class UserMenuComponent implements OnInit {
   //For Change Password Modal Popup
   changepasswordModalToggle(e) {
     if (e == 1) {
-      var session_values = JSON.parse(sessionStorage['Session_name'])
+      var session_values = JSON.parse(localStorage['Session_name'])
       var value = { userId: session_values.user_id }
       this.appservice.profileUpdate(value).subscribe(
         data => {
@@ -153,7 +153,7 @@ export class UserMenuComponent implements OnInit {
         error => {
           console.log(error);
           if(error.status==401){
-            sessionStorage.clear();
+            localStorage.clear();
             this.router.navigate(['/login'])
           }
         }
@@ -168,7 +168,7 @@ export class UserMenuComponent implements OnInit {
   //For Logout 
   logOut(e) {
     if (e == 1) {
-      var session_values = JSON.parse(sessionStorage['Session_name'])
+      var session_values = JSON.parse(localStorage['Session_name'])
       var value = { userId: session_values.user_id }
       this.appservice.logOut(value).subscribe(
         data => {
@@ -182,7 +182,7 @@ export class UserMenuComponent implements OnInit {
           console.log(error);
         }
       )
-      sessionStorage.clear();
+      localStorage.clear();
     }
   }
 
@@ -190,7 +190,7 @@ export class UserMenuComponent implements OnInit {
   //Assigning values to form controls from service API
   profileModalToggle(e) {
     if (e == 1) {
-      var session_values = JSON.parse(sessionStorage['Session_name'])
+      var session_values = JSON.parse(localStorage['Session_name'])
       var value = { userId: session_values.user_id }
       this.appservice.profileUpdate(value).subscribe(
         data => {
@@ -206,7 +206,7 @@ export class UserMenuComponent implements OnInit {
         error => {
           console.log(error);
           if(error.status==401){
-            sessionStorage.clear();
+            localStorage.clear();
             this.router.navigate(['/login'])
           }
         }

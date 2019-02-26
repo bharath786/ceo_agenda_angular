@@ -11,7 +11,7 @@ export class AuthGuard implements CanActivate {
 
   canActivate() {
     //Assigning Session values to sessionid
-    let sessionid = JSON.parse(sessionStorage.getItem("Session_name"));
+    let sessionid = JSON.parse(localStorage.getItem("Session_name"));
 
     //Redirecting to logout page if session is null
     if (sessionid == null) {
