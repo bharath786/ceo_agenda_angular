@@ -117,4 +117,10 @@
 border: 1px solid #283593;    
 }
 
+::ng-deep body .ui-slider.ui-slider-horizontal .ui-slider-handle {
+    top: 50%;
+    margin-top: -0.5715em;
+    border-radius: 100% !important;
+}
+
 

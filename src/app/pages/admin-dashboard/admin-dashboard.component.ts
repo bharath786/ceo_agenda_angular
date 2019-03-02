@@ -105,6 +105,10 @@ export class selectEntity {
     selectedEntity: any;
     entityDefault: any;
     selectedEntityCode: any[];
+    UniqueEntitiesList: any;
+    years: any[];
+    i: any;
+    differenceYears: any=[];
 
     constructor(public dialog: MatDialog,
         private appSettings: AppSettings,
@@ -117,12 +121,14 @@ export class selectEntity {
             'divId': [null],
             'locationId': [null],
             'entityId': null,
-            'isDefault': false
+            'isDefault': false,
+            'year': [null]
         });
         this.getEntitiesList();
     }
 
     ngOnInit() {
+        
     }
 
     onEntitySubmit(values) {
@@ -154,9 +160,9 @@ export class selectEntity {
             data => {
                 console.log(data)
                 this.entitiesList = data['data']
-                this.selectedEntities();
+                 this.UniqueEntitiesList = this.selectedEntities();
                 var EntityDetails = JSON.parse(localStorage['EntityDetails'])
-                console.log(EntityDetails)
+                console.log(EntityDetails,'local entity details')
                 if (EntityDetails != null) {
                     console.log(EntityDetails['defaultDivisionId'])
                     this.entityform.controls['divId'].setValue(EntityDetails['defaultDivisionId']);
@@ -164,12 +170,12 @@ export class selectEntity {
                     this.entityform.controls['locationId'].setValue(EntityDetails['defaultCountryId']);
                     this.onLocationSelect(EntityDetails['defaultCountryId'])
                     this.entityform.controls['entityId'].setValue(EntityDetails['defaultEntityId']);
-                    var EntityDetails = JSON.parse(localStorage['EntityDetails'])
-                    if (this.entityDefault != data['Data']['DefaultEntityId']) {
-                        this.entityform.controls['isDefault'].setValue(false);
-                    }
-                    else {
+                    EntityDetails = JSON.parse(localStorage['EntityDetails'])
+                    if(this.entityDefault == data['Data']['DefaultEntityId']){
                         this.entityform.controls['isDefault'].setValue(true);
+                    }
+                    else{
+                        this.entityform.controls['isDefault'].setValue(false);
                     }
                 }
             }
@@ -183,6 +189,7 @@ export class selectEntity {
                 console.log(data['Data'], 'Check Now')
                 this.selectedEntityCode = data['Data']['EntityIdnNames'];
                 this.selectedDivisions = this.multiDimensionalUnique(data['Data']['DivisionIdnNames'])
+                this.entityform.controls['isDefault'].setValue(false);
             }
         )
     }
@@ -217,23 +224,35 @@ export class selectEntity {
         this.selectedEntity = []
         this.entitiesList.filter((x) => {
             if (x.countryId == countryId) {
-                this.selectedEntity.push({ EntityId: x.entityId, EntityName: x.entityName })
+                this.selectedEntity.push({ EntityId: x.entityId, EntityName: x.entityName, EntityCreatedYear: x.EntityCreatedYear })
             }
         })
         this.selectedEntity = this.multiDimensionalUnique(this.selectedEntity)
         this.entityform.controls['isDefault'].setValue(false);
     }
-    onEntitySelect(EntityId) {
-        if (EntityId == this.EntityDetails['defaultEntityId']) {
+    onEntitySelect(EntityId){
+        this.years =[];
+        this.selectedEntity.filter((x) => {
+            if(x.EntityId == EntityId){
+                console.log(this.getDifferenceYears(x.EntityCreatedYear),'years')
+            }
+        })
+        var EntityDetails = JSON.parse(localStorage['EntityDetails'])
+        if(EntityId == EntityDetails['defaultEntityId']){
             this.entityform.controls['isDefault'].setValue(true);
         }
         else {
             this.entityform.controls['isDefault'].setValue(false);
-
         }
     }
 
-
+    getDifferenceYears(year){
+        this.differenceYears =[];
+        for(this.i= year; this.i<(new Date()).getFullYear()+1; this.i++){
+          this.differenceYears.push(this.i)
+        }
+        return this.differenceYears
+      }
     multiDimensionalUnique(arr: any[]) {
         var uniques = [];
         var itemsFound = {};
