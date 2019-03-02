@@ -73,7 +73,7 @@
                                 <input maxlength="50" formControlName="dimensionName" class="form-control" type="text"
                                     placeholder="Enter Dimension Title">
                                 <mat-error
-                                    *ngIf="dimensionform.controls.dimensionName.errors?.required && dimensionform.controls.dimensionName.touched">
+                                    *ngIf="dimensionform.controls.dimensionName.errors?.required && dimensionform.controls.dimensionName.dirty && dimensionform.controls.dimensionName.touched">
                                     Dimension Title is required</mat-error>
                             </div>
                         </div>

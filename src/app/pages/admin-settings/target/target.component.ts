@@ -41,6 +41,8 @@ export class TargetComponent implements OnInit {
   selectedDivisionId: any;
   filterForm: any;
   SelectedLocations: any =[];
+  i: any;
+  differenceYears: any=[];
 
   constructor(private _adminsettingservice: AdminsettingsService,
     public fb: FormBuilder,public snackBar: MatSnackBar, 
@@ -58,6 +60,7 @@ export class TargetComponent implements OnInit {
   ngOnInit() {
     this.getTargetTemplateKPI(0);
     this.getTargetValue()
+    console.log(this.diffYears((new Date('2010')).getFullYear()), 'years')
   }
 
   resetForm(){
@@ -65,6 +68,14 @@ export class TargetComponent implements OnInit {
     this.getTargetValue()
   }
   
+diffYears(year){
+  for(this.i= year; this.i<(new Date()).getFullYear()+1; this.i++){
+    this.differenceYears.push(this.i)
+  }
+  return this.differenceYears
+}
+
+
   onYearSelect(year){
     this.selectedYear = year;
     this._adminsettingservice.getTargetValue().subscribe(

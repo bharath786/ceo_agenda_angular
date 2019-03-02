@@ -69,7 +69,7 @@ export class ApplicationsComponent implements OnInit {
   }
 
   openDialog1() {
-    var EntityDetails = JSON.parse(sessionStorage['EntityDetails'])
+    var EntityDetails = JSON.parse(localStorage['EntityDetails'])
     const dialogRef = this.dialog.open(selectEntity, {
       data: EntityDetails ,
       width: '500px'
