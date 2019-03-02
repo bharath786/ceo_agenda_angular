@@ -14,8 +14,7 @@
     <!-- For Setup Tree data -->
     <div class="col-sm-8">
         <!-- For Analytics Update -->
-        <div *ngIf="allforms == 'updateanalytics'" class="gridrole col-sm-12 clearfix"
-            style="border: 1px solid rgb(204, 204, 204); padding: 20px; border-radius: 4px !important;">
+        <div *ngIf="allforms == 'updateanalytics'" class="gridrole col-sm-12 clearfix border-rad">
             <div class="col-sm-12">
                 <form [formGroup]="analyticsform" (ngSubmit)="onSubmitAnalytics(analyticsform.value)"
                     #analyticsupdateform="ngForm" class="form-horizontal">
@@ -41,7 +40,7 @@
                                 Analytics Description is required</mat-error> -->
                         </div>
                     </div>
-                    <div class="pull-right" style="margin-top: 25px;">
+                    <div class="pull-right margin-top25">
                         <button [disabled]="!analyticsupdateform.form.valid" class="btn btn-success"
                             id="btnupdateFimrDiv" type="submit">Update</button>
                         <button type="button" id="btn_firmdiv" class="btn btn-danger hide" data-toggle="modal"
@@ -57,9 +56,8 @@
         <div class="" *ngIf="allforms=='adddimension' || allforms == 'updatedimension'">
             <form [formGroup]="dimensionform" (ngSubmit)="onSubmitDimension(dimensionform.value)"
                 #dimensionupsertform="ngForm" class="form-horizontal">
-                <div class="col-sm-12 clearfix gridrole"
-                    style="border: 1px solid rgb(204, 204, 204); padding: 20px; border-radius: 4px !important;">
-                    <h4 class="modal-title"><span style="padding-left: 13px;" class="bold">{{ allforms ==
+                <div class="col-sm-12 clearfix gridrole border-rad">
+                    <h4 class="modal-title"><span class="bold padding-left13">{{ allforms ==
                             'adddimension' ? 'Add
                             Dimension' : 'Edit Dimension Details'}}</span>
                         <a *ngIf="allforms == 'updatedimension'" (click)='addKRA(1)'
@@ -126,9 +124,8 @@
         <div class="" *ngIf="allforms=='addKRA' || allforms=='updateKRA'">
             <form [formGroup]="KRAform" (ngSubmit)="onSubmitKRA(KRAform.value)" #KRAupsertform="ngForm"
                 class="form-horizontal">
-                <div class="col-sm-12 clearfix gridrole"
-                    style="border: 1px solid rgb(204, 204, 204); padding: 20px; border-radius: 4px !important;">
-                    <h4 class="modal-title"><span style="padding-left: 13px;" class="bold">{{ allforms == 'addKRA' ?
+                <div class="col-sm-12 clearfix gridrole border-rad">
+                    <h4 class="modal-title"><span class="bold padding-left13">{{ allforms == 'addKRA' ?
                             'Add
                             KRA'
                             :'Edit KRA Details'}}</span>
@@ -155,11 +152,11 @@
                                     Please Enter Remarks</mat-error> -->
                             </div>
                         </div>
-                        <div *ngIf="allforms == 'addKRA'" class="pull-right" style="margin-top: 25px;">
+                        <div *ngIf="allforms == 'addKRA'" class="pull-right margin-top25">
                             <button [disabled]="!KRAupsertform.form.valid" class="btn btn-success" id="btnupdateFimrDiv"
                                 type="submit">Save</button>
                         </div>
-                        <div *ngIf="allforms == 'updateKRA'" class="pull-right" style="margin-top: 25px;">
+                        <div *ngIf="allforms == 'updateKRA'" class="pull-right margin-top25">
                             <button [disabled]="!KRAupsertform.form.valid" class="btn btn-success marginbtn"
                                 type="submit">Update</button>
                             <!-- <button type="button" (click)="onDeleteKRA(KRAform.value)" class="btn btn-danger marginbtn" data-toggle="modal" data-tooltip="tooltip" data-placement="top" title=""
@@ -181,10 +178,9 @@
         <div class="" *ngIf="allforms == 'addKPI' || allforms == 'updateKPI'">
             <form [formGroup]="KPIform" (ngSubmit)="onSubmitKPI(KPIform.value)" #KPIupsertform="ngForm"
                 class="form-horizontal">
-                <div class="col-sm-12 clearfix gridrole"
-                    style="border: 1px solid rgb(204, 204, 204); padding: 20px; border-radius: 4px !important;">
+                <div class="col-sm-12 clearfix gridrole border-rad">
                     <h4 class="modal-title">
-                        <span style="padding-left: 13px;" class="bold">{{ allforms == 'addKPI' ? 'Add KPI':'Edit KPI
+                        <span class="bold padding-left13">{{ allforms == 'addKPI' ? 'Add KPI':'Edit KPI
                             Details'}}</span></h4>
                     <br>
                     <div class="col-xs-12">
@@ -236,7 +232,7 @@
                         </div>
                         <div *ngIf="rangeApplicableDataType" class="form-group">
                                 <label class="col-md-12 lblfnt"> Min Value:&nbsp;<span class="badge"> {{rangeValues[0]}} </span> &nbsp; Max Value:&nbsp;<span class="badge"> {{rangeValues[1]}} </span></label>
-                                <div class="col-md-12" style="margin-top: 5px;">
+                                <div class="col-md-12 margin-top5">
                                     <p-slider [(ngModel)]="rangeValues"  formControlName="minMax"  [style]="{'width':'14em'}" [range]="true" class='noborder'></p-slider>
                                     <mat-error
                                     *ngIf="KPIform.controls.minMax.errors?.required && KPIform.controls.minMax.touched">
@@ -258,7 +254,7 @@
                         </div>
                         <mat-slide-toggle formControlName="isScope" (change)="removeScopeAlias()" [(ngModel)]="isScopeApplicable">Is Scope Applicable
                         </mat-slide-toggle>
-                        <div *ngIf="isScopeApplicable==true" class="form-group" style="margin-top:4px;">
+                        <div *ngIf="isScopeApplicable==true" class="form-group margin-top5">
                             <label class="col-md-12 required">Scope</label>
                            <div class="col-sm-12">
                                <div class="col-md-4 no-padding">
@@ -266,7 +262,7 @@
                                     placeholder="Please Enter Scope Alias Name">
                                </div>
                                 <div class="col-md-8 no-padding pull-right">
-                                        <a class="pull-right" style="margin-top: 20px;" (click)="downloadScopesample()">Download Sample</a>
+                                        <a class="pull-right margin-top20" (click)="downloadScopesample()">Download Sample</a>
                                 </div>
                            </div>
                             <div class="col-md-12">
@@ -282,11 +278,11 @@
                                 </div>
                             </div>
                         </div>
-                        <div *ngIf="allforms == 'addKPI'" class="pull-right" style="margin-top: 25px;">
+                        <div *ngIf="allforms == 'addKPI'" class="pull-right margin-top25">
                             <button [disabled]="!KPIupsertform.form.valid" [ngClass]="{'customDisabled': !customValidation()}" class="btn btn-success"
                                 type="submit">Save</button>
                         </div>
-                        <div *ngIf="allforms == 'updateKPI'" class="pull-right" style="margin-top: 25px;">
+                        <div *ngIf="allforms == 'updateKPI'" class="pull-right margin-top25">
                             <button [disabled]="!KPIupsertform.form.valid" [ngClass]="{'customDisabled': !customValidation()}" class="btn btn-success marginbtn"
                                 type="submit">Update</button>
                             <!-- <button type="button" (click)="onDeleteKPI(KPIform.value)" class="btn btn-danger marginbtn" data-toggle="modal" data-tooltip="tooltip" data-placement="top" title=""
@@ -305,25 +301,3 @@
             </form>
         </div>
 
-
-        <!-- For Delete Modal Popup -->
-        <!-- <div class="modal fade" bsModal #deleteModal="bs-modal" [config]="{backdrop: 'static'}" role="dialog">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title titlemodal">
-                            <b>Delete Record</b>
-                        </h4>
-                    </div>
-                    <div class="modal-body col-md-12">
-                        <div class="col-sm-12">
-                            <label>Are You Sure ? You want to delete record, this action can't be undone.</label>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary"><i class="fa fa-check"></i>&nbsp;Delete</button>
-                        <button type="button" class="btn btn-default" (click)="deleteModalToggle(2)"><i class="fa fa-times"></i>&nbsp;Close</button>
-                    </div>
-                </div>
-            </div>
-        </div> -->

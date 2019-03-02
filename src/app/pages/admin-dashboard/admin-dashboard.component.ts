@@ -1,6 +1,4 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import * as moment from 'moment';
-import * as jQuery from 'jquery';
 import 'rxjs/add/operator/map';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { Router, RouterModule, NavigationEnd } from '@angular/router';
@@ -19,33 +17,33 @@ export class AdminDashboardComponent implements OnInit {
     start_date: any;
 
     end_date: any;
-    constructor(public dialog: MatDialog, public router: Router) {
+    constructor(private appSettings: AppSettings, public dialog: MatDialog, public router: Router, public _adminsettings: AdminsettingsService) {
         var EntityDetails = JSON.parse(localStorage['EntityDetails'])
         var userSession = JSON.parse(localStorage['Session_name'])
         if (EntityDetails.assignedEntities < 1) {
-            
-            if(userSession.email != "admin@ceo.com"){
+
+            if (userSession.email != "admin@ceo.com") {
                 this.openDialog();
             }
- 
+
         }
-        if (EntityDetails.assignedEntities == 1) {
-            
-        }
-        if (EntityDetails.assignedEntities > 1) {
+        // if (EntityDetails.assignedEntities == 1) {
+        //     this.appSettings.setIsNewAdded(true);
+        // }
+
+        if (EntityDetails.assignedEntities >= 1) {
             if (EntityDetails.defaultEntityId == null) {
                 this.openDialog1();
-            } 
+            }
         }
     }
 
-        openDialog1() {
+    openDialog1() {
         const dialogRef = this.dialog.open(selectEntity, {
             width: '500px',
             disableClose: true
         }
         );
-
         dialogRef.afterClosed().subscribe(result => {
             console.log(`Dialog result: ${result}`);
         });
@@ -106,9 +104,10 @@ export class selectEntity {
     selectedDivisions: any;
     selectedEntity: any;
     entityDefault: any;
+    selectedEntityCode: any[];
 
     constructor(public dialog: MatDialog,
-        private appSettings:AppSettings,
+        private appSettings: AppSettings,
         @Inject(MAT_DIALOG_DATA) public EntityDetails,
         public fb: FormBuilder,
         public router: Router,
@@ -127,13 +126,16 @@ export class selectEntity {
     }
 
     onEntitySubmit(values) {
-        var EntityDetails = JSON.parse(localStorage['EntityDetails'])
+        var entityCodeSet =this.selectedEntityCode.filter(x=>x.EntityId == values['entityId'])
+        var EntityDetails = JSON.parse(localStorage['EntityDetails']) 
         localStorage.setItem('EntityDetails',
             JSON.stringify({
                 assignedEntities: EntityDetails.assignedEntities,
                 defaultCountryId: values['locationId'], defaultDivisionId: values['divId'],
-                defaultEntityId: values['entityId'], isDefault: values['isDefault']
+                entityCode: entityCodeSet[0]['EntityCode'],defaultEntityId: values['entityId'], 
+                isDefault: values['isDefault']
             }));
+            console.log(localStorage['EntityDetails'])
         let sessionUser = JSON.parse(localStorage['Session_name'])
         values['userId'] = sessionUser.user_id;
         this.adminsettingsservice.getEntityData(values).subscribe(
@@ -141,10 +143,7 @@ export class selectEntity {
                 console.log(data, 'EntityData')
                 this.dialog.closeAll()
                 this.appSettings.setIsNewAdded(true);
-                this.router.events.subscribe((res) => {
-                })
                 this.router.navigate(['/dashboard']);
-                // this.router.navigate([this.router.url]);
             }
         )
     }
@@ -159,17 +158,17 @@ export class selectEntity {
                 var EntityDetails = JSON.parse(localStorage['EntityDetails'])
                 console.log(EntityDetails)
                 if (EntityDetails != null) {
-                     console.log(EntityDetails['defaultDivisionId'])
+                    console.log(EntityDetails['defaultDivisionId'])
                     this.entityform.controls['divId'].setValue(EntityDetails['defaultDivisionId']);
                     this.onDivisionSelect(EntityDetails['defaultDivisionId'])
                     this.entityform.controls['locationId'].setValue(EntityDetails['defaultCountryId']);
                     this.onLocationSelect(EntityDetails['defaultCountryId'])
                     this.entityform.controls['entityId'].setValue(EntityDetails['defaultEntityId']);
                     var EntityDetails = JSON.parse(localStorage['EntityDetails'])
-                    if(this.entityDefault != data['Data']['DefaultEntityId']){
+                    if (this.entityDefault != data['Data']['DefaultEntityId']) {
                         this.entityform.controls['isDefault'].setValue(false);
                     }
-                    else{
+                    else {
                         this.entityform.controls['isDefault'].setValue(true);
                     }
                 }
@@ -182,6 +181,7 @@ export class selectEntity {
         this.adminsettingsservice.getUserEntitiesList(sessionUser.user_id).subscribe(
             data => {
                 console.log(data['Data'], 'Check Now')
+                this.selectedEntityCode = data['Data']['EntityIdnNames'];
                 this.selectedDivisions = this.multiDimensionalUnique(data['Data']['DivisionIdnNames'])
             }
         )
@@ -223,11 +223,11 @@ export class selectEntity {
         this.selectedEntity = this.multiDimensionalUnique(this.selectedEntity)
         this.entityform.controls['isDefault'].setValue(false);
     }
-    onEntitySelect(EntityId){
-        if(EntityId == this.EntityDetails['defaultEntityId']){
+    onEntitySelect(EntityId) {
+        if (EntityId == this.EntityDetails['defaultEntityId']) {
             this.entityform.controls['isDefault'].setValue(true);
         }
-        else{
+        else {
             this.entityform.controls['isDefault'].setValue(false);
 
         }

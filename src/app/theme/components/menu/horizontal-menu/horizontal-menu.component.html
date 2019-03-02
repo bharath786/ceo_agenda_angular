@@ -1,6 +1,6 @@
 <div [fxLayout]="(menuParentId == 0) ? 'row' : 'column'" fxLayoutAlign="start center">
     <div *ngFor="let menu of  menuItems" class="horizontal-menu-item w-100">
-        <a *ngIf="menu.routerLink && !menu.hasSubMenu" (click)="getDimensionData(menu.id)" mat-button fxLayout="row" [fxLayoutAlign]="(settings.menuType=='default') ? 'start center' : 'center center'"
+        <a *ngIf="menu.routerLink && !menu.hasSubMenu"  mat-button fxLayout="row" [fxLayoutAlign]="(settings.menuType=='default') ? 'start center' : 'center center'"
             [routerLink]="[menu.routerLink]" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact:true}"
             [matTooltip]="menu.title" matTooltipPosition="above" [matTooltipDisabled]="(settings.menuType=='mini') ? 'false' : 'true'"
             [id]="'horizontal-menu-item-'+menu.id">

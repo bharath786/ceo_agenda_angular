@@ -99,7 +99,7 @@ export class DimensionDataComponent implements OnInit {
       this._adminsettindservice.getDimensionFrequency().subscribe(
         data => {
           //Assigning the values to the dimension frequency variable
-          this.dimensionFrequency = data['data']
+         this.dimensionFrequency = data['data']
          this.dimensionFrequency = this.dimensionFrequency.filter(x=>x.lookupId == this.kpiDetails.frequencyId);
          this.dimensionFrequency = this.dimensionFrequency[0]['lookupName']
 

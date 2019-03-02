@@ -62,8 +62,8 @@ export class ManageUsersComponent implements OnInit {
     //Add User Form
     this.form = this.fb.group({
       'userId': null,
-      'firstName': [null, Validators.compose([Validators.required])],
-      'lastName': [null, Validators.compose([ Validators.required])],
+      'firstName': [null, Validators.compose([Validators.required,Validators.pattern(".*\\S.*[a-zA-z0-9 ]")])],
+      'lastName': [null, Validators.compose([ Validators.required, Validators.pattern(".*\\S.*[a-zA-z0-9 ]")])],
       'email': [null, Validators.compose([Validators.required, emailValidator])],
       'phoneNo': [null],
       'dateOfBirth': [null, Validators.compose([Validators.required])],

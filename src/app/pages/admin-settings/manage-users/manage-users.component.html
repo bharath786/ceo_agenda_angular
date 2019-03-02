@@ -105,7 +105,7 @@
                                 <i class="fa fa-user"></i>
                                 <input type="text" class="form-control" formControlName="firstName" maxlength="50" autocomplete="off"
                                     placeholder="Enter First Name">
-                                <mat-error *ngIf="form.controls.firstName.errors?.required && form.controls.firstName.touched">First
+                                <mat-error *ngIf="form.controls.firstName.errors?.required && form.controls.firstName.dirty">First
                                     Name is required</mat-error>
                             </div>
                         </div>
@@ -254,7 +254,7 @@
             
             </div>
             <div class="modal-footer">
-                    <button type="submit" [disabled]="!enityUpsertForm.form.valid"  class="btn btn-primary"><i class="fa fa-check"></i>&nbsp;Save</button>
+                    <button type="submit" [disabled]="!enityUpsertForm.form.valid"  class="btn btn-success"><i class="fa fa-check"></i>&nbsp;Save</button>
                 <!-- <button type="submit" (click)="assignEntities()" class="btn btn-primary"><i class="fa fa-check"></i>&nbsp;Save</button> -->
                 <button type="button" class="btn btn-default" (click)="entitiesnModalToggle(null)"><i class="fa fa-times"></i>&nbsp;Close
                 </button>

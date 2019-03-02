@@ -50,7 +50,7 @@ export class PagesComponent implements OnInit {
     this.userIdle.onTimerStart().subscribe();
     this.userIdle.onTimeout().subscribe(
       res=>{
-        var session_values = JSON.parse(sessionStorage['Session_name'])
+        var session_values = JSON.parse(localStorage['Session_name'])
         var value = { userId: session_values.user_id }
         this.appservice.logOut(value).subscribe(
           data => {
@@ -59,9 +59,9 @@ export class PagesComponent implements OnInit {
             console.log(error);
           }
         )
-        sessionStorage.clear();
+        localStorage.clear();
+        this.dialog.closeAll();
         this.router.navigate(['/login']);
-        this.dialog.closeAll()
         this.snackBar.open('Session Timed Out', 'OK');
       },
       error=>{

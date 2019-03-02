@@ -6,7 +6,7 @@ import { AppSettings } from '../../app.settings';
 import { Settings } from '../../app.settings.model';
 import { LoginService } from './login.service';
 import { first } from 'rxjs/operators';
-import { MatSnackBar, MatSnackBarConfig,MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition, } from '@angular/material';
+import { MatSnackBar} from '@angular/material';
 import { CookieService } from 'angular2-cookie/services/cookies.service';
 
 @Component({
@@ -55,6 +55,7 @@ export class LoginComponent {
                 panelClass: ['greenSnackbar']
               });
               this.router.navigate(['/dashboard']);
+              //  location.reload();
             }
             else {
               //Sending message to Snackbar

@@ -9,7 +9,8 @@
 
     </div>
 
-    <p-tree [value]="files" selectionMode="single" [(selection)]="selectedFile" (onNodeSelect)="nodeSelect($event)"></p-tree>
+    <p-tree [value]="files" selectionMode="single" [(selection)]="selectedFile" (onNodeSelect)="nodeSelect($event)">
+    </p-tree>
   </div>
 
   <!-- For Structure tree data -->
@@ -17,16 +18,19 @@
     <!-- For Organization Update -->
     <form [formGroup]="organizationform" (ngSubmit)="onSubmitOrganization(organizationform.value)"
       #organizationupdateform="ngForm" class="form-horizontal">
-      <div *ngIf="allforms == 'updateorganization'" class="col-sm-12 clearfix gridrole" style="border: 1px solid rgb(204, 204, 204); padding: 20px; border-radius: 3px;">
-        <h4 class="modal-title"><span style="padding-left: 13px;" class="bold">Organization Details</span>
+      <div *ngIf="allforms == 'updateorganization'" class="col-sm-12 clearfix gridrole FormsDiv">
+        <h4 class="modal-title"><span class="bold padding-left13">Organization Details</span>
           <a (click)='adddiv(1)' class="pull-right btn btn-primary"><i class="fa fa-plus"></i> Add Division</a></h4>
         <br>
         <div class="col-xs-12">
           <div class="form-group">
             <label class="col-md-12 lblfnt required">Organization Name</label>
             <div class="col-md-12">
-              <input formControlName="organizationName" class="form-control" maxlength="50" type="text" placeholder="Organization Name">
-              <mat-error *ngIf="organizationform.controls.organizationName.errors?.required && organizationform.controls.organizationName.touched">Organization
+              <input formControlName="organizationName" class="form-control" maxlength="50" type="text"
+                placeholder="Organization Name">
+              <mat-error
+                *ngIf="organizationform.controls.organizationName.errors?.required && organizationform.controls.organizationName.touched">
+                Organization
                 Name is required</mat-error>
             </div>
           </div>
@@ -39,10 +43,12 @@
                 Organization Description is required</mat-error> -->
             </div>
           </div>
-          <div class="pull-right" style="margin-top: 25px;">
-            <button [disabled]="!organizationupdateform.form.valid" class="btn btn-success" id="btnupdateFimrDiv" type="submit">Update</button>
-            <button type="button" id="btn_firmdiv" class="btn btn-danger hide" data-toggle="modal" data-target="#Mymodel-FirmDivDelete"
-              data-tooltip="tooltip" data-placement="top" title="" value="" data-original-title="Delete">
+          <div class="pull-right margin-top25">
+            <button [disabled]="!organizationupdateform.form.valid" class="btn btn-success" id="btnupdateFimrDiv"
+              type="submit">Update</button>
+            <button type="button" id="btn_firmdiv" class="btn btn-danger hide" data-toggle="modal"
+              data-target="#Mymodel-FirmDivDelete" data-tooltip="tooltip" data-placement="top" title="" value=""
+              data-original-title="Delete">
               <i class="fa fa-trash"></i>
             </button>
           </div>
@@ -54,11 +60,12 @@
     <div class="" *ngIf="allforms == 'adddivision' || allforms == 'updatedivision'">
       <form [formGroup]="divisionform" (ngSubmit)="onSubmitDivision(divisionform.value)" #divisionupsertform="ngForm"
         class="form-horizontal">
-        <div class="col-sm-12 clearfix gridrole" style="border: 1px solid rgb(204, 204, 204); padding: 20px; border-radius: 3px;">
-          <h4 class="modal-title"><span style="padding-left: 13px;" class="bold">{{ allforms == 'adddivision' ? 'Add
+        <div class="col-sm-12 clearfix gridrole FormsDiv">
+          <h4 class="modal-title"><span class="bold padding-left13">{{ allforms == 'adddivision' ? 'Add
               Division'
               :'Edit Division Details'}}</span>
-            <a *ngIf="allforms == 'updatedivision'" class="pull-right btn btn-primary" (click)=addLoc(1)><i class="fa fa-plus"></i> Add Location
+            <a *ngIf="allforms == 'updatedivision'" class="pull-right btn btn-primary" (click)=addLoc(1)><i
+                class="fa fa-plus"></i> Add Location
             </a></h4>
           <br>
           <div class="col-xs-12">
@@ -67,18 +74,21 @@
               <div class="col-md-12">
                 <input formControlName="divName" class="form-control FirstLetterCapital" maxlength="50" type="text"
                   placeholder="Enter Division Name">
-                <mat-error *ngIf="divisionform.controls.divName.errors?.required && divisionform.controls.divName.touched">
+                <mat-error
+                  *ngIf="divisionform.controls.divName.errors?.required && divisionform.controls.divName.touched">
                   Division Name is required</mat-error>
               </div>
             </div>
             <div class="form-group">
               <label class="col-md-12 lblfnt">Contact Number</label>
               <div class="col-md-12">
-                <input formControlName="phoneNumber" (keypress)="keyPress($event)" minlength=10 maxlength=14 class="form-control"
-                  type="text" placeholder="Enter Contact Number">
+                <input formControlName="phoneNumber" (keypress)="keyPress($event)" minlength=10 maxlength=14
+                  class="form-control" type="text" placeholder="Enter Contact Number">
                 <!-- <mat-error *ngIf="divisionform.controls.phoneNumber.errors?.required && divisionform.controls.phoneNumber.touched">Contact
                   Number is required</mat-error>-->
-                <mat-error *ngIf="divisionform.controls.phoneNumber.hasError('minlength') && divisionform.controls.phoneNumber.touched">Contact
+                <mat-error
+                  *ngIf="divisionform.controls.phoneNumber.hasError('minlength') && divisionform.controls.phoneNumber.touched">
+                  Contact
                   Number isn't valid</mat-error>
               </div>
             </div>
@@ -91,15 +101,17 @@
                   Division Address is required</mat-error> -->
               </div>
             </div>
-            <div *ngIf="allforms == 'adddivision'" class="pull-right" style="margin-top: 25px;">
-              <button [disabled]="!divisionupsertform.form.valid" class="btn btn-success" id="btnupdateFimrDiv" type="submit">Save</button>
+            <div *ngIf="allforms == 'adddivision'" class="pull-right margin-top25">
+              <button [disabled]="!divisionupsertform.form.valid" class="btn btn-success" id="btnupdateFimrDiv"
+                type="submit">Save</button>
             </div>
-            <div *ngIf="allforms == 'updatedivision'" class="pull-right" style="margin-top: 25px;">
-              <button [disabled]="!divisionupsertform.form.valid" class="btn btn-success marginbtn" id="btnupdateFimrDiv"
-                type="submit">Update</button>
+            <div *ngIf="allforms == 'updatedivision'" class="pull-right margin-top25">
+              <button [disabled]="!divisionupsertform.form.valid" class="btn btn-success marginbtn"
+                id="btnupdateFimrDiv" type="submit">Update</button>
               <button type="button" mwlConfirmationPopover [popoverTitle]="popoverTitle" [confirmText]="confirmText"
-                [cancelText]="cancelText" [popoverMessage]="popoverMessage" placement="left" (confirm)="onDeleteDivision(divisionform.value)"
-                class="btn btn-danger marginbtn" data-toggle="modal" data-tooltip="tooltip" data-original-title="Delete">
+                [cancelText]="cancelText" [popoverMessage]="popoverMessage" placement="left"
+                (confirm)="onDeleteDivision(divisionform.value)" class="btn btn-danger marginbtn" data-toggle="modal"
+                data-tooltip="tooltip" data-original-title="Delete">
                 <i class="fa fa-trash"></i>
               </button>
             </div>
@@ -112,11 +124,12 @@
     <div class="" *ngIf="allforms == 'updatelocation' || allforms == 'addlocation'">
       <form [formGroup]="locationform" (ngSubmit)="onSubmitLocation(locationform.value)" #locationupsertform="ngForm"
         class="form-horizontal">
-        <div class="col-sm-12 clearfix gridrole" style="border: 1px solid rgb(204, 204, 204); padding: 20px; border-radius: 3px;">
-          <h4 class="modal-title"><span style="padding-left: 13px;" class="bold">{{ allforms == 'addlocation' ? 'Add
+        <div class="col-sm-12 clearfix gridrole FormsDiv">
+          <h4 class="modal-title"><span class="bold padding-left13">{{ allforms == 'addlocation' ? 'Add
               Location'
               :'Edit Location Details'}}</span>
-            <a *ngIf="allforms == 'updatelocation'" class="pull-right btn btn-primary" (click)=addEntity(1)><i class="fa fa-plus"></i> Add Entity
+            <a *ngIf="allforms == 'updatelocation'" class="pull-right btn btn-primary" (click)=addEntity(1)><i
+                class="fa fa-plus"></i> Add Entity
             </a>
           </h4>
           <br>
@@ -124,9 +137,11 @@
             <div class="form-group">
               <label class="col-md-12 lblfnt required">Country</label>
               <div class="col-md-12">
-                <mat-select placeholder='Select Country' formControlName='countryId' [ngClass]="{'disablecustom': allforms=='updatelocation'}"
-                  class="form-control" (selectionChange)="onCountrySelect($event.value)">
-                  <mat-option *ngFor="let value of countries" [value]="value['countryId']">{{value['countryName']}}</mat-option>
+                <mat-select placeholder='Select Country' formControlName='countryId'
+                  [ngClass]="{'disablecustom': allforms=='updatelocation'}" class="form-control"
+                  (selectionChange)="onCountrySelect($event.value)">
+                  <mat-option *ngFor="let value of countries" [value]="value['countryId']">{{value['countryName']}}
+                  </mat-option>
                 </mat-select>
                 <!-- <mat-error *ngIf="locationform.controls.countryId.errors?.required && locationform.controls.countryId.touched">
                   Please Select your Country</mat-error> -->
@@ -134,7 +149,7 @@
             </div>
             <!-- <p-autoComplete [(ngModel)]="country" [ariaLabelledBy]="101" formControlName='CountryName' [suggestions]="filteredCountriesSingle" (completeMethod)="filterCountrySingle($event)" field="countryName" [size]="30"
             placeholder="Countries" [minLength]="1"></p-autoComplete> -->
-            
+
             <div class="form-group">
               <label class="col-md-12 lblfnt">Description</label>
               <div class="col-md-12">
@@ -144,20 +159,19 @@
                   Location Description is required</mat-error> -->
               </div>
             </div>
-
-
-            <div *ngIf="allforms == 'addlocation'" class="pull-right" style="margin-top: 25px;">
-              <button [disabled]="!locationupsertform.form.valid" class="btn btn-success pull-right" id="btnupdateFimrDiv"
-                type="submit">Save</button>
+            <div *ngIf="allforms == 'addlocation'" class="pull-right margin-top25">
+              <button [disabled]="!locationupsertform.form.valid" class="btn btn-success pull-right"
+                id="btnupdateFimrDiv" type="submit">Save</button>
             </div>
-            <div *ngIf="allforms == 'updatelocation'" class="pull-right" style="margin-top: 25px;">
+            <div *ngIf="allforms == 'updatelocation'" class="pull-right margin-top25">
               <button class="pull-right" type="button" mwlConfirmationPopover [popoverTitle]="popoverTitle"
                 [confirmText]="confirmText" [cancelText]="cancelText" [popoverMessage]="popoverMessage" placement="left"
                 (confirm)="onDeleteLocation(locationform.value)" class="btn btn-danger marginbtn pull-right"
                 data-toggle="modal" data-tooltip="tooltip" data-original-title="Delete">
                 <i class="fa fa-trash"></i>
               </button>
-              <button [disabled]="!locationupsertform.form.valid" class="btn btn-success marginbtn pull-right" type="submit">Update</button>
+              <button [disabled]="!locationupsertform.form.valid" class="btn btn-success marginbtn pull-right"
+                type="submit">Update</button>
             </div>
           </div>
         </div>
@@ -167,34 +181,50 @@
     <!-- For Entity Adding and Updating -->
     <div class="" *ngIf="allforms == 'addEntity'|| allforms == 'updateentity'">
       <form [formGroup]="entityform" (ngSubmit)="onSubmitEntity(entityform.value)" #entityupsertform="ngForm">
-        <div class="gridrole" style="border: 1px solid rgb(204, 204, 204); padding: 20px; border-radius: 3px;">
-          <h4 class="modal-title"><span style="padding-left: 13px;" class="bold">{{ allforms == 'addEntity' ? 'Add
+        <div class="gridrole FormsDiv">
+          <h4 class="modal-title"><span class="bold padding-left13">{{ allforms == 'addEntity' ? 'Add
               Entity' :'Edit Entity Details'}}</span>
           </h4>
           <br>
           <div class="form-group">
             <label class="col-md-12 lblfnt required">Entity Name</label>
             <div class="col-md-12">
-              <input formControlName="entityName" class="form-control" maxlength="50" type="text" placeholder="Enter Entity Name">
-              <mat-error *ngIf="entityform.controls.entityName.errors?.required && entityform.controls.entityName.touched">
+              <input formControlName="entityName" class="form-control" maxlength="50" type="text"
+                placeholder="Enter Entity Name">
+              <mat-error
+                *ngIf="entityform.controls.entityName.errors?.required && (entityform.controls.entityName.touched || 
+                entityform.controls.entityName.dirty)">
                 Entity Name is required</mat-error>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-12 lblfnt required">Entity Code</label>
+            <div class="col-md-12">
+              <input formControlName="entityCode" class="form-control" maxlength="50" type="text"
+                placeholder="Enter Entity Code">
+              <mat-error
+                *ngIf="entityform.controls.entityCode.errors?.required && entityform.controls.entityCode.touched">
+                Entity Code is required</mat-error>
             </div>
           </div>
           <div class="form-group">
             <label class="col-md-12 add-member-label add-member-input col-md-12 lblfnt">Contact Number</label>
             <div class="col-md-12">
-              <input formControlName="phoneNumber" (keypress)="keyPress($event)" minlength=10 maxlength=14 class="form-control"
-                type="text" placeholder="Enter Contact Number">
+              <input formControlName="phoneNumber" (keypress)="keyPress($event)" minlength=10 maxlength=14
+                class="form-control" type="text" placeholder="Enter Contact Number">
               <!-- <mat-error *ngIf="entityform.controls.phoneNumber.errors?.required && entityform.controls.phoneNumber.touched">Phone
                 Number is required</mat-error>-->
-              <mat-error *ngIf="entityform.controls.phoneNumber.hasError('minlength') && entityform.controls.phoneNumber.touched">Contact
+              <mat-error
+                *ngIf="entityform.controls.phoneNumber.hasError('minlength') && entityform.controls.phoneNumber.touched">
+                Contact
                 Number isn't valid</mat-error>
             </div>
           </div>
           <div class="form-group">
             <label class="col-md-12 lblfnt required">State</label>
             <div class="col-md-12">
-              <mat-select placeholder='Select State' formControlName='stateId' class="form-control" (selectionChange)="onStateSelect($event.value)">
+              <mat-select placeholder='Select State' formControlName='stateId' class="form-control"
+                (selectionChange)="onStateSelect($event.value)">
                 <mat-option *ngFor="let value of states" [value]="value['stateId']">{{value['stateName']}}</mat-option>
               </mat-select>
               <mat-error *ngIf="entityform.controls.stateId.errors?.required && entityform.controls.stateId.touched">
@@ -220,122 +250,61 @@
                 Entity is required</mat-error> -->
             </div>
           </div>
-<!-- 
-          <div class="form-group">
-            <label class="col-md-12 lblfnt">Dimensions</label>
-            <div class="col-md-12">
-              <a class="btn btn-primary" (click)=selectDimension(1)>Select Dimensions</a>   
-            </div>
-          </div> -->
-          <div *ngIf="allforms == 'addEntity'" class="pull-right" style="margin-top: 25px;">
+
+          <div *ngIf="allforms == 'addEntity'" class="pull-right margin-top25">
             <button [disabled]="!entityupsertform.form.valid" class="btn btn-success pull-right" id="btnupdateFimrDiv"
               type="submit">Save</button>
           </div>
-          <div *ngIf="allforms == 'updateentity'" class="pull-right" style="margin-top: 25px;">
+          <div *ngIf="allforms == 'updateentity'" class="pull-right margin-top25">
             <button type="button" mwlConfirmationPopover [popoverTitle]="popoverTitle" [confirmText]="confirmText"
-              [cancelText]="cancelText" [popoverMessage]="popoverMessage" placement="left" (confirm)="onDeleteEntity(entityform.value)"
-              class="btn btn-danger marginbtn pull-right" data-toggle="modal" data-tooltip="tooltip"
-              data-original-title="Delete">
+              [cancelText]="cancelText" [popoverMessage]="popoverMessage" placement="left"
+              (confirm)="onDeleteEntity(entityform.value)" class="btn btn-danger marginbtn pull-right"
+              data-toggle="modal" data-tooltip="tooltip" data-original-title="Delete">
               <i class="fa fa-trash"></i>
             </button>
-            <button [disabled]="!entityupsertform.form.valid" class="btn btn-success marginbtn pull-right" type="submit">Update</button>
-            <!-- <button (click)="onDeleteEntity(entityform.value)" type="button" id="btn_firmdiv" class="btn btn-danger marginbtn"
-                data-toggle="modal" data-target="#Mymodel-FirmDivDelete" data-tooltip="tooltip" data-placement="top"
-                title="" value="" data-original-title="Delete">
-                <i class="fa fa-trash"></i>
-              </button> -->
+            <button [disabled]="!entityupsertform.form.valid" class="btn btn-success marginbtn pull-right"
+              type="submit">Update</button>
 
           </div>
 
         </div>
       </form>
     </div>
-
-
-    <!-- <div class="" *ngIf="allforms == 'dimensiondata'">
- 
-        <div class="col-sm-12 clearfix gridrole" style="border: 1px solid rgb(204, 204, 204); padding: 20px; border-radius: 3px;">
-          <h4 class="modal-title"><span style="padding-left: 13px;" class="bold">Dimension Details</span>
-            <button class="pull-right btn btn-primary">Go Back
-            </button>
-          </h4>
-          <br>
-
-          <mat-checkbox *ngFor="let item of dimensionsEntityBased" value="item.dimensionId" [(ngModel)]="checkingarray[item.dimensionId]" class="col-sm-6 example-margin">
-            {{item.dimensionName}} 
-            </mat-checkbox>
-     <p-tree [value]="dimensionsEntityBased" selectionMode="checkbox" (onNodeSelect)="dimensionSelect($event)"></p-tree> -->
-<!-- 
-          <div formArrayName="dimensionValues">
-            <div [formGroupName]="i" *ngFor="let tech of dimensionForm.get('dimensionValues')['controls'] | keyvalue; let i = index">
-              <div class="col-sm-6" style="margin-top:5px">
-                <mat-checkbox formControlName="btdimId">{{dimensionsEntityBased[i].dimensionName}}</mat-checkbox>
-              </div>
-            </div>
-          </div> 
-          <button (click)="checkingfunction()" class="btn btn-success marginbtn pull-right" >Update</button> 
-        </div>
-   
-    </div> -->
-
-
   </div>
 </div>
 
-
-<!-- <div formArrayName="rightMasters">
-  <div [formGroupName]="i" *ngFor="let tech of permissionsForm.get('rightMasters')['controls'] | keyvalue; let i = index">
-
-      <div *ngIf="i>=15" class="col-sm-6" style="margin-top:5px">
-          <mat-checkbox color="primary" *ngIf="rightsMaster.length > 0"
-              formControlName="btRightMaster">{{rightsMaster[i].vcRightMasterName}}</mat-checkbox>
+<!-- For Permission Modal Popup -->
+<div class="modal fade" bsModal #dimensionsModal="bs-modal" [config]="{backdrop: 'static'}" role="dialog">
+  <div class="modal-dialog modal-custom">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title titlemodal">
+          <b>Dimensions</b> <i (click)="fnDimensionsModal()" id="DimensionsModel"
+            class="fa fa-times pull-right titlemodal"></i>
+        </h4>
       </div>
-      Allow generated input field to be removed
+      <div class="modal-body row">
+        <div class="col-sm-12">
+          <table class="table table-hover table-bordered table-scrollable-borderless col-sm-6 table-striped margin-top"
+            id="table1">
+            <tbody>
+              <tr *ngFor="let item of dimensionsEntityBased" class="col-sm-4 margin-top5">
+                <mat-checkbox value="item.dimensionId" [(ngModel)]="dimensionArray[item.dimensionId]"
+                  class="example-margin">
+                  {{item.dimensionName}}
+                </mat-checkbox>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" (click)="checkingfunction()" class="btn btn-primary"><i
+            class="fa fa-check"></i>&nbsp;Update</button>
+        <button type="button" class="btn btn-default" (click)="selectDimension(2)"><i
+            class="fa fa-arrow-left"></i>&nbsp;Go
+          Back</button>
+      </div>
+    </div>
   </div>
-</div> -->
-
-
-        <!-- For Permission Modal Popup -->
-        <div class="modal fade" bsModal #dimensionsModal="bs-modal" [config]="{backdrop: 'static'}" role="dialog">
-          <div class="modal-dialog modal-custom">
-              <div class="modal-content">
-                  <div class="modal-header">
-                      <h4 class="modal-title titlemodal">
-                          <b>Dimensions</b> <i (click)="fnDimensionsModal()" id="DimensionsModel" class="fa fa-times pull-right titlemodal"></i>
-                      </h4>
-                  </div>
-                  <div class="modal-body row">
-                      <div class="col-sm-12">
-                        <!-- <div class="col-sm-12">   
-                          
-                            <mat-checkbox [(ngModel)]="selectAllDimensions" (change)="selectAllDimension()" class="example-margin">
-                                Select All
-                             </mat-checkbox></div> -->
-                          <table class="table table-hover table-bordered table-scrollable-borderless col-sm-6 table-striped margin-top"
-                              id="table1">
-                              <tbody>      
-                                  <!-- <tr>
-                                     
-                                      <mat-checkbox value="all" [(ngModel)]="checkingarray" class="example-margin">
-                                          Select All
-                                          </mat-checkbox>
-                              </tr> -->
-                                  <tr *ngFor="let item of dimensionsEntityBased" class="col-sm-4" style="margin-top: 5px">
-                                     
-                                          <mat-checkbox  value="item.dimensionId" [(ngModel)]="dimensionArray[item.dimensionId]" class="example-margin">
-                                              {{item.dimensionName}} 
-                                              </mat-checkbox>
-                                  </tr>
-      
-                              </tbody>
-                          </table>
-                      </div>
-                  </div>
-                  <div class="modal-footer">
-                      <button type="submit" (click)="checkingfunction()" class="btn btn-primary"><i class="fa fa-check"></i>&nbsp;Update</button>
-                      <button type="button" class="btn btn-default" (click)="selectDimension(2)"><i class="fa fa-arrow-left"></i>&nbsp;Go
-                          Back</button>
-                  </div>
-              </div>
-          </div>
-      </div>
+</div>

@@ -14,10 +14,10 @@ import {TabMenuModule} from 'primeng/tabmenu';
 
 export const routes: Routes = [
   {
-    path: '', component: GlobalAnalyticsLayoutComponent, data: { breadcrumb: 'Dimension', helptext: { heading: 'Analytics', text: 'Detailed summary report can be viewed and managed from here' } }, children: [
-      { path: '', redirectTo: 'highlights', pathMatch: 'full' },
-      { path: 'highlights', component: DimensionHighlightsComponent, data: { breadcrumb: 'Highlights', helptext: { heading: 'Highlights', text: 'Users & Permissions can be managed from here' } } },
-      { path: 'data', component: DimensionDataComponent, data: { breadcrumb: 'Data', helptext: { heading: 'Data', text: 'Users & Permissions can be managed from here' } } }
+    path: 'highlights/:dimId', component: GlobalAnalyticsLayoutComponent, data: { breadcrumb: 'Dimension', helptext: { heading: 'Analytics', text: 'Detailed summary report can be viewed and managed from here' } }, children: [
+      // { path: '', redirectTo: 'highlights', pathMatch: 'full' },
+      // { path: 'highlights/:dimId', component: DimensionHighlightsComponent, data: { breadcrumb: 'Highlights', helptext: { heading: 'Highlights', text: 'Users & Permissions can be managed from here' } } },
+      // { path: 'data/:dimId', component: DimensionDataComponent, data: { breadcrumb: 'Data', helptext: { heading: 'Data', text: 'Users & Permissions can be managed from here' } } }
     ]
   }
 ]

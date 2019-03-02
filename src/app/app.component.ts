@@ -2,7 +2,6 @@ import { Component, ViewChild } from '@angular/core';
 import { AppSettings } from './app.settings';
 import { Settings } from './app.settings.model';
 import { Router } from '@angular/router';
-import { UserIdleService } from 'angular-user-idle';
 
 
 @Component({

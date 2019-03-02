@@ -21,11 +21,29 @@ export class ApplicationsComponent implements OnInit {
   start_date: any;
 
   end_date: any;
+  isFilter: any;
+  EntityCode: any;
+  isEntityCode : boolean = false;
   constructor(public dialog: MatDialog) { }
 
   ngOnInit() {
-
+   
   }
+
+  checkEntityCode(){
+    this.isEntityCode = false
+    if(localStorage['EntityDetails']  != null){
+      var EntityDetails = JSON.parse(localStorage['EntityDetails']);
+      this.EntityCode = EntityDetails['entityCode'];
+      this.isEntityCode = true;
+    }
+    else{
+      this.isEntityCode = false;
+
+    }
+    return this.isEntityCode;
+  }
+
 
 
   //For Dropdown filter
@@ -69,7 +87,7 @@ export class ApplicationsComponent implements OnInit {
   }
 
   openDialog1() {
-    var EntityDetails = JSON.parse(sessionStorage['EntityDetails'])
+    var EntityDetails = JSON.parse(localStorage['EntityDetails'])
     const dialogRef = this.dialog.open(selectEntity, {
       data: EntityDetails ,
       width: '500px'

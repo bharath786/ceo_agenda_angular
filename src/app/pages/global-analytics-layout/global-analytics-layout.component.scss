@@ -1,0 +1,74 @@
+.greybackground{
+    background: #e7e7e7 !important;
+}
+
+.lblfnt{
+    font-size: 15px !important;
+    font-weight: 500 !important;
+    margin-bottom: 0px;
+}
+
+::ng-deep body .ui-corner-top {
+    border-top-left-radius: 3px !important;
+    border-top-right-radius: 3px !important;
+}
+
+ ::ng-deep .panelcustom .ui-widget {
+    font-family: "Segoe UI", "Helvetica Neue", sans-serif !important;
+    font-size: 16px;
+    text-decoration: none;
+    border: 0px !important;
+    height: 0px !important;
+} 
+
+::ng-deep body .ui-tabmenu .ui-tabmenu-nav {
+    padding: 0;
+    background: transparent;
+    float: right !important;
+}
+
+::ng-deep body .ui-tabmenu .ui-tabmenu-nav .ui-tabmenuitem.ui-state-active {
+    background-color: #1568b0 !important;
+    border: 1px solid #1568b0 !important;
+}
+
+::ng-deep body .ui-tabmenu .ui-tabmenu-nav .ui-tabmenuitem .ui-menuitem-link .ui-menuitem-text{
+    color:white;
+    margin-right: 0.5em;
+}
+
+::ng-deep body .ui-tabmenu .ui-tabmenu-nav .ui-tabmenuitem .ui-menuitem-link .ui-menuitem-icon {
+    color: white !important;
+    margin-right: 0.5em;
+}
+
+
+::ng-deep body .ui-tabmenu .ui-tabmenu-nav .ui-tabmenuitem {
+    position: static;
+    border: 1px solid #67809f;
+    background-color: #67809f;
+    margin-right: 2px;
+    margin-bottom: -1px;
+    transition: background-color 0.2s;
+}
+
+
+.panelcustom{
+    margin-bottom: 11px;
+}
+
+.custombord{
+    padding-right: 0px;
+    border-bottom: 1px solid #c8c8c8;
+}
+
+.spansize{
+    font-size: 15px !important;
+    color: #302f2d !important;
+}
+.headingdata{
+    font-size: 19px;
+    padding-left: 5px;
+    margin-top: 7px;
+    font-weight: 500;
+}

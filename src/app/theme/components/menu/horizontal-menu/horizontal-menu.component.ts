@@ -7,6 +7,9 @@ import { MatMenuTrigger } from '@angular/material';
 import { Menu } from '../menu.model';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs';
+import * as crypto from 'crypto-js';
+import { HttpUrlEncodingCodec } from '@angular/common/http';
+
 
 @Component({
   selector: 'app-horizontal-menu',
@@ -39,6 +42,7 @@ export class HorizontalMenuComponent implements OnInit {
           this.setInitialMenus();
           console.log('Success')
           this.appSettings.setIsNewAdded(false);
+          this.cdref.detectChanges();
         }
       }
     });
@@ -70,11 +74,13 @@ export class HorizontalMenuComponent implements OnInit {
     this.menuService.getMenu().subscribe(
       data => {
         data['data'].forEach((element) => {
-          horizontalMenuItems.push(new Menu(element['dimensionId'], element['dimensionName'], '/analytics/highlights', null, '', null, false, element['analyticsId']))
+          horizontalMenuItems.push(new Menu(element['dimensionId'], element['dimensionName'], '/analytics/highlights/'+ btoa(element['dimensionId'].toString()) , null, '', null, false, element['analyticsId']))
+          // horizontalMenuItems.push(new Menu(element['dimensionId'], element['dimensionName'], '/analytics/highlights/'+ crypto.DES.encrypt(element['dimensionId'].toString(), "DIMID") , null, '', null, false, element['analyticsId']))
       });
       let menuItemsBeforeFilter = horizontalMenuItems;
       let temp = menuItemsBeforeFilter.filter(item => item.parentId == this.menuParentId);
       this.menuItems = temp;
+      
         // this.menuItems = horizontalMenuItems;
         // this.menuItems = this.menuItems.filter(item => item.parentId == this.menuParentId);
       }
@@ -82,9 +88,12 @@ export class HorizontalMenuComponent implements OnInit {
   }
 
 
-  getDimensionData(menuId) {
-    this.appSettings.setMenuId(menuId);
-  }
+  /* getDimensionData(menuId, parentId) {
+    if(parentId >= 1 && parentId <= 4) {
+      this.router.navigate(['/analytics/highlights/'+menuId]);
+    }
+    //this.appSettings.setMenuId(menuId);
+  } */
 
   ngAfterViewInit() {
     this.router.events.subscribe(event => {

@@ -21,44 +21,45 @@
                     "label": "Prospects",
                     "data": "Work Folder",
                     "expandedIcon": "fa fa-file green",
-                    "collapsedIcon": "fa fa-file green"
+                    "collapsedIcon": "fa fa-file green", "level":"kpi"
+                    
                     
                 },
                 {
                     "label": "Active Leads",
                     "data": "Work Folder",
                     "expandedIcon": "fa fa-file green",
-                    "collapsedIcon": "fa fa-file green"
+                    "collapsedIcon": "fa fa-file green", "level":"kpi"
                 },
                 {
                     "label": "Future Leads",
                     "data": "Work Folder",
                     "expandedIcon": "fa fa-file green",
-                    "collapsedIcon": "fa fa-file green"
+                    "collapsedIcon": "fa fa-file green", "level":"kpi"
                 },
                 {
                     "label": "Parallel Projects",
                     "data": "Work Folder",
                     "expandedIcon": "fa fa-file green",
-                    "collapsedIcon": "fa fa-file green"
+                    "collapsedIcon": "fa fa-file green", "level":"kpi"
                 },
                 {
                     "label": "Conversion Ratio",
                     "data": "Work Folder",
                     "expandedIcon": "fa fa-file green",
-                    "collapsedIcon": "fa fa-file green"
+                    "collapsedIcon": "fa fa-file green", "level":"kpi"
                 },
                 {
                     "label": "Wins",
                     "data": "Work Folder",
                     "expandedIcon": "fa fa-file green",
-                    "collapsedIcon": "fa fa-file green"
+                    "collapsedIcon": "fa fa-file green", "level":"kpi"
                 },
                 {
                     "label": "Losses",
                     "data": "Work Folder",
                     "expandedIcon": "fa fa-file green",
-                    "collapsedIcon": "fa fa-file green"
+                    "collapsedIcon": "fa fa-file green", "level":"kpi"
                 }
             ]
         },
@@ -73,13 +74,13 @@
                     "label": "Glassdoor Review",
                     "data": "Work Folder",
                     "expandedIcon": "fa fa-file green",
-                    "collapsedIcon": "fa fa-file green"
+                    "collapsedIcon": "fa fa-file green", "level":"kpi"
                 },
                 {
                     "label": "Google Review",
                     "data": "Work Folder",
                     "expandedIcon": "fa fa-file green",
-                    "collapsedIcon": "fa fa-file green"
+                    "collapsedIcon": "fa fa-file green", "level":"kpi"
                 }
             ]
         },
@@ -94,19 +95,19 @@
                     "label": "Voice",
                     "data": "Work Folder",
                     "expandedIcon": "fa fa-file green",
-                    "collapsedIcon": "fa fa-file green"
+                    "collapsedIcon": "fa fa-file green", "level":"kpi"
                 },
                 {
                     "label": "Social",
                     "data": "Work Folder",
                     "expandedIcon": "fa fa-file green",
-                    "collapsedIcon": "fa fa-file green"
+                    "collapsedIcon": "fa fa-file green", "level":"kpi"
                 },
                 {
                     "label": "Mail",
                     "data": "Work Folder",
                     "expandedIcon": "fa fa-file green",
-                    "collapsedIcon": "fa fa-file green"
+                    "collapsedIcon": "fa fa-file green", "level":"kpi"
                 }
             ]
         },

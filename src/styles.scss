@@ -56,11 +56,6 @@ width: 145px !important;
     margin-top: 6px !important;
 }
 
-// .btn-success{
-//   background-color: #428bca !important;
-//   border-color: #357ebd !important;
-
-// }
 
 .breadtitle {
     margin-left: 6px;
@@ -467,10 +462,20 @@ border-radius: 2px !important;
     margin-top: 10px !important;
 }
 
+.margin-top5{
+margin-top: 5px;
+}
 
+.margin-top15{
+  margin-top: 15px !important;
+}
 
 .margin-top20{
     margin-top: 20px;
+}
+
+.margin-top25{
+  margin-top: 25px;
 }
 
 .marging{
@@ -481,6 +486,15 @@ border-radius: 2px !important;
     padding: 0;
     margin: 0;
 }
+
+.padding-left13{
+padding-left: 13px;
+}
+
+:focus {
+  outline: -webkit-focus-ring-color auto 0px !important;
+}
+
 //Ends here
 
 //For Blue color on buttons in timeline

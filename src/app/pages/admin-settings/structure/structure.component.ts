@@ -4,8 +4,6 @@ import { AdminsettingsService } from '../adminsettings.service';
 import { FormBuilder, Validators, FormControl, FormGroup, FormArray } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
-import { CheckboxModule } from 'primeng/checkbox';
-import { element } from '@angular/core/src/render3';
 import { ModalDirective } from 'ngx-bootstrap';
 
 @Component({
@@ -67,7 +65,7 @@ export class StructureComponent implements OnInit {
     //Organization Update Form
     this.organizationform = this.fb.group({
       'organizationId': null,
-      'organizationName': [null, Validators.compose([Validators.required])],
+      'organizationName': [null, Validators.compose([Validators.required, Validators.pattern(".*\\S.*[a-zA-z0-9 ]")])],
       'organizationDescription': [null],
       'modifiedBy': this.sessionUser['user_id']
     });
@@ -75,7 +73,7 @@ export class StructureComponent implements OnInit {
     //Division Update Form
     this.divisionform = this.fb.group({
       'divId': null,
-      'divName': [null, Validators.compose([Validators.required])],
+      'divName': [null, Validators.compose([Validators.required, Validators.pattern(".*\\S.*[a-zA-z0-9 ]")])],
       'phoneNumber': [null, Validators.compose([Validators.minLength(6)])],
       'address': [null],
       'modifiedBy': this.sessionUser['user_id'],
@@ -97,12 +95,13 @@ export class StructureComponent implements OnInit {
     //Entity Update Form
     this.entityform = this.fb.group({
       'entityId': null,
-      'entityName': [null, Validators.compose([Validators.required])],
+      'entityName': [null, Validators.compose([Validators.required,Validators.pattern(".*\\S.*[a-zA-z0-9 ]")])],
+      'entityCode':[null, Validators.compose([Validators.required, Validators.pattern(".*\\S.*[a-zA-z0-9 ]")])],
       'countryId': [null],
       'stateId': [null, Validators.compose([Validators.required])],
       'cityId': [null, Validators.compose([Validators.required])],
       'phoneNumber': [null],
-      'address': [null],
+      'address': [null, Validators.pattern(".*\\S.*[a-zA-z0-9 ]")],
       'modifiedBy': this.sessionUser['user_id'],
       'createdBy': this.sessionUser['user_id'],
       'locationId': null
@@ -114,25 +113,24 @@ export class StructureComponent implements OnInit {
     this.dimensionsModal.hide();
   }
 
-
   ngOnInit() {
     //Get Structure Tree
     this.getStructure();
     
   }
 
-  checkingfunction(){
-    this.finaldimensionId=[];
-      for (let key in this.dimensionArray) {
-        if(this.dimensionArray[key] == true){
-        this.finaldimensionId.push(key)
-        }
-    }
-     console.log(this.finaldimensionId)
+  // checkingfunction(){
+  //   this.finaldimensionId=[];
+  //     for (let key in this.dimensionArray) {
+  //       if(this.dimensionArray[key] == true){
+  //       this.finaldimensionId.push(key)
+  //       }
+  //   }
+  //    console.log(this.finaldimensionId)
 
-    this.dimensionsModal.hide();
-    return this.finaldimensionId
-  }
+  //   this.dimensionsModal.hide();
+  //   return this.finaldimensionId
+  // }
   
   //For Phone Number Validation
   keyPress(event: any) {
@@ -142,34 +140,6 @@ export class StructureComponent implements OnInit {
       event.preventDefault();
     }
   }
-
-  // selectAllDimension(){
-  //   if(this.selectAllDimensions == true){
-  //     this.dimensionsEntityBased.forEach(element => {
-  //       this.dimensionArray[element['dimensionId']]=true;
-  //     });
-  //   }
-  //   else{
-  //     this.dimensionsEntityBased.forEach(element => {
-  //       this.dimensionArray[element['dimensionId']]=false;
-  //     });
-  //   }
-  // }
-
-  // onSubmitDIMENSION(e) {
-  //   console.log(e)
-  //   let dimension = []
-  //   e.forEach(element => {
-  //     dimension.push(element.value);
-  //   });
-  //   dimension = dimension.filter(dimension => dimension.btdimId == true);
-  //   dimension.forEach(element => {
-  //     this.finaldimensionId.push(element.dimensionId)
-  //     console.log(this.finaldimensionId)
-  //     this.getBack();
-  //   })
-  // }
-
 
   //For Getting Contries
   getCountries(divId, countryId) {
@@ -349,6 +319,7 @@ filterCountry(query, countries: any[]):any[] {
       this.getDimensionEntity(event['node']['entityId'])
       this.entityform.controls['entityId'].setValue(event['node']['entityId']);
       this.entityform.controls['entityName'].setValue(event['node']['entityName']);
+      this.entityform.controls['entityCode'].setValue(event['node']['entityCode']);
       this.entityform.controls['phoneNumber'].setValue(event['node']['phoneNumber']);
       this.entityform.controls['countryId'].setValue(event['node']['countryId']);
       this.entityform.controls['stateId'].setValue(event['node']['stateId']);
@@ -539,34 +510,49 @@ filterCountry(query, countries: any[]):any[] {
   //For Entity Upsert values (value >> Service >> API)    
   public onSubmitEntity(value) {
     console.log(value)
-    value['dimensions'] = this.checkingfunction();
-    this.structureservice.upsertEntity(value).subscribe(
-      data => {
-        if (this.cities == 0) {
-          this.entityform.controls['cityId'].setValue('null');
+    // if(value.entityName == ""){
+    //   this.snackBar.open("this is required", 'OK', {
+    //     duration: 7000,
+    //     panelClass: ['redSnackbar']
+    //   });
+    // }
+    // else if(value.entityCode == ""){
+    //   this.snackBar.open("this is required", 'OK', {
+    //     duration: 7000,
+    //     panelClass: ['redSnackbar']
+    //   });
+    // }
+    // //value['dimensions'] = this.checkingfunction();
+    // else{
+      this.structureservice.upsertEntity(value).subscribe(
+        data => {
+          if (this.cities == 0) {
+            this.entityform.controls['cityId'].setValue('null');
+          }
+          if (data['error'] == true) {
+            this.snackBar.open(data['message'], 'OK', {
+              duration: 7000,
+              panelClass: ['redSnackbar']
+            });
+          }
+          else {
+            this.getStructure();
+            this.snackBar.open(data['message'], 'OK', {
+              duration: 7000,
+              panelClass: ['greenSnackbar']
+            });
+          }
+        },
+        error => {
+          console.log(error);
+          if (error.status == 401) {
+            localStorage.clear();
+            this.router.navigate(['/login'])
+          }
         }
-        if (data['error'] == true) {
-          this.snackBar.open(data['message'], 'OK', {
-            duration: 7000,
-            panelClass: ['redSnackbar']
-          });
-        }
-        else {
-          this.getStructure();
-          this.snackBar.open(data['message'], 'OK', {
-            duration: 7000,
-            panelClass: ['greenSnackbar']
-          });
-        }
-      },
-      error => {
-        console.log(error);
-        if (error.status == 401) {
-          localStorage.clear();
-          this.router.navigate(['/login'])
-        }
-      }
-    )
+      )
+    //}
+    
   }
 
   //For Deleting Entity 
