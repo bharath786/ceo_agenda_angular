@@ -72,3 +72,50 @@
     margin-top: 7px;
     font-weight: 500;
 }
+
+::ng-deep .app.indigo-light .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
+    border-color: #207ede !important;
+}
+
+ ::ng-deep .mat-radio-inner-circle, .app.indigo-light .mat-radio-button.mat-accent .mat-radio-ripple .mat-ripple-element:not(.mat-radio-persistent-ripple), .app.indigo-light .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-persistent-ripple, .app.indigo-light .mat-radio-button.mat-accent:active .mat-radio-persistent-ripple {
+    background-color: #40c1ff !important;
+}
+
+::ng-deep .mat-radio-outer-circle {
+    box-sizing: border-box;
+    height: 20px;
+    left: 0;
+    position: absolute;
+    top: 0;
+    transition: border-color ease 280ms;
+    width: 20px;
+    border-width: 2px;
+    border-style: solid;
+    border-radius: 50% !important;
+}
+
+::ng-deep .mat-radio-inner-circle {
+    border-radius: 50% !important;
+    box-sizing: border-box;
+    height: 20px;
+    left: 0;
+    position: absolute;
+    top: 0;
+    transition: transform ease 280ms,background-color ease 280ms;
+    width: 20px;
+    transform: scale(.001);
+}
+
+::ng-deep .mat-radio-label {
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    padding: 9px !important;
+}
+
+
+.margin8{
+    margin-left: 8px !important;
+}

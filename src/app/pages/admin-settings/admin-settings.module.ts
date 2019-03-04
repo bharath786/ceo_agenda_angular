@@ -54,7 +54,7 @@ export const routes :Routes = [
     })
   ],
   exports:[RouterModule],
-  declarations: [DataFilterPipe, GetMonthName, PreferencesComponent, 
+  declarations: [DataFilterPipe, PreferencesComponent, 
     ManageUsersComponent, SetupComponent, StructureComponent, TargetComponent],
   providers: [AdminsettingsService, DownloadExcelService]
 

@@ -132,6 +132,7 @@ export class selectEntity {
     }
 
     onEntitySubmit(values) {
+        console.log(values,'VAlues Format')
         var entityCodeSet =this.selectedEntityCode.filter(x=>x.EntityId == values['entityId'])
         var EntityDetails = JSON.parse(localStorage['EntityDetails']) 
         localStorage.setItem('EntityDetails',
@@ -139,7 +140,7 @@ export class selectEntity {
                 assignedEntities: EntityDetails.assignedEntities,
                 defaultCountryId: values['locationId'], defaultDivisionId: values['divId'],
                 entityCode: entityCodeSet[0]['EntityCode'],defaultEntityId: values['entityId'], 
-                isDefault: values['isDefault']
+                year:values['year'], isDefault: values['isDefault']
             }));
             console.log(localStorage['EntityDetails'])
         let sessionUser = JSON.parse(localStorage['Session_name'])
@@ -252,7 +253,7 @@ export class selectEntity {
           this.differenceYears.push(this.i)
         }
         return this.differenceYears
-      }
+    }
     multiDimensionalUnique(arr: any[]) {
         var uniques = [];
         var itemsFound = {};

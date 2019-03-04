@@ -36,6 +36,8 @@ import {
   MatStepperModule,
   MatBadgeModule
 } from '@angular/material';
+import { DataFilterPipe } from '../data-filter.pipe';
+import { GetMonthName } from '../theme/pipes/Months.pipe';
 
 @NgModule({
   imports: [

@@ -27,7 +27,6 @@ export class ApplicationsComponent implements OnInit {
   constructor(public dialog: MatDialog) { }
 
   ngOnInit() {
-   
   }
 
   checkEntityCode(){
@@ -43,8 +42,6 @@ export class ApplicationsComponent implements OnInit {
     }
     return this.isEntityCode;
   }
-
-
 
   //For Dropdown filter
   selectedValue: string;

@@ -9,8 +9,9 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { HttpClientModule } from '@angular/common/http';
 import { GlobalAnalyticsLayoutComponent } from './global-analytics-layout.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {TabMenuModule} from 'primeng/tabmenu';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { GetMonthName } from 'src/app/theme/pipes/Months.pipe';
 
 export const routes: Routes = [
   {
@@ -29,11 +30,13 @@ export const routes: Routes = [
     TreeModule,
     HttpClientModule,
     ModalModule,
+    ReactiveFormsModule,
     SharedModule,
     NgxChartsModule,
-    TabMenuModule
+    TabMenuModule,
+    FormsModule,
   ],
-  declarations: [DimensionDataComponent, DimensionHighlightsComponent, GlobalAnalyticsLayoutComponent],
+  declarations: [GetMonthName,DimensionDataComponent, DimensionHighlightsComponent, GlobalAnalyticsLayoutComponent],
   exports: [RouterModule]
 })
 export class GlobalAnalyticsModule {
