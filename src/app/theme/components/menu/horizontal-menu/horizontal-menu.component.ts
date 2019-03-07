@@ -7,7 +7,6 @@ import { MatMenuTrigger } from '@angular/material';
 import { Menu } from '../menu.model';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs';
-import * as crypto from 'crypto-js';
 import { HttpUrlEncodingCodec } from '@angular/common/http';
 
 
