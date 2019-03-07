@@ -60,20 +60,24 @@ export class TargetComponent implements OnInit {
   ngOnInit() {
     this.getTargetTemplateKPI(0);
     this.getTargetValue()
-    console.log(this.diffYears((new Date('2010')).getFullYear()), 'years')
+    console.log(this.getDifferenceYears((new Date('2010')).getFullYear()), 'years')
+  }
+  getDifferenceYears(year){
+    for(this.i= year; this.i<(new Date()).getFullYear()+1; this.i++){
+      this.differenceYears.push(this.i)
+    }
+    return this.differenceYears
   }
 
+
+
+  
   resetForm(){
     this.filterForm.reset();
     this.getTargetValue()
   }
   
-diffYears(year){
-  for(this.i= year; this.i<(new Date()).getFullYear()+1; this.i++){
-    this.differenceYears.push(this.i)
-  }
-  return this.differenceYears
-}
+
 
 
   onYearSelect(year){

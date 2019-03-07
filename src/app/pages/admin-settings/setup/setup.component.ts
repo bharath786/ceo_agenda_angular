@@ -2,7 +2,7 @@ import { AdminsettingsService } from './../adminsettings.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { TreeNode } from 'primeng/api';
 import { ModalDirective } from 'ngx-bootstrap';
-import { FormBuilder, Validators, NG_VALIDATORS } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
 import { Router, NavigationEnd } from '@angular/router';
 import { AppSettings } from '../../../app.settings';
@@ -42,7 +42,7 @@ export class SetupComponent implements OnInit {
   dimensionform: any;
   KRAform: any;
   KPIform: any;
-  dimensionFrequency: any = [];
+  dimensionFrequency: any= [];
   scopeInput: any;
   kpiDataType: any;
   fileScope: File;
@@ -58,7 +58,7 @@ export class SetupComponent implements OnInit {
   cancelClicked: boolean = false;
   arrayBuffer: any;
   submittedfile: any;
-  fileScopeInput: any;
+  fileScopeInput : any;
   uploadedFileFormatChecking: boolean;
   DatatypeId: any;
   rangeApplicableDataType: any;
@@ -78,7 +78,7 @@ export class SetupComponent implements OnInit {
     //Dimension Update Form
     this.dimensionform = this.fb.group({
       'dimensionId': null,
-      'dimensionName': [null, Validators.compose([Validators.required,Validators.pattern(".*\\S.*[a-zA-z0-9 ]")])],
+      'dimensionName': [null, Validators.compose([Validators.required])],
       'description': null,
       'modifiedBy': this.sessionUser['user_id'],
       'createdBy': this.sessionUser['user_id'],
@@ -88,7 +88,7 @@ export class SetupComponent implements OnInit {
     //KRA Upsert Form
     this.KRAform = this.fb.group({
       'KRAId': null,
-      'KRAName': [null, Validators.compose([Validators.required, Validators.pattern(".*\\S.*[a-zA-z0-9 ]")])],
+      'KRAName': [null, Validators.compose([Validators.required])],
       'description': [null],
       'modifiedBy': this.sessionUser['user_id'],
       'createdBy': this.sessionUser['user_id'],
@@ -98,8 +98,8 @@ export class SetupComponent implements OnInit {
     //KPI Update Form
     this.KPIform = this.fb.group({
       'KPIId': null,
-      'KPIName': [null, Validators.compose([Validators.required, Validators.pattern(".*\\S.*[a-zA-z0-9 ]")])],
-      'KPICode': [null, Validators.compose([Validators.required, Validators.pattern(".*\\S.*[a-zA-z0-9 ]")])],
+      'KPIName': [null, Validators.compose([Validators.required])],
+      'KPICode': [null, Validators.compose([Validators.required])],
       'PriorityTypeId': [null, Validators.compose([Validators.required])],
       'dataTypeId': [null, Validators.compose([Validators.required])],
       'modifiedBy': this.sessionUser['user_id'],
@@ -115,49 +115,59 @@ export class SetupComponent implements OnInit {
   }
 
 
-  dataTypeCheck(event) {
-    if (event == "7" || event == "10") {
+  dataTypeCheck(event){
+
+    if(event == "7" || event == "10" ){
       this.rangeValues = [];
       this.rangeApplicableDataType = true;
       this.datatypeType = true;
     }
-    else {
-      this.rangeValues = [];
-      this.rangeApplicableDataType = false;
-      this.datatypeType = true;
+    
+      else{
+        this.rangeValues = [];
+        this.rangeApplicableDataType = false;
+        this.datatypeType = true;
+      
+   
     }
   }
 
-  customValidation() {
-    if (this.rangeApplicableDataType) {
-      if (this.rangeValues[0] == this.rangeValues[1]) {
+  customValidation(){
+
+
+    if(this.rangeApplicableDataType){
+      if(this.rangeValues[0] == this.rangeValues[1]){
         return false;
       }
-      if (this.rangeValues.length < 2) {
+      if(this.rangeValues.length < 2){
         return false;
       }
     }
-    if (this.isScopeApplicable == true) {
-      if (this.fileScopeInput == null || this.fileScopeInput == '' || this.uploadedFileFormatChecking == false) {
+   
+    if(this.isScopeApplicable == true){
+
+      if (this.fileScopeInput == null || this.fileScopeInput == '' || this.uploadedFileFormatChecking == false){
         return false;
       }
-      else {
-        return true;
+      else{
+         return true;
       }
     }
-    else {
-      this.fileScopeInput = ""
+    else{
+      this.fileScopeInput = "" 
       return true;
     }
+
   }
 
   ngOnInit() {
     //For Loading setup Tree On Load
     this.getSetup();
+   
   }
 
-  removeScopeAlias() {
-    if (this.isScopeApplicable == false) {
+  removeScopeAlias(){
+    if(this.isScopeApplicable == false){
       this.KPIform.controls['scopeAlias'].setValue(null);
     }
   }
@@ -206,19 +216,26 @@ export class SetupComponent implements OnInit {
       var worksheet = workbook.Sheets[first_sheet_name];
       console.log(XLSX.utils.sheet_to_json(worksheet, { raw: true }));
       this.submittedfile = XLSX.utils.sheet_to_json(worksheet, { raw: true })
-      if (this.submittedfile.length > 0) {
-        if (this.submittedfile[0].ScopeCode == undefined || this.submittedfile[0].ScopeValue == undefined) {
-          this.uploadedFileFormatChecking = false;
-          this.snackBar.open("Uploaded file is invalid, please refer to download sample", "OK", {
-            panelClass: ['redSnackbar']
-          });
-          this.fileScopeInput = '';
-        }
-        else {
-          this.uploadedFileFormatChecking = true;
-        }
+
+      console.log(this.submittedfile)
+      if(this.submittedfile.length > 0){
+      console.log(this.submittedfile[0].ScopeCode)
+      console.log(this.submittedfile[0].ScopeValue)
+
+      if(this.submittedfile[0].ScopeCode == undefined || this.submittedfile[0].ScopeValue == undefined){
+        console.log("Please upload relavent data")
+        this.uploadedFileFormatChecking = false;
+        this.snackBar.open("Uploaded file is invalid, please refer to download sample","OK", {
+          panelClass: ['redSnackbar']
+        });
+        this.fileScopeInput = '';
       }
+      else{
+        this.uploadedFileFormatChecking = true;
+      }
+
     }
+  }
     fileReader.readAsArrayBuffer(this.fileScope);
   }
 
@@ -245,6 +262,7 @@ export class SetupComponent implements OnInit {
             panelClass: ['greenSnackbar']
           });
         }
+
       },
       error => {
         console.log(error);
@@ -275,6 +293,8 @@ export class SetupComponent implements OnInit {
             panelClass: ['greenSnackbar']
           });
         }
+
+
       },
       error => {
         console.log(error);
@@ -345,7 +365,8 @@ export class SetupComponent implements OnInit {
 
   //For KPI Upsert
   public onSubmitKPI(value: object) {
-    if (this.isScopeApplicable == false) {
+
+    if(this.isScopeApplicable == false){
       this.submittedfile = null;
       value['scopeAlias'] = null;
     }
@@ -459,8 +480,8 @@ export class SetupComponent implements OnInit {
       this.dataTypeCheck(event['node']['dataTypeId']);
       this.KPIform.controls['isScope'].setValue(event['node']['isScope']);
       this.KPIform.controls['KRAId'].setValue(event['node']['KRAId']);
-
-      if (event['node']['isScope'] == true) {
+      
+      if(event['node']['isScope'] == true){
         this.isScopeApplicable = true
       }
       this.KPIform.controls['frequencyId'].setValue(event['node']['frequencyId']);
@@ -495,7 +516,7 @@ export class SetupComponent implements OnInit {
   //For Adding New KPI
   addKPI(e) {
     this.KPIform.reset();
-    this.getDimensionFrequencies();
+      this.getDimensionFrequencies();
     this.KPIform.controls['KRAId'].setValue(this.mainvalue['KRAId']);
     this.KPIform.controls['modifiedBy'].setValue(this.sessionUser['user_id']);
     this.KPIform.controls['createdBy'].setValue(this.sessionUser['user_id']);
@@ -519,7 +540,7 @@ export class SetupComponent implements OnInit {
       data => {
         //Assigning the values to the dimension frequency variable
         this.dimensionFrequency = data['data']
-        this.dimensionFrequency = this.dimensionFrequency.filter(x => x.lookupName == "Monthly" || x.lookupName == "Weekly")
+        this.dimensionFrequency = this.dimensionFrequency.filter(x=>x.lookupName == "Monthly" || x.lookupName == "Weekly")
       },
       error => {
         console.log(error);
@@ -538,7 +559,7 @@ export class SetupComponent implements OnInit {
         console.log(data, 'Data Type')
         //Assigning the values to the KPI Datatype variable
         this.kpiDataType = data['data']
-        this.kpiDataType = this.kpiDataType.filter(x => x.lookupName != 'List');
+        this.kpiDataType = this.kpiDataType.filter(x=>x.lookupName != 'List');
         this.KPIHigherOrLower = data['data1']
       },
       error => {
