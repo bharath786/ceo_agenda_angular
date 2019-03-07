@@ -4,7 +4,7 @@ import { DimensionDataComponent } from './dimension-data/dimension-data.componen
 import { DimensionHighlightsComponent } from './dimension-highlights/dimension-highlights.component';
 import { Routes, RouterModule } from '@angular/router';
 import { TreeModule } from 'primeng/tree';
-import { ModalModule } from 'ngx-bootstrap';
+import { ModalModule, TooltipModule } from 'ngx-bootstrap';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { HttpClientModule } from '@angular/common/http';
@@ -12,6 +12,9 @@ import { GlobalAnalyticsLayoutComponent } from './global-analytics-layout.compon
 import {TabMenuModule} from 'primeng/tabmenu';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { GetMonthName } from 'src/app/theme/pipes/Months.pipe';
+import { DataTableModule } from 'angular2-datatable';
+import { DataFilterPipe } from 'src/app/data-filter.pipe';
+import { FilterPipe } from 'src/app/theme/filterfordata.pipe';
 
 export const routes: Routes = [
   {
@@ -26,17 +29,19 @@ export const routes: Routes = [
 @NgModule({
   imports: [
     CommonModule,
+    TooltipModule.forRoot(),
     RouterModule.forChild(routes),
     TreeModule,
     HttpClientModule,
     ModalModule,
     ReactiveFormsModule,
+    DataTableModule,
     SharedModule,
     NgxChartsModule,
     TabMenuModule,
     FormsModule,
   ],
-  declarations: [GetMonthName,DimensionDataComponent, DimensionHighlightsComponent, GlobalAnalyticsLayoutComponent],
+  declarations: [FilterPipe,GetMonthName,DimensionDataComponent, DimensionHighlightsComponent, GlobalAnalyticsLayoutComponent],
   exports: [RouterModule]
 })
 export class GlobalAnalyticsModule {

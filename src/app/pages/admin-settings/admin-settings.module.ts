@@ -21,6 +21,7 @@ import { TooltipModule } from 'ngx-bootstrap';
 import { GetMonthName } from 'src/app/theme/pipes/Months.pipe';
 import {SliderModule} from 'primeng/slider';
 import {AutoCompleteModule} from 'primeng/autocomplete';
+import { GetMonthNameAdmin } from 'src/app/theme/getMonthNameAdminModule.pipe';
 
 
 
@@ -54,7 +55,7 @@ export const routes :Routes = [
     })
   ],
   exports:[RouterModule],
-  declarations: [DataFilterPipe, PreferencesComponent, 
+  declarations: [GetMonthNameAdmin,DataFilterPipe, PreferencesComponent, 
     ManageUsersComponent, SetupComponent, StructureComponent, TargetComponent],
   providers: [AdminsettingsService, DownloadExcelService]
 

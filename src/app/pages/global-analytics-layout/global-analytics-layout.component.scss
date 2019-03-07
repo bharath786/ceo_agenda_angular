@@ -119,3 +119,15 @@
 .margin8{
     margin-left: 8px !important;
 }
+
+.removeborder:hover{
+    background-color: #fafafa !important;
+}
+
+.customDisabled{
+    background-color: #45B6AF;
+    border-color: #3ea49d;
+    cursor: not-allowed;
+    pointer-events:none !important;
+    opacity: .65;
+}

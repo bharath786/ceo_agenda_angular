@@ -108,7 +108,7 @@ export class selectEntity {
     UniqueEntitiesList: any;
     years: any[];
     i: any;
-    differenceYears: any=[];
+    differenceYears: any = [];
 
     constructor(public dialog: MatDialog,
         private appSettings: AppSettings,
@@ -128,21 +128,21 @@ export class selectEntity {
     }
 
     ngOnInit() {
-        
+
     }
 
     onEntitySubmit(values) {
-        console.log(values,'VAlues Format')
-        var entityCodeSet =this.selectedEntityCode.filter(x=>x.EntityId == values['entityId'])
-        var EntityDetails = JSON.parse(localStorage['EntityDetails']) 
+        console.log(values, 'VAlues Format')
+        var entityCodeSet = this.selectedEntityCode.filter(x => x.EntityId == values['entityId'])
+        var EntityDetails = JSON.parse(localStorage['EntityDetails'])
         localStorage.setItem('EntityDetails',
             JSON.stringify({
                 assignedEntities: EntityDetails.assignedEntities,
                 defaultCountryId: values['locationId'], defaultDivisionId: values['divId'],
-                entityCode: entityCodeSet[0]['EntityCode'],defaultEntityId: values['entityId'], 
-                year:values['year'], isDefault: values['isDefault']
+                entityCode: entityCodeSet[0]['EntityCode'], defaultEntityId: values['entityId'],
+                year: values['year'], isDefault: values['isDefault']
             }));
-            console.log(localStorage['EntityDetails'])
+        console.log(localStorage['EntityDetails'])
         let sessionUser = JSON.parse(localStorage['Session_name'])
         values['userId'] = sessionUser.user_id;
         this.adminsettingsservice.getEntityData(values).subscribe(
@@ -161,9 +161,9 @@ export class selectEntity {
             data => {
                 console.log(data)
                 this.entitiesList = data['data']
-                 this.UniqueEntitiesList = this.selectedEntities();
+                this.UniqueEntitiesList = this.selectedEntities();
                 var EntityDetails = JSON.parse(localStorage['EntityDetails'])
-                console.log(EntityDetails,'local entity details')
+                console.log(EntityDetails, 'local entity details')
                 if (EntityDetails != null) {
                     console.log(EntityDetails['defaultDivisionId'])
                     this.entityform.controls['divId'].setValue(EntityDetails['defaultDivisionId']);
@@ -171,11 +171,22 @@ export class selectEntity {
                     this.entityform.controls['locationId'].setValue(EntityDetails['defaultCountryId']);
                     this.onLocationSelect(EntityDetails['defaultCountryId'])
                     this.entityform.controls['entityId'].setValue(EntityDetails['defaultEntityId']);
+                    this.onEntitySelect(EntityDetails['defaultEntityId'])
+                    this.entityform.controls['year'].setValue(EntityDetails['year']);
+
+                    // this.differenceYears.filter((x) => {
+                    //     if (x == EntityDetails['DefaultEntityCreatedYear']) {
+                    //         this.entityform.controls['year'].setValue(x);
+                    //         console.log(x, 'Check X')
+                    //     }
+                    //     console.log('Hellkl')
+                    // })
+                    console.log('sss')
                     EntityDetails = JSON.parse(localStorage['EntityDetails'])
-                    if(this.entityDefault == data['Data']['DefaultEntityId']){
+                    if (this.entityDefault == data['Data']['DefaultEntityId']) {
                         this.entityform.controls['isDefault'].setValue(true);
                     }
-                    else{
+                    else {
                         this.entityform.controls['isDefault'].setValue(false);
                     }
                 }
@@ -228,18 +239,20 @@ export class selectEntity {
                 this.selectedEntity.push({ EntityId: x.entityId, EntityName: x.entityName, EntityCreatedYear: x.EntityCreatedYear })
             }
         })
+        this.onEntitySelect(this.selectedEntity)
         this.selectedEntity = this.multiDimensionalUnique(this.selectedEntity)
         this.entityform.controls['isDefault'].setValue(false);
+        this.entityform.controls['year'].setValue(null);
     }
-    onEntitySelect(EntityId){
-        this.years =[];
+    onEntitySelect(EntityId) {
+        this.years = [];
         this.selectedEntity.filter((x) => {
-            if(x.EntityId == EntityId){
-                console.log(this.getDifferenceYears(x.EntityCreatedYear),'years')
+            if (x.EntityId == EntityId) {
+                console.log(this.getDifferenceYears(x.EntityCreatedYear), 'years')
             }
         })
         var EntityDetails = JSON.parse(localStorage['EntityDetails'])
-        if(EntityId == EntityDetails['defaultEntityId']){
+        if (EntityId == EntityDetails['defaultEntityId']) {
             this.entityform.controls['isDefault'].setValue(true);
         }
         else {
@@ -247,10 +260,10 @@ export class selectEntity {
         }
     }
 
-    getDifferenceYears(year){
-        this.differenceYears =[];
-        for(this.i= year; this.i<(new Date()).getFullYear()+1; this.i++){
-          this.differenceYears.push(this.i)
+    getDifferenceYears(year) {
+        this.differenceYears = [];
+        for (this.i = year; this.i < (new Date()).getFullYear() + 1; this.i++) {
+            this.differenceYears.push(this.i)
         }
         return this.differenceYears
     }
