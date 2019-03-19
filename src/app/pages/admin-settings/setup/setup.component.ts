@@ -9,6 +9,8 @@ import { AppSettings } from '../../../app.settings';
 import * as XLSX from 'xlsx';
 import { Menu } from 'src/app/theme/components/menu/menu.model';
 import { DownloadExcelService } from '../../download-excel.service';
+import { ToasterService } from 'angular2-toaster/src/toaster.service';
+
 
 @Component({
   selector: 'app-setup',
@@ -64,7 +66,7 @@ export class SetupComponent implements OnInit {
   rangeApplicableDataType: any;
   datatypeType: boolean;
 
-  constructor(private appSettings: AppSettings, private excelService: DownloadExcelService, private setupservice: AdminsettingsService, public router: Router, public fb: FormBuilder, public snackBar: MatSnackBar) {
+  constructor(private appSettings: AppSettings,public toasterService:ToasterService, private excelService: DownloadExcelService, private setupservice: AdminsettingsService, public router: Router, public fb: FormBuilder, public snackBar: MatSnackBar) {
 
     this.sessionUser = JSON.parse(localStorage['Session_name'])
     //Analytics Update Form
@@ -177,10 +179,7 @@ export class SetupComponent implements OnInit {
     this.setupservice.updateAnalytics(value).subscribe(
       data => {
         this.getSetup();
-        this.snackBar.open(data['message'], 'OK', {
-          duration: 7000,
-          panelClass: ['greenSnackbar']
-        });
+        this.toasterService.pop('success','',data['message']);
       },
       error => {
         console.log(error);
@@ -225,9 +224,7 @@ export class SetupComponent implements OnInit {
       if(this.submittedfile[0].ScopeCode == undefined || this.submittedfile[0].ScopeValue == undefined){
         console.log("Please upload relavent data")
         this.uploadedFileFormatChecking = false;
-        this.snackBar.open("Uploaded file is invalid, please refer to download sample","OK", {
-          panelClass: ['redSnackbar']
-        });
+        this.toasterService.pop('success','Invalid File',"Uploaded file is invalid, please refer to download sample")
         this.fileScopeInput = '';
       }
       else{
@@ -248,19 +245,14 @@ export class SetupComponent implements OnInit {
       data => {
         console.log(data);
         if (data['error'] == true) {
-          this.snackBar.open(data['message'], 'OK', {
-            duration: 7000,
-            panelClass: ['redSnackbar']
-          });
+        this.toasterService.pop('error','',data['message']);
         }
         else {
           this.getSetup();
           this.appSettings.setIsNewAdded(true);
           this.router.navigate(['adminsettings/setup']);
-          this.snackBar.open(data['message'], 'OK', {
-            duration: 7000,
-            panelClass: ['greenSnackbar']
-          });
+        this.toasterService.pop('success','',data['message']);
+
         }
 
       },
@@ -279,19 +271,13 @@ export class SetupComponent implements OnInit {
     this.setupservice.deleteDimension(value).subscribe(
       data => {
         if (data['error'] == true) {
-          this.snackBar.open(data['message'], 'OK', {
-            duration: 7000,
-            panelClass: ['redSnackbar']
-          });
+        this.toasterService.pop('error','',data['message']);
         }
         else {
           this.getSetup();
           this.appSettings.setIsNewAdded(true);
           this.router.navigate(['adminsettings/setup']);
-          this.snackBar.open(data['message'], 'OK', {
-            duration: 7000,
-            panelClass: ['greenSnackbar']
-          });
+          this.toasterService.pop('success','',data['message']);
         }
 
 
@@ -312,17 +298,11 @@ export class SetupComponent implements OnInit {
     this.setupservice.upsertKRA(value).subscribe(
       data => {
         if (data['error'] == true) {
-          this.snackBar.open(data['message'], 'OK', {
-            duration: 7000,
-            panelClass: ['redSnackbar']
-          });
+          this.toasterService.pop('error','',data['message']);
         }
         else {
           this.getSetup();
-          this.snackBar.open(data['message'], 'OK', {
-            duration: 7000,
-            panelClass: ['greenSnackbar']
-          });
+          this.toasterService.pop('success','',data['message']);
         }
       },
       error => {
@@ -340,17 +320,11 @@ export class SetupComponent implements OnInit {
     this.setupservice.deleteKRA(value).subscribe(
       data => {
         if (data['error'] == true) {
-          this.snackBar.open(data['message'], 'OK', {
-            duration: 7000,
-            panelClass: ['redSnackbar']
-          });
+          this.toasterService.pop('error','',data['message']);
         }
         else {
           this.getSetup();
-          this.snackBar.open(data['message'], 'OK', {
-            duration: 7000,
-            panelClass: ['greenSnackbar']
-          });
+          this.toasterService.pop('success','',data['message']);
         }
       },
       error => {
@@ -375,17 +349,11 @@ export class SetupComponent implements OnInit {
     this.setupservice.upsertKPI(value).subscribe(
       data => {
         if (data['error'] == true) {
-          this.snackBar.open(data['message'], 'OK', {
-            duration: 7000,
-            panelClass: ['redSnackbar']
-          });
+          this.toasterService.pop('error','',data['message']);
         }
         else {
           this.getSetup();
-          this.snackBar.open(data['message'], 'OK', {
-            duration: 7000,
-            panelClass: ['greenSnackbar']
-          });
+          this.toasterService.pop('success','',data['message']);
         }
       },
       error => {
@@ -411,17 +379,11 @@ export class SetupComponent implements OnInit {
     this.setupservice.deleteKPI(value).subscribe(
       data => {
         if (data['error'] == true) {
-          this.snackBar.open(data['message'], 'OK', {
-            duration: 7000,
-            panelClass: ['redSnackbar']
-          });
+          this.toasterService.pop('error','',data['message']);
         }
         else {
           this.getSetup();
-          this.snackBar.open(data['message'], 'OK', {
-            duration: 7000,
-            panelClass: ['greenSnackbar']
-          });
+          this.toasterService.pop('success','',data['message']);
         }
       },
       error => {

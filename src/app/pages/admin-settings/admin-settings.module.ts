@@ -18,10 +18,12 @@ import { AdminsettingsService } from './adminsettings.service';
 import { ConfirmationPopoverModule } from 'angular-confirmation-popover';
 import { DownloadExcelService } from '../download-excel.service';
 import { TooltipModule } from 'ngx-bootstrap';
-import { GetMonthName } from 'src/app/theme/pipes/Months.pipe';
 import {SliderModule} from 'primeng/slider';
 import {AutoCompleteModule} from 'primeng/autocomplete';
 import { GetMonthNameAdmin } from 'src/app/theme/getMonthNameAdminModule.pipe';
+import {KeyFilterModule} from 'primeng/keyfilter';
+import {MessagesModule} from 'primeng/messages';
+import {MessageModule} from 'primeng/message';
 
 
 
@@ -37,7 +39,10 @@ export const routes :Routes = [
 @NgModule({
   imports: [
     CommonModule,
+    MessagesModule,
+    MessageModule,
     SliderModule,
+    KeyFilterModule,
     RouterModule.forChild(routes),
     ModalModule.forRoot(),
     FormsModule,

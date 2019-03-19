@@ -7,6 +7,8 @@ import { Validators, FormGroup, FormBuilder } from '@angular/forms';
 import { emailValidator } from '../../utils/app-validators';
 import { AppService } from 'src/app/app.service';
 import { AdminsettingsService } from 'src/app/pages/admin-settings/adminsettings.service';
+import { ToasterService } from 'angular2-toaster/src/toaster.service';
+
 
 @Component({
   selector: 'app-user-menu',
@@ -27,7 +29,7 @@ export class UserMenuComponent implements OnInit {
   @ViewChild('changepasswordModal') public changepasswordModal: ModalDirective;
   @ViewChild('profileModal') public profileModal: ModalDirective;
 
-  constructor(private router: Router, public fb: FormBuilder, public snackBar: MatSnackBar, public appservice: AppService, public adminsettingsservice: AdminsettingsService) {
+  constructor(private router: Router,public toasterService: ToasterService,  public fb: FormBuilder, public snackBar: MatSnackBar, public appservice: AppService, public adminsettingsservice: AdminsettingsService) {
    
     //Update Profile Form
     this.form = this.fb.group({
@@ -74,9 +76,7 @@ export class UserMenuComponent implements OnInit {
       console.log(values)
       this.adminsettingsservice.userUpsert(values).subscribe(
         data => {
-          this.snackBar.open(data['message'], 'OK', {
-            duration: 6000,
-          });
+          this.toasterService.pop('success','',data['message']);
           this.profileModal.hide();
         },
         error => {
@@ -122,10 +122,7 @@ export class UserMenuComponent implements OnInit {
       values['userId'] = sessionUser.user_id;
       this.appservice.changePassword(values).subscribe(
         data => {
-          this.snackBar.open(data['message'], 'OK', {
-            duration: 5000,
-            panelClass: ['greenSnackbar']
-          });
+          this.toasterService.pop('success','',data['message']);
           this.changepasswordModal.hide();
         },
         error => {
@@ -172,11 +169,8 @@ export class UserMenuComponent implements OnInit {
       var value = { userId: session_values.user_id }
       this.appservice.logOut(value).subscribe(
         data => {
-          //Sending message for Snackbar
-          this.snackBar.open(data['message'], 'OK', {
-            duration: 5000,
-            panelClass:['greenSnackbar']
-          });
+          window.location.reload();
+          this.toasterService.pop('success','',data['message']);
         },
         error=>{
           console.log(error);

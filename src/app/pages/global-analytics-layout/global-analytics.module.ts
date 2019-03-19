@@ -13,8 +13,14 @@ import {TabMenuModule} from 'primeng/tabmenu';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { GetMonthName } from 'src/app/theme/pipes/Months.pipe';
 import { DataTableModule } from 'angular2-datatable';
-import { DataFilterPipe } from 'src/app/data-filter.pipe';
 import { FilterPipe } from 'src/app/theme/filterfordata.pipe';
+import { Ng2SmartTableModule } from 'ng2-smart-table';
+import { ChartModule } from 'angular-highcharts';
+import {MessagesModule} from 'primeng/messages';
+import {MessageModule} from 'primeng/message';
+import {KeyFilterModule} from 'primeng/keyfilter';
+
+
 
 export const routes: Routes = [
   {
@@ -29,6 +35,10 @@ export const routes: Routes = [
 @NgModule({
   imports: [
     CommonModule,
+    MessagesModule,
+    KeyFilterModule,
+    MessageModule,
+    Ng2SmartTableModule,
     TooltipModule.forRoot(),
     RouterModule.forChild(routes),
     TreeModule,
@@ -40,9 +50,11 @@ export const routes: Routes = [
     NgxChartsModule,
     TabMenuModule,
     FormsModule,
+    ChartModule 
   ],
   declarations: [FilterPipe,GetMonthName,DimensionDataComponent, DimensionHighlightsComponent, GlobalAnalyticsLayoutComponent],
-  exports: [RouterModule]
+  exports: [RouterModule],
+  providers:[GetMonthName]
 })
 export class GlobalAnalyticsModule {
 

@@ -5,6 +5,8 @@ import { FormBuilder, Validators, FormControl, FormGroup, FormArray } from '@ang
 import { MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
 import { ModalDirective } from 'ngx-bootstrap';
+import { ToasterService } from 'angular2-toaster/src/toaster.service';
+
 
 @Component({
   selector: 'app-structure',
@@ -59,7 +61,8 @@ export class StructureComponent implements OnInit {
   constructor(private structureservice: AdminsettingsService, 
               public router: Router, 
               public fb: FormBuilder, 
-              public snackBar: MatSnackBar) {
+              public snackBar: MatSnackBar,
+              public toasterService: ToasterService) {
 
     this.sessionUser = JSON.parse(localStorage['Session_name'])
     //Organization Update Form
@@ -360,10 +363,7 @@ filterCountry(query, countries: any[]):any[] {
     this.structureservice.updateOrganization(value).subscribe(
       data => {
         this.getStructure();
-        this.snackBar.open(data['message'], 'OK', {
-          duration: 7000,
-          panelClass: ['greenSnackbar']
-        });
+        this.toasterService.pop('success','',data['message']);
       },
       error => {
         console.log(error);
@@ -380,17 +380,11 @@ filterCountry(query, countries: any[]):any[] {
     this.structureservice.upsertDivision(value).subscribe(
       data => {
         if (data['error'] == true) {
-          this.snackBar.open(data['message'], 'OK', {
-            duration: 7000,
-            panelClass: ['redSnackbar']
-          });
+        this.toasterService.pop('error','',data['message']);
         }
         else {
           this.getStructure();
-          this.snackBar.open(data['message'], 'OK', {
-            duration: 7000,
-            panelClass: ['greenSnackbar']
-          });
+          this.toasterService.pop('success','',data['message']);
         }
       },
       error => {
@@ -408,17 +402,11 @@ filterCountry(query, countries: any[]):any[] {
     this.structureservice.deleteDivision(value).subscribe(
       data => {
         if (data['error'] == true) {
-          this.snackBar.open(data['message'], 'OK', {
-            duration: 7000,
-            panelClass: ['redSnackbar']
-          });
+          this.toasterService.pop('error','',data['message']);
         }
         else {
           this.getStructure();
-          this.snackBar.open(data['message'], 'OK', {
-            duration: 7000,
-            panelClass: ['greenSnackbar']
-          });
+          this.toasterService.pop('success','',data['message']);
         }
       },
       error => {
@@ -439,10 +427,7 @@ filterCountry(query, countries: any[]):any[] {
         this.structureservice.upsertLocation(value).subscribe(
           data => {
             this.getStructure();
-            this.snackBar.open(data['message'], 'OK', {
-              duration: 7000,
-              panelClass: ['greenSnackbar']
-            });
+            this.toasterService.pop('success','',data['message']);  
           },
           error => {
             console.log(error);
@@ -454,19 +439,15 @@ filterCountry(query, countries: any[]):any[] {
         )
       }
       else {
-        this.snackBar.open("Sorry, You couldn't change Country for this Dimension", 'OK', {
-          duration: 7000,
-        });
+        this.toasterService.pop('error','',"Sorry, You couldn't change Country for this Dimension");
+
       }
     }
     else {
       this.structureservice.upsertLocation(value).subscribe(
         data => {
           this.getStructure();
-          this.snackBar.open(data['message'], 'OK', {
-            duration: 7000,
-            panelClass: ['greenSnackbar']
-          });
+          this.toasterService.pop('error','',data['message']);
         },
         error => {
           console.log(error);
@@ -484,17 +465,11 @@ filterCountry(query, countries: any[]):any[] {
     this.structureservice.deleteLocation(value).subscribe(
       data => {
         if (data['error'] == true) {
-          this.snackBar.open(data['message'], 'OK', {
-            duration: 7000,
-            panelClass: ['redSnackbar']
-          });
+          this.toasterService.pop('error','',data['message']);
         }
         else {
           this.getStructure();
-          this.snackBar.open(data['message'], 'OK', {
-            duration: 7000,
-            panelClass: ['greenSnackbar']
-          });
+          this.toasterService.pop('success','',data['message']); 
         }
       },
       error => {
@@ -530,17 +505,12 @@ filterCountry(query, countries: any[]):any[] {
             this.entityform.controls['cityId'].setValue('null');
           }
           if (data['error'] == true) {
-            this.snackBar.open(data['message'], 'OK', {
-              duration: 7000,
-              panelClass: ['redSnackbar']
-            });
+
+        this.toasterService.pop('error','',data['message']);
           }
           else {
             this.getStructure();
-            this.snackBar.open(data['message'], 'OK', {
-              duration: 7000,
-              panelClass: ['greenSnackbar']
-            });
+            this.toasterService.pop('success','',data['message']);   
           }
         },
         error => {
@@ -560,17 +530,11 @@ filterCountry(query, countries: any[]):any[] {
     this.structureservice.deleteEntity(value).subscribe(
       data => {
         if (data['error'] == true) {
-          this.snackBar.open(data['message'], 'OK', {
-            duration: 7000,
-            panelClass: ['redSnackbar']
-          });
+          this.toasterService.pop('error','',data['message']);
         }
         else {
           this.getStructure();
-          this.snackBar.open(data['message'], 'OK', {
-            duration: 7000,
-            panelClass: ['greenSnackbar']
-          });
+          this.toasterService.pop('success','',data['message']);  
         }
       },
       error => {

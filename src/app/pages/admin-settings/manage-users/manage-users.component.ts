@@ -9,6 +9,8 @@ import { MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
 import { formatDate } from '@angular/common';
 import * as _ from 'lodash'; 
+import { ToasterService } from 'angular2-toaster/src/toaster.service';
+
 
 @Component({
   selector: 'app-manage-users',
@@ -52,7 +54,8 @@ export class ManageUsersComponent implements OnInit {
 
   constructor(public appSettings: AppSettings, public fb: FormBuilder,
     public router: Router, private adminsettingsservice: AdminsettingsService,
-    public snackBar: MatSnackBar) {
+    public snackBar: MatSnackBar,
+    public toasterService: ToasterService) {
 
     this.settings = this.appSettings.settings;
 
@@ -259,10 +262,7 @@ export class ManageUsersComponent implements OnInit {
       data => {
         this.deleteModal.hide();
         this.userslist();
-        this.snackBar.open(data['message'], 'OK', {
-          duration: 7000,
-          panelClass: ['greenSnackbar'],
-        });
+        this.toasterService.pop('success','',data['message']);
       },
       error => {
         console.log(error)
@@ -317,10 +317,7 @@ export class ManageUsersComponent implements OnInit {
       this.adminsettingsservice.userStatus(values).subscribe(
         data => {
           this.userslist();
-          this.snackBar.open(data['message'], 'OK', {
-            duration: 7000,
-            panelClass: ['greenSnackbar']
-          });
+          this.toasterService.pop('success','',data['message']);
         },
         error => {
           console.log(error);
@@ -331,10 +328,7 @@ export class ManageUsersComponent implements OnInit {
         }
       )
     } else {
-      this.snackBar.open("Please verify email to change status", '', {
-        duration: 7000,
-        panelClass: ['redSnackbar']
-      });
+      this.toasterService.pop('error','','Please verify email to change status');
     }
   }
 
@@ -364,10 +358,7 @@ export class ManageUsersComponent implements OnInit {
     }
     this.adminsettingsservice.resendMail(values).subscribe(
       data => {
-        this.snackBar.open(data['message'], 'OK', {
-          duration: 7000,
-          panelClass: ['greenSnackbar']
-        });
+        this.toasterService.pop('success','',data['message']);
       }
     )
   }
@@ -381,10 +372,7 @@ export class ManageUsersComponent implements OnInit {
     }
     this.adminsettingsservice.insertUserEntities(data).subscribe(
       data => {
-        this.snackBar.open(data['responseType']['message'], 'OK', {
-          duration: 7000,
-          panelClass: ['greenSnackbar']
-        });
+        this.toasterService.pop('success','',data['responseType']['message']);
         this.entitiesModal.hide();
         this.userslist();
       },
@@ -407,10 +395,7 @@ export class ManageUsersComponent implements OnInit {
       }
       this.adminsettingsservice.userUpsert(values).subscribe(
         data => {
-          this.snackBar.open(data['message'], 'OK', {
-            duration: 7000,
-            panelClass: ['greenSnackbar']
-          });
+          this.toasterService.pop('success','',data['message']);
           this.userslist();
           this.addUserModal.hide();
           this.form.reset();

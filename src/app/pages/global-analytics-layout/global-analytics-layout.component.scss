@@ -2,11 +2,6 @@
     background: #e7e7e7 !important;
 }
 
-.lblfnt{
-    font-size: 15px !important;
-    font-weight: 500 !important;
-    margin-bottom: 0px;
-}
 
 ::ng-deep body .ui-corner-top {
     border-top-left-radius: 3px !important;
@@ -19,6 +14,15 @@
     text-decoration: none;
     border: 0px !important;
     height: 0px !important;
+} 
+
+
+::ng-deep .customValidMessage .ui-widget {
+    font-family: "Segoe UI", "Helvetica Neue", sans-serif !important;
+    font-size: 16px;
+    text-decoration: none;
+    border: 0px !important;
+    height: auto !important;
 } 
 
 ::ng-deep body .ui-tabmenu .ui-tabmenu-nav {
@@ -114,6 +118,63 @@
     vertical-align: middle;
     padding: 9px !important;
 }
+
+
+:host /deep/ a.sort.asc::after, a.sort.desc::after {
+    content: '';
+    display: inline-block !important;
+    width: 0 !important;
+    height: 0 !important;
+    border-bottom: 4px solid #fff !important;
+    border-top: 4px solid transparent !important;
+    border-left: 4px solid transparent !important;
+    border-right: 4px solid transparent !important;
+    margin-bottom: 2px;
+}
+
+// :host /deep/ .ng2-smart-action {
+//     color: #3e4798 !important;
+//     margin: 2px;
+// }
+
+:host /deep/  .iconred{
+  color: red !important;
+  margin: 2px;
+  font-size: 15px;
+  margin-left: 4px;
+}
+:host /deep/ .iconblue{
+    color: #89C4F4 !important;
+    margin: 2px;
+    font-size: 15px;
+    margin-right: 4px;
+}
+
+
+::ng-deep .mat-card-header-text{
+    margin: 0px !important; 
+}
+
+
+:host /deep/ ng2-smart-table table  { 
+    font-size: 17px;
+ } 
+
+
+::ng-deep .ngsmarttable a {
+    color: azure !important;
+    text-decoration: none !important;
+ }
+
+ ::ng-deep .ng2-smart-filters{
+     display: none !important;
+ }
+
+ :host /deep/ ng2-smart-table table th  { 
+    background-color: #3e4798;
+    color: azure;
+    font-weight: 500 !important;
+ } 
 
 
 .margin8{

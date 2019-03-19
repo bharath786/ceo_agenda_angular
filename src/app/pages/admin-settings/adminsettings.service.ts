@@ -30,11 +30,11 @@ export class AdminsettingsService {
   deleteRecordAPI = url + "user-delete";
   userStatusAPI = url + "user-status";
   getEntiesListAPI = url + "get-divisions";
-  resendMailAPI = url+"send-verification-mail";
-  insertUserEntitiesAPI = url+"Insert-user-entity-assignment";
-  getUserRelatedEntitiesAPI = url+"Get-user-assigned-entities";
+  resendMailAPI = url + "send-verification-mail";
+  insertUserEntitiesAPI = url + "Insert-user-entity-assignment";
+  getUserRelatedEntitiesAPI = url + "Get-user-assigned-entities";
   getUserEntitiesListAPI = url + "Get-user-assigned-entities-names";
-  getEntityDataAPI = url+ "get-entity-data"
+  getEntityDataAPI = url + "get-entity-data"
 
   //For Structure API's
   getStructureAPI = url + "get-structure";
@@ -68,7 +68,7 @@ export class AdminsettingsService {
   getEntitiesAPI = url + "get-lookup-entity";
   getTargetTemplateAPI = url + "get-target-template";
   upsertTargetAPI = url + "add-edit-target-value";
-  getTargetValueAPI = url+ "get-target-value";
+  getTargetValueAPI = url + "get-target-value";
 
 
 
@@ -87,14 +87,14 @@ export class AdminsettingsService {
     return this.http.get(this.getLocationsAPI + '/' + divisonId, this.getHeaders())
   }
 
-  upsertTarget(targetvalues){
+  upsertTarget(targetvalues) {
     return this.http.post(this.upsertTargetAPI, targetvalues, this.getHeaders())
   }
 
-  getUserEntitiesList(encryptUserId){
+  getUserEntitiesList(encryptUserId) {
 
     //let sessionUser = JSON.parse(localStorage['Session_name'])
-    return this.http.get(this.getUserEntitiesListAPI +'/?userId='+ encryptUserId, this.getHeaders() )
+    return this.http.get(this.getUserEntitiesListAPI + '/?userId=' + encryptUserId, this.getHeaders())
   }
 
   //For all locations based on divison
@@ -102,16 +102,16 @@ export class AdminsettingsService {
     return this.http.get(this.getEntitiesAPI + '/' + locationId, this.getHeaders())
   }
 
-  getTargetTemplate(){
+  getTargetTemplate() {
     return this.http.get(this.getTargetTemplateAPI, this.getHeaders())
   }
 
-  getTargetValue(){
+  getTargetValue() {
     return this.http.get(this.getTargetValueAPI, this.getHeaders())
   }
 
-  getEntityData(data){
-    return this.http.post(this.getEntityDataAPI,data, this.getHeaders())
+  getEntityData(data) {
+    return this.http.post(this.getEntityDataAPI, data, this.getHeaders())
   }
 
 
@@ -132,18 +132,18 @@ export class AdminsettingsService {
   }
 
   //Manage Users Methods
-  insertUserEntities(data){
+  insertUserEntities(data) {
     return this.http.post(this.insertUserEntitiesAPI, data, this.getHeaders())
   }
-  getUserRelatedEntities(userId){
-  return this.http.get(this.getUserRelatedEntitiesAPI+'?UserId='+userId, this.getHeaders())
+  getUserRelatedEntities(userId) {
+    return this.http.get(this.getUserRelatedEntitiesAPI + '?UserId=' + userId, this.getHeaders())
   }
   //For Adding New User
   userUpsert(values) {
     return this.http.post(this.userUpsertAPI, values, this.getHeaders())
   }
 
-  resendMail(values){
+  resendMail(values) {
     return this.http.post(this.resendMailAPI, values, this.getHeaders())
   }
 
@@ -152,8 +152,8 @@ export class AdminsettingsService {
     return this.http.get(this.usersListAPI, this.getHeaders())
   }
 
-  getAllEntities(){
-    return this.http.get(this.getEntiesListAPI,this.getHeaders())
+  getAllEntities() {
+    return this.http.get(this.getEntiesListAPI, this.getHeaders())
   }
 
   //Status value
@@ -210,9 +210,18 @@ export class AdminsettingsService {
   // For Setup Tree
   public getSetup(): Observable<any> {
     var EntityDetails = JSON.parse(localStorage['EntityDetails'])
-    
-    return this.http.get(this.getSetupAPI+'?entityId='+EntityDetails.defaultEntityId, this.getHeaders())
+    console.log(EntityDetails)
+
+    return this.http.get(this.getSetupAPI + '?entityId=' + EntityDetails.defaultEntityId + '&isTarget=' + null+'&filterYear='+EntityDetails.year, this.getHeaders())
   }
+
+  // For Setup Tree
+  public getTarget(): Observable<any> {
+    var EntityDetails = JSON.parse(localStorage['EntityDetails'])
+
+    return this.http.get(this.getSetupAPI + '?entityId=' + EntityDetails.defaultEntityId + '&isTarget=' + true + '&filterYear='+EntityDetails.year, this.getHeaders())
+  }
+
 
   //For deleting Dimension
   deleteDimension(id) {
@@ -284,169 +293,17 @@ export class AdminsettingsService {
     return this.http.get(this.getStructureAPI, this.getHeaders())
   }
 
-  getDimensionEntity(entityId){
-    return this.http.get(this.getDimensionsEntityBasedAPI+"?entityId="+entityId,this.getHeaders())
+  getDimensionEntity(entityId) {
+    return this.http.get(this.getDimensionsEntityBasedAPI + "?entityId=" + entityId, this.getHeaders())
   }
 
-
-
-  public getmarketingJSON(): Observable<any> {
-    return this.http.get("../../../assets/marketing.json")
+  //For target Values
+  getKPITargetMonthsWeeksData(data) {
+    return this.http.post(url + "get-kpi-target-data-months-weeks", data[0], this.getHeaders())
   }
 
-  public gettechnologyJSON(): Observable<any> {
-    return this.http.get("../../../assets/technology.json")
+  postTargetValues(data){
+    return this.http.post(url+'save-kpi-target-data', data,this.getHeaders())
   }
 
-  public getsoltionsJSON(): Observable<any> {
-    return this.http.get("../../../assets/solutions.json")
-  }
-
-  public getprogressJSON(): Observable<any> {
-    return this.http.get("../../../assets/progress.json")
-  }
-
-  public getinnovationJSON(): Observable<any> {
-    return this.http.get("../../../assets/innovation.json")
-  }
-
-  public gettalentJSON(): Observable<any> {
-    return this.http.get("../../../assets/talent.json")
-  }
-
-  public getcultureJSON(): Observable<any> {
-    return this.http.get("../../../assets/culture.json")
-  }
-
-  public getindustriesJSON(): Observable<any> {
-    return this.http.get("../../../assets/industries.json")
-  }
-
-  public getalignmentJSON(): Observable<any> {
-    return this.http.get("../../../assets/alignment.json")
-  }
-
-  public getriskJSON(): Observable<any> {
-    return this.http.get("../../../assets/risk.json")
-  }
-
-  public getinfrastructureJSON(): Observable<any> {
-    return this.http.get("../../../assets/infrastructure.json")
-  }
-
-  public getfinanceJSON(): Observable<any> {
-    return this.http.get("../../../assets/finance.json")
-  }
-
-  public getstatutoryJSON(): Observable<any> {
-    return this.http.get("../../../assets/statutory.json")
-  }
-
-  public getprojectsJSON(): Observable<any> {
-    return this.http.get("../../../assets/projects.json")
-  }
-
-  public getqualityJSON(): Observable<any> {
-    return this.http.get("../../../assets/quality.json")
-  }
-
-  getstructure() {
-    return this.http.get('../../../assets/structure.json')
-      .toPromise()
-      .then(res => <TreeNode[]>res);
-  }
-
-  getFiles() {
-    return this.http.get('../../../assets/setuptree.json')
-      .toPromise()
-      .then(res => <TreeNode[]>res);
-  }
-
-  getMarketing() {
-    return this.http.get('../../../assets/marketing.json')
-      .toPromise()
-      .then(res => <TreeNode[]>res);
-  }
-
-  getTechnology() {
-    return this.http.get('../../../assets/technology.json')
-      .toPromise()
-      .then(res => <TreeNode[]>res);
-  }
-
-  getSolutions() {
-    return this.http.get('../../../assets/solutions.json')
-      .toPromise()
-      .then(res => <TreeNode[]>res);
-  }
-
-  getProgress() {
-    return this.http.get('../../../assets/progress.json')
-      .toPromise()
-      .then(res => <TreeNode[]>res);
-  }
-
-  getInnovation() {
-    return this.http.get('../../../assets/innovation.json')
-      .toPromise()
-      .then(res => <TreeNode[]>res);
-  }
-
-  getTalent() {
-    return this.http.get('../../../assets/talent.json')
-      .toPromise()
-      .then(res => <TreeNode[]>res);
-  }
-
-  getCulture() {
-    return this.http.get('../../../assets/culture.json')
-      .toPromise()
-      .then(res => <TreeNode[]>res);
-  }
-
-  getIndustries() {
-    return this.http.get('../../../assets/industries.json')
-      .toPromise()
-      .then(res => <TreeNode[]>res);
-  }
-
-  getalignment() {
-    return this.http.get('../../../assets/alignment.json')
-      .toPromise()
-      .then(res => <TreeNode[]>res);
-  }
-
-  getrisk() {
-    return this.http.get('../../../assets/risk.json')
-      .toPromise()
-      .then(res => <TreeNode[]>res);
-  }
-
-  getinfrastructure() {
-    return this.http.get('../../../assets/infrastructure.json')
-      .toPromise()
-      .then(res => <TreeNode[]>res);
-  }
-
-  getfinance() {
-    return this.http.get('../../../assets/finance.json')
-      .toPromise()
-      .then(res => <TreeNode[]>res);
-  }
-
-  getstatutory() {
-    return this.http.get('../../../assets/statutory.json')
-      .toPromise()
-      .then(res => <TreeNode[]>res);
-  }
-  getprojects() {
-    return this.http.get('../../../assets/projects.json')
-      .toPromise()
-      .then(res => <TreeNode[]>res);
-  }
-  getquality() {
-    return this.http.get('../../../assets/projects.json')
-      .toPromise()
-      .then(res => <TreeNode[]>res);
-  }
 }

@@ -1,4 +1,4 @@
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ModalModule } from 'ngx-bootstrap';
 import { TreeModule } from 'primeng/tree';
 import { AdminDashboardComponent, NoPermsisionModal, selectEntity } from './pages/admin-dashboard/admin-dashboard.component';
@@ -43,11 +43,16 @@ import { NgbAlertModule, NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap'
 import { NgxDaterangepickerMd } from 'ngx-daterangepicker-material';
 import { UserIdleModule } from 'angular-user-idle';
 import { AppService } from './app.service';
+import { DataTableModule } from 'primeng/primeng'; // Here
+import {ToasterModule, ToasterService} from 'angular2-toaster';
+import { ErrorInterceptService } from './error-intercept.service';
+import { NgHttpLoaderModule } from 'ng-http-loader'; 
 
 @NgModule({
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    ToasterModule.forRoot(),
     FormsModule,
     ReactiveFormsModule,
     AgmCoreModule.forRoot({
@@ -55,6 +60,7 @@ import { AppService } from './app.service';
     }),
     PerfectScrollbarModule,
     CalendarModule.forRoot(),
+    NgHttpLoaderModule.forRoot(),
     SharedModule,
     PipesModule,
     routing,
@@ -64,6 +70,7 @@ import { AppService } from './app.service';
     NgbPaginationModule, NgbAlertModule,
     NgxDaterangepickerMd,
     Daterangepicker,
+    DataTableModule,
     UserIdleModule.forRoot({ idle: 700, timeout: 1, ping: 0 })
   ],
   declarations: [
@@ -94,7 +101,8 @@ import { AppService } from './app.service';
     { provide: PERFECT_SCROLLBAR_CONFIG, useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG },
     { provide: OverlayContainer, useClass: CustomOverlayContainer },
     { provide: LocationStrategy, useClass: HashLocationStrategy },
-    AppService
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptService, multi: true },
+    AppService,ToasterService
     //AppService, LoginService
   ],
   bootstrap: [AppComponent]

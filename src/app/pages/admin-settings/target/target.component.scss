@@ -29,6 +29,19 @@ hr {
     width: 40%;
 }
 
-mat-select{
-    background: #e4e4e4 !important;
+
+.margin-top-0{
+    margin-bottom: 0px !important;
+}
+
+::ng-deep .customValidMessage .ui-widget {
+    font-family: "Segoe UI", "Helvetica Neue", sans-serif !important;
+    font-size: 16px;
+    text-decoration: none;
+    border: 0px !important;
+    height: auto !important;
+} 
+
+.greybackground{
+    background: #e7e7e7 !important;
 }

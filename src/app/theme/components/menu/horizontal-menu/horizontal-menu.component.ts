@@ -66,7 +66,7 @@ export class HorizontalMenuComponent implements OnInit {
       new Menu(8, 'Setup', '/adminsettings/setup', null, 'build', null, false, 5),
       new Menu(9, 'Structure', '/adminsettings/structure', null, 'memory', null, false, 5),
       new Menu(10, 'Manage Users', '/adminsettings/manageusers', null, 'people_outline', null, false, 5),
-      new Menu(11, 'Preferences', '/adminsettings/preferences', null, 'chat_bubble', null, false, 5),
+      //new Menu(11, 'Preferences', '/adminsettings/preferences', null, 'chat_bubble', null, false, 5),
       new Menu(27, 'Target', '/adminsettings/target', null, 'done_all', null, false, 5),
     ];
 

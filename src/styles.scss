@@ -2,6 +2,7 @@
 @import url('https://fonts.googleapis.com/icon?family=Material+Icons');
 @import url('https://cdn.quilljs.com/1.2.2/quill.snow.css');
 @import url('https://cdn.quilljs.com/1.2.2/quill.bubble.css');
+@import '../node_modules/angular2-toaster/toaster.css';
 
 // indigo-pink, deeppurple-amber, purple-green and pink-bluegrey.
 @import 'assets/indigo-pink.css';
@@ -87,6 +88,11 @@ width: 145px !important;
 }
 
 //Styles End here for tree
+.lblfnt{
+  font-size: 15px !important;
+  font-weight: 500 !important;
+  margin-bottom: 0px;
+}
 
 
 
@@ -451,7 +457,7 @@ border-radius: 2px !important;
       border-bottom-right-radius: 3px;
       border-bottom-left-radius: 3px;
       padding: 10px;
-      margin-top: 55px;
+      margin-top: 25px;
   }
 
   //Styles for timeline ends here

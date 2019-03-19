@@ -23,44 +23,136 @@
     <div *ngIf="activeItem['label']=='Highlights'">
       <div class="row">
         <div class="col-sm-12">
+          <div *ngIf="kpiDetails == null && summary == true">
+            <table class="table table-bordered table-striped text-center table-responsive">
+              <thead>
+                <tr>
+                  <th class="thblue">KRA</th>
+                  <th class="thblue">KPI</th>
+                  <th class="thblue">Max</th>
+                  <th class="thblue">Min</th>
+                  <th class="thblue">Average</th>
+                  <th class="thblue">Target</th>
+                </tr>
+              </thead>
+              <tbody *ngFor="let item of dimensionSummary">
+                <tr *ngFor="let subItem of item;let idx = index ">
+                  <td *ngIf="idx==0" [attr.rowspan]=item.length style="vertical-align: middle;"> {{subItem.KRA_Name}}</td>
+                  <td> {{subItem.KPI_Name}}</td>
+                  <td>{{subItem.int_range_max_value}} </td>
+                  <td> {{subItem.int_range_minmum_value}}</td>
+                  <td> {{subItem.Average_Value}}</td>
+                  <td> {{subItem.Target_Value != null ? subItem.Target_Value : "--"}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div *ngIf="kpiDetails != null" class="">
+            <div class="border">
+              <div class="portlet-title">
+                <div class="caption">
+                  &nbsp;{{kpiDetails.KPIName}}
+                </div>
+              </div>
+
+              <div *ngIf="kpiDetails.isScope == false && kpiDataType =='Numeric'" [chart]="chartData"></div>
+              <div *ngIf="kpiDetails.isScope == false && kpiDataType =='Binary'" [chart]="binaryChartData"></div>
+              <div
+                *ngIf="kpiDetails.isScope == true && summary== false && (kpiDataType =='Numeric' || kpiDataType =='Binary')"
+                class="col-md-12" style="background-color: white;">
+                <div class="col-md-5">
+                </div>
+
+                <div class="col-md-4 pull-right margin-top">
+                  <mat-select class="form-control" [(ngModel)]="defaultSelectedScope"
+                    (selectionChange)="onScopeSelect($event.value)">
+                    <mat-option *ngFor="let item of scopeList" [value]="item.scopeId">{{item.scopeName}}</mat-option>
+                  </mat-select>
+                </div>
+                <label class="lblfnt margin-top20 pull-right">{{kpiDetails.scopeAlias}}</label>
+              </div>
+              <div style="width: 100%; height: 350px;" *ngIf="kpiDetails.isScope == true && kpiDataType =='Numeric'"
+                [chart]="chartDataWithScope"></div>
+              <div style="width: 100%; height: 400px;" *ngIf="kpiDetails.isScope == true && kpiDataType =='Binary'"
+                [chart]="binaryChartDataWithScope"></div>
+
+              <div *ngIf="kpiDataType=='Text Numeric' || kpiDataType=='Text'" class="">
+                <ul class="timeline">
+                  <li *ngFor="let item of KPIFilteredSavedData | Filter : filterQuery">
+                    <i class="fa fa-comments bg-blue"></i>
+                    <div class="timeline-item">
+                      <h3 *ngIf="kpiDetails.isScope == true" class="timeline-header"><a style="color:#357ebd;"
+                          href="javascript:;">
+                          {{item.scopeValue}}</a>&nbsp;
+                        <span *ngIf="item.int_numeric_data != null || item.int_numeric_data != undefined"
+                          class="badge badge-dark">
+                          {{item.int_numeric_data}}
+                        </span>
+                      </h3>
+                      <h3 *ngIf="kpiDetails.isScope == false" class="timeline-header">
+                        <a *ngIf="item.int_month != null" style="color:#357ebd; cursor: context-menu !important;"
+                          href="javascript:;">
+                          {{item.int_month | GetMonthName}}</a>
+                        <a *ngIf="item.int_week != null" style="color:#357ebd; cursor: context-menu !important;"
+                          href="javascript:;">
+                          Week {{item.int_week}}</a>&nbsp;
+                        <span *ngIf="item.int_numeric_data != null || item.int_numeric_data != undefined"
+                          class="badge badge-dark">
+                          {{item.int_numeric_data}}
+                        </span>
+                      </h3>
+                      <div class="timeline-body">
+                        <p>{{item.vc_text_data}}</p>
+                      </div>
+                      <div class="timeline-footer">
+                        <span class="time"><i class="fa fa-calendar"></i> {{item.dt_created_date | date}}</span>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+                <!-- /.table-responsive -->
+              </div>
+            </div>
+          </div>
+
 
         </div>
       </div>
     </div>
 
     <!-- for Data Tab -->
-    <div class="row" *ngIf="activeItem['label']=='Data'">
+    <div class="row" *ngIf="activeItem['label']=='Data' && iskpiDataValid == false">
       <div class="col-sm-12">
         <mat-card class="example-card greybackground">
           <mat-card-header>
-            <mat-card-title>{{kpiDetails.KPIName}}</mat-card-title>
-            <mat-card-subtitle>{{kpiDetails.KPICode}}</mat-card-subtitle>
+            <mat-card-title>{{kpiDetails.KPIName}} ({{kpiDetails.KPICode}})</mat-card-title>
+            <!-- <mat-card-subtitle>{{kpiDetails.KPICode}}</mat-card-subtitle> -->
           </mat-card-header>
           <div class="form-group col-sm-4">
-            <label class="lblfnt">Data Type : &nbsp;</label>
-            <span class="spansize"> {{kpiDataType}}</span>
+            <label class="col-sm-6 no-padding">Data Type : &nbsp;</label>
+            <span class="spansize col-sm-6 no-padding"> {{kpiDataType}}</span>
           </div>
           <div class="form-group col-sm-4">
-            <label class="lblfnt">Scope : &nbsp;</label>
-            <span> {{kpiDetails.isScope == true ? "Yes" : "No" }}</span>
-            <span *ngIf="kpiDetails.isScope == true"> ({{kpiDetails.scopeAlias}})</span>
+            <label class="col-sm-6 no-padding">Scope : &nbsp;</label>
+            <span class="spansize col-sm-6 no-padding"> {{kpiDetails.isScope == true ? "Yes" : "No" }}</span>
+            <!-- <span class="spansize col-sm-6 no-padding" *ngIf="kpiDetails.isScope == true"> ({{kpiDetails.scopeAlias}})</span> -->
           </div>
           <div class="form-group col-sm-4">
-            <label class="lblfnt">Frequency : &nbsp;</label>
-            <span class="spansize">{{dimensionFrequency}}</span>
+            <label class="col-sm-6 no-padding">Frequency : &nbsp;</label>
+            <span class="spansize col-sm-6 no-padding">{{dimensionFrequency}}</span>
           </div>
           <div class="form-group col-sm-4">
-            <label class="lblfnt">Priority Type : &nbsp;</label>
-            <span class="spansize">{{KPIPriorityType}}</span>
+            <label class="col-sm-6 no-padding">Priority Type :&nbsp;</label>
+            <span class="spansize col-sm-6 no-padding">{{KPIPriorityType}}</span>
           </div>
           <div *ngIf="kpiDataType == 'Numeric' || kpiDataType == 'Text Numeric'">
             <div class="form-group col-sm-4">
-              <label class="lblfnt">Min Value : &nbsp;</label>
-              <span class="spansize"> {{kpiDetails.minMax[0]}}</span>
+              <label class="col-sm-6 no-padding">Min Value : &nbsp;</label>
+              <span class="spansize col-sm-6 no-padding"> {{kpiDetails.minMax[0]}}</span>
             </div>
             <div class="form-group col-sm-4">
-              <label class="lblfnt">Max Value : &nbsp;</label>
-              <span class="spansize"> {{kpiDetails.minMax[1]}}</span>
+              <label class="col-sm-6 no-padding">Max Value : &nbsp;</label>
+              <span class="spansize col-sm-6 no-padding"> {{kpiDetails.minMax[1]}}</span>
             </div>
           </div>
           <mat-card-content>
@@ -70,131 +162,133 @@
 
       <div *ngIf="kpiDetails.isScope == false" class="col-sm-12 margin-top">
         <mat-card class="example-card greybackground" style="padding-bottom:0px;">
-          <mat-grid-list *ngIf="kpiDataType!='Text Numeric'" cols="3" rowHeight="100px">
+          <mat-card-content style="padding: 8px;">
             <form [formGroup]="KPIForm" (ngSubmit)="onSubmit(KPIForm.value)" #KPIUpsertForm="ngForm"
               class="form-horizontal">
-              <mat-grid-tile [colspan]="1">
-                <div class="form-group" *ngIf="dimensionFrequency == 'Monthly'">
-                  <label class="col-md-12 lblfnt required">Select Month</label>
-                  <div class="col-md-12">
-                    <mat-select (selectionChange)="onWeekMonthSelection($event.value)" formControlName="Month"
-                      class="form-control" placeholder="Select Month">
-                      <mat-option *ngFor="let item of Months" [value]=item.int_month_id>{{item.vc_month_name}}
-                      </mat-option>
-                    </mat-select>
-                  </div>
+              <div *ngIf="kpiDataType!='Text Numeric'" class="">
+                <div *ngIf="dimensionFrequency == 'Weekly'" class="form-group col-sm-4 margin-top-0">
+                  <label class="col-sm-6 no-padding lblfnt" style="padding-top:8px">Select Week :&nbsp;</label>
+                  <mat-select (selectionChange)="onWeekMonthSelection($event.value)" placeholder="Week"
+                    formControlName="Week" class="col-sm-6 form-control"
+                    style="margin-top:0px; margin-bottom:0px;width:45%; height: 30px;">
+                    <mat-option *ngFor="let item of Weeks" [value]="item.int_week_id">
+                      {{item.vc_week_name}}
+                    </mat-option>
+                  </mat-select>
                 </div>
-                <div class="form-group" *ngIf="dimensionFrequency == 'Weekly'">
-                  <label class="col-md-12 lblfnt required">Select Week</label>
-                  <div class="col-md-12">
-                    <mat-select formControlName="Week" (selectionChange)="onWeekMonthSelection($event.value)"
-                      class="form-control" placeholder="Select Week">
-                      <mat-option *ngFor="let item of Weeks" [value]="item.int_week_id">{{item.vc_week_name}}
-                      </mat-option>
-                    </mat-select>
-                  </div>
+                <div *ngIf="dimensionFrequency == 'Monthly'" class="form-group col-sm-4 margin-top-0">
+                  <label class="col-sm-6 no-padding lblfnt" style="padding-top:8px">Select Month :&nbsp;</label>
+                  <mat-select (selectionChange)="onWeekMonthSelection($event.value)" placeholder="Month"
+                    class="col-sm-6 form-control" formControlName="Month"
+                    style="margin-top:0px; margin-bottom:0px;width:45%; height: 30px;">
+                    <mat-option *ngFor="let item of Months" [value]="item.int_month_id" placeholder="Select Month">
+                      {{item.vc_month_name}}
+                    </mat-option>
+                  </mat-select>
                 </div>
-              </mat-grid-tile>
-              <mat-grid-tile [colspan]="1">
-                <div class="form-group">
-                  <label class="lblfnt col-md-12 required" [ngClass]="{'margin8' : kpiDataType=='Binary'}">Value</label>
-                  <div class="col-md-12">
-                    <input *ngIf="kpiDataType=='Text'" type="text" placeholder="Enter Text" formControlName="textData"
-                      class="col-sm-3 margin-left form-control">
-                    <input *ngIf="kpiDataType=='Numeric'" type="text" formControlName="numericData"
-                      onCopy='return false' onPaste='return false' (keypress)="keyPress($event)"
-                      placeholder="Enter Value" class="col-sm-3 margin-left form-control">
-                    <mat-error
-                      *ngIf="KPIForm.controls.numericData.errors?.required && KPIForm.controls.numericData.touched">
-                      Value
-                      is required</mat-error>
-                    <mat-error
-                      *ngIf="KPIForm.controls.numericData.errors?.min || KPIForm.controls.numericData.errors?.max">
-                      Value should be between Min and Max Value</mat-error>
-                    <mat-radio-group formControlName="binaryData" *ngIf="kpiDataType=='Binary'">
-                      <mat-radio-button value="true">Yes</mat-radio-button>
-                      <mat-radio-button value="false">No</mat-radio-button>
-                    </mat-radio-group>
-                  </div>
+                <div class="col-sm-1"> </div>
+                <div class="form-group margin-top-0"
+                  [ngClass]="{'col-sm-6' : kpiDataType=='Binary', 'col-sm-3' : kpiDataType=='Numeric', 'col-sm-4': kpiDataType == 'Text' }">
+                  <label *ngIf="kpiDataType!='Text'" class="no-padding lblfnt"
+                    [ngClass]="{'col-sm-2' : kpiDataType=='Binary', 'col-sm-6' : kpiDataType!='Binary'}"
+                    style="padding-top:8px">Value :&nbsp;</label>
+                  <label *ngIf="kpiDataType=='Text'" class="no-padding lblfnt col-sm-3" style="padding-top:8px">Text
+                    :&nbsp;</label>
+                  <input type="text" *ngIf="kpiDataType=='Numeric'" pKeyFilter="num"
+                    [ngClass]="{'margin8' : kpiDataType=='Binary'}" formControlName="numericData" placeholder="Target"
+                    class="col-sm-6 form-control" style="margin-top:0px; margin-bottom:0px;width:45%; height: 30px;">
+                  <textarea *ngIf="kpiDataType=='Text'" type="text" placeholder="Enter Text" formControlName="textData"
+                    class="col-sm-3 margin-left form-control" style="width:  70%"></textarea>
+                  <mat-radio-group formControlName="binaryData" *ngIf="kpiDataType=='Binary'">
+                    <mat-radio-button value="true">Yes</mat-radio-button>
+                    <mat-radio-button value="false">No</mat-radio-button>
+                  </mat-radio-group>
                 </div>
+                <p-message style="margin-top:7px;"
+                  *ngIf="KPIForm.controls.textData.errors?.required && KPIForm.controls.textData.touched"
+                  class="col-sm-3 customValidMessage no-padding" severity="error" text="Text is required"></p-message>
+                <p-message *ngIf="KPIForm.controls.numericData.errors?.required && KPIForm.controls.numericData.touched"
+                  class="col-sm-3 customValidMessage no-padding" severity="error" text="Value is required"></p-message>
+                <p-message *ngIf="KPIForm.controls.numericData.errors?.min || KPIForm.controls.numericData.errors?.max"
+                  class="col-sm-3 customValidMessage no-padding" severity="error"
+                  text="Value should be between Min and Max Value"></p-message>
+                <div *ngIf="kpiDataType!='Text'" class="col-sm-1"></div>
 
-              </mat-grid-tile>
-              <mat-grid-tile [colspan]="1" style="margin-top:4px;">
-                <button [disabled]="!KPIUpsertForm.form.valid" type="submit" class="btn btn-success">Save</button>
-              </mat-grid-tile>
+                <button type="submit" [disabled]="!KPIUpsertForm.form.valid"
+                  class="btn btn-success col-sm-1 form-group pull-right margin-top5"
+                  style="margin-right: 0px;">Save</button>
+              </div>
             </form>
-          </mat-grid-list>
-          <mat-grid-list *ngIf="kpiDataType=='Text Numeric'" cols="4" rowHeight="100px">
+
+
             <form [formGroup]="KPIForm" (ngSubmit)="onSubmit(KPIForm.value)" #KPIUpsertForm="ngForm"
               class="form-horizontal">
-              <mat-grid-tile [colspan]="1">
-                <div class="form-group" *ngIf="dimensionFrequency == 'Monthly'">
-                  <label class="col-md-12 lblfnt required">Select Month</label>
-                  <div class="col-md-12">
-                    <mat-select (selectionChange)="onWeekMonthSelection($event.value)" formControlName="Month"
-                      class="form-control" placeholder="Select Month">
-                      <mat-option *ngFor="let item of Months" [value]=item.int_month_id>{{item.vc_month_name}}
-                      </mat-option>
-                    </mat-select>
-                  </div>
+
+              <div *ngIf="kpiDataType=='Text Numeric'" class="col-sm-12 no-padding">
+                <div class="col-sm-4">
+                    <div *ngIf="dimensionFrequency == 'Weekly'" class="form-group margin-top-0">
+                        <label class="col-sm-6 no-padding lblfnt" style="padding-top:8px">Select Week :&nbsp;</label>
+                        <mat-select (selectionChange)="onWeekMonthSelection($event.value)" placeholder="Week"
+                          formControlName="Week" class="col-sm-6 form-control"
+                          style="margin-top:0px; margin-bottom:0px;width:45%; height: 30px;">
+                          <mat-option *ngFor="let item of Weeks" [value]="item.int_week_id">
+                            {{item.vc_week_name}}
+                          </mat-option>
+                        </mat-select>
+                      </div>
+      
+                      <div *ngIf="dimensionFrequency == 'Monthly'" class="form-group margin-top-0">
+                        <label class="col-sm-6 no-padding lblfnt" style="padding-top:8px">Select Month :&nbsp;</label>
+                        <mat-select (selectionChange)="onWeekMonthSelection($event.value)" placeholder="Month"
+                          class="col-sm-6 form-control" formControlName="Month"
+                          style="margin-top:0px; margin-bottom:0px;width:45%; height: 30px;">
+                          <mat-option *ngFor="let item of Months" [value]="item.int_month_id" placeholder="Select Month">
+                            {{item.vc_month_name}}
+                          </mat-option>
+                        </mat-select>
+                      </div>
                 </div>
-                <div class="form-group" *ngIf="dimensionFrequency == 'Weekly'">
-                  <label class="col-md-12 lblfnt required">Select Week</label>
-                  <div class="col-md-12">
-                    <mat-select formControlName="Week" (selectionChange)="onWeekMonthSelection($event.value)"
-                      class="form-control" placeholder="Select Week">
-                      <mat-option *ngFor="let item of Weeks" [value]="item.int_week_id">{{item.vc_week_name}}
-                      </mat-option>
-                    </mat-select>
+                <div class="form-group margin-top-0 col-sm-4" style="padding-left:40px;">
+                    <label class="no-padding lblfnt col-sm-6" style="padding-top:8px">Value :&nbsp;</label>
+                    <input type="text" pKeyFilter="num" [ngClass]="{'margin8' : kpiDataType=='Binary'}"
+                      formControlName="numericData" placeholder="Target" class="col-sm-6 form-control"
+                      style="margin-top:0px; margin-bottom:0px;width:45%; height: 30px;">
                   </div>
+                <div class="col-sm-4" style="padding-left:0px; margin-bottom:5px">  
+                  <p-message *ngIf="KPIForm.controls.numericData.errors?.required && KPIForm.controls.numericData.touched"
+                    class="customValidMessage no-padding" severity="error" text="Value is required"></p-message>
+                  <p-message *ngIf="KPIForm.controls.numericData.errors?.min || KPIForm.controls.numericData.errors?.max"
+                    class="customValidMessage no-padding" severity="error"
+                    text="Value should be between Min - Max"></p-message>
                 </div>
-              </mat-grid-tile>
-              <mat-grid-tile [colspan]="1">
-                <div class="form-group">
-                  <label class="lblfnt required" [ngClass]="{'margin8' : kpiDataType=='Binary'}">Value</label>
-                  <div class="">
-                    <input type="text" formControlName="numericData" onCopy='return false' onPaste='return false'
-                      (keypress)="keyPress($event)" placeholder="Enter Value"
-                      class="col-sm-12 margin-left form-control">
-                    <mat-error
-                      *ngIf="KPIForm.controls.numericData.errors?.required && KPIForm.controls.numericData.touched">
-                      Value
-                      is required</mat-error>
-                    <mat-error
-                      *ngIf="KPIForm.controls.numericData.errors?.min || KPIForm.controls.numericData.errors?.max">
-                      Value should be between Min and Max Value</mat-error>
+             
+              </div>
+              <div *ngIf="kpiDataType=='Text Numeric'" class="col-sm-12 no-padding">
+                  <div class="col-sm-8" style="padding-right: 0px;">
+                      <div class="form-group margin-top-0" style="padding-right: 0px;">
+                          <label class="col-sm-3 no-padding lblfnt" style="padding-top:8px">Text :&nbsp;</label>
+                          <textarea  type="text" placeholder="Enter Text" formControlName="textData"
+                          class="col-sm-8 margin-left form-control" style="width:65%"></textarea>
+                        </div>
                   </div>
-                </div>
-              </mat-grid-tile>
-              <mat-grid-tile [colspan]="1">
-                <div class="form-group">
-                  <label class="lblfnt required" [ngClass]="{'margin8' : kpiDataType=='Binary'}">Text</label>
-                  <div class="">
-                    <input type="text" placeholder="Enter Text" formControlName="textData"
-                      class="col-sm-12 margin-left form-control">
+         
+                  <div class="col-sm-3" style="padding-left:0px; margin-top: 7px; margin-left: -25px;">
+                      <p-message style="margin-top:10px;"
+                      *ngIf="KPIForm.controls.textData.errors?.required && KPIForm.controls.textData.touched"
+                      class="customValidMessage no-padding" severity="error" text="Text is required"></p-message>
                   </div>
+                  <div class="col-sm-1 pull-right no-padding" style="margin-top:24px;">
+                      <button type="submit" [disabled]="!KPIUpsertForm.form.valid"
+                      class="btn btn-success pull-right margin-top5">Save</button>
+                  </div>
+               
                 </div>
-              </mat-grid-tile>
-              <mat-grid-tile [colspan]="1" style="margin-top:4px;">
-                <button [disabled]="!KPIUpsertForm.form.valid" type="submit" class="btn btn-success">Save</button>
-              </mat-grid-tile>
             </form>
-            <div class="col-sm-12">
-                <mat-error
-                *ngIf="KPIForm.controls.numericData.errors?.required && KPIForm.controls.numericData.touched">
-                Value is required</mat-error>
-              <mat-error
-                *ngIf="KPIForm.controls.numericData.errors?.min || KPIForm.controls.numericData.errors?.max">
-                Value should be between Min and Max Value</mat-error>
-            </div>
-          </mat-grid-list>
-          <mat-card-content>
+
           </mat-card-content>
-          <!-- <mat-card-actions>
-                          <button mat-button>LIKE</button>
-                          <button mat-button>SHARE</button>
-                        </mat-card-actions> -->
+
         </mat-card>
+
         <div class="row">
           <div class="flex-p col-sm-12">
             <div class="col-sm-7 headingdata">
@@ -209,26 +303,27 @@
         <div *ngIf="filterToggle" class="flex-p col-sm-12 greybackground"
           style="margin-bottom:10px; border-radius: 4px !important;">
           <div class="col-sm-4 pull-right">
-              <button class="btn btn-primary pull-right" (click)="getDataOfKPI()" style="margin-top: 6px;">Reset</button>
-             </div>
+            <button class="btn btn-primary pull-right" (click)="getDataOfKPI()" style="margin-top: 6px;">Reset</button>
+          </div>
           <div class="col-sm-4 pull-right">
             <input type="text" [(ngModel)]="filterQuery" class="form-control" placeholder="Search">
           </div>
           <div class="col-sm-4 pull-right">
-              <mat-select *ngIf="dimensionFrequency == 'Weekly'" [(ngModel)]="weekFilter" (selectionChange)="filterWeekKPISavedData($event.value)"
-              class="form-control" placeholder="Select Week">
+            <mat-select *ngIf="dimensionFrequency == 'Weekly'" [(ngModel)]="weekFilter"
+              (selectionChange)="filterWeekKPISavedData($event.value)" class="form-control" placeholder="Select Week">
               <mat-option *ngFor="let item of Weeks" [value]="item.int_week_id">{{item.vc_week_name}}
               </mat-option>
             </mat-select>
-            <mat-select *ngIf="dimensionFrequency == 'Monthly'" [(ngModel)]="monthFilter" (selectionChange)="filterMonthKPISavedData($event.value)"
-            class="form-control" placeholder="Select Month">
-            <mat-option *ngFor="let item of Months" [value]=item.int_month_id>{{item.vc_month_name}}
-            </mat-option>
-          </mat-select>
+            <mat-select *ngIf="dimensionFrequency == 'Monthly'" [(ngModel)]="monthFilter"
+              (selectionChange)="filterMonthKPISavedData($event.value)" class="form-control" placeholder="Select Month">
+              <mat-option *ngFor="let item of Months" [value]=item.int_month_id>{{item.vc_month_name}}
+              </mat-option>
+            </mat-select>
           </div>
         </div>
-        <table class="table table-bordered table-striped text-center table-responsive" [mfData]="KPIFilteredSavedData | Filter : filterQuery"
-        #mf="mfDataTable" [mfRowsOnPage]="10">
+        <table *ngIf="kpiDetails.dataTypeId == 7 || kpiDetails.dataTypeId == 8"
+          class="table table-bordered table-striped text-center table-responsive"
+          [mfData]="KPIFilteredSavedData | Filter : filterQuery" #mf="mfDataTable" [mfRowsOnPage]="10">
           <thead>
             <tr>
               <th class="thblue" *ngIf="kpiDetails.frequencyId == 2">Week</th>
@@ -243,7 +338,7 @@
             <tr *ngIf="mf.data?.length == 0">
               <td colspan="6">No record found</td>
             </tr>
-            
+
             <tr *ngFor="let item of mf.data">
               <td *ngIf="item.int_week != null">Week {{item.int_week}}</td>
               <td *ngIf="item.int_month != null">{{item.int_month | GetMonthName }}</td>
@@ -254,19 +349,37 @@
             </tr>
           </tbody>
           <tfoot>
-              <tr class="removeborder">
-                  <td colspan="7" style="padding-right:0px !important;">
-                      <mfBootstrapPaginator class="pull-right"></mfBootstrapPaginator>
-                  </td>
-              </tr>
+            <tr class="removeborder">
+              <td colspan="7" style="padding-right:0px !important;">
+                <mfBootstrapPaginator class="pull-right"></mfBootstrapPaginator>
+              </td>
+            </tr>
           </tfoot>
         </table>
 
+        <div *ngIf="kpiDetails.dataTypeId == 10 || kpiDetails.dataTypeId == 6">
+          <mat-card [ngClass]="{'greybackground': i%2 == 1}"
+            *ngFor="let item of KPIFilteredSavedData | Filter : filterQuery ; let i = index "
+            style="margin-bottom:5px;">
+            <mat-card-content *ngIf="dimensionFrequency == 'Weekly'">
+              Week: Week {{item.int_week }}
+            </mat-card-content>
+            <mat-card-content *ngIf="dimensionFrequency == 'Monthly'">
+              Month: {{item.int_month | GetMonthName }}
+            </mat-card-content>
+            <mat-card-content *ngIf="kpiDetails['dataTypeId'] == 10">
+              Numeric value : <span>{{item.int_numeric_data }}</span>
+            </mat-card-content>
+            <mat-card-content>
+              <span>{{item.vc_text_data}} </span>
+            </mat-card-content>
+          </mat-card>
+        </div>
       </div>
 
       <div *ngIf="kpiDetails.isScope == true" class="col-sm-12 margin-top">
         <mat-card class="example-card greybackground" style="padding-bottom:0px;">
-          <mat-grid-list cols="4" rowHeight="100px">
+          <mat-grid-list cols="3" rowHeight="100px">
             <form [formGroup]="KPIForm" (ngSubmit)="onSubmit(KPIForm.value)" #KPIUpsertForm="ngForm"
               class="form-horizontal">
               <mat-grid-tile [colspan]="1">
@@ -289,31 +402,26 @@
                   </div>
                 </div>
               </mat-grid-tile>
-              <mat-grid-tile [colspan]="2" style="margin-top: 4px;">
+              <mat-grid-tile [colspan]="1" style="margin-top: 4px;">
                 <a (click)="downloadDatasample()" class="btn btn-primary marginbtn"
                   title="Click to Download Scope Template">
                   <i class="fa fa-download"></i>&nbsp;&nbsp;Download Template
                 </a>
 
-                <a (click)='uploadModalToggle(1)' class="btn btn-primary marginbtn"
-                  title="Click to Upload Scope Document">
-                  <i class="fa fa-upload"></i>&nbsp;&nbsp;Upload
-                </a>
-
               </mat-grid-tile>
               <mat-grid-tile [colspan]="1" style="margin-top: 4px;">
-                <button [disabled]="!KPIUpsertForm.form.valid" [ngClass]="{'customDisabled': isFilePresent == false}"
-                  type="submit" class="btn btn-success">Save</button>
+                <!-- <button [disabled]="!KPIUpsertForm.form.valid" [ngClass]="{'customDisabled': isFilePresent == false}"
+                  type="submit" class="btn btn-success">Save</button> -->
+                <button type="submit" [disabled]="!KPIUpsertForm.form.valid" class="btn btn-primary marginbtn"
+                  title="Click to Upload Scope Document">
+                  <i class="fa fa-upload"></i>&nbsp;&nbsp;Upload
+                </button>
               </mat-grid-tile>
 
             </form>
           </mat-grid-list>
           <mat-card-content>
           </mat-card-content>
-          <!-- <mat-card-actions>
-                        <button mat-button>LIKE</button>
-                        <button mat-button>SHARE</button>
-                      </mat-card-actions> -->
         </mat-card>
         <div class="row">
           <div class="flex-p col-sm-12">
@@ -329,65 +437,130 @@
         <div *ngIf="filterToggle" class="flex-p col-sm-12 greybackground"
           style="margin-bottom:10px; border-radius: 4px !important;">
           <div class="col-sm-4 pull-right">
-             <button class="btn btn-primary pull-right" (click)="getDataOfKPI()" style="margin-top: 6px;">Reset</button>
-            </div>
+            <button class="btn btn-primary pull-right" (click)="getDataOfKPI()" style="margin-top: 6px;">Reset</button>
+          </div>
           <div class="col-sm-4 pull-right">
             <input type="text" [(ngModel)]="filterQuery" class="form-control" placeholder="Search">
           </div>
           <div class="col-sm-4 pull-right">
-              <mat-select *ngIf="dimensionFrequency == 'Weekly'" [(ngModel)]="weekFilter" (selectionChange)="filterWeekKPISavedData($event.value)"
-              class="form-control" placeholder="Select Week">
+            <mat-select *ngIf="dimensionFrequency == 'Weekly'" [(ngModel)]="weekFilter"
+              (selectionChange)="filterWeekKPISavedData($event.value)" class="form-control" placeholder="Select Week">
               <mat-option *ngFor="let item of Weeks" [value]="item.int_week_id">{{item.vc_week_name}}
               </mat-option>
             </mat-select>
-            <mat-select *ngIf="dimensionFrequency == 'Monthly'" [(ngModel)]="monthFilter" (selectionChange)="filterMonthKPISavedData($event.value)"
-            class="form-control" placeholder="Select Month">
-            <mat-option *ngFor="let item of Months" [value]=item.int_month_id>{{item.vc_month_name}}
-            </mat-option>
-          </mat-select>
+            <mat-select *ngIf="dimensionFrequency == 'Monthly'" [(ngModel)]="monthFilter"
+              (selectionChange)="filterMonthKPISavedData($event.value)" class="form-control" placeholder="Select Month">
+              <mat-option *ngFor="let item of Months" [value]=item.int_month_id>{{item.vc_month_name}}
+              </mat-option>
+            </mat-select>
           </div>
         </div>
-        <table class="table table-bordered table-striped text-center table-responsive" [mfData]="KPISavedData | Filter : filterQuery"
-        #mf="mfDataTable" [mfRowsOnPage]="10">
-          <thead>
-            <tr>
-              <th class="thblue" *ngIf="kpiDetails.frequencyId == 2">Week</th>
-              <th class="thblue" *ngIf="kpiDetails.frequencyId == 4">Month</th>
-              <th scope="col" class="thblue">Scope Code</th>
-              <th scope="col" class="thblue">Scope Value</th>
-              <th class="thblue" *ngIf="kpiDetails.dataTypeId == 7 || kpiDetails.dataTypeId == 10">Numeric Data</th>
-              <th class="thblue" *ngIf="kpiDetails.dataTypeId == 6 || kpiDetails.dataTypeId == 10">Text Data</th>
-              <th class="thblue" *ngIf="kpiDetails.dataTypeId == 8">Binary Data</th>
-              <th scope="col" class="thblue">Target</th>
+        <form [formGroup]="KPIBandDataForm" (ngSubmit)="onSubmitKPI(KPIBandDataForm.value)"
+          #kpiNumericBinaryUpsert="ngForm" class="form-horizontal">
+          <table *ngIf="kpiDetails.dataTypeId == 7 || kpiDetails.dataTypeId == 8"
+            class="table table-bordered table-striped text-center table-responsive"
+            [mfData]="KPISavedData | Filter : filterQuery" #mf="mfDataTable" [mfRowsOnPage]="10">
+            <thead>
+              <tr>
+                <th class="thblue" *ngIf="kpiDetails.frequencyId == 2">Week</th>
+                <th class="thblue" *ngIf="kpiDetails.frequencyId == 4">Month</th>
+                <th scope="col" class="thblue">Scope Code</th>
+                <th scope="col" class="thblue">Scope Value</th>
+                <th class="thblue" *ngIf="kpiDetails.dataTypeId == 7 || kpiDetails.dataTypeId == 10">Numeric Data</th>
+                <th class="thblue" *ngIf="kpiDetails.dataTypeId == 8">Binary Data</th>
+                <th scope="col" class="thblue">Target</th>
 
-            </tr>
-          </thead>
-          <tbody>
-              <tr *ngIf="mf.data?.length == 0">
-                  <td colspan="6">No record found</td>
-                </tr>
-                
-            <tr *ngFor="let item of mf.data">
-              <td *ngIf="item.int_week != null">Week {{item.int_week}}</td>
-              <td *ngIf="item.int_month != null">{{item.int_month | GetMonthName }}</td>
-              <td>{{item.scopeCode}}</td>
-              <td>{{item.scopeValue}}</td>
-              <td *ngIf="item.int_numeric_data != null">{{item.int_numeric_data }}</td>
-              <td *ngIf="item.vc_text_data != null">{{item.vc_text_data }}</td>
-              <td *ngIf="item.bt_binary_data != null">{{item.bt_binary_data }}</td>
-              <td>--</td>
-            </tr>
-          </tbody>
-          <tfoot>
-              <tr class="removeborder">
-                  <td colspan="7" style="padding-right:0px !important;">
-                      <mfBootstrapPaginator class="pull-right"></mfBootstrapPaginator>
-                  </td>
               </tr>
-          </tfoot>
-        </table>
-      </div>
+            </thead>
+            <tbody>
+              <tr *ngIf="mf.data?.length == 0">
+                <td colspan="6">No record found</td>
+              </tr>
 
+              <tr *ngFor="let item of mf.data">
+                <td *ngIf="item.int_week != null">Week {{item.int_week}}</td>
+                <td *ngIf="item.int_month != null">{{item.int_month | GetMonthName }}</td>
+                <td>{{item.scopeCode}}</td>
+                <td>{{item.scopeValue}}</td>
+                <td *ngIf="this.kpiDetails['dataTypeId'] == 7">
+                  <span *ngIf="KPIBandDataId != item.int_kpi_data_id">{{item.int_numeric_data}} </span>
+                  <input formControlName="numericData" class="form-control"
+                    *ngIf="KPIBandDataId === item.int_kpi_data_id" type="number" [(ngModel)]="item.int_numeric_data">
+                </td>
+                <td *ngIf="item.bt_binary_data != null">
+                  <span
+                    *ngIf="KPIBandDataId != item.int_kpi_data_id">{{item.bt_binary_data == true ? "Yes" : "No" }}</span>
+                  <mat-radio-group formControlName="binaryData" [(ngModel)]="item.bt_binary_data"
+                    *ngIf="KPIBandDataId === item.int_kpi_data_id">
+                    <mat-radio-button [value]='true'>Yes</mat-radio-button>
+                    <mat-radio-button [value]='false'>No</mat-radio-button>
+                  </mat-radio-group>
+                </td>
+                <td>
+                  <button type="submit" *ngIf="KPIBandDataId === item.int_kpi_data_id"
+                    class="btn btn-success marginbtn">Update</button>
+                  <button type="button" *ngIf="KPIBandDataId === item.int_kpi_data_id" (click)="cancelBand()"
+                    class="btn btn-danger marginbtn">Cancel</button>
+                  <i *ngIf="KPIBandDataId != item.int_kpi_data_id" (click)="editBand(item)" class="fa fa-edit blue"
+                    style="font-size:18px; margin: 3px; cursor: pointer;"></i>
+                  <i *ngIf="KPIBandDataId != item.int_kpi_data_id" (click)="deleteBand(item)" class="fa fa-trash-o red"
+                    style="font-size:18px; margin: 3px; cursor: pointer;"></i>
+                </td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr class="removeborder">
+                <td colspan="7" style="padding-right:0px !important;">
+                  <mfBootstrapPaginator class="pull-right"></mfBootstrapPaginator>
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+        </form>
+
+        <!-- <ng2-smart-table *ngIf="kpiDetails.dataTypeId != 10" class="ngsmarttable" (editConfirm)="onSaveConfirm($event)" [source]="KPIFilteredSavedData | Filter : filterQuery" [settings]="kpiDataTable"></ng2-smart-table> -->
+
+        <div *ngIf="kpiDetails.dataTypeId == 10 || kpiDetails.dataTypeId == 6 ">
+          <form [formGroup]="KPIBandDataForm" (ngSubmit)="onSubmitKPI(KPIBandDataForm.value)" #kpiBandForm="ngForm"
+            class="form-horizontal">
+            <mat-card [ngClass]="{'greybackground': i%2 == 1}"
+              *ngFor="let item of KPIFilteredSavedData | Filter : filterQuery ; let i = index "
+              style="margin-bottom:5px;">
+              <mat-card-header>
+                <mat-card-title>{{item.scopeValue}}</mat-card-title>
+              </mat-card-header>
+              <mat-card-content *ngIf="dimensionFrequency == 'Weekly'">
+                Scope Code: {{item.scopeCode}} | Week: Week {{item.int_week }}
+              </mat-card-content>
+              <mat-card-content *ngIf="dimensionFrequency == 'Monthly'">
+                Scope Code: {{item.scopeCode}} | Month: {{item.int_month | GetMonthName }}
+              </mat-card-content>
+              <mat-card-content *ngIf="kpiDetails['dataTypeId'] == 10">
+                Numeric value : <span *ngIf="KPIBandDataId != item.int_kpi_data_id">{{item.int_numeric_data }}</span>
+                <input class="" formControlName="numericData" *ngIf="KPIBandDataId === item.int_kpi_data_id"
+                  type="number" [(ngModel)]="item.int_numeric_data">
+              </mat-card-content>
+              <mat-card-content>
+                <span *ngIf="KPIBandDataId != item.int_kpi_data_id">{{item.vc_text_data}} </span>
+                <!-- <input  *ngIf="KPIBandDataId === item.int_kpi_data_id" type="text" [(ngModel)]="item.vc_text_data"> -->
+                <textarea formControlName="textData" class="form-control" *ngIf="KPIBandDataId === item.int_kpi_data_id"
+                  type="text" [(ngModel)]="item.vc_text_data"></textarea>
+              </mat-card-content>
+              <mat-card-actions class="pull-right">
+                <button type="submit" *ngIf="KPIBandDataId === item.int_kpi_data_id"
+                  class="btn btn-success marginbtn">Update</button>
+                <button type="button" *ngIf="KPIBandDataId === item.int_kpi_data_id" (click)="cancelBand()"
+                  class="btn btn-danger marginbtn">Cancel</button>
+                <button *ngIf="KPIBandDataId != item.int_kpi_data_id" class="btn btn-primary marginbtn"
+                  (click)="editBand(item)">Edit</button>
+                <button type="button" (click)="deleteBand(item)" *ngIf="KPIBandDataId != item.int_kpi_data_id"
+                  class="btn btn-danger marginbtn"><i class="fa fa-trash-o"></i></button>
+              </mat-card-actions>
+            </mat-card>
+          </form>
+        </div>
+
+      </div>
 
       <!-- For Upload Modal Popup -->
       <div class="modal fade" bsModal #uploadModal="bs-modal" [config]="{backdrop: 'static'}" role="dialog">
@@ -408,6 +581,7 @@
                       accept=".csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
                       maxlength="50" class="form-control" [(ngModel)]="inputScopeFile" type="file"
                       [ngClass]="{'disablecustom': scopeValue}" (change)="handleFileSelect($event)">
+                    <!-- <span *ngIf="file != null || file != undefined">{{file.name}}</span>  -->
                   </div>
                 </div>
               </div>
@@ -478,6 +652,55 @@
           </div>
         </div>
       </div>
+
+
+    </div>
+
+    <div class="row" *ngIf="activeItem['label']=='Data' && iskpiDataValid == true">
+      <div class="col-sm-12 margintop10">
+        <table class="table table-bordered table-striped text-center table-responsive">
+          <thead>
+            <tr>
+              <th class="thblue">Scope Value</th>
+              <th class="thblue">Scope Code</th>
+              <th class="thblue" *ngIf="kpiDetails.dataTypeId == 7 || kpiDetails.dataTypeId == 10">Numeric
+                Data</th>
+              <th class="thblue" *ngIf="kpiDetails.dataTypeId == 6 || kpiDetails.dataTypeId == 10">Text Data
+              </th>
+              <th class="thblue" *ngIf="kpiDetails.dataTypeId == 8">Binary Data</th>
+              <th class="thblue">Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of valid_invalid_ScopeRecords">
+              <td>{{item.scopeValue}}</td>
+              <td>{{item.scopeCode}}</td>
+              <td *ngIf="kpiDetails.dataTypeId == 7 || kpiDetails.dataTypeId == 10">{{item.numericData}}</td>
+              <td *ngIf="kpiDetails.dataTypeId == 6 || kpiDetails.dataTypeId == 10">{{item.textData}}</td>
+              <td *ngIf="kpiDetails.dataTypeId == 8">{{item.BinaryData}}</td>
+              <td>
+                <i *ngIf="item.isValid==true" class="fa fa-check green" tooltip="Correct Data" placement="right"></i>
+                <i *ngIf="item.isValid==false" class="fa fa-times red" tooltip={{item.errorMessage}}
+                  placement="right"></i>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="col-sm-12 pull-right">
+        <button type="button" class="btn btn-danger pull-right marginbtn" (click)="kpiDataModalToggle(2)"
+          data-dismiss="modal">Close</button>
+
+        <button *ngIf="check == true" (click)="kpiDataModalToggle(3)" type="button"
+          class="btn btn-success marginbtn pull-right" data-dismiss="modal">Still Proceed</button>
+
+        <button *ngIf="check == false" (click)="kpiDataModalToggle(3)" type="button"
+          class="btn btn-success marginbtn pull-right" data-dismiss="modal">Add</button>
+        <!-- <button *ngIf="scopeData.length == 0" type="button" class="btn btn-default"
+                      data-dismiss="modal">Upload</button> -->
+
+      </div>
+
     </div>
 
   </div>

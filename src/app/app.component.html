@@ -5,10 +5,20 @@
             [class.compact]="settings.menuType == 'compact'" 
             [class.mini]="settings.menuType == 'mini'" >
     <router-outlet></router-outlet>
-    <div id="app-spinner" [class.hide]="!settings.loadingSpinner"> 
+    <!-- <div id="app-spinner" [class.hide]="!settings.loadingSpinner"> 
         <mat-spinner color="primary"></mat-spinner>  
         <h4>loading...</h4>
-    </div>
-</div>  
+    </div> -->
 
+</div>  
+<toaster-container></toaster-container>
+<ng-http-loader
+[backdrop]="false"
+[backgroundColor]="'#1a237e'"
+[debounceDelay]="100"
+[extraDuration]="300"
+[minDuration]="300"
+[opacity]=".6"
+[spinner]="spinkit.skWave">
+</ng-http-loader>
 

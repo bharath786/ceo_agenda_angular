@@ -2,9 +2,11 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ModalDirective } from 'ngx-bootstrap';
 import { AdminsettingsService } from '../adminsettings.service';
 import { DownloadExcelService } from '../../download-excel.service';
-import * as XLSX from 'xlsx';
 import { MatSnackBar, MatOptionSelectionChange } from '@angular/material';
 import { FormBuilder, Validators } from '@angular/forms';
+import { TreeNode } from 'primeng/api';
+import { Router } from '@angular/router';
+import { ToasterService } from 'angular2-toaster/src/toaster.service';
 
 
 @Component({
@@ -17,296 +19,240 @@ export class TargetComponent implements OnInit {
   @ViewChild('uploadModal') public uploadModal: ModalDirective;
   @ViewChild('downloadModal') public downloadModal: ModalDirective;
 
-  currentYear = new Date().getFullYear();
-  currentMonth = new Date().getMonth() + 1;
-  divisions: any = [];
-  locations: any;
-  entities: any;
-  TargetTemplate: any = [];
-  downloadData: any = [];
-  datatemplate: any = [];
-  targetfiltered: any;
-  file: File;
-  arrayBuffer: any;
-  submittedfile: any[];
-  uploadTemplate: any = [];
-  finalTargetFile: any = [];
-  targetValue: any;
+
+  //For Steup Tree
+  files: TreeNode[] = [];
+  //For selected File
   public filterQuery = "";
-  totalYears:  any = [];
-  filteredTargetValues: any;
-  YearMonths: any = [];
-  selectedYear: any;
-  selectedMonth: any;
-  selectedDivisionId: any;
-  filterForm: any;
-  SelectedLocations: any =[];
-  i: any;
-  differenceYears: any=[];
+  weekFilter: any = "";
+  monthFilter: any = "";
+  selectedFile: TreeNode[];
+  mainvalue: any;
+  somevalue: any;
+  addtoggle: any;
+  selectedradiobtn = 1;
+  scopeValue: boolean;
+  analyticsId: any;
+  dimensionId: any;
+  KRAId: any;
+  KPIId: any;
+  KPIHigherOrLower: any;
+  allforms: string;
+  sessionUser: any;
+  dimensionform: any;
+  fileName: any;
+  kpiDetails: any;
+  KPIPriorityType: any;
+  kpiDataType: any;
+  dimensionFrequency: any;
+  Months: any;
+  Weeks: any;
+  targetForm: any;
+  targetData: any[];
+  targetSavedData: any;
+  Data: { 'KPICreatedYear': any; 'KPICreatedMonth': any; 'KPICreatedWeek': any; 'KPIId': any; }[];
+  KPIFilteredTargetData: any[];
 
   constructor(private _adminsettingservice: AdminsettingsService,
-    public fb: FormBuilder,public snackBar: MatSnackBar, 
-    private excelService: DownloadExcelService) { 
+    public fb: FormBuilder, public snackBar: MatSnackBar,
+    private excelService: DownloadExcelService,
+    private setupservice: AdminsettingsService, public router: Router,
+    public toasterService: ToasterService) {
+    //Form to Update Target Values
+    this.targetForm = this.fb.group({
+      'KPIId': null,
+      'numericData': null,
+      'Month': null,
+      'Week': null
+    });
 
-        this.filterForm = this.fb.group({
-          'year': [null],
-          'month': [null],
-          'division': [null],
-          'country': [null],
-          'entity': [null]
-        });
   }
 
   ngOnInit() {
-    this.getTargetTemplateKPI(0);
-    this.getTargetValue()
-    console.log(this.getDifferenceYears((new Date('2010')).getFullYear()), 'years')
-  }
-  getDifferenceYears(year){
-    for(this.i= year; this.i<(new Date()).getFullYear()+1; this.i++){
-      this.differenceYears.push(this.i)
-    }
-    return this.differenceYears
+    //For Loading setup Tree On Load
+    this.getSetup();
   }
 
-
-
-  
-  resetForm(){
-    this.filterForm.reset();
-    this.getTargetValue()
-  }
-  
-
-
-
-  onYearSelect(year){
-    this.selectedYear = year;
-    this._adminsettingservice.getTargetValue().subscribe(
+  //For Getting Dimension Frequencies for Dropdown
+  getDimensionFrequencies() {
+    this._adminsettingservice.getDimensionFrequency().subscribe(
       data => {
-        this.targetValue = data['data']
-        this.targetValue = this.targetValue.filter(x=> x.year==year) 
-        this.YearMonths =[];
-        this.targetValue.forEach(element => {
-          this.YearMonths.push(element.month) 
-          this.YearMonths = Array.from(new Set(this.YearMonths));
-        }); 
+        //Assigning the values to the dimension frequency variable
+        this.dimensionFrequency = data['data']
+        this.dimensionFrequency = this.dimensionFrequency.filter(x => x.lookupId == this.kpiDetails.frequencyId);
+        this.dimensionFrequency = this.dimensionFrequency[0]['lookupName']
+      },
+      error => {
+        console.log(error);
       }
     )
   }
 
-  onMonthSelect(month){
-    this._adminsettingservice.getTargetValue().subscribe(
-      data => {
-        this.selectedMonth = month;
-        this.targetValue = data['data']
-        this.targetValue = this.targetValue.filter(x=> x.year==this.selectedYear && x.month == month)
-        this.targetValue.forEach(element => {
-          this.divisions = [];
-        this.divisions.push({Name: element.divisionName, Id: element.divisionId}  ) 
-        this.divisions = Array.from(new Set(this.divisions));
-        }); 
-      }
-    )
-  }
-
-  onDivisionSelect(DivisionId){
-    this._adminsettingservice.getTargetValue().subscribe(
-      data => {
-        this.selectedDivisionId = DivisionId;
-        this.targetValue = data['data']
-        this.targetValue = this.targetValue.filter(x=> x.year==this.selectedYear 
-          && x.month == this.selectedMonth && x.divisionId == DivisionId)
-        this.targetValue.forEach(element => {
-          this.SelectedLocations =[];
-          this.SelectedLocations.push({LocationId : element.locationId, LocationName : element.countryName}) 
-          this.SelectedLocations = Array.from(new Set(this.SelectedLocations));
-        }); 
-      }
-    )
-    console.log(this.divisions)
-
-  }
-
-  incomingfile(event) {
-    this.file = event.target.files[0];
-  }
-
-  Upload() {
-    let fileReader = new FileReader();
-    fileReader.onload = (e) => {
-      this.arrayBuffer = fileReader.result;
-      var data = new Uint8Array(this.arrayBuffer);
-      var arr = new Array();
-      for (var i = 0; i != data.length; ++i) arr[i] = String.fromCharCode(data[i]);
-      var bstr = arr.join("");
-      var workbook = XLSX.read(bstr, { type: "binary" });
-      var first_sheet_name = workbook.SheetNames[0];
-      var worksheet = workbook.Sheets[first_sheet_name];
-      console.log(XLSX.utils.sheet_to_json(worksheet, { raw: true }));
-      let submittedfile = XLSX.utils.sheet_to_json(worksheet, { raw: true })
-      this.comparefiles(submittedfile);
-    }
-    fileReader.readAsArrayBuffer(this.file);
-    this.getTargetValue();
-    this.uploadModal.hide();
-  }
-
-
-  /*  testing */
-  comparefiles(submittedfile) {
-    console.log(submittedfile, 'submitted file');
-
-    var testing = [];
-
-    this._adminsettingservice.getTargetTemplate().subscribe(
-      data => {
-        console.log(data['data'], "main data");
-        this.uploadTemplate = data['data'];
-
-        submittedfile.forEach(element => {
-          for (var i = 0; i < this.uploadTemplate.length; i++) {
-
-            if (this.uploadTemplate[i].KPITitle == element.KPITitle && this.uploadTemplate[i].DimensionTitle == element.DimensionTitle && this.uploadTemplate[i].KRATitle == element.KRATitle) {
-
-              if (element['year'] >= this.currentYear && element['month'] >= this.currentMonth && element['target'] <= 100 && element['target'] != null) {
-                element['KPIId'] = this.uploadTemplate[i].KPIId;
-                let sessionUser = JSON.parse(localStorage['Session_name'])
-                element['createdBy'] = sessionUser["user_id"];
-                element['modifiedBy'] = sessionUser["user_id"];
-                element['entityId'] = 1;
-                console.log(sessionUser["user_id"], "user_id")
-                console.log(element, "zzzzzzzzzz");
-                testing.push(element);
-                break;
-              }
-            }
-          }
-          console.log("-----------------------")
-          // this.finalTargetFile.push(element)
-        });
-
-        if (testing.length == this.uploadTemplate.length) {
-          console.log("working")
+  onSubmit(value) {
+    this.sessionUser = JSON.parse(localStorage['Session_name'])
+    value['KPIId'] = this.kpiDetails['KPIId'];
+    var EntityDetails = JSON.parse(localStorage['EntityDetails'])
+    value['year'] = EntityDetails.year;
+    value['createdById'] = this.sessionUser['user_id'],
+      this._adminsettingservice.postTargetValues(value).subscribe(
+        data => {
+          console.log(data)
+         this.toasterService.pop('success','',data['message']);
+          this.targetForm.reset();
+          this.getTargetData();
         }
-        else {
-          console.log("Invalid")
-        }
-
-
-        /*  WRITE CODE TO SEND VALUES TO THE API  */
-
-        this._adminsettingservice.upsertTarget(testing).subscribe(
-          data => {
-            console.log(data)
-            this.getTargetValue()
-          },
-          error => {
-            console.log(error)
-          }
-        )
-      });
+      )
   }
 
-  getTargetValue() {
-    this._adminsettingservice.getTargetValue().subscribe(
+  //Key press function for allowing only numbers
+  keyPress(event: any) {
+    const pattern = /^(\(?\+?[0-9]*\)?)?[0-9_\- \(\)]*$/;
+    let inputValue = Number(event.key);
+    let inputChar = String.fromCharCode(event.charCode);
+    if (event.keyCode != 8 && !pattern.test(inputChar) && inputValue < 5) {
+      event.preventDefault();
+    }
+  }
+
+  //Function for binding the saved data values to their inputs based on the month and week selection
+  onWeekMonthSelection(Id) {
+    console.log(this.targetSavedData)
+    this.targetData = []
+
+    this.targetData = this.targetSavedData.filter(x => x.int_week == Id || x.int_month == Id)
+    //Checking for the data
+    console.log(this.targetData);
+    if (this.targetData.length > 0) {
+
+      this.targetForm.controls['numericData'].setValue(this.targetData[0]['int_target'])
+    }
+    //If there is no data
+    else {
+      this.targetForm.controls['numericData'].setValue(null)
+    }
+  }
+
+  //For Getting KPI Data Types for Dropdown
+  getKpiDataType() {
+    this._adminsettingservice.getKpiDataType().subscribe(
       data => {
-        this.targetValue = data['data']
-        this.targetValue.forEach(element => {
-          this.totalYears.push(element.year)
-        });
-        this.totalYears = Array.from(new Set(this.totalYears));
+        //Assigning the values to the KPI Datatype variable
+        this.kpiDataType = data['data']
+        this.kpiDataType = this.kpiDataType.filter(x => x.lookupId == this.kpiDetails.dataTypeId)
+        this.kpiDataType = this.kpiDataType[0]['lookupName']
+        this.KPIPriorityType = data['data1']
+        this.KPIPriorityType = this.KPIPriorityType.filter(x => x.lookupId == this.kpiDetails.PriorityTypeId)
+        this.KPIPriorityType = this.KPIPriorityType[0]['lookupName']
+        console.log(this.KPIPriorityType, 'proiritytype')
+
+      },
+      error => {
+        console.log(error);
       }
     )
   }
 
-  downloadExistingData(targetValue){
-    console.log(targetValue)
-    let data= []
-    targetValue.forEach(element => {
-      delete element['KPIId'];
-      delete element['entityId'];
-      delete element['targetId']
-      delete element['targetValueId']
-      delete element['createdBy'];
-      delete element['createdDate'];
-      delete element['modifiedBy'];
-      delete element['modifiedDate'];
-      data.push(element);
+  filterWeekKPITargetData(weekId) {
+    this.KPIFilteredTargetData = [];
+    this.KPIFilteredTargetData = this.targetSavedData.filter(x => x.int_week == weekId)
+    console.log(this.KPIFilteredTargetData)
+  }
+
+  filterMonthKPITargetData(monthId) {
+    this.KPIFilteredTargetData = [];
+    this.KPIFilteredTargetData = this.targetSavedData.filter(x => x.int_month == monthId)
+    console.log(this.KPIFilteredTargetData)
+  }
+
+
+  //On Selecting Tree Nodes for Setup Tree
+  nodeSelect(event) {
+    this.kpiDetails = event['node'];
+    console.log(this.kpiDetails)
+    this.getKpiDataType();
+    this.getDimensionFrequencies();
+    this.Data = [{
+      'KPICreatedYear': this.kpiDetails['KPICreatedYear'],
+      'KPICreatedMonth': this.kpiDetails['KPICreateMonth'],
+      'KPICreatedWeek': this.kpiDetails['KPICreatedWeek'],
+      'KPIId': this.kpiDetails['KPIId']
+    }];
+
+    //Custom Validator for Week Frequency
+    if (this.kpiDetails.frequencyId == 2) {
+      this.targetForm.controls['Week'].setValidators(Validators.compose([Validators.required]))
+      this.targetForm.controls['numericData'].setValidators(Validators.compose([Validators.min(this.kpiDetails.minMax[0]), Validators.max(this.kpiDetails.minMax[1]), Validators.required]))
+      this.targetForm.controls['Month'].setValidators(null)
+    }
+    //Custom Validation for Month Frequency
+    else if (this.kpiDetails.frequencyId == 4){
+      this.targetForm.controls['Month'].setValidators(Validators.compose([Validators.required]))
+      this.targetForm.controls['numericData'].setValidators(Validators.compose([Validators.min(this.kpiDetails.minMax[0]), Validators.max(this.kpiDetails.minMax[1]), Validators.required]))
+      this.targetForm.controls['Week'].setValidators(null)
+    }
+    this.targetForm.reset();
+    this.getTargetData();
+  }
+
+  getTargetData() {
+    this.monthFilter = "";
+    this.weekFilter = "";
+    this.filterQuery = "";
+    this._adminsettingservice.getKPITargetMonthsWeeksData(this.Data).subscribe(
+      data => {
+        console.log(data, 'KPITARGET');
+        this.targetSavedData = data['KPISavedTargetData']
+        this.KPIFilteredTargetData = data['KPISavedTargetData']
+        this.Months = data['Months'];
+        this.Weeks = data['Weeks']
+      }
+    )
+  }
+
+  //For Setup Tree
+  getSetup() {
+    this.setupservice.getTarget()
+      .subscribe(
+        files => {
+          this.files = files['data'];
+          console.log(files['data']['0'])
+          this.fileName = null;
+        },
+        error => {
+          console.log(error);
+          if (error.status == 401) {
+            localStorage.clear();
+            this.router.navigate(['/login'])
+          }
+        });
+  }
+
+
+  //For Setup Tree Starts here
+  unselectFile() {
+    this.files = null;
+  }
+
+  expandAll() {
+    this.files.forEach(node => {
+      this.expandRecursive(node, true);
     });
-    this.excelService.exportAsExcelFile(data, 'Data');
   }
 
-  getTargetTemplateKPI(i: number) {
-    this.downloadData = [];
-    this._adminsettingservice.getTargetTemplate().subscribe(
-      data => {
-        this.TargetTemplate = data['data'];
-        this.TargetTemplate.forEach(element => {
-           delete element['KPIId'];
-          delete element['entityId'];
-
-          delete element['createdBy'];
-          delete element['createdDate'];
-          delete element['modifiedBy'];
-          delete element['modifiedDate'];
-
-           element['year'] = null;
-          element['month'] = null;
-          element['target'] = null;
-          this.downloadData.push(element);
-        });
-        if (i != 0)
-          this.exportAsXLSX(this.downloadData);
-      },
-      error => {
-        console.log(error)
-      }
-    )
+  collapseAll() {
+    this.files.forEach(node => {
+      this.expandRecursive(node, false);
+    });
   }
 
-  getLocations(divisionId) {
-    this._adminsettingservice.getLocations(divisionId).subscribe(
-      data => {
-        this.locations = data['data']
-      },
-      error => {
-        console.log(error)
-      }
-    )
-  }
-
-  getEntities(locationId) {
-    this._adminsettingservice.getEntities(locationId).subscribe(
-      data => {
-        this.entities = data['data']
-      },
-      error => {
-        console.log(error)
-      }
-    )
-  }
-
-  downloadModalToggle(e) {
-    if (e == 1) {
-      this.downloadModal.show();
-    }
-    else {
-      this.downloadModal.hide();
+  private expandRecursive(node: TreeNode, isExpand: boolean) {
+    node.expanded = isExpand;
+    if (node.children) {
+      node.children.forEach(childNode => {
+        this.expandRecursive(childNode, isExpand);
+      });
     }
   }
-
-  uploadModalToggle(e) {
-    if (e == 1) {
-      this.uploadModal.show();
-    }
-    else {
-      this.uploadModal.hide();
-    }
-  }
-
-  exportAsXLSX(element: any): void {
-    this.excelService.exportAsExcelFile(element, 'Upload Template');
-  }
+  //Setup tree Ends here
 
 }

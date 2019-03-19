@@ -26,11 +26,12 @@ export class MenuService {
 
   getMenu(){
     var EntityDetails = JSON.parse(localStorage['EntityDetails'])
-    return this.http.get(url+'get-menu'+'?entityId='+EntityDetails.defaultEntityId, this.getHeaders())
+    return this.http.get(url+'get-menu'+'?entityId='+EntityDetails.defaultEntityId+'&filterYear='+EntityDetails.year, this.getHeaders())
   }
 
   getDimensionData(dimensionId){
-    return this.http.get(url+'get-dimensiondata?dimensionId='+dimensionId, this.getHeaders())
+    var EntityDetails = JSON.parse(localStorage['EntityDetails'])
+    return this.http.get(url+'get-dimensiondata?dimensionId='+dimensionId+'&isTarget='+false+'&filterYear='+EntityDetails.year, this.getHeaders())
   }
 
     //For Headers

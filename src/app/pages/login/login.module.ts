@@ -9,7 +9,6 @@ import { ChangePasswordComponent } from './change-password/change-password.compo
 import { CookieService } from 'angular2-cookie/services/cookies.service';
 import { LoginService } from './login.service';
 import { AuthGuard } from './auth.guard';
-import { EmailLinkExpiryComponent } from './email-link-expiry/email-link-expiry/email-link-expiry.component';
 
 export const routes = [
   { path: '', component: LoginComponent },
@@ -29,7 +28,6 @@ export const routes = [
     LoginComponent,
     ForgotPasswordComponent,
     ChangePasswordComponent,
-    EmailLinkExpiryComponent
   ],
   providers: [CookieService, LoginService, AuthGuard]
 })

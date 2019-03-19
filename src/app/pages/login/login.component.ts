@@ -5,9 +5,10 @@ import { emailValidator } from '../../theme/utils/app-validators';
 import { AppSettings } from '../../app.settings';
 import { Settings } from '../../app.settings.model';
 import { LoginService } from './login.service';
-import { first } from 'rxjs/operators';
 import { MatSnackBar} from '@angular/material';
 import { CookieService } from 'angular2-cookie/services/cookies.service';
+import { ToasterService } from 'angular2-toaster/src/toaster.service';
+
 
 @Component({
   selector: 'app-login',
@@ -19,7 +20,10 @@ export class LoginComponent {
   public form: FormGroup;
   public settings: Settings;
 
-  constructor(public appSettings: AppSettings, public fb: FormBuilder, public router: Router, public login: LoginService, public _cookieService: CookieService, public snackBar: MatSnackBar) {
+  constructor(public appSettings: AppSettings, public fb: FormBuilder, 
+            public router: Router, public login: LoginService,
+             public _cookieService: CookieService, public toasterService : ToasterService,
+             public snackBar: MatSnackBar) {
     this.settings = this.appSettings.settings;
   
     //Login Form
@@ -56,19 +60,15 @@ export class LoginComponent {
               defaultEntityId: data['DefaultEntityId'],
               defaultEntityYear: data['DefaultEntityCreatedYear'] }));              
               //Sending message to Snackbar
-              this.snackBar.open(data['responseType']['message'], 'OK', {
-                duration: 5000,
-                panelClass: ['greenSnackbar']
-              });
+
+              this.toasterService.pop('success','',data['responseType']['message']);
               this.router.navigate(['/dashboard']);
               //  location.reload();
             }
             else {
               //Sending message to Snackbar
-              this.snackBar.open(data['responseType']['message'], 'OK', {
-                duration: 5000,
-                panelClass: ['redSnackbar']
-              });
+              this.toasterService.pop('error','',data['responseType']['message']);
+
             }
           },
           error => {

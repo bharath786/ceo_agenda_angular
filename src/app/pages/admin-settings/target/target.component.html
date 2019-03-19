@@ -1,178 +1,150 @@
-<!-- For Filter  -->
-<form [formGroup]="filterForm" #filterform="ngForm">
-<div class="col-sm-12">
-    <div class="panel panel-default col-xs-12 col-sm-12 col-md-12 col-lg-12 ">
-        <div class="panel-body col-sm-12">
-            <div class="col-sm-2 cust-padding">
-                <mat-select formControlName="year" (selectionChange)="onYearSelect($event.value)" placeholder="Year" class="col-sm-10 form-control marginbtn">
-                    <mat-option *ngFor="let year of totalYears" [value]="year">
-                        {{year}}
+<div class="">
 
-                    </mat-option>
-                </mat-select>
+    <!-- For Setup Tree -->
+    <div class="col-sm-4">
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="fa fa-cogs"></i>&nbsp;&nbsp;Target
             </div>
-            <div class="col-sm-2 cust-padding">
-                <mat-select formControlName="month" (selectionChange)="onMonthSelect($event.value)" placeholder="Month" class="col-sm-10 form-control marginbtn">
-                    <mat-option *ngFor="let month of YearMonths" [value]="month">
-                        {{month}}
-                    </mat-option>
-                </mat-select>
-            </div>
-            <div class="col-sm-2 cust-padding">
-                <mat-select formControlName="division" placeholder="Division" class="col-sm-10 form-control marginbtn">
-                    <mat-option (click)="onDivisionSelect(division.Id)" *ngFor="let division of divisions" [value]="division.Id">
-                        {{division.Name}}
-                    </mat-option>
-                </mat-select>
-            </div>
-            <div class="col-sm-2 cust-padding">
-                <mat-select formControlName="country" placeholder="Location" class="col-sm-10 form-control marginbtn">
-                    <mat-option  (click)="onLocationSelect(location.countryId)" *ngFor="let location of locations" [value]="location.countryId">
-                        {{location.countryName}}
-                    </mat-option>
-                </mat-select>
-            </div>
-
-            <div class="col-sm-2 cust-padding">
-                <mat-select formControlName="entity" placeholder="Entity" class="col-sm-10 form-control marginbtn">
-                    <mat-option *ngFor="let entity of entities" [value]="entity.entityId">
-                        {{entity.entityName}}
-                    </mat-option>
-                </mat-select>
-            </div>
-            <div class="col-sm-2 pull-right">
-                <a class="btn btn-success pull-right" style="margin-top:6px;" (click)="resetForm()" title="Click to Reset">Reset</a>
-                <!-- <button type="button" class="btn btn-default" (click)="resetForm()">Reset</button> -->
-            </div>
-            
         </div>
+        <p-tree [value]="files" selectionMode="single" [(selection)]="selectedFile" [propagateSelectionUp]="true"
+            (onNodeSelect)="nodeSelect($event)"></p-tree>
     </div>
-
-</div>
-</form>
-
-<div class="col-sm-12">
-
-    <!-- For Upload and Download Pills -->
-    <div class="pull-right">
-        <a (click)='getTargetTemplateKPI(1)' class="btn btn-primary marginbtn" id="Quality_Upload" title="Click to Download Sample Document">
-            <i class="fa fa-download"></i>&nbsp;&nbsp;Download Sample
-        </a>
-        <a (click)='uploadModalToggle(1)' class="btn btn-primary marginbtn" id="Quality_Upload" title="Click to Upload Document">
-            <i class="fa fa-upload"></i>&nbsp;&nbsp;Upload
-        </a>
-        <a (click)='downloadExistingData(targetValue)' class="btn btn-primary marginbtn" title="Click to Download Document">
-            <i class="fa fa-download"></i>&nbsp;&nbsp;Download
-        </a>
-    </div>
-
-    <!-- For number of records and search -->
-    <div class="row">
-        <div class="col-sm-12 margin-top">
-            <div class="row">
-                <div class="col-md-6 col-sm-12 pull-right">
-                    <div id="Quality_table1_filter" class="dataTables_filter pull-right">
-                        <label class="table_labels">Search:&nbsp;</label>
-                        <input
-                            type="search"  [(ngModel)]="filterQuery" class="form-control input-small input-inline" aria-controls="Quality_table1"></div>
+    <!-- For Setup Tree data -->
+    <div class="col-sm-8" *ngIf="kpiDetails != null">
+        <mat-card class="example-card greybackground">
+            <mat-card-header>
+                <mat-card-title>{{kpiDetails.KPIName}} ({{kpiDetails.KPICode}})</mat-card-title>
+                <!-- <mat-card-subtitle>{{kpiDetails.KPICode}}</mat-card-subtitle> -->
+            </mat-card-header>
+            <div class="form-group col-sm-4">
+                <label class="col-sm-6 no-padding">Data Type : &nbsp;</label>
+                <span class="spansize col-sm-6 no-padding"> {{kpiDataType}}</span>
+            </div>
+            <div class="form-group col-sm-4">
+                <label class="col-sm-6 no-padding">Scope : &nbsp;</label>
+                <span class="spansize col-sm-6 no-padding"> {{kpiDetails.isScope == true ? "Yes" : "No" }}</span>
+                <!-- <span class="spansize col-sm-6 no-padding" *ngIf="kpiDetails.isScope == true"> ({{kpiDetails.scopeAlias}})</span> -->
+            </div>
+            <div class="form-group col-sm-4">
+                <label class="col-sm-6 no-padding">Frequency : &nbsp;</label>
+                <span class="spansize col-sm-6 no-padding">{{dimensionFrequency}}</span>
+            </div>
+            <div class="form-group col-sm-4">
+                <label class="col-sm-6 no-padding">Priority Type :&nbsp;</label>
+                <span class="spansize col-sm-6 no-padding">{{KPIPriorityType}}</span>
+            </div>
+            <div *ngIf="kpiDataType == 'Numeric' || kpiDataType == 'Text Numeric'">
+                <div class="form-group col-sm-4">
+                    <label class="col-sm-6 no-padding">Min Value : &nbsp;</label>
+                    <span class="spansize col-sm-6 no-padding"> {{kpiDetails.minMax[0]}}</span>
+                </div>
+                <div class="form-group col-sm-4">
+                    <label class="col-sm-6 no-padding">Max Value : &nbsp;</label>
+                    <span class="spansize col-sm-6 no-padding"> {{kpiDetails.minMax[1]}}</span>
                 </div>
             </div>
-        </div>
-    </div>
+            <mat-card-content>
+            </mat-card-content>
+        </mat-card>
+        <mat-card *ngIf="kpiDetails != null" class="example-card margin-top15">
+            <form [formGroup]="targetForm" (ngSubmit)="onSubmit(targetForm.value)" #TargetUpsertForm="ngForm"
+                class="form-horizontal">
+                <mat-card-content style="padding: 8px;">
+                    <div *ngIf="kpiDetails.frequencyId==2" class="form-group col-sm-4 margin-top-0">
+                        <label class="col-sm-6 no-padding lblfnt" style="padding-top:8px">Select Week :&nbsp;</label>
+                        <mat-select (selectionChange)="onWeekMonthSelection($event.value)" placeholder="Week" formControlName="Week" class="col-sm-6 form-control"
+                            style="margin-top:0px; margin-bottom:0px;width:45%; height: 30px;">
+                            <mat-option *ngFor="let item of Weeks" [value]="item.int_week_id">
+                                {{item.vc_week_name}}
+                            </mat-option>
+                        </mat-select>
+                    </div>
 
-    <!-- For Table -->
-    <table [mfData]="targetValue | dataFilter : filterQuery" #mf="mfDataTable" [mfRowsOnPage]="10" class="table table-hover table-bordered table-scrollable-borderless table-striped margin-top">
-        <thead>
-            <tr>
-                <th class="thblue">Year</th>
-                <th class="thblue">Month</th>
-                <th class="thblue">Dimension</th>
-                <th class="thblue">KRA</th>
-                <th class="thblue">KPI</th>
-                <th class="thblue">Target</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngIf="mf.data?.length == 0">
-                <td colspan="6">No record found</td>
-            </tr>
-            <tr *ngFor="let item of mf.data">
-                <td>{{item.year}}</td>
-                <td>{{item.month }}</td>
-                <td>{{item.dimensionTitle}}</td>
-                <td>{{item.KRATitle}}</td>
-                <td>{{item.KPITitle}}</td>
-                <td>{{item.target}}</td>
-            </tr>
-        </tbody>
-        <tfoot>
-                <tr class="removeborder">
+                    <div *ngIf="kpiDetails.frequencyId==4" class="form-group col-sm-4 margin-top-0">
+                        <label class="col-sm-6 no-padding lblfnt" style="padding-top:8px">Select Month :&nbsp;</label>
+                        <mat-select (selectionChange)="onWeekMonthSelection($event.value)" placeholder="Month" class="col-sm-6 form-control" formControlName="Month"
+                            style="margin-top:0px; margin-bottom:0px;width:45%; height: 30px;">
+                            <mat-option *ngFor="let item of Months" [value]="item.int_month_id"
+                                placeholder="Select Month">{{item.vc_month_name}}
+                            </mat-option>
+                        </mat-select>
+                    </div>
+                    <div class="col-sm-1"> </div>
+                    <div class="form-group col-sm-3 margin-top-0">
+                        <label class="col-sm-6 no-padding lblfnt" style="padding-top:8px">Target :&nbsp;</label>
+                        <input type="text" pKeyFilter="num" formControlName="numericData" placeholder="Target" class="col-sm-6 form-control"
+                            style="margin-top:0px; margin-bottom:0px;width:45%; height: 30px;">  
+                    </div>
+                    <p-message *ngIf="targetForm.controls.numericData.errors?.required && targetForm.controls.numericData.touched" class="col-sm-3 customValidMessage no-padding" severity="error" text="Target is required"></p-message>
+                    <p-message *ngIf="targetForm.controls.numericData.errors?.min || targetForm.controls.numericData.errors?.max" class="col-sm-3 customValidMessage no-padding" severity="error" text="Target should be between Min and Max Value"></p-message>
+                          <div class="col-sm-1"></div>
+                        <button type="submit" [disabled]="!TargetUpsertForm.form.valid" class="btn btn-success col-sm-1 form-group pull-right margin-top5" style="margin-right: 0px;">Save</button>
+  
+                </mat-card-content>
+                </form>
+        </mat-card>
+        <div class="row">
+                <div class="flex-p col-sm-12">
+                  <div class="col-sm-7 headingdata">
+                  </div>
+                  <button mat-raised-button class="pull-right filter-hover margin-right-10"
+                    style="color: white; background: #45b6af;" (click)="filterToggle = !filterToggle">
+                    <mat-icon>filter_list</mat-icon> Filter
+                  </button>
+                </div>
+              </div>
+              <div *ngIf="filterToggle" class="flex-p col-sm-12 greybackground"
+                style="margin-bottom:10px; border-radius: 4px !important;">
+                <div class="col-sm-4 pull-right">
+                  <button class="btn btn-primary pull-right" (click)="getTargetData()" style="margin-top: 6px;">Reset</button>
+                </div>
+                <div class="col-sm-4 pull-right">
+                  <input type="text" [(ngModel)]="filterQuery" class="form-control" placeholder="Search">
+                </div>
+                <div class="col-sm-4 pull-right">
+                  <mat-select *ngIf="dimensionFrequency == 'Weekly'" [(ngModel)]="weekFilter"
+                    (selectionChange)="filterWeekKPITargetData($event.value)" class="form-control" placeholder="Select Week">
+                    <mat-option *ngFor="let item of Weeks" [value]="item.int_week_id">{{item.vc_week_name}}
+                    </mat-option>
+                  </mat-select>
+                  <mat-select *ngIf="dimensionFrequency == 'Monthly'" [(ngModel)]="monthFilter"
+                    (selectionChange)="filterMonthKPITargetData($event.value)" class="form-control" placeholder="Select Month">
+                    <mat-option *ngFor="let item of Months" [value]=item.int_month_id>{{item.vc_month_name}}
+                    </mat-option>
+                  </mat-select>
+                </div>
+              </div>
+              <table
+                class="table table-bordered table-striped text-center table-responsive"
+                [mfData]="KPIFilteredTargetData | dataFilter : filterQuery" #mf="mfDataTable" [mfRowsOnPage]="10">
+                <thead>
+                  <tr>
+                    <th class="thblue">Year</th>
+                    <th class="thblue" *ngIf="dimensionFrequency == 'Weekly'">Week</th>
+                    <th class="thblue" *ngIf="dimensionFrequency == 'Monthly'">Month</th>
+                    <th scope="col" class="thblue">Target</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngIf="mf.data?.length == 0">
+                    <td colspan="6">No record found</td>
+                  </tr>
+      
+                  <tr *ngFor="let item of mf.data">
+                    <td> {{item.vc_year}}</td>
+                    <td *ngIf="item.int_week != null">Week {{item.int_week}}</td>
+                    <td *ngIf="item.int_month != null">{{item.int_month | GetMonthNameAdmin }}</td>
+                    <td>{{item.int_target}}</td>
+                  </tr>
+                </tbody>
+                <tfoot>
+                  <tr class="removeborder">
                     <td colspan="7" style="padding-right:0px !important;">
-                        <mfBootstrapPaginator class="pull-right"></mfBootstrapPaginator>
+                      <mfBootstrapPaginator class="pull-right"></mfBootstrapPaginator>
                     </td>
-                </tr>
-            </tfoot>
-    </table>
-
-
-
-</div>
-
-<!-- Download Modal Popup -->
-<div class="modal fade" bsModal #downloadModal="bs-modal" [config]="{backdrop: 'static'}" role="dialog">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-
-                <b class="modal-title titlemodal text">Download KPI</b> <i (click)="downloadModalToggle(2)" class="fa fa-times pull-right titlemodal"></i>
-            </div>
-            <div class="modal-body ">
-                <div class="row container-fluid">
-                    <div class="col-sm-12 margin-left-16">
-                        <a class="btn btn-primary col-sm-5 marginbtn" id="Marketing_download_csv" title="Click to download Document"><i
-                                class="fa fa-download"></i>&nbsp;&nbsp;Download CSV Template&nbsp;&nbsp;</a>
-                        <a class="btn btn-primary col-sm-5 marginbtn pull-right" id="Marketing_download_Latest_data"
-                            title="Click to Download CSV Document"><i class="fa fa-download"></i>&nbsp;&nbsp;Download
-                            Latest KPI's&nbsp;&nbsp;</a>
-                    </div>
-
-                </div>
-            </div>
-            <div class="modal-footer">
-
-                <button type="button" (click)='downloadModalToggle(2)' class="btn btn-default" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-
+                  </tr>
+                </tfoot>
+              </table>
     </div>
-</div>
-
-<!-- Upload Modal Popup -->
-<div class="modal fade" bsModal #uploadModal="bs-modal" [config]="{backdrop: 'static'}" role="dialog">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-
-                <b class="modal-title titlemodal">Upload KPI Targets</b><i (click)="uploadModalToggle(2)" class="fa fa-times pull-right titlemodal"></i>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-
-                    <div class="col-sm-12 margintop10">
-                        <div class="col-sm-4">
-                            <label class="control-label">Select File&nbsp;:</label>
-                        </div>
-                        <div class="col-sm-8">
-                            <input type="file" (change)="incomingfile($event)" class="form-control">
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" (click)="Upload()" class="btn btn-success" data-dismiss="modal"><i class="fa fa-upload"></i>&nbsp;Upload</button>
-                <button type="button" class="btn btn-default" (click)="uploadModalToggle(2)" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-
 </div>

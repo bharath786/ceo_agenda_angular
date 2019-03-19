@@ -62,6 +62,7 @@ export class PagesComponent implements OnInit {
         localStorage.clear();
         this.dialog.closeAll();
         this.router.navigate(['/login']);
+        window.location.reload();
         this.snackBar.open('Session Timed Out', 'OK');
       },
       error=>{
