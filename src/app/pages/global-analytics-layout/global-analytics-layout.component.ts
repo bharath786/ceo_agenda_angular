@@ -79,6 +79,8 @@ export class GlobalAnalyticsLayoutComponent implements OnInit {
   temporaryValue: any;
   summary: boolean = false;
   dimensionSummary: any;
+  dimensionExceptions: any;
+  exceptions: boolean = false;
 
   constructor(private activeRoute: ActivatedRoute,
     private router: Router, public appSettings: AppSettings,
@@ -93,7 +95,7 @@ export class GlobalAnalyticsLayoutComponent implements OnInit {
     this.KPIForm = Form.group({
       "KPIId": [null],
       "Month": [null, Validators.compose([Validators.required])],
-      "Week": [null, Validators.compose([Validators.required])],
+      "Week": [null, Validators.compose([Validators.required])],  
       "textData": [null, Validators.compose([Validators.required])],
       "numericData": [null, Validators.compose([Validators.required])],
       "binaryData": [null, Validators.compose([Validators.required])]
@@ -194,7 +196,7 @@ export class GlobalAnalyticsLayoutComponent implements OnInit {
     )
   }
 
-  deleteBand(values){
+  deleteBand(values) {
     console.log(values);
     var EntityDetails = JSON.parse(localStorage['EntityDetails']);
     values['year'] = EntityDetails.year;
@@ -207,7 +209,7 @@ export class GlobalAnalyticsLayoutComponent implements OnInit {
     scopeData.push({ 'ScopeId': values['int_scope_id'], 'NumericData': values['numericData'] })
     values['scopeData'] = scopeData;
     this._globalAnalyticsService.deleteKPIData(values).subscribe(
-      data=>{
+      data => {
         console.log(data)
         this.getDataOfKPI();
         this.snackBar.open(data['message'], 'OK', {
@@ -280,28 +282,28 @@ export class GlobalAnalyticsLayoutComponent implements OnInit {
     this.menuService.getDimensionData(this.dimId).subscribe(
       data => {
         this.files = data['data']
-        let dimensiondata =[];
-        dimensiondata[0]= {
+        let dimensiondata = [];
+        dimensiondata[0] = {
           "label": "Summary",
           "expandedIcon": null,
           "collapsedIcon": "fa fa-file green",
           "expanded": false,
           "selectable": true
-      };
-         dimensiondata[1] = this.files[0];
-         dimensiondata[2] = {
+        };
+        dimensiondata[1] = this.files[0];
+        dimensiondata[2] = {
           "label": "Exception(s)",
           "expandedIcon": null,
           "collapsedIcon": "fa fa-exclamation-circle red",
           "expanded": false,
           "selectable": true
-      };
+        };
 
-         this.files = dimensiondata;
+        this.files = dimensiondata;
 
-        console.log(this.files,"dim data")
+        console.log(this.files, "dim data")
         this.selectedFile = this.files['0'];
-       this.nodeSelect({ "node": this.selectedFile });
+        this.nodeSelect({ "node": this.selectedFile });
       },
       error => {
         console.log(error)
@@ -677,7 +679,8 @@ export class GlobalAnalyticsLayoutComponent implements OnInit {
     this.iskpiDataValid = false;
     console.log(this.mainvalue);
     if (this.mainvalue['KPIId'] != null) {
-            this.summary = false;
+      this.summary = false;
+      this.exceptions = false;
       this.kpiDetails = this.mainvalue;
       this.Data = [{
         'KPICreatedYear': this.mainvalue['KPICreatedYear'],
@@ -787,17 +790,30 @@ export class GlobalAnalyticsLayoutComponent implements OnInit {
       ];
       this.activeItem = this.items[0];
       this.kpiDetails = null;
-      if(this.mainvalue.label == 'Summary'){
+      if (this.mainvalue.label == 'Summary') {
         this.summary = true;
+        this.exceptions = false;
         this._globalAnalyticsService.getDimensionSummary(this.dimId).subscribe(
-          data=>{
+          data => {
             console.log(data);
             this.dimensionSummary = data['DimensionSummary']
           }
         )
       }
-      else{
+      else if (this.mainvalue.label == 'Exception(s)') {
         this.summary = false;
+        this.exceptions = true;
+        var EntityDetails = JSON.parse(localStorage['EntityDetails']);
+        this._globalAnalyticsService.getDimensionExceptions(this.dimId, EntityDetails.year).subscribe(
+          data => {
+            console.log(data['DimensionExceptions']);
+            this.dimensionExceptions = data['DimensionExceptions']
+          }
+        )
+      }
+      else {
+        this.summary = false;
+        this.exceptions = false;
       }
 
     }

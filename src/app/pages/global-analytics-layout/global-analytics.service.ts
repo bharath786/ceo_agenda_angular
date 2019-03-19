@@ -36,4 +36,8 @@ export class GlobalAnalyticsService {
     return this.http.get(url+'get-dimension-summary'+'/?DimensionId='+dimensionId);
   }
 
+  getDimensionExceptions(dimensionId, Year){
+    return this.http.get(url+'get-dimension-exception'+'/?DimensionId='+dimensionId+'&Selecte_Year='+Year);
+  }
+
 }

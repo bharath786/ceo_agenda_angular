@@ -47,6 +47,24 @@
               </tbody>
             </table>
           </div>
+          <div *ngIf="kpiDetails == null && exceptions == true">
+            <table class="table table-bordered table-striped text-center table-responsive">
+              <thead>
+                <tr>
+                  <th class="thblue">KRA</th>
+                  <th class="thblue">KPI</th>
+                  <th class="thblue">Exceptions</th>
+                </tr>
+              </thead>
+              <tbody *ngFor="let item of dimensionExceptions">
+                <tr *ngFor="let subItem of item['KRA_KPI_Exceptions']; let idx = index">
+                  <td *ngIf="idx==0" [attr.rowspan]=item.KRA_KPI_Exceptions.length style="vertical-align: middle;"> {{subItem.KRA_Name}}</td>
+                  <td> {{subItem.KPI_Name}}</td>
+                  <td>{{subItem.Exceptions}} </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
           <div *ngIf="kpiDetails != null" class="">
             <div class="border">
               <div class="portlet-title">
@@ -223,8 +241,8 @@
 
             <form [formGroup]="KPIForm" (ngSubmit)="onSubmit(KPIForm.value)" #KPIUpsertForm="ngForm"
               class="form-horizontal">
-
-              <div *ngIf="kpiDataType=='Text Numeric'" class="col-sm-12 no-padding">
+            <div class="" *ngIf="kpiDataType=='Text Numeric'">
+              <div class="col-sm-12 no-padding">
                 <div class="col-sm-4">
                     <div *ngIf="dimensionFrequency == 'Weekly'" class="form-group margin-top-0">
                         <label class="col-sm-6 no-padding lblfnt" style="padding-top:8px">Select Week :&nbsp;</label>
@@ -263,26 +281,26 @@
                 </div>
              
               </div>
-              <div *ngIf="kpiDataType=='Text Numeric'" class="col-sm-12 no-padding">
+              <div class="col-sm-12 no-padding">
                   <div class="col-sm-8" style="padding-right: 0px;">
                       <div class="form-group margin-top-0" style="padding-right: 0px;">
                           <label class="col-sm-3 no-padding lblfnt" style="padding-top:8px">Text :&nbsp;</label>
-                          <textarea  type="text" placeholder="Enter Text" formControlName="textData"
+                          <textarea  placeholder="Enter Text" formControlName="textData"
                           class="col-sm-8 margin-left form-control" style="width:65%"></textarea>
                         </div>
                   </div>
          
                   <div class="col-sm-3" style="padding-left:0px; margin-top: 7px; margin-left: -25px;">
                       <p-message style="margin-top:10px;"
-                      *ngIf="KPIForm.controls.textData.errors?.required && KPIForm.controls.textData.touched"
-                      class="customValidMessage no-padding" severity="error" text="Text is required"></p-message>
+                      *ngIf="KPIForm.controls.textData.errors?.required && KPIForm.controls.textData.touched" class="customValidMessage no-padding" severity="error" text="Text is required"></p-message>
                   </div>
                   <div class="col-sm-1 pull-right no-padding" style="margin-top:24px;">
                       <button type="submit" [disabled]="!KPIUpsertForm.form.valid"
                       class="btn btn-success pull-right margin-top5">Save</button>
                   </div>
-               
                 </div>
+            </div>
+    
             </form>
 
           </mat-card-content>
