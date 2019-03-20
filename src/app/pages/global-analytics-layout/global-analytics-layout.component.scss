@@ -2,12 +2,25 @@
     background: #e7e7e7 !important;
 }
 
+.bluebackground{
+   background:  #1a74b9  !important
+}
 
 ::ng-deep body .ui-corner-top {
     border-top-left-radius: 3px !important;
     border-top-right-radius: 3px !important;
 }
 
+.iconbtn{
+    font-size:18px; 
+    margin: 3px; 
+    cursor: pointer; 
+    padding-right: 5px;
+}
+
+.white-color{
+    color: #ffffff !important;
+}
  ::ng-deep .panelcustom .ui-widget {
     font-family: "Segoe UI", "Helvetica Neue", sans-serif !important;
     font-size: 16px;
@@ -68,7 +81,7 @@
 
 .spansize{
     font-size: 15px !important;
-    color: #302f2d !important;
+    color: #ffffff !important;
 }
 .headingdata{
     font-size: 19px;
@@ -117,6 +130,14 @@
     white-space: nowrap;
     vertical-align: middle;
     padding: 9px !important;
+}
+
+.margin-bottom-0{
+    margin-bottom: 0px;
+}
+.customWidthInput{
+    width: 74px;
+    display: initial;
 }
 
 .tableinput{

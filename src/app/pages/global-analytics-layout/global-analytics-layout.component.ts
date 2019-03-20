@@ -11,7 +11,6 @@ import { DownloadExcelService } from '../download-excel.service';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { ModalDirective } from 'ngx-bootstrap';
 import { MatSnackBar } from '@angular/material';
-import { flatMap } from 'rxjs/operators';
 import { GetMonthName } from 'src/app/theme/pipes/Months.pipe';
 import { Chart } from 'angular-highcharts';
 import { ToasterService } from 'angular2-toaster/src/toaster.service';
@@ -169,8 +168,8 @@ export class GlobalAnalyticsLayoutComponent implements OnInit {
       this.toasterService.pop('error','','Value should be between Min and Max')
       this.numericValid = false;
      }
-     if(values['textData'] == (null || "")){
-      this.toasterService.pop('error','','Value should be between Min and Max')
+     else if(values['textData'] == ""){
+      this.toasterService.pop('error','','Text Required')
       this.textValid = false;
      }
     }
@@ -762,11 +761,8 @@ export class GlobalAnalyticsLayoutComponent implements OnInit {
           this.KPIForm.controls['textData'].setValidators(null);
           this.KPIForm.controls['binaryData'].setValidators(null);
           this.KPIForm.controls['numericData'].setValidators(null);
-        }
-        else {
-          if (this.kpiDetails['isScope'] == true) {
-            //For Binary Data Validations removing Numeric Data
-            if (this.kpiDetails['dataTypeId'] == 8) {
+             //For Binary Data Validations removing Numeric Data
+             if (this.kpiDetails['dataTypeId'] == 8) {
               this.KPIBandDataForm.controls['binaryData'].setValidators(Validators.compose([Validators.required]));
               this.KPIBandDataForm.controls['numericData'].setValidators(null);
               this.KPIBandDataForm.controls['textData'].setValidators(null);
@@ -783,7 +779,8 @@ export class GlobalAnalyticsLayoutComponent implements OnInit {
               this.KPIBandDataForm.controls['binaryData'].setValidators(null);
               this.KPIBandDataForm.controls['textData'].setValidators(Validators.compose([Validators.required]));
             }
-          }
+        }
+        else {
           //For Data Type
           //For Numeric Data Type 
           if (this.kpiDetails['dataTypeId'] == 7) {
