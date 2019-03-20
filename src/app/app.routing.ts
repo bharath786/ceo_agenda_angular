@@ -20,7 +20,7 @@ export const routes: Routes = [
             { path: 'icons', loadChildren: './pages/icons/icons.module#IconsModule', data: { breadcrumb: 'Material Icons' } },
             { path: 'drag-drop', loadChildren: './pages/drag-drop/drag-drop.module#DragDropModule', data: { breadcrumb: 'Drag & Drop' } },
             { path: 'schedule', loadChildren: './pages/schedule/schedule.module#ScheduleModule', data: { breadcrumb: 'Schedule' } },
-            { path: 'analytics', loadChildren: './pages/global-analytics-layout/global-analytics.module#GlobalAnalyticsModule', data: { breadcrumb: 'Analyitcs' } },
+            { path: 'category', loadChildren: './pages/global-analytics-layout/global-analytics.module#GlobalAnalyticsModule', data: { breadcrumb: 'Category' } },
             { path: 'mailbox', loadChildren: './pages/mailbox/mailbox.module#MailboxModule', data: { breadcrumb: 'Mailbox' } },
             { path: 'chat', loadChildren: './pages/chat/chat.module#ChatModule', data: { breadcrumb: 'Chat' } },
             { path: 'maps', loadChildren: './pages/maps/maps.module#MapsModule', data: { breadcrumb: 'Maps' } },

@@ -18,17 +18,17 @@
             <div class="col-sm-12">
                 <form [formGroup]="analyticsform" (ngSubmit)="onSubmitAnalytics(analyticsform.value)"
                     #analyticsupdateform="ngForm" class="form-horizontal">
-                    <h4 class="modal-title"><span class="bold">Analytics Details</span>
+                    <h4 class="modal-title"><span class="bold">Category Details</span>
                         <a (click)='adddimension(1)' class="pull-right btn btn-primary"><i class="fa fa-plus"></i> Add Dimension </a></h4>
                     <br>
                     <div class="form-group">
-                        <label class="col-md-12 lblfnt required">Analytics Name</label>
+                        <label class="col-md-12 lblfnt required">Category Name</label>
                         <div class="col-md-12">
                             <input maxlength="50" formControlName="analyticsName" class="form-control disablecustom"
-                                type="text" placeholder="Analytics Name">
+                                type="text" placeholder="Category Name">
                             <mat-error
                                 *ngIf="analyticsform.controls.analyticsName.errors?.required && analyticsform.controls.analyticsName.touched">
-                                Analytics Name is required</mat-error>
+                                Category Name is required</mat-error>
                         </div>
                     </div>
                     <div class="form-group">
@@ -240,7 +240,7 @@
                                 </div>
                             </div>
                         <div class="form-group">
-                            <label class="col-md-12 lblfnt required">Priority Type</label>
+                            <label class="col-md-12 lblfnt required">Direction</label>
                             <div class="col-md-12">
                                 <mat-radio-group formControlName="PriorityTypeId">
                                     <mat-radio-button *ngFor="let higherOrLower of KPIHigherOrLower"

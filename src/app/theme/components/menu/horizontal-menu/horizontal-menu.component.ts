@@ -73,7 +73,7 @@ export class HorizontalMenuComponent implements OnInit {
     this.menuService.getMenu().subscribe(
       data => {
         data['data'].forEach((element) => {
-          horizontalMenuItems.push(new Menu(element['dimensionId'], element['dimensionName'], '/analytics/highlights/'+ btoa(element['dimensionId'].toString()) , null, '', null, false, element['analyticsId']))
+          horizontalMenuItems.push(new Menu(element['dimensionId'], element['dimensionName'], '/category/highlights/'+ btoa(element['dimensionId'].toString()) , null, '', null, false, element['analyticsId']))
           // horizontalMenuItems.push(new Menu(element['dimensionId'], element['dimensionName'], '/analytics/highlights/'+ crypto.DES.encrypt(element['dimensionId'].toString(), "DIMID") , null, '', null, false, element['analyticsId']))
       });
       let menuItemsBeforeFilter = horizontalMenuItems;
