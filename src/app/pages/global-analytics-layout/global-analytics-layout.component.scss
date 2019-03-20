@@ -119,6 +119,11 @@
     padding: 9px !important;
 }
 
+.tableinput{
+    width: 90px !important;
+    margin-right: 0px;
+    display: initial;
+}
 
 :host /deep/ a.sort.asc::after, a.sort.desc::after {
     content: '';

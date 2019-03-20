@@ -14,6 +14,7 @@ import { MatSnackBar } from '@angular/material';
 import { flatMap } from 'rxjs/operators';
 import { GetMonthName } from 'src/app/theme/pipes/Months.pipe';
 import { Chart } from 'angular-highcharts';
+import { ToasterService } from 'angular2-toaster/src/toaster.service';
 
 
 @Component({
@@ -81,6 +82,8 @@ export class GlobalAnalyticsLayoutComponent implements OnInit {
   dimensionSummary: any;
   dimensionExceptions: any;
   exceptions: boolean = false;
+  numericValid: boolean = true;
+  textValid: boolean = true;
 
   constructor(private activeRoute: ActivatedRoute,
     private router: Router, public appSettings: AppSettings,
@@ -90,12 +93,13 @@ export class GlobalAnalyticsLayoutComponent implements OnInit {
     public excelService: DownloadExcelService,
     public _globalAnalyticsService: GlobalAnalyticsService,
     public snackBar: MatSnackBar,
+    public toasterService : ToasterService,
     public Form: FormBuilder) {
 
     this.KPIForm = Form.group({
       "KPIId": [null],
       "Month": [null, Validators.compose([Validators.required])],
-      "Week": [null, Validators.compose([Validators.required])],  
+      "Week": [null, Validators.compose([Validators.required])],
       "textData": [null, Validators.compose([Validators.required])],
       "numericData": [null, Validators.compose([Validators.required])],
       "binaryData": [null, Validators.compose([Validators.required])]
@@ -155,45 +159,63 @@ export class GlobalAnalyticsLayoutComponent implements OnInit {
   }
 
   onSubmitKPI(values) {
-    let sessionUser = JSON.parse(localStorage['Session_name']);
-    this.KPIBandDataId = null;
-    var EntityDetails = JSON.parse(localStorage['EntityDetails']);
-    values['year'] = EntityDetails.year;
-    values['KPIId'] = this.kpiDetails.KPIId;
-    values['Month'] = this.temporaryValue['int_month']
-    values['isScopeAvailable'] = this.kpiDetails['isScope'];
-    values['KPIDataTypeId'] = this.kpiDetails['dataTypeId'];
-    values['Week'] = this.temporaryValue['int_week']
-    values['createdById'] = sessionUser.user_id;
-    var scopeData = []
-    if (this.kpiDetails['dataTypeId'] == 7) {
-      scopeData.push({ 'ScopeId': this.temporaryValue['int_scope_id'], 'NumericData': values['numericData'] })
+    if (!this.KPIBandDataForm.valid) {
+      console.log(values,'Checkin FOrmat')
+     if(values['numericData'] == null || values['numericData'] == ""){
+       this.toasterService.pop('error','','Value Required')
+       this.numericValid = false;
+     }
+     else if(values['numericData'] < this.getMinValue() || values['numericData'] > this.getMaxValue()){
+      this.toasterService.pop('error','','Value should be between Min and Max')
+      this.numericValid = false;
+     }
+     if(values['textData'] == (null || "")){
+      this.toasterService.pop('error','','Value should be between Min and Max')
+      this.textValid = false;
+     }
     }
-    else if (this.kpiDetails['dataTypeId'] == 6) {
-
-      scopeData.push({ 'ScopeId': this.temporaryValue['int_scope_id'], 'TextData': values['textData'] })
-
-    }
-    else if (this.kpiDetails['dataTypeId'] == 8) {
-
-      scopeData.push({ 'ScopeId': this.temporaryValue['int_scope_id'], 'BinaryData': values['binaryData'] })
-
-    }
-    else if (this.kpiDetails['dataTypeId'] == 10) {
-
-      scopeData.push({ 'ScopeId': this.temporaryValue['int_scope_id'], 'NumericData': values['numericData'], 'TextData': values['textData'] })
-    }
-    values['scopeData'] = scopeData;
-    this._globalAnalyticsService.saveKPIData(values).subscribe(
-      data => {
-        console.log(data)
-        this.getDataOfKPI();
-        this.snackBar.open(data['message'], 'OK', {
-          duration: 7000,
-          panelClass: ['greenSnackbar'],
-        });
+    else {
+      this.textValid = true;
+      this.numericValid = true;
+      let sessionUser = JSON.parse(localStorage['Session_name']);
+      this.KPIBandDataId = null;
+      var EntityDetails = JSON.parse(localStorage['EntityDetails']);
+      values['year'] = EntityDetails.year;
+      values['KPIId'] = this.kpiDetails.KPIId;
+      values['Month'] = this.temporaryValue['int_month']
+      values['isScopeAvailable'] = this.kpiDetails['isScope'];
+      values['KPIDataTypeId'] = this.kpiDetails['dataTypeId'];
+      values['Week'] = this.temporaryValue['int_week']
+      values['createdById'] = sessionUser.user_id;
+      var scopeData = []
+      if (this.kpiDetails['dataTypeId'] == 7) {
+        scopeData.push({ 'ScopeId': this.temporaryValue['int_scope_id'], 'NumericData': values['numericData'] })
       }
-    )
+      else if (this.kpiDetails['dataTypeId'] == 6) {
+
+        scopeData.push({ 'ScopeId': this.temporaryValue['int_scope_id'], 'TextData': values['textData'] })
+
+      }
+      else if (this.kpiDetails['dataTypeId'] == 8) {
+
+        scopeData.push({ 'ScopeId': this.temporaryValue['int_scope_id'], 'BinaryData': values['binaryData'] })
+
+      }
+      else if (this.kpiDetails['dataTypeId'] == 10) {
+
+        scopeData.push({ 'ScopeId': this.temporaryValue['int_scope_id'], 'NumericData': values['numericData'], 'TextData': values['textData'] })
+      }
+      values['scopeData'] = scopeData;
+      this._globalAnalyticsService.saveKPIData(values).subscribe(
+        data => {
+          console.log(data)
+          this.getDataOfKPI();
+       this.toasterService.pop('success','',data['message']);
+
+        }
+      )
+
+    }
   }
 
   deleteBand(values) {
@@ -212,10 +234,7 @@ export class GlobalAnalyticsLayoutComponent implements OnInit {
       data => {
         console.log(data)
         this.getDataOfKPI();
-        this.snackBar.open(data['message'], 'OK', {
-          duration: 7000,
-          panelClass: ['greenSnackbar'],
-        });
+        this.toasterService.pop('success','',data['message']);
       }
     )
   }
@@ -249,10 +268,7 @@ export class GlobalAnalyticsLayoutComponent implements OnInit {
           console.log(data)
           this.mainvalue['KPIId'] = this.fileValues['KPIId']
           this.getDataOfKPI();
-          this.snackBar.open(data['message'], 'OK', {
-            duration: 7000,
-            panelClass: ['greenSnackbar'],
-          });
+          this.toasterService.pop('success','',data['message']);
           this.KPIForm.reset();
           // this.isFilePresent = false;
           this.iskpiDataValid = false;
@@ -583,9 +599,7 @@ export class GlobalAnalyticsLayoutComponent implements OnInit {
 
     }
     else {
-      this.snackBar.open('Please Check File Format', 'OK', {
-        panelClass: ['redSnackbar'],
-      });
+      this.toasterService.pop('error','Invalid File','Please Check File Format');
       this.inputScopeFile = ""
       this.isFilePresent = false;
     }
@@ -638,10 +652,7 @@ export class GlobalAnalyticsLayoutComponent implements OnInit {
           this.mainvalue['KPIId'] = this.fileValues['KPIId']
           //Calling the getDataOfKPI to get all the saved data from an API
           this.getDataOfKPI();
-          this.snackBar.open(data['message'], 'OK', {
-            duration: 7000,
-            panelClass: ['greenSnackbar'],
-          });
+          this.toasterService.pop('success','',data['message']);
           this.KPIForm.reset();
           // this.isFilePresent = false;
           this.iskpiDataValid = false;
@@ -697,15 +708,23 @@ export class GlobalAnalyticsLayoutComponent implements OnInit {
           this.KPIForm.controls['textData'].setValidators(null);
           this.KPIForm.controls['binaryData'].setValidators(null);
           this.KPIForm.controls['numericData'].setValidators(null);
-          //For Binary Data removing Numeric Data
+          //For Binary Data Validations removing Numeric Data
           if (this.kpiDetails['dataTypeId'] == 8) {
             this.KPIBandDataForm.controls['binaryData'].setValidators(Validators.compose([Validators.required]));
             this.KPIBandDataForm.controls['numericData'].setValidators(null);
+            this.KPIBandDataForm.controls['textData'].setValidators(null);
           }
-          //For Numeric Data removing Binary Data
+          //For Numeric Data Validations removing Binary Data
           else if (this.kpiDetails['dataTypeId'] == 7) {
-            this.KPIBandDataForm.controls['numericData'].setValidators(Validators.compose([Validators.required]));
+            this.KPIBandDataForm.controls['numericData'].setValidators(Validators.compose([Validators.min(this.kpiDetails.minMax[0]), Validators.max(this.kpiDetails.minMax[1]), Validators.required]));
             this.KPIBandDataForm.controls['binaryData'].setValidators(null);
+            this.KPIBandDataForm.controls['textData'].setValidators(null);
+          }
+          //For Numeric Data Validations removing Binary Data
+          else if (this.kpiDetails['dataTypeId'] == 10) {
+            this.KPIBandDataForm.controls['numericData'].setValidators(Validators.compose([Validators.min(this.kpiDetails.minMax[0]), Validators.max(this.kpiDetails.minMax[1]), Validators.required]));
+            this.KPIBandDataForm.controls['binaryData'].setValidators(null);
+            this.KPIBandDataForm.controls['textData'].setValidators(Validators.compose([Validators.required]));
           }
         }
         else {
@@ -745,6 +764,26 @@ export class GlobalAnalyticsLayoutComponent implements OnInit {
           this.KPIForm.controls['numericData'].setValidators(null);
         }
         else {
+          if (this.kpiDetails['isScope'] == true) {
+            //For Binary Data Validations removing Numeric Data
+            if (this.kpiDetails['dataTypeId'] == 8) {
+              this.KPIBandDataForm.controls['binaryData'].setValidators(Validators.compose([Validators.required]));
+              this.KPIBandDataForm.controls['numericData'].setValidators(null);
+              this.KPIBandDataForm.controls['textData'].setValidators(null);
+            }
+            //For Numeric Data Validations removing Binary Data
+            else if (this.kpiDetails['dataTypeId'] == 7) {
+              this.KPIBandDataForm.controls['numericData'].setValidators(Validators.compose([Validators.min(this.kpiDetails.minMax[0]), Validators.max(this.kpiDetails.minMax[1]), Validators.required]));
+              this.KPIBandDataForm.controls['binaryData'].setValidators(null);
+              this.KPIBandDataForm.controls['textData'].setValidators(null);
+            }
+            //For Numeric Data Validations removing Binary Data
+            else if (this.kpiDetails['dataTypeId'] == 10) {
+              this.KPIBandDataForm.controls['numericData'].setValidators(Validators.compose([Validators.min(this.kpiDetails.minMax[0]), Validators.max(this.kpiDetails.minMax[1]), Validators.required]));
+              this.KPIBandDataForm.controls['binaryData'].setValidators(null);
+              this.KPIBandDataForm.controls['textData'].setValidators(Validators.compose([Validators.required]));
+            }
+          }
           //For Data Type
           //For Numeric Data Type 
           if (this.kpiDetails['dataTypeId'] == 7) {

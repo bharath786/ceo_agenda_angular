@@ -473,8 +473,7 @@
             </mat-select>
           </div>
         </div>
-        <form [formGroup]="KPIBandDataForm" (ngSubmit)="onSubmitKPI(KPIBandDataForm.value)"
-          #kpiNumericBinaryUpsert="ngForm" class="form-horizontal">
+        <form [formGroup]="KPIBandDataForm" #kpiNumericBinaryUpsert="ngForm" class="form-horizontal">
           <table *ngIf="kpiDetails.dataTypeId == 7 || kpiDetails.dataTypeId == 8"
             class="table table-bordered table-striped text-center table-responsive"
             [mfData]="KPISavedData | Filter : filterQuery" #mf="mfDataTable" [mfRowsOnPage]="10">
@@ -502,8 +501,8 @@
                 <td>{{item.scopeValue}}</td>
                 <td *ngIf="this.kpiDetails['dataTypeId'] == 7">
                   <span *ngIf="KPIBandDataId != item.int_kpi_data_id">{{item.int_numeric_data}} </span>
-                  <input formControlName="numericData" class="form-control"
-                    *ngIf="KPIBandDataId === item.int_kpi_data_id" type="number" [(ngModel)]="item.int_numeric_data">
+                  <input formControlName="numericData" class="form-control tableinput" [ngClass]="{'field-required': numericValid==false}"
+                    *ngIf="KPIBandDataId === item.int_kpi_data_id" pKeyFilter="num" type="text" [(ngModel)]="item.int_numeric_data" style="margin:0px !important;">
                 </td>
                 <td *ngIf="item.bt_binary_data != null">
                   <span
@@ -514,11 +513,16 @@
                     <mat-radio-button [value]='false'>No</mat-radio-button>
                   </mat-radio-group>
                 </td>
-                <td>
-                  <button type="submit" *ngIf="KPIBandDataId === item.int_kpi_data_id"
-                    class="btn btn-success marginbtn">Update</button>
-                  <button type="button" *ngIf="KPIBandDataId === item.int_kpi_data_id" (click)="cancelBand()"
-                    class="btn btn-danger marginbtn">Cancel</button>
+                <td style="padding-right:0px; padding-left:0px; vertical-align: middle">
+                 <a (click)="onSubmitKPI(KPIBandDataForm.value)" *ngIf="KPIBandDataId === item.int_kpi_data_id">
+                  <i class="fa fa-save blue" style="font-size:18px; margin: 3px; cursor: pointer;"></i>
+                 </a> 
+                 <i type="button" *ngIf="KPIBandDataId === item.int_kpi_data_id" (click)="cancelBand()" class="fa fa-times red"
+                 style="font-size:18px; margin: 3px; cursor: pointer;"></i>
+                  <!-- <button type="submit" *ngIf="KPIBandDataId === item.int_kpi_data_id"
+                    class="btn btn-success marginbtn">Update</button> -->
+                  <!-- <button type="button" *ngIf="KPIBandDataId === item.int_kpi_data_id" (click)="cancelBand()"
+                    class="btn btn-danger marginbtn">Cancel</button> -->
                   <i *ngIf="KPIBandDataId != item.int_kpi_data_id" (click)="editBand(item)" class="fa fa-edit blue"
                     style="font-size:18px; margin: 3px; cursor: pointer;"></i>
                   <i *ngIf="KPIBandDataId != item.int_kpi_data_id" (click)="deleteBand(item)" class="fa fa-trash-o red"
