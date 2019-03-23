@@ -12,7 +12,7 @@
     </div>
     <!-- For Setup Tree data -->
     <div class="col-sm-8" *ngIf="kpiDetails != null">
-        <mat-card class="example-card greybackground">
+        <mat-card class="example-card bluebackground white-color">
             <mat-card-header>
                 <mat-card-title>{{kpiDetails.KPIName}} ({{kpiDetails.KPICode}})</mat-card-title>
                 <!-- <mat-card-subtitle>{{kpiDetails.KPICode}}</mat-card-subtitle> -->
@@ -31,7 +31,7 @@
                 <span class="spansize col-sm-6 no-padding">{{dimensionFrequency}}</span>
             </div>
             <div class="form-group col-sm-4">
-                <label class="col-sm-6 no-padding">Priority Type :&nbsp;</label>
+                <label class="col-sm-6 no-padding">Direction :&nbsp;</label>
                 <span class="spansize col-sm-6 no-padding">{{KPIPriorityType}}</span>
             </div>
             <div *ngIf="kpiDataType == 'Numeric' || kpiDataType == 'Text Numeric'">
@@ -99,10 +99,7 @@
                 <div class="col-sm-4 pull-right">
                   <button class="btn btn-primary pull-right" (click)="getTargetData()" style="margin-top: 6px;">Reset</button>
                 </div>
-                <div class="col-sm-4 pull-right">
-                  <input type="text" [(ngModel)]="filterQuery" class="form-control" placeholder="Search">
-                </div>
-                <div class="col-sm-4 pull-right">
+                <div class="col-sm-3">
                   <mat-select *ngIf="dimensionFrequency == 'Weekly'" [(ngModel)]="weekFilter"
                     (selectionChange)="filterWeekKPITargetData($event.value)" class="form-control" placeholder="Select Week">
                     <mat-option *ngFor="let item of Weeks" [value]="item.int_week_id">{{item.vc_week_name}}
@@ -114,6 +111,10 @@
                     </mat-option>
                   </mat-select>
                 </div>
+                <div class="col-sm-3">
+                  <input type="text" [(ngModel)]="filterQuery" class="form-control" placeholder="Search">
+                </div>
+               
               </div>
               <table
                 class="table table-bordered table-striped text-center table-responsive"

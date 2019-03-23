@@ -93,8 +93,10 @@
                 [chart]="chartDataWithScope"></div>
               <div style="width: 100%; height: 400px;" *ngIf="kpiDetails.isScope == true && kpiDataType =='Binary'"
                 [chart]="binaryChartDataWithScope"></div>
-
-              <div *ngIf="kpiDataType=='Text Numeric' || kpiDataType=='Text'" class="">
+                <!-- <div class="col-sm-3 pull-right">
+                    <input type="text" [(ngModel)]="filterQuery" class="form-control " placeholder="Search">
+                </div> -->
+              <div *ngIf="kpiDataType==='Text Numeric' || kpiDataType==='Text'" class="">
                 <ul class="timeline">
                   <li *ngFor="let item of KPIFilteredSavedData | Filter : filterQuery">
                     <i class="fa fa-comments bg-blue"></i>
@@ -224,7 +226,7 @@
                 </div>
                 <p-message style="margin-top:7px;"
                   *ngIf="KPIForm.controls.textData.errors?.required && KPIForm.controls.textData.touched"
-                  class="col-sm-3 customValidMessage no-padding" severity="error" text="Text is required"></p-message>
+                  class="col-sm-3 customValidMessage no-padding" severity="error" text="Text Required"></p-message>
                 <p-message *ngIf="KPIForm.controls.numericData.errors?.required && KPIForm.controls.numericData.touched"
                   class="col-sm-3 customValidMessage no-padding" severity="error" text="Value is required"></p-message>
                 <p-message *ngIf="KPIForm.controls.numericData.errors?.min || KPIForm.controls.numericData.errors?.max"
@@ -292,7 +294,7 @@
          
                   <div class="col-sm-3" style="padding-left:0px; margin-top: 7px; margin-left: -25px;">
                       <p-message style="margin-top:10px;"
-                      *ngIf="KPIForm.controls.textData.errors?.required && KPIForm.controls.textData.touched" class="customValidMessage no-padding" severity="error" text="Text is required"></p-message>
+                      *ngIf="KPIForm.controls.textData.errors?.required && KPIForm.controls.textData.touched" class="customValidMessage no-padding" severity="error" text="Text required"></p-message>
                   </div>
                   <div class="col-sm-1 pull-right no-padding" style="margin-top:24px;">
                       <button type="submit" [disabled]="!KPIUpsertForm.form.valid"
@@ -323,10 +325,7 @@
           <div class="col-sm-4 pull-right">
             <button class="btn btn-primary pull-right" (click)="getDataOfKPI()" style="margin-top: 6px;">Reset</button>
           </div>
-          <div class="col-sm-4 pull-right">
-            <input type="text" [(ngModel)]="filterQuery" class="form-control" placeholder="Search">
-          </div>
-          <div class="col-sm-4 pull-right">
+          <div class="col-sm-3">
             <mat-select *ngIf="dimensionFrequency == 'Weekly'" [(ngModel)]="weekFilter"
               (selectionChange)="filterWeekKPISavedData($event.value)" class="form-control" placeholder="Select Week">
               <mat-option *ngFor="let item of Weeks" [value]="item.int_week_id">{{item.vc_week_name}}
@@ -337,6 +336,9 @@
               <mat-option *ngFor="let item of Months" [value]=item.int_month_id>{{item.vc_month_name}}
               </mat-option>
             </mat-select>
+          </div>
+          <div class="col-sm-3">
+            <input type="text" [(ngModel)]="filterQuery" class="form-control" placeholder="Search">
           </div>
         </div>
         <table *ngIf="kpiDetails.dataTypeId == 7 || kpiDetails.dataTypeId == 8"
@@ -459,10 +461,7 @@
           <div class="col-sm-4 pull-right">
             <button class="btn btn-primary pull-right" (click)="getDataOfKPI()" style="margin-top: 6px;">Reset</button>
           </div>
-          <div class="col-sm-4 pull-right">
-            <input type="text" [(ngModel)]="filterQuery" class="form-control" placeholder="Search">
-          </div>
-          <div class="col-sm-4 pull-right">
+          <div class="col-sm-3">
             <mat-select *ngIf="dimensionFrequency == 'Weekly'" [(ngModel)]="weekFilter"
               (selectionChange)="filterWeekKPISavedData($event.value)" class="form-control" placeholder="Select Week">
               <mat-option *ngFor="let item of Weeks" [value]="item.int_week_id">{{item.vc_week_name}}
@@ -473,6 +472,9 @@
               <mat-option *ngFor="let item of Months" [value]=item.int_month_id>{{item.vc_month_name}}
               </mat-option>
             </mat-select>
+          </div>
+          <div class="col-sm-3">
+            <input type="text" [(ngModel)]="filterQuery" class="form-control" placeholder="Search">
           </div>
         </div>
         <form [formGroup]="KPIBandDataForm" #kpiNumericBinaryUpsert="ngForm" class="form-horizontal">

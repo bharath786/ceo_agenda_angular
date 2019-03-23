@@ -46,7 +46,7 @@ export class GlobalAnalyticsLayoutComponent implements OnInit {
   dimensionFrequency: any;
   kpiDataType: any;
   KPIPriorityType: any;
-  Data: { 'KPICreatedYear': any; 'KPICreatedMonth': any; 'KPICreatedWeek': any; 'KPIId': any; }[];
+  Data: { 'KPICreatedYear': any; 'KPICreatedMonth': any; 'KPICreatedWeek': any; 'KPIId': any; 'year': number}[];
   Months: any;
   Weeks: any;
   arrayBuffer: any;
@@ -687,6 +687,7 @@ export class GlobalAnalyticsLayoutComponent implements OnInit {
     // console.log(event['node']['label']);
     this.mainvalue = event['node'];
     this.iskpiDataValid = false;
+    var EntityDetails = JSON.parse(localStorage['EntityDetails']);
     console.log(this.mainvalue);
     if (this.mainvalue['KPIId'] != null) {
       this.summary = false;
@@ -696,7 +697,8 @@ export class GlobalAnalyticsLayoutComponent implements OnInit {
         'KPICreatedYear': this.mainvalue['KPICreatedYear'],
         'KPICreatedMonth': this.mainvalue['KPICreateMonth'],
         'KPICreatedWeek': this.mainvalue['KPICreatedWeek'],
-        'KPIId': this.mainvalue['KPIId']
+        'KPIId': this.mainvalue['KPIId'],
+        'year': EntityDetails.year
       }];
       this.kpiDataTable = null;
       //For Weekly Frequency
@@ -773,7 +775,7 @@ export class GlobalAnalyticsLayoutComponent implements OnInit {
               this.KPIBandDataForm.controls['binaryData'].setValidators(null);
               this.KPIBandDataForm.controls['textData'].setValidators(null);
             }
-            //For Numeric Data Validations removing Binary Data
+            //For Text Numeric Data Validations removing Binary Data
             else if (this.kpiDetails['dataTypeId'] == 10) {
               this.KPIBandDataForm.controls['numericData'].setValidators(Validators.compose([Validators.min(this.kpiDetails.minMax[0]), Validators.max(this.kpiDetails.minMax[1]), Validators.required]));
               this.KPIBandDataForm.controls['binaryData'].setValidators(null);
@@ -798,6 +800,7 @@ export class GlobalAnalyticsLayoutComponent implements OnInit {
           else if (this.kpiDetails['dataTypeId'] == 10) {
             this.KPIForm.controls['binaryData'].setValidators(null);
             this.KPIForm.controls['numericData'].setValidators(Validators.compose([Validators.min(this.kpiDetails.minMax[0]), Validators.max(this.kpiDetails.minMax[1]), Validators.required]))
+            this.KPIForm.controls['textData'].setValidators(Validators.compose([Validators.required]))         
           }
           // For Binary Data Type
           else if (this.kpiDetails['dataTypeId'] == 8) {

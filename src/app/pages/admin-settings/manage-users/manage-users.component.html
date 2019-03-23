@@ -10,15 +10,16 @@
     <!-- For Records and Search Option above table -->
     <div class="row">
         <div class="col-md-6 col-sm-12 pull-right">
-            <div id="Quality_table1_filter" class="dataTables_filter pull-right"><label class="table_labels">Search:&nbsp;</label>
+            <div id="Quality_table1_filter" class="dataTables_filter pull-right"><label
+                    class="table_labels">Search:&nbsp;</label>
                 <input type="search" [(ngModel)]="filterQuery" class="form-control input-small input-inline"
                     placeholder=""></div>
         </div>
     </div>
 
     <!-- Users Table with delete and edit options -->
-    <table class="table table-hover table-bordered table-scrollable-borderless table-striped margin-top" [mfData]="users | dataFilter : filterQuery"
-        #mf="mfDataTable" [mfRowsOnPage]="10">
+    <table class="table table-hover table-bordered table-scrollable-borderless table-striped margin-top"
+        [mfData]="users | dataFilter : filterQuery" #mf="mfDataTable" [mfRowsOnPage]="10">
         <thead>
             <tr>
                 <th class="thblue">
@@ -45,19 +46,24 @@
             </tr>
         </thead>
         <tbody>
-                <tr *ngIf="mf.data?.length == 0">
-                        <td colspan="6">No record found</td>
-                    </tr>
+            <tr *ngIf="mf.data?.length == 0">
+                <td colspan="6">No record found</td>
+            </tr>
             <tr *ngFor="let data of mf.data" [ngClass]="{'disablerow': data.firstName=='Admin'}">
-                <td>{{data.firstName}}  {{data.lastName}} </td>
-                <td>{{data.email}} <i *ngIf="data.verified==true" class="fa fa-check green" tooltip="Email is Verified" placement="right"></i><i *ngIf="data.verified==false"  mwlConfirmationPopover [popoverTitle]="popoverTitle" [confirmText]="confirmText"
-                    [cancelText]="cancelText" [popoverMessage]="popoverMessage" placement="left" (confirm)="resendMail(data)" class="fa fa-times red" tooltip="Email is not verified. Click here to resend verification mail" placement="right"></i> </td>
+                <td>{{data.firstName}} {{data.lastName}} </td>
+                <td>{{data.email}} <i *ngIf="data.verified==true" class="fa fa-check green" tooltip="Email is Verified"
+                        placement="right"></i><i *ngIf="data.verified==false" mwlConfirmationPopover
+                        [popoverTitle]="popoverTitle" [confirmText]="confirmText" [cancelText]="cancelText"
+                        [popoverMessage]="popoverMessage" placement="left" (confirm)="resendMail(data)"
+                        class="fa fa-times red" tooltip="Email is not verified. Click here to resend verification mail"
+                        placement="right"></i> </td>
                 <td>{{data.phoneNo}}</td>
                 <td>
-                    <a title="Click to Assign Permissions" (click)="permissionModal1Toggle(1)">11/24</a>
+                    <a title="Click to Assign Permissions" (click)="permissionModal1Toggle(data.userId)">Assign Permissions</a>
                 </td>
                 <td>
-                    <a title="Click to Assign Permissions" (click)="entitiesnModalToggle(data)">{{data.AssignedEntitiesCount}}/{{data.TotalEntitiesCount}}</a>
+                    <a title="Click to Assign Permissions"
+                        (click)="entitiesnModalToggle(data)">{{data.AssignedEntitiesCount}}/{{data.TotalEntitiesCount}}</a>
                 </td>
                 <td>
                     <a (click)="changeStatus(data)">{{ data.status ? '&nbsp;&nbsp;&nbsp;Active'
@@ -91,9 +97,10 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title titlemodal">
-                    <b>  {{ emailchange !=
+                    <b> {{ emailchange !=
                             null ? 'Edit
-                            User Details' : 'Add User Details'}}</b> <i (click)="addUserModalToggle(2)" class="fa fa-times pull-right titlemodal"></i>
+                            User Details' : 'Add User Details'}}</b> <i (click)="addUserModalToggle(2)"
+                        class="fa fa-times pull-right titlemodal"></i>
                 </h4>
             </div>
             <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)" #userForm="ngForm" class="form-horizontal">
@@ -103,9 +110,11 @@
                         <div class="col-md-8">
                             <div class="input-icon right">
                                 <i class="fa fa-user"></i>
-                                <input type="text" class="form-control" formControlName="firstName" maxlength="50" autocomplete="off"
-                                    placeholder="Enter First Name">
-                                <mat-error *ngIf="form.controls.firstName.errors?.required && form.controls.firstName.dirty">First
+                                <input type="text" class="form-control" formControlName="firstName" maxlength="50"
+                                    autocomplete="off" placeholder="Enter First Name">
+                                <mat-error
+                                    *ngIf="form.controls.firstName.errors?.required && form.controls.firstName.dirty">
+                                    First
                                     Name is required</mat-error>
                             </div>
                         </div>
@@ -115,9 +124,11 @@
                         <div class="col-md-8">
                             <div class="input-icon right">
                                 <i class="fa fa-user"></i>
-                                <input type="text" class="form-control" maxlength="50" formControlName="lastName" autocomplete="off"
-                                    placeholder="Enter Last Name">
-                                <mat-error *ngIf="form.controls.lastName.errors?.required && form.controls.lastName.touched">Last
+                                <input type="text" class="form-control" maxlength="50" formControlName="lastName"
+                                    autocomplete="off" placeholder="Enter Last Name">
+                                <mat-error
+                                    *ngIf="form.controls.lastName.errors?.required && form.controls.lastName.touched">
+                                    Last
                                     Name is required</mat-error>
                             </div>
                         </div>
@@ -128,13 +139,19 @@
                             <div class="input-icon right">
                                 <i class="fa fa-calendar"></i>
                                 <!-- <input type="date" max="2014-05-15" formControlName="dateOfBirth" class="form-control" placeholder="mm/dd/yyyy"> -->
-                                <input type="text" onCopy='return false' onPaste='return false' (keypress)="keyPressforDob($event)" formControlName="dateOfBirth" placeholder="MM/DD/YYYY" class="form-control" bsDatepicker [bsConfig]="{ dateInputFormat: 'MM/DD/YYYY', containerClass: 'theme-dark-blue'}" [maxDate]="maxDate">
-<!-- 
+                                <input type="text" onCopy='return false' onPaste='return false'
+                                    (keypress)="keyPressforDob($event)" formControlName="dateOfBirth"
+                                    placeholder="MM/DD/YYYY" class="form-control" bsDatepicker
+                                    [bsConfig]="{ dateInputFormat: 'MM/DD/YYYY', containerClass: 'theme-dark-blue'}"
+                                    [maxDate]="maxDate">
+                                <!-- 
                                  <input matInput [matDatepicker]="picker" placeholder="Choose a date">
                                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                                  <mat-datepicker #picker></mat-datepicker> -->
-                          
-                                <mat-error *ngIf="form.controls.dateOfBirth.errors?.required  && form.controls.dateOfBirth.touched">Date
+
+                                <mat-error
+                                    *ngIf="form.controls.dateOfBirth.errors?.required  && form.controls.dateOfBirth.touched">
+                                    Date
                                     of Birth is required</mat-error>
                             </div>
                         </div>
@@ -144,11 +161,14 @@
                         <div class="col-md-8">
                             <div class="input-icon right">
                                 <i class="fa fa-envelope"></i>
-                                <input type="text" maxlength="50" formControlName="email" class="form-control" autocomplete="off"
-                                    placeholder="Enter Email Address">
-                                <mat-error *ngIf="form.controls.email.errors?.required && form.controls.email.touched">Email
+                                <input type="text" maxlength="50" formControlName="email" class="form-control"
+                                    autocomplete="off" placeholder="Enter Email Address">
+                                <mat-error *ngIf="form.controls.email.errors?.required && form.controls.email.touched">
+                                    Email
                                     is required</mat-error>
-                                <mat-error *ngIf="form.controls.email.hasError('invalidEmail') && form.controls.email.touched">Invalid email address</mat-error>
+                                <mat-error
+                                    *ngIf="form.controls.email.hasError('invalidEmail') && form.controls.email.touched">
+                                    Invalid email address</mat-error>
                             </div>
                         </div>
                     </div>
@@ -157,18 +177,22 @@
                         <div class="col-md-8">
                             <div class="input-icon right">
                                 <i class="fa fa-mobile"></i>
-                                <input type="text" maxlength="50" formControlName="phoneNo" class="form-control" autocomplete="off"
-                                    (keypress)="keyPress($event)" minlength=10 maxlength=14 placeholder="Enter Phone Number">
+                                <input type="text" maxlength="50" formControlName="phoneNo" class="form-control"
+                                    autocomplete="off" (keypress)="keyPress($event)" minlength=10 maxlength=14
+                                    placeholder="Enter Phone Number">
                                 <!-- <mat-error *ngIf="form.controls.phoneNo.errors?.required && form.controls.phoneNo.touched">Phone
                                     Number is required</mat-error> -->
-                                <mat-error *ngIf="form.controls.phoneNo.hasError('minlength') && form.controls.phoneNo.touched">Phone Number isn't valid</mat-error>
+                                <mat-error
+                                    *ngIf="form.controls.phoneNo.hasError('minlength') && form.controls.phoneNo.touched">
+                                    Phone Number isn't valid</mat-error>
                             </div>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-md-3 control-label">Permissions</label>
                         <div class="col-md-7 no-padding">
-                            <label class="radio-inline" style="margin-left:0px;" (click)="permissionModalToggle(1)"><a>Click
+                            <label class="radio-inline" style="margin-left:0px;"
+                                (click)="permissionModalToggle(1)"><a>Click
                                     Here</a></label>
                         </div>
                     </div>
@@ -189,7 +213,8 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title titlemodal">
-                    <b>Delete Record</b> <i (click)="deleteModalToggle(2)" class="fa fa-times pull-right titlemodal"></i>
+                    <b>Delete Record</b> <i (click)="deleteModalToggle(2)"
+                        class="fa fa-times pull-right titlemodal"></i>
                 </h4>
             </div>
             <div class="modal-body col-md-12">
@@ -199,8 +224,10 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" (click)="deleteUser()" class="btn btn-danger"><i class="fa fa-check"></i>&nbsp;Delete</button>
-                <button type="button" class="btn btn-default" (click)="deleteModalToggle(2)"><i class="fa fa-times"></i>&nbsp;Close</button>
+                <button type="button" (click)="deleteUser()" class="btn btn-danger"><i
+                        class="fa fa-check"></i>&nbsp;Delete</button>
+                <button type="button" class="btn btn-default" (click)="deleteModalToggle(2)"><i
+                        class="fa fa-times"></i>&nbsp;Close</button>
             </div>
         </div>
     </div>
@@ -209,59 +236,69 @@
 
 <!-- For Entities List Modal Popup -->
 <div class="modal fade" bsModal #entitiesModal="bs-modal" [config]="{backdrop: 'static'}" role="dialog">
-    <form [formGroup]="entityform" (ngSubmit)="onEntitySubmit(entityform.value)" #enityUpsertForm="ngForm" class="form-horizontal">    
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title titlemodal">
-                    <b>Assign Entity</b> <i (click)="entitiesnModalToggle(null)" class="fa fa-times pull-right titlemodal"></i>
-                </h4>
-            </div>
-            <div class="modal-body modalbody">
-    
-                        <div class="form-group">
-                            <label class="col-md-3 control-label">Division&nbsp;:</label>
-                            <div class="col-md-8">
-                                <mat-select (selectionChange)="onDivisionSelect($event.value)" formControlName="divId" placeholder="Division" class="col-sm-10 form-control marginbtn" multiple>
-                                    <mat-option *ngFor="let division of divisiondata" [value]="division.divisonId">
-                                        {{division.divisionName}}
-                                    </mat-option>
-                                </mat-select>
-                                <mat-error *ngIf="entityform.controls.divId.errors?.required && form.controls.email.touched">Division
-                                    is required</mat-error>
-                            </div>
+    <form [formGroup]="entityform" (ngSubmit)="onEntitySubmit(entityform.value)" #enityUpsertForm="ngForm"
+        class="form-horizontal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title titlemodal">
+                        <b>Assign Entity</b> <i (click)="entitiesnModalToggle(null)"
+                            class="fa fa-times pull-right titlemodal"></i>
+                    </h4>
+                </div>
+                <div class="modal-body modalbody">
+
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Division&nbsp;:</label>
+                        <div class="col-md-8">
+                            <mat-select (selectionChange)="onDivisionSelect($event.value)" formControlName="divId"
+                                placeholder="Division" class="col-sm-10 form-control marginbtn" multiple>
+                                <mat-option *ngFor="let division of divisiondata" [value]="division.divisonId">
+                                    {{division.divisionName}}
+                                </mat-option>
+                            </mat-select>
+                            <mat-error
+                                *ngIf="entityform.controls.divId.errors?.required && form.controls.email.touched">
+                                Division
+                                is required</mat-error>
                         </div>
-                        <div class="form-group">
-                            <label class="col-md-3 control-label"> Location&nbsp;:</label>
-                            <div class="col-md-8">
-                                <mat-select (selectionChange)="onLocationSelect($event.value)" formControlName="locationId" placeholder="Location" class="col-sm-10 form-control marginbtn" multiple>
-                                    <mat-option *ngFor="let location of locationdata" [value]="location.countryId">
-                                        {{location.countryName}}
-                                    </mat-option>
-                                </mat-select>
-                            </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label"> Location&nbsp;:</label>
+                        <div class="col-md-8">
+                            <mat-select (selectionChange)="onLocationSelect($event.value)" formControlName="locationId"
+                                placeholder="Location" class="col-sm-10 form-control marginbtn" multiple>
+                                <mat-option *ngFor="let location of locationdata" [value]="location.countryId">
+                                    {{location.countryName}}
+                                </mat-option>
+                            </mat-select>
                         </div>
-                        <div class="form-group">
-                            <label class="col-md-3 control-label">Entity&nbsp;:</label>
-                            <div class="col-md-8">
-                                <mat-select placeholder="Entity" formControlName="entityId" class="col-sm-10 form-control marginbtn" multiple>
-                                    <mat-option *ngFor="let entity of entityarray" [value]="entity.entityId">
-                                        {{entity.entityName}}
-                                    </mat-option>
-                                </mat-select>
-                            </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Entity&nbsp;:</label>
+                        <div class="col-md-8">
+                            <mat-select placeholder="Entity" formControlName="entityId"
+                                class="col-sm-10 form-control marginbtn" multiple>
+                                <mat-option *ngFor="let entity of entityarray" [value]="entity.entityId">
+                                    {{entity.entityName}}
+                                </mat-option>
+                            </mat-select>
                         </div>
-            
-            </div>
-            <div class="modal-footer">
-                    <button type="submit" [disabled]="!enityUpsertForm.form.valid"  class="btn btn-success"><i class="fa fa-check"></i>&nbsp;Save</button>
-                <!-- <button type="submit" (click)="assignEntities()" class="btn btn-primary"><i class="fa fa-check"></i>&nbsp;Save</button> -->
-                <button type="button" class="btn btn-default" (click)="entitiesnModalToggle(null)"><i class="fa fa-times"></i>&nbsp;Close
-                </button>
-                <button type="button" *ngIf="isUnassignEntities == true" (click)="assignEntities([])" class="btn btn-danger"><i class="fa fa-times"></i>&nbsp;Unassign Entities</button>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" [disabled]="!enityUpsertForm.form.valid" class="btn btn-success"><i
+                            class="fa fa-check"></i>&nbsp;Save</button>
+                    <!-- <button type="submit" (click)="assignEntities()" class="btn btn-primary"><i class="fa fa-check"></i>&nbsp;Save</button> -->
+                    <button type="button" class="btn btn-default" (click)="entitiesnModalToggle(null)"><i
+                            class="fa fa-times"></i>&nbsp;Close
+                    </button>
+                    <button type="button" *ngIf="isUnassignEntities == true" (click)="assignEntities([])"
+                        class="btn btn-danger"><i class="fa fa-times"></i>&nbsp;Unassign Entities</button>
+                </div>
             </div>
         </div>
-    </div>
     </form>
 </div>
 
@@ -273,12 +310,14 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title titlemodal">
-                    <b>Permissions</b> <i (click)="permissionModalToggle(2)" class="fa fa-times pull-right titlemodal"></i>
+                    <b>Permissions</b> <i (click)="permissionModalToggle(2)"
+                        class="fa fa-times pull-right titlemodal"></i>
                 </h4>
             </div>
             <div class="modal-body row">
-                <div class="col-sm-6">
-                    <table class="table table-hover table-bordered table-scrollable-borderless col-sm-6 table-striped margin-top"
+                <div class="col-sm-12">
+                    <table
+                        class="table table-hover table-bordered table-scrollable-borderless col-sm-6 table-striped margin-top"
                         id="table1">
                         <thead>
 
@@ -367,99 +406,12 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="col-sm-6">
-                    <table class="table table-hover table-bordered table-scrollable-borderless table-striped margin-top"
-                        id="table1">
-                        <thead>
-                            <tr>
-                                <th class="thblue">
-                                    Select
-                                </th>
-                                <th class="thblue">
-                                    Permission
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>
-                                    <mat-checkbox></mat-checkbox>
-                                </td>
-                                <td class="textleft"><b>Predictive Analytics</b></td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <mat-checkbox></mat-checkbox>
-                                </td>
-                                <td class="textleft">Manage Highlights</td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <mat-checkbox></mat-checkbox>
-                                </td>
-                                <td class="textleft">Manage Data</td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <mat-checkbox></mat-checkbox>
-                                </td>
-                                <td class="textleft"><b>System Analytics</b></td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <mat-checkbox></mat-checkbox>
-                                </td>
-                                <td class="textleft">Manage Highlights</td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <mat-checkbox></mat-checkbox>
-                                </td>
-                                <td class="textleft">Manage Data</td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <mat-checkbox></mat-checkbox>
-                                </td>
-                                <td class="textleft"><b>Control Analytics</b></td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <mat-checkbox></mat-checkbox>
-                                </td>
-                                <td class="textleft">Manage Highlights</td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <mat-checkbox></mat-checkbox>
-                                </td>
-                                <td class="textleft">Manage Data</td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <mat-checkbox></mat-checkbox>
-                                </td>
-                                <td class="textleft"><b>Process Analytics</b></td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <mat-checkbox></mat-checkbox>
-                                </td>
-                                <td class="textleft">Manage Highlights</td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <mat-checkbox></mat-checkbox>
-                                </td>
-                                <td class="textleft">Manage Data</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
             </div>
             <div class="modal-footer">
-                <button type="submit" (click)="permissionModalToggle(2)" class="btn btn-primary"><i class="fa fa-check"></i>&nbsp;Update</button>
-                <button type="button" class="btn btn-default" (click)="permissionModalToggle(2)"><i class="fa fa-arrow-left"></i>&nbsp;Go
+                <button type="submit" (click)="permissionModalToggle(2)" class="btn btn-primary"><i
+                        class="fa fa-check"></i>&nbsp;Update</button>
+                <button type="button" class="btn btn-default" (click)="permissionModal1Toggle(null)"><i
+                        class="fa fa-arrow-left"></i>&nbsp;Go
                     Back</button>
             </div>
         </div>
@@ -469,204 +421,55 @@
 <!-- For Permission Modal Popup Readonly Mode -->
 <div class="modal fade" bsModal #permissionModal1="bs-modal" [config]="{backdrop: 'static'}" role="dialog">
     <div class="modal-dialog modal-custom">
+           
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title titlemodal">
-                    <b>Permissions</b> <i (click)="permissionModal1Toggle(2)" class="fa fa-times pull-right titlemodal"></i>
+                    <b>Permissions</b> <i (click)="permissionModal1Toggle(null)"
+                        class="fa fa-times pull-right titlemodal"></i>
                 </h4>
             </div>
+         
             <div class="modal-body row">
-                <div class="col-sm-6">
-                    <table class="table table-hover table-bordered table-scrollable-borderless col-sm-6 table-striped margin-top"
+ 
+                <div class="col-sm-12">
+                    <table
+                        class="table table-hover table-bordered table-scrollable-borderless col-sm-6 table-striped margin-top"
                         id="table1">
                         <thead>
                             <tr>
                                 <th class="thblue">
-                                    Select
+                                    Permission
                                 </th>
                                 <th class="thblue">
-                                    Permission
+                                    Read
+                                </th>
+                                <th class="thblue">
+                                    Write
                                 </th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
+                            <tr *ngFor="let item of allPermissions">
+                                <td class="textleft">{{item.vc_pemission_screen_name}}</td>
                                 <td>
-                                    <mat-checkbox [disabled]="disabled" [checked]="myModel"></mat-checkbox>
+                                    <mat-checkbox name="read{{item.int_permission_screen_id}}" [(ngModel)]="isReadPerm[item.int_permission_screen_id]" (change)="autoDeselectPermissions($event.checked,item.int_permission_screen_id)"></mat-checkbox>
                                 </td>
-                                <td class="textleft"><b>View Dashboard</b></td>
-                            </tr>
-                            <tr>
                                 <td>
-                                    <mat-checkbox [disabled]="disabled"></mat-checkbox>
+                                    <mat-checkbox name="write{{item.int_permission_screen_id}}"  [(ngModel)]="isWritePerm[item.int_permission_screen_id]" (change)="autoSelectPermissions($event.checked,item.int_permission_screen_id)"></mat-checkbox>
                                 </td>
-                                <td class="textleft">Manage Organization</td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <mat-checkbox [disabled]="disabled" [checked]="myModel"></mat-checkbox>
-                                </td>
-                                <td class="textleft">Manage Division</td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <mat-checkbox [disabled]="disabled" [checked]="myModel"></mat-checkbox>
-                                </td>
-                                <td class="textleft">Manage Location</td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <mat-checkbox [disabled]="disabled" [checked]="myModel"></mat-checkbox>
-                                </td>
-                                <td class="textleft">Manage Entity</td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <mat-checkbox [disabled]="disabled"></mat-checkbox>
-                                </td>
-                                <td class="textleft"><b>Setup</b></td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <mat-checkbox [disabled]="disabled"></mat-checkbox>
-                                </td>
-                                <td class="textleft">Manage Dimension</td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <mat-checkbox [disabled]="disabled"></mat-checkbox>
-                                </td>
-                                <td class="textleft">Manage KRA</td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <mat-checkbox [disabled]="disabled"></mat-checkbox>
-                                </td>
-                                <td class="textleft">Manage KPI</td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <mat-checkbox [disabled]="disabled"></mat-checkbox>
-                                </td>
-                                <td class="textleft"><b>Users</b></td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <mat-checkbox [disabled]="disabled"></mat-checkbox>
-                                </td>
-                                <td class="textleft">Manage Users</td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <mat-checkbox [disabled]="disabled"></mat-checkbox>
-                                </td>
-                                <td class="textleft">Assign Permissions</td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
-                <div class="col-sm-6">
-                    <table class="table table-hover table-bordered table-scrollable-borderless table-striped margin-top"
-                        id="table1">
-                        <thead>
-
-                            <tr>
-                                <th class="thblue">
-                                    Select
-                                </th>
-                                <th class="thblue">
-                                    Permission
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>
-                                    <mat-checkbox [disabled]="disabled" [checked]="myModel"></mat-checkbox>
-                                </td>
-                                <td class="textleft"><b>Predictive Analytics</b></td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <mat-checkbox [disabled]="disabled" [checked]="myModel"></mat-checkbox>
-                                </td>
-                                <td class="textleft">Manage Highlights</td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <mat-checkbox [disabled]="disabled" [checked]="myModel"></mat-checkbox>
-                                </td>
-                                <td class="textleft">Manage Data</td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <mat-checkbox [disabled]="disabled" [checked]="myModel"></mat-checkbox>
-                                </td>
-                                <td class="textleft"><b>System Analytics</b></td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <mat-checkbox [disabled]="disabled" [checked]="myModel"></mat-checkbox>
-                                </td>
-                                <td class="textleft">Manage Highlights</td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <mat-checkbox [disabled]="disabled" [checked]="myModel"></mat-checkbox>
-                                </td>
-                                <td class="textleft">Manage Data</td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <mat-checkbox [disabled]="disabled"></mat-checkbox>
-                                </td>
-                                <td class="textleft"><b>Control Analytics</b></td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <mat-checkbox [disabled]="disabled" [checked]="myModel"></mat-checkbox>
-                                </td>
-                                <td class="textleft">Manage Highlights</td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <mat-checkbox [disabled]="disabled"></mat-checkbox>
-                                </td>
-                                <td class="textleft">Manage Data</td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <mat-checkbox [disabled]="disabled"></mat-checkbox>
-                                </td>
-                                <td class="textleft"><b>Process Analytics</b></td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <mat-checkbox [disabled]="disabled"></mat-checkbox>
-                                </td>
-                                <td class="textleft">Manage Highlights</td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <mat-checkbox [disabled]="disabled"></mat-checkbox>
-                                </td>
-                                <td class="textleft">Manage Data</td>
-                            </tr>
-
-
-
-                        </tbody>
-                    </table>
-                </div>
-
+           
             </div>
             <div class="modal-footer">
-
-                <button type="button" class="btn btn-default" (click)="permissionModal1Toggle(2)"><i class="fa fa-times"></i>&nbsp;Close
-                </button>
-            </div>
+                    <button type="button" (click)="onSubmitPermissions(isReadPerm, isWritePerm)" class="btn btn-primary"><i
+                            class="fa fa-check"></i>&nbsp;Update</button>
+                    <button type="button" class="btn btn-danger" (click)="permissionModal1Toggle(null)"><i
+                            class="fa fa-times"></i>&nbsp;Close</button>
+                </div>
         </div>
     </div>
 </div>
-
-

@@ -106,6 +106,10 @@ export class AdminsettingsService {
     return this.http.get(this.getTargetTemplateAPI, this.getHeaders())
   }
 
+  getPermissions(){
+    return this.http.get(url+'get-all-permissions',this.getHeaders())
+  }
+
   getTargetValue() {
     return this.http.get(this.getTargetValueAPI, this.getHeaders())
   }
@@ -145,6 +149,14 @@ export class AdminsettingsService {
 
   resendMail(values) {
     return this.http.post(this.resendMailAPI, values, this.getHeaders())
+  }
+
+  permissionsUpsert(values){
+    return this.http.post(url+'upsert-user-permissions', values, this.getHeaders())
+  }
+
+  getuserPermissions(userId){
+    return this.http.get(url+'get-user-permissions'+'?userId='+userId)
   }
 
   //To get the list of Users

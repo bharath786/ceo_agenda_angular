@@ -50,7 +50,7 @@ export class TargetComponent implements OnInit {
   targetForm: any;
   targetData: any[];
   targetSavedData: any;
-  Data: { 'KPICreatedYear': any; 'KPICreatedMonth': any; 'KPICreatedWeek': any; 'KPIId': any; }[];
+  Data: { 'KPICreatedYear': any; 'KPICreatedMonth': any; 'KPICreatedWeek': any; 'KPIId': any; 'year':number}[];
   KPIFilteredTargetData: any[];
 
   constructor(private _adminsettingservice: AdminsettingsService,
@@ -118,12 +118,10 @@ export class TargetComponent implements OnInit {
   onWeekMonthSelection(Id) {
     console.log(this.targetSavedData)
     this.targetData = []
-
     this.targetData = this.targetSavedData.filter(x => x.int_week == Id || x.int_month == Id)
     //Checking for the data
     console.log(this.targetData);
     if (this.targetData.length > 0) {
-
       this.targetForm.controls['numericData'].setValue(this.targetData[0]['int_target'])
     }
     //If there is no data
@@ -169,13 +167,15 @@ export class TargetComponent implements OnInit {
   nodeSelect(event) {
     this.kpiDetails = event['node'];
     console.log(this.kpiDetails)
+    var EntityDetails = JSON.parse(localStorage['EntityDetails'])
     this.getKpiDataType();
     this.getDimensionFrequencies();
     this.Data = [{
       'KPICreatedYear': this.kpiDetails['KPICreatedYear'],
       'KPICreatedMonth': this.kpiDetails['KPICreateMonth'],
       'KPICreatedWeek': this.kpiDetails['KPICreatedWeek'],
-      'KPIId': this.kpiDetails['KPIId']
+      'KPIId': this.kpiDetails['KPIId'],
+      'year': EntityDetails.year
     }];
 
     //Custom Validator for Week Frequency
