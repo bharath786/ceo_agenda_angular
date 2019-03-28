@@ -39,6 +39,8 @@ export class StructureComponent implements OnInit {
   selectAllDimensions: any;
   dimensionArray: any =[];
 
+  blockSpecial: RegExp = /^[^<>*!]+$/ 
+
   @ViewChild('dimensionsModal') public dimensionsModal: ModalDirective;
 
   //For Confirmation
@@ -57,6 +59,8 @@ export class StructureComponent implements OnInit {
   country: any;
   filteredCountriesSingle: any[];
   filteredCountriesMultiple: any[];
+  isRead: boolean = false;
+  isWrite: boolean = false;
   
   constructor(private structureservice: AdminsettingsService, 
               public router: Router, 
@@ -102,13 +106,35 @@ export class StructureComponent implements OnInit {
       'entityCode':[null, Validators.compose([Validators.required, Validators.pattern(".*\\S.*[a-zA-z0-9 ]")])],
       'countryId': [null],
       'stateId': [null, Validators.compose([Validators.required])],
-      'cityId': [null, Validators.compose([Validators.required])],
+      'cityId': [null],
       'phoneNumber': [null],
       'address': [null, Validators.pattern(".*\\S.*[a-zA-z0-9 ]")],
       'modifiedBy': this.sessionUser['user_id'],
       'createdBy': this.sessionUser['user_id'],
       'locationId': null
     });
+    let PermsissionDetails = [];
+    PermsissionDetails = JSON.parse(localStorage['userPermissions']);
+    PermsissionDetails = PermsissionDetails['PermissionArray']
+    console.log(PermsissionDetails,'User Permissions')
+    let Userdetails = JSON.parse(localStorage['Session_name']);
+    if(Userdetails.email == 'admin@ceo.com')
+    {
+      this.isRead = true;
+      this.isWrite = true;
+    }
+    else{
+     var permissionlist = [];
+     permissionlist =  PermsissionDetails.filter(x=>x.screen_name == 'Structure');
+     if(permissionlist.length > 0){
+       this.isRead = permissionlist[0]['bt_isRead'];
+       this.isWrite = permissionlist[0]['bt_isWrite'];
+     }
+     else{
+      this.isRead = false;
+      this.isWrite = false;
+     }
+    }
   }
 
   fnDimensionsModal(){
@@ -426,8 +452,8 @@ filterCountry(query, countries: any[]):any[] {
       if (value['countryId'] == this.mainvalue['countryId']) {
         this.structureservice.upsertLocation(value).subscribe(
           data => {
-            this.getStructure();
             this.toasterService.pop('success','',data['message']);  
+            this.getStructure();
           },
           error => {
             console.log(error);
@@ -447,7 +473,7 @@ filterCountry(query, countries: any[]):any[] {
       this.structureservice.upsertLocation(value).subscribe(
         data => {
           this.getStructure();
-          this.toasterService.pop('error','',data['message']);
+          this.toasterService.pop('success','',data['message']);
         },
         error => {
           console.log(error);

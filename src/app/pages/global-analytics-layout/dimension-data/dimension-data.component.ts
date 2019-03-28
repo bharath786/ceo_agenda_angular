@@ -89,7 +89,6 @@ export class DimensionDataComponent implements OnInit {
     else if(this.kpiDataType == 'BInary'){
     data.push({ 'ScopeValue': '', 'ScopeCode': '' , 'Enter Yes/No':'' })
     }
-    console.log(data)
     this.excelService.exportAsExcelFile(data, 'DataSample');
   }
 
@@ -103,7 +102,6 @@ export class DimensionDataComponent implements OnInit {
          this.dimensionFrequency = this.dimensionFrequency.filter(x=>x.lookupId == this.kpiDetails.frequencyId);
          this.dimensionFrequency = this.dimensionFrequency[0]['lookupName']
 
-         console.log(this.dimensionFrequency,'Dimension Frequency')
         },
         error => {
           console.log(error);
@@ -119,11 +117,9 @@ export class DimensionDataComponent implements OnInit {
         this.kpiDataType = data['data']
         this.kpiDataType = this.kpiDataType.filter(x=>x.lookupId == this.kpiDetails.dataTypeId)
         this.kpiDataType = this.kpiDataType[0]['lookupName']
-        console.log(this.kpiDataType, 'Data Type')
         this.KPIPriorityType = data['data1']
         this.KPIPriorityType = this.KPIPriorityType.filter(x=>x.lookupId == this.kpiDetails.PriorityTypeId)
         this.KPIPriorityType = this.KPIPriorityType[0]['lookupName']
-        console.log(this.KPIPriorityType, 'proiritytype')
       },
       error => {
         console.log(error);

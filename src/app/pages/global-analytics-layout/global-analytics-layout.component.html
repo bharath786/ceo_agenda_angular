@@ -36,6 +36,9 @@
                 </tr>
               </thead>
               <tbody *ngFor="let item of dimensionSummary">
+                  <tr *ngIf="item?.length == 0">
+                      <td colspan="5">No record found</td>
+                  </tr>
                 <tr *ngFor="let subItem of item;let idx = index ">
                   <td *ngIf="idx==0" [attr.rowspan]=item.length style="vertical-align: middle;"> {{subItem.KRA_Name}}</td>
                   <td> {{subItem.KPI_Name}}</td>
@@ -57,6 +60,9 @@
                 </tr>
               </thead>
               <tbody *ngFor="let item of dimensionExceptions">
+                  <tr *ngIf="item?.length == 0">
+                      <td colspan="5">No record found</td>
+                  </tr>
                 <tr *ngFor="let subItem of item['KRA_KPI_Exceptions']; let idx = index">
                   <td *ngIf="idx==0" [attr.rowspan]=item.KRA_KPI_Exceptions.length style="vertical-align: middle;"> {{subItem.KRA_Name}}</td>
                   <td> {{subItem.KPI_Name}}</td>
@@ -215,7 +221,7 @@
                   <label *ngIf="kpiDataType=='Text'" class="no-padding lblfnt col-sm-3" style="padding-top:8px">Text
                     :&nbsp;</label>
                   <input type="text" *ngIf="kpiDataType=='Numeric'" pKeyFilter="num"
-                    [ngClass]="{'margin8' : kpiDataType=='Binary'}" formControlName="numericData" placeholder="Target"
+                    [ngClass]="{'margin8' : kpiDataType=='Binary'}" formControlName="numericData" placeholder="Value"
                     class="col-sm-6 form-control" style="margin-top:0px; margin-bottom:0px;width:45%; height: 30px;">
                   <textarea *ngIf="kpiDataType=='Text'" type="text" placeholder="Enter Text" formControlName="textData"
                     class="col-sm-3 margin-left form-control" style="width:  70%"></textarea>
@@ -234,7 +240,7 @@
                   text="Value should be between Min and Max Value"></p-message>
                 <div *ngIf="kpiDataType!='Text'" class="col-sm-1"></div>
 
-                <button type="submit" [disabled]="!KPIUpsertForm.form.valid"
+                <button *ngIf="isWrite==true" type="submit" [disabled]="!KPIUpsertForm.form.valid"
                   class="btn btn-success col-sm-1 form-group pull-right margin-top5"
                   style="margin-right: 0px;">Save</button>
               </div>
@@ -271,7 +277,7 @@
                 <div class="form-group margin-top-0 col-sm-4" style="padding-left:40px;">
                     <label class="no-padding lblfnt col-sm-6" style="padding-top:8px">Value :&nbsp;</label>
                     <input type="text" pKeyFilter="num" [ngClass]="{'margin8' : kpiDataType=='Binary'}"
-                      formControlName="numericData" placeholder="Target" class="col-sm-6 form-control"
+                      formControlName="numericData" placeholder="Value" class="col-sm-6 form-control"
                       style="margin-top:0px; margin-bottom:0px;width:45%; height: 30px;">
                   </div>
                 <div class="col-sm-4" style="padding-left:0px; margin-bottom:5px">  
@@ -297,7 +303,7 @@
                       *ngIf="KPIForm.controls.textData.errors?.required && KPIForm.controls.textData.touched" class="customValidMessage no-padding" severity="error" text="Text required"></p-message>
                   </div>
                   <div class="col-sm-1 pull-right no-padding" style="margin-top:24px;">
-                      <button type="submit" [disabled]="!KPIUpsertForm.form.valid"
+                      <button *ngIf="isWrite==true" type="submit" [disabled]="!KPIUpsertForm.form.valid"
                       class="btn btn-success pull-right margin-top5">Save</button>
                   </div>
                 </div>
@@ -489,7 +495,7 @@
                 <th scope="col" class="thblue">Scope Value</th>
                 <th class="thblue" *ngIf="kpiDetails.dataTypeId == 7 || kpiDetails.dataTypeId == 10">Numeric Data</th>
                 <th class="thblue" *ngIf="kpiDetails.dataTypeId == 8">Binary Data</th>
-                <th scope="col" class="thblue">Target</th>
+                <th *ngIf="isWrite==true" scope="col" class="thblue">Actions</th>
 
               </tr>
             </thead>
@@ -517,7 +523,7 @@
                     <mat-radio-button [value]='false'>No</mat-radio-button>
                   </mat-radio-group>
                 </td>
-                <td style="padding-right:0px; padding-left:0px; vertical-align: middle">
+                <td *ngIf="isWrite==true" style="padding-right:0px; padding-left:0px; vertical-align: middle">
                  <a (click)="onSubmitKPI(KPIBandDataForm.value)" class="iconbtn" *ngIf="KPIBandDataId === item.int_kpi_data_id">
                   <i class="fa fa-save blue"></i>
                  </a> 
@@ -568,7 +574,7 @@
                 <textarea formControlName="textData" [ngClass]="{'field-required': textValid==false}" class="form-control" *ngIf="KPIBandDataId === item.int_kpi_data_id"
                   type="text" [(ngModel)]="item.vc_text_data"></textarea>
               </mat-card-content>
-              <mat-card-actions class="pull-right no-padding">
+              <mat-card-actions class="pull-right no-padding" *ngIf="isWrite==true">
                 <button type="submit" *ngIf="KPIBandDataId === item.int_kpi_data_id"
                   class="btn btn-success marginbtn">Update</button>
                 <button type="button" *ngIf="KPIBandDataId === item.int_kpi_data_id" (click)="cancelBand()"
@@ -609,7 +615,7 @@
               </div>
             </div>
             <div class="modal-footer">
-              <button (click)="scopefileValidation()" type="button" class="btn btn-success" data-dismiss="modal"><i
+              <button *ngIf="isWrite==true" (click)="scopefileValidation()" type="button" class="btn btn-success" data-dismiss="modal"><i
                   class="fa fa-upload"></i>&nbsp;Upload</button>
               <button type="button" class="btn btn-default" (click)="uploadModalToggle(2)"
                 data-dismiss="modal">Close</button>
@@ -643,6 +649,9 @@
                       </tr>
                     </thead>
                     <tbody>
+                        <tr *ngIf="valid_invalid_ScopeRecords?.length == 0">
+                            <td colspan="5">No record found</td>
+                        </tr>
                       <tr *ngFor="let item of valid_invalid_ScopeRecords">
                         <td>{{item.scopeValue}}</td>
                         <td>{{item.scopeCode}}</td>
@@ -662,9 +671,9 @@
               </div>
             </div>
             <div class="modal-footer">
-              <button *ngIf="check == true" (click)="kpiDataModalToggle(3)" type="button" class="btn btn-warning"
+              <button *ngIf="check == true && isWrite == true" (click)="kpiDataModalToggle(3)" type="button" class="btn btn-success"
                 data-dismiss="modal">Still Proceed</button>
-              <button *ngIf="check == false" (click)="kpiDataModalToggle(3)" type="button" class="btn btn-success"
+              <button *ngIf="check == false && isWrite == true" (click)="kpiDataModalToggle(3)" type="button" class="btn btn-success"
                 data-dismiss="modal">Add</button>
               <!-- <button *ngIf="scopeData.length == 0" type="button" class="btn btn-default"
                     data-dismiss="modal">Upload</button> -->
@@ -694,6 +703,9 @@
             </tr>
           </thead>
           <tbody>
+              <tr *ngIf="valid_invalid_ScopeRecords?.length == 0">
+                  <td colspan="5">No record found</td>
+              </tr>
             <tr *ngFor="let item of valid_invalid_ScopeRecords">
               <td>{{item.scopeValue}}</td>
               <td>{{item.scopeCode}}</td>
@@ -713,10 +725,10 @@
         <button type="button" class="btn btn-danger pull-right marginbtn" (click)="kpiDataModalToggle(2)"
           data-dismiss="modal">Close</button>
 
-        <button *ngIf="check == true" (click)="kpiDataModalToggle(3)" type="button"
+        <button *ngIf="check == true && isWrite == true" (click)="kpiDataModalToggle(3)" type="button"
           class="btn btn-success marginbtn pull-right" data-dismiss="modal">Still Proceed</button>
 
-        <button *ngIf="check == false" (click)="kpiDataModalToggle(3)" type="button"
+        <button *ngIf="check == false && isWrite == true" (click)="kpiDataModalToggle(3)" type="button"
           class="btn btn-success marginbtn pull-right" data-dismiss="modal">Add</button>
         <!-- <button *ngIf="scopeData.length == 0" type="button" class="btn btn-default"
                       data-dismiss="modal">Upload</button> -->

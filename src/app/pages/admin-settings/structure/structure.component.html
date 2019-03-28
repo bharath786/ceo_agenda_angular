@@ -20,7 +20,7 @@
       #organizationupdateform="ngForm" class="form-horizontal">
       <div *ngIf="allforms == 'updateorganization'" class="col-sm-12 clearfix gridrole FormsDiv">
         <h4 class="modal-title"><span class="bold padding-left13">Organization Details</span>
-          <a (click)='adddiv(1)' class="pull-right btn btn-primary"><i class="fa fa-plus"></i> Add Division</a></h4>
+          <a (click)='adddiv(1)' *ngIf="isWrite == true" class="pull-right btn btn-primary"><i class="fa fa-plus"></i> Add Division</a></h4>
         <br>
         <div class="col-xs-12">
           <div class="form-group">
@@ -44,9 +44,9 @@
             </div>
           </div>
           <div class="pull-right margin-top25">
-            <button [disabled]="!organizationupdateform.form.valid" class="btn btn-success" id="btnupdateFimrDiv"
+            <button *ngIf="isWrite == true" [disabled]="!organizationupdateform.form.valid" class="btn btn-success" id="btnupdateFimrDiv"
               type="submit">Update</button>
-            <button type="button" id="btn_firmdiv" class="btn btn-danger hide" data-toggle="modal"
+            <button *ngIf="isWrite == true" type="button" id="btn_firmdiv" class="btn btn-danger hide" data-toggle="modal"
               data-target="#Mymodel-FirmDivDelete" data-tooltip="tooltip" data-placement="top" title="" value=""
               data-original-title="Delete">
               <i class="fa fa-trash"></i>
@@ -64,7 +64,7 @@
           <h4 class="modal-title"><span class="bold padding-left13">{{ allforms == 'adddivision' ? 'Add
               Division'
               :'Edit Division Details'}}</span>
-            <a *ngIf="allforms == 'updatedivision'" class="pull-right btn btn-primary" (click)=addLoc(1)><i
+            <a *ngIf="allforms == 'updatedivision' && isWrite == true" class="pull-right btn btn-primary" (click)=addLoc(1)><i
                 class="fa fa-plus"></i> Add Location
             </a></h4>
           <br>
@@ -102,13 +102,13 @@
               </div>
             </div>
             <div *ngIf="allforms == 'adddivision'" class="pull-right margin-top25">
-              <button [disabled]="!divisionupsertform.form.valid" class="btn btn-success" id="btnupdateFimrDiv"
+              <button *ngIf="isWrite == true" [disabled]="!divisionupsertform.form.valid" class="btn btn-success" id="btnupdateFimrDiv"
                 type="submit">Save</button>
             </div>
             <div *ngIf="allforms == 'updatedivision'" class="pull-right margin-top25">
-              <button [disabled]="!divisionupsertform.form.valid" class="btn btn-success marginbtn"
+              <button *ngIf="isWrite == true" [disabled]="!divisionupsertform.form.valid" class="btn btn-success marginbtn"
                 id="btnupdateFimrDiv" type="submit">Update</button>
-              <button type="button" mwlConfirmationPopover [popoverTitle]="popoverTitle" [confirmText]="confirmText"
+              <button *ngIf="isWrite == true" type="button" mwlConfirmationPopover [popoverTitle]="popoverTitle" [confirmText]="confirmText"
                 [cancelText]="cancelText" [popoverMessage]="popoverMessage" placement="left"
                 (confirm)="onDeleteDivision(divisionform.value)" class="btn btn-danger marginbtn" data-toggle="modal"
                 data-tooltip="tooltip" data-original-title="Delete">
@@ -128,7 +128,7 @@
           <h4 class="modal-title"><span class="bold padding-left13">{{ allforms == 'addlocation' ? 'Add
               Location'
               :'Edit Location Details'}}</span>
-            <a *ngIf="allforms == 'updatelocation'" class="pull-right btn btn-primary" (click)=addEntity(1)><i
+            <a *ngIf="allforms == 'updatelocation' && isWrite == true" class="pull-right btn btn-primary" (click)=addEntity(1)><i
                 class="fa fa-plus"></i> Add Entity
             </a>
           </h4>
@@ -160,17 +160,17 @@
               </div>
             </div>
             <div *ngIf="allforms == 'addlocation'" class="pull-right margin-top25">
-              <button [disabled]="!locationupsertform.form.valid" class="btn btn-success pull-right"
+              <button *ngIf="isWrite == true" [disabled]="!locationupsertform.form.valid" class="btn btn-success pull-right"
                 id="btnupdateFimrDiv" type="submit">Save</button>
             </div>
             <div *ngIf="allforms == 'updatelocation'" class="pull-right margin-top25">
-              <button class="pull-right" type="button" mwlConfirmationPopover [popoverTitle]="popoverTitle"
+              <button *ngIf="isWrite == true" class="pull-right" type="button" mwlConfirmationPopover [popoverTitle]="popoverTitle"
                 [confirmText]="confirmText" [cancelText]="cancelText" [popoverMessage]="popoverMessage" placement="left"
                 (confirm)="onDeleteLocation(locationform.value)" class="btn btn-danger marginbtn pull-right"
                 data-toggle="modal" data-tooltip="tooltip" data-original-title="Delete">
                 <i class="fa fa-trash"></i>
               </button>
-              <button [disabled]="!locationupsertform.form.valid" class="btn btn-success marginbtn pull-right"
+              <button *ngIf="isWrite == true" [disabled]="!locationupsertform.form.valid" class="btn btn-success marginbtn pull-right"
                 type="submit">Update</button>
             </div>
           </div>
@@ -200,7 +200,7 @@
           <div class="form-group">
             <label class="col-md-12 lblfnt required">Entity Code</label>
             <div class="col-md-12">
-              <input formControlName="entityCode" class="form-control" maxlength="50" type="text"
+              <input formControlName="entityCode" pKeyFilter="alphanum" class="form-control" maxlength="8" type="text"
                 placeholder="Enter Entity Code">
               <mat-error
                 *ngIf="entityform.controls.entityCode.errors?.required && entityform.controls.entityCode.touched">
@@ -232,7 +232,7 @@
             </div>
           </div>
           <div *ngIf="cities != 0" class="form-group">
-            <label class="col-md-12 lblfnt required">City</label>
+            <label class="col-md-12 lblfnt">City</label>
             <div class="col-md-12">
               <mat-select placeholder='Select City' formControlName='cityId' class="form-control">
                 <mat-option *ngFor="let city of cities" [value]="city['cityId']">{{city['cityName']}}</mat-option>
@@ -252,17 +252,17 @@
           </div>
 
           <div *ngIf="allforms == 'addEntity'" class="pull-right margin-top25">
-            <button [disabled]="!entityupsertform.form.valid" class="btn btn-success pull-right" id="btnupdateFimrDiv"
+            <button *ngIf="isWrite == true" [disabled]="!entityupsertform.form.valid" class="btn btn-success pull-right" id="btnupdateFimrDiv"
               type="submit">Save</button>
           </div>
           <div *ngIf="allforms == 'updateentity'" class="pull-right margin-top25">
-            <button type="button" mwlConfirmationPopover [popoverTitle]="popoverTitle" [confirmText]="confirmText"
+            <button *ngIf="isWrite == true" type="button" mwlConfirmationPopover [popoverTitle]="popoverTitle" [confirmText]="confirmText"
               [cancelText]="cancelText" [popoverMessage]="popoverMessage" placement="left"
               (confirm)="onDeleteEntity(entityform.value)" class="btn btn-danger marginbtn pull-right"
               data-toggle="modal" data-tooltip="tooltip" data-original-title="Delete">
               <i class="fa fa-trash"></i>
             </button>
-            <button [disabled]="!entityupsertform.form.valid" class="btn btn-success marginbtn pull-right"
+            <button *ngIf="isWrite == true" [disabled]="!entityupsertform.form.valid" class="btn btn-success marginbtn pull-right"
               type="submit">Update</button>
 
           </div>
@@ -299,9 +299,9 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button type="submit" (click)="checkingfunction()" class="btn btn-primary"><i
+        <button *ngIf="isWrite == true" type="submit" (click)="checkingfunction()" class="btn btn-primary"><i
             class="fa fa-check"></i>&nbsp;Update</button>
-        <button type="button" class="btn btn-default" (click)="selectDimension(2)"><i
+        <button *ngIf="isWrite == true" type="button" class="btn btn-default" (click)="selectDimension(2)"><i
             class="fa fa-arrow-left"></i>&nbsp;Go
           Back</button>
       </div>

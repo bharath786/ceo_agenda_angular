@@ -83,6 +83,8 @@ export class GlobalAnalyticsLayoutComponent implements OnInit {
   exceptions: boolean = false;
   numericValid: boolean = true;
   textValid: boolean = true;
+  isRead: boolean = false;
+  isWrite: boolean = false;
 
   constructor(private activeRoute: ActivatedRoute,
     private router: Router, public appSettings: AppSettings,
@@ -109,6 +111,29 @@ export class GlobalAnalyticsLayoutComponent implements OnInit {
       'textData': null,
       'binaryData': null
     })
+
+    let PermsissionDetails = [];
+    PermsissionDetails = JSON.parse(localStorage['userPermissions']);
+    PermsissionDetails = PermsissionDetails['PermissionArray']
+    console.log(PermsissionDetails,'User Permissions')
+    let Userdetails = JSON.parse(localStorage['Session_name']);
+    if(Userdetails.email == 'admin@ceo.com')
+    {
+      this.isRead = true;
+      this.isWrite = true;
+    }
+    else{
+     var permissionlist = [];
+     permissionlist =  PermsissionDetails.filter(x=>x.screen_name == 'Dimension Data');
+     if(permissionlist.length > 0){
+       this.isRead = permissionlist[0]['bt_isRead'];
+       this.isWrite = permissionlist[0]['bt_isWrite'];
+     }
+     else{
+      this.isRead = false;
+      this.isWrite = false;
+     }
+    }
   }
 
 
@@ -176,10 +201,10 @@ export class GlobalAnalyticsLayoutComponent implements OnInit {
     else {
       this.textValid = true;
       this.numericValid = true;
-      let sessionUser = JSON.parse(localStorage['Session_name']);
+      let sessionUser = JSON.parse(localStorage.getItem('Session_name'));
       this.KPIBandDataId = null;
-      var EntityDetails = JSON.parse(localStorage['EntityDetails']);
-      values['year'] = EntityDetails.year;
+      var EntityDetails = JSON.parse(localStorage.getItem('EntityDetails'));
+      values['year'] = EntityDetails.defaultEntityYear;
       values['KPIId'] = this.kpiDetails.KPIId;
       values['Month'] = this.temporaryValue['int_month']
       values['isScopeAvailable'] = this.kpiDetails['isScope'];
@@ -220,7 +245,7 @@ export class GlobalAnalyticsLayoutComponent implements OnInit {
   deleteBand(values) {
     console.log(values);
     var EntityDetails = JSON.parse(localStorage['EntityDetails']);
-    values['year'] = EntityDetails.year;
+    values['year'] = EntityDetails.defaultEntityYear;
     values['KPIId'] = this.kpiDetails.KPIId;
     values['Month'] = values['int_month'];
     values['isScopeAvailable'] = this.kpiDetails['isScope'];
@@ -254,12 +279,12 @@ export class GlobalAnalyticsLayoutComponent implements OnInit {
     console.log(values)
     this.fileValues = values;
     if (this.kpiDetails.isScope == false) {
-      var EntityDetails = JSON.parse(localStorage['EntityDetails']);
-      let sessionUser = JSON.parse(localStorage['Session_name']);
+      var EntityDetails = JSON.parse(localStorage.getItem('EntityDetails'));
+      let sessionUser = JSON.parse(localStorage.getItem('Session_name'));
       values['createdById'] = sessionUser.user_id;
       values['isScopeAvailable'] = this.kpiDetails['isScope'];
       values['KPIDataTypeId'] = this.kpiDetails['dataTypeId'];
-      values['year'] = EntityDetails.year;
+      values['year'] = EntityDetails.defaultEntityYear;
       values['KPIId'] = this.kpiDetails.KPIId;
       console.log(values);
       this._globalAnalyticsService.saveKPIData(values).subscribe(
@@ -633,14 +658,14 @@ export class GlobalAnalyticsLayoutComponent implements OnInit {
     }
     else if (e == 3) {
       //Taking the filter entity values from the session
-      var EntityDetails = JSON.parse(localStorage['EntityDetails']);
+      var EntityDetails = JSON.parse(localStorage.getItem('EntityDetails'));
       //Taking the user values from the session
       let sessionUser = JSON.parse(localStorage['Session_name']);
       //Merging all the data to fuilevalues to send (API)
       this.fileValues['createdById'] = sessionUser.user_id;
       this.fileValues['isScopeAvailable'] = this.kpiDetails['isScope'];
       this.fileValues['KPIDataTypeId'] = this.kpiDetails['dataTypeId'];
-      this.fileValues['year'] = EntityDetails.year;
+      this.fileValues['year'] = EntityDetails.defaultEntityYear;
       this.fileValues['KPIId'] = this.kpiDetails['KPIId']
       this.fileValues['scopeData'] = this.validRecords;
       console.log(this.fileValues)
@@ -666,6 +691,7 @@ export class GlobalAnalyticsLayoutComponent implements OnInit {
 
   //Function for exporting the data by Excel format
   downloadDatasample() {
+    console.log(this.ScopeTemplate)
     this.excelService.exportAsExcelFile(this.ScopeTemplate, 'Scope Template')
   }
 
@@ -698,7 +724,7 @@ export class GlobalAnalyticsLayoutComponent implements OnInit {
         'KPICreatedMonth': this.mainvalue['KPICreateMonth'],
         'KPICreatedWeek': this.mainvalue['KPICreatedWeek'],
         'KPIId': this.mainvalue['KPIId'],
-        'year': EntityDetails.year
+        'year': EntityDetails.defaultEntityYear
       }];
       this.kpiDataTable = null;
       //For Weekly Frequency
@@ -815,12 +841,20 @@ export class GlobalAnalyticsLayoutComponent implements OnInit {
       this.getDimensionFrequencies();
       this.getKpiDataType();
       this.items = [];
-      this.items = [
-        { label: 'Highlights', icon: 'fa fa-list-alt' },
-        { label: 'Data', icon: 'fa fa-folder' }
-      ];
-      this.activeItem = this.items[0];
-    }
+      if(this.isRead == true){
+        this.items = [
+          { label: 'Highlights', icon: 'fa fa-list-alt' },
+          { label: 'Data', icon: 'fa fa-folder' }
+        ];
+        this.activeItem = this.items[0];
+      }
+      else{
+        this.items = [
+          { label: 'Highlights', icon: 'fa fa-list-alt' }
+        ];
+        this.activeItem = this.items[0];
+      }
+      }
 
     else {
       this.items = [];
@@ -842,8 +876,8 @@ export class GlobalAnalyticsLayoutComponent implements OnInit {
       else if (this.mainvalue.label == 'Exception(s)') {
         this.summary = false;
         this.exceptions = true;
-        var EntityDetails = JSON.parse(localStorage['EntityDetails']);
-        this._globalAnalyticsService.getDimensionExceptions(this.dimId, EntityDetails.year).subscribe(
+        var EntityDetails = JSON.parse(localStorage.getItem('EntityDetails'));
+        this._globalAnalyticsService.getDimensionExceptions(this.dimId, EntityDetails.defaultEntityYear).subscribe(
           data => {
             console.log(data['DimensionExceptions']);
             this.dimensionExceptions = data['DimensionExceptions']
@@ -973,6 +1007,7 @@ export class GlobalAnalyticsLayoutComponent implements OnInit {
     this.chartData = null;
     //If the Scope is selected 
     if (this.kpiDetails['isScope'] == true) {
+      if(this.KPISavedData.length != 0){
       this.scopeList = [];
       //getting all the scope members from the data
       this.KPISavedData.filter(x => {
@@ -985,6 +1020,7 @@ export class GlobalAnalyticsLayoutComponent implements OnInit {
       //Triggering the OnScopeSelect Function to get the value and for cahrt binding
       this.onScopeSelect(this.defaultSelectedScope)
     }
+  }
     //Checking the frequency
     if (this.kpiDetails.frequencyId == 2) {
       //Setting the number to Week number and pushing the data to pass this data to chart 
@@ -1116,7 +1152,9 @@ export class GlobalAnalyticsLayoutComponent implements OnInit {
         this.Months = data['Months'];
         this.Weeks = data['Weeks']
         this.chartNoScope();
+        console.log(this.kpiDetails,'KPISCOPE')
         if (this.kpiDetails['isScope'] == true) {
+        console.log(this.kpiDetails,'KPaasdsadsadasdISCOPE')
           console.log(this.KPIScope)
           this.ScopeTemplate = [];
           //For Numeric Data Type 

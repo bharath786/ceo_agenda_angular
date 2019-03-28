@@ -36,9 +36,6 @@ export class AppService {
     return this.headers = httpOptions
   }
 
-
-
-
   //For Update Profile API
   profileUpdate(values) {
     return this.http.post(this.getProfileAPI, values, this.getHeaders())
@@ -48,6 +45,15 @@ export class AppService {
   changePassword(values) {
     return this.http.post(this.changePasswordAPI, values, this.getHeaders())
   }
+
+  getUserPermissions(userId){
+    return this.http.get(url+'get-user-permissions-encrypt'+'?userId='+userId, this.getHeaders())
+  }
+
+  getDashboardData(year,EntityId){
+    return this.http.get(url+'get-selected-entity-year-exceptions-compliance'+'?EntityId='+EntityId+'&Year='+year,this.getHeaders())
+  }
+
 
   //For logout API
   logOut(user_id) {

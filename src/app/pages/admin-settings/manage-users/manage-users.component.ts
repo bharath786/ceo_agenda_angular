@@ -58,6 +58,9 @@ export class ManageUsersComponent implements OnInit {
   isWritePerm: any = [];
   Permissions: any[];
   data1: any[];
+  isRead: boolean = false;
+  isWrite: boolean = false; 
+  userEmail: any;
 
 
   constructor(public appSettings: AppSettings, public fb: FormBuilder,
@@ -94,10 +97,35 @@ export class ManageUsersComponent implements OnInit {
       'isRead': [null],
       'isWrite': [null]
     });
+
+    let PermsissionDetails = [];
+    PermsissionDetails = JSON.parse(localStorage.getItem('userPermissions'));
+    PermsissionDetails = PermsissionDetails['PermissionArray']
+    console.log(PermsissionDetails,'User Permissions')
+    let Userdetails = JSON.parse(localStorage['Session_name']);
+    if(Userdetails.email == 'admin@ceo.com')
+    {
+      this.isRead = true;
+      this.isWrite = true;
+    }
+    else{
+     var permissionlist = [];
+     permissionlist =  PermsissionDetails.filter(x=>x.screen_name == 'Manage Users');
+     if(permissionlist.length > 0){
+       this.isRead = permissionlist[0]['bt_isRead'];
+       this.isWrite = permissionlist[0]['bt_isWrite'];
+     }
+     else{
+      this.isRead = false;
+      this.isWrite = false;
+     }
+    }
+
+    let sessionUser = JSON.parse(localStorage.getItem('Session_name'))
+    this.userEmail = sessionUser.email;
   }
 
   onSubmitPermissions(readArray,writeArray) {
-   
     let ReadArray = [];
     let WriteArray = [];
     ReadArray.push();
@@ -126,14 +154,6 @@ export class ManageUsersComponent implements OnInit {
         }
       }
     }
-    console.log( ReadArray,"ReadArray")
-    console.log(WriteArray,"WriteArray")
-    
-    
-
-    console.log(readArray,"readArray")
-    console.log(writeArray,"writeArray")
-
     this.Permissions = [];
     let values;
     for(var i in ReadArray){
@@ -165,6 +185,7 @@ export class ManageUsersComponent implements OnInit {
     this.adminsettingsservice.permissionsUpsert(values).subscribe(
       data=>{
         console.log(data);
+        this.toasterService.pop('success', '', data['message']);
         this.permissionModal1.hide();
         this.isWritePerm = [];
         this.isReadPerm = [];
@@ -475,7 +496,7 @@ export class ManageUsersComponent implements OnInit {
   //Update Profile values setting to form
   updateProfile(data) {
     this.emailchange = data
-    let sessionUser = JSON.parse(localStorage['Session_name'])
+    let sessionUser = JSON.parse(localStorage.getItem('Session_name'))
     this.form.controls['userId'].setValue(data.userId);
     this.form.controls['firstName'].setValue(data.firstName);
     let newDate = new Date(data.dateOfBirth);

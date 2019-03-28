@@ -23,14 +23,14 @@ export class UserMenuComponent implements OnInit {
   public changepwform: FormGroup;
   userId: any;
   userEmail: any;
-  name :any;
+  name: any;
 
 
   @ViewChild('changepasswordModal') public changepasswordModal: ModalDirective;
   @ViewChild('profileModal') public profileModal: ModalDirective;
 
-  constructor(private router: Router,public toasterService: ToasterService,  public fb: FormBuilder, public snackBar: MatSnackBar, public appservice: AppService, public adminsettingsservice: AdminsettingsService) {
-   
+  constructor(private router: Router, public toasterService: ToasterService, public fb: FormBuilder, public snackBar: MatSnackBar, public appservice: AppService, public adminsettingsservice: AdminsettingsService) {
+
     //Update Profile Form
     this.form = this.fb.group({
       'userId': null,
@@ -76,12 +76,12 @@ export class UserMenuComponent implements OnInit {
       console.log(values)
       this.adminsettingsservice.userUpsert(values).subscribe(
         data => {
-          this.toasterService.pop('success','',data['message']);
+          this.toasterService.pop('success', '', data['message']);
           this.profileModal.hide();
         },
         error => {
           console.log(error);
-          if(error.status==401){
+          if (error.status == 401) {
             localStorage.clear();
             this.router.navigate(['/login'])
           }
@@ -94,17 +94,17 @@ export class UserMenuComponent implements OnInit {
   }
 
   //For Profile Details
-  userDetailsToggle(e){
+  userDetailsToggle(e) {
     if (e == 1) {
       var session_values = JSON.parse(localStorage['Session_name'])
       var value = { userId: session_values.user_id }
       this.appservice.profileUpdate(value).subscribe(
         data => {
-          this.name = data['Data'][0]['firstName']+' '+data['Data'][0]['lastName'];
+          this.name = data['Data'][0]['firstName'] + ' ' + data['Data'][0]['lastName'];
         },
         error => {
           console.log(error);
-          if(error.status==401){
+          if (error.status == 401) {
             localStorage.clear();
             this.router.navigate(['/login'])
           }
@@ -122,12 +122,12 @@ export class UserMenuComponent implements OnInit {
       values['userId'] = sessionUser.user_id;
       this.appservice.changePassword(values).subscribe(
         data => {
-          this.toasterService.pop('success','',data['message']);
+          this.toasterService.pop('success', '', data['message']);
           this.changepasswordModal.hide();
         },
         error => {
           console.log(error)
-          if(error.status==401){
+          if (error.status == 401) {
             localStorage.clear();
             this.router.navigate(['/login'])
           }
@@ -149,7 +149,7 @@ export class UserMenuComponent implements OnInit {
         },
         error => {
           console.log(error);
-          if(error.status==401){
+          if (error.status == 401) {
             localStorage.clear();
             this.router.navigate(['/login'])
           }
@@ -170,9 +170,9 @@ export class UserMenuComponent implements OnInit {
       this.appservice.logOut(value).subscribe(
         data => {
           window.location.reload();
-          this.toasterService.pop('success','',data['message']);
+          this.toasterService.pop('success', '', data['message']);
         },
-        error=>{
+        error => {
           console.log(error);
         }
       )
@@ -199,7 +199,7 @@ export class UserMenuComponent implements OnInit {
         },
         error => {
           console.log(error);
-          if(error.status==401){
+          if (error.status == 401) {
             localStorage.clear();
             this.router.navigate(['/login'])
           }

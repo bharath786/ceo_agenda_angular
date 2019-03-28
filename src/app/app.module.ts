@@ -47,6 +47,8 @@ import { DataTableModule } from 'primeng/primeng'; // Here
 import {ToasterModule, ToasterService} from 'angular2-toaster';
 import { ErrorInterceptService } from './error-intercept.service';
 import { NgHttpLoaderModule } from 'ng-http-loader'; 
+import { ChartModule } from 'angular-highcharts';
+import { MonthAppModule } from './theme/pipes/MonthappModul.pipe';
 
 @NgModule({
   imports: [
@@ -71,6 +73,7 @@ import { NgHttpLoaderModule } from 'ng-http-loader';
     NgxDaterangepickerMd,
     Daterangepicker,
     DataTableModule,
+    ChartModule,
     UserIdleModule.forRoot({ idle: 700, timeout: 1, ping: 0 })
   ],
   declarations: [
@@ -91,7 +94,8 @@ import { NgHttpLoaderModule } from 'ng-http-loader';
     AdminDashboardComponent,
     FooterComponent,
     NoPermsisionModal,
-    selectEntity
+    selectEntity,
+    MonthAppModule
   ],
   entryComponents: [
     VerticalMenuComponent,NoPermsisionModal,selectEntity
@@ -102,7 +106,7 @@ import { NgHttpLoaderModule } from 'ng-http-loader';
     { provide: OverlayContainer, useClass: CustomOverlayContainer },
     { provide: LocationStrategy, useClass: HashLocationStrategy },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptService, multi: true },
-    AppService,ToasterService
+    AppService,ToasterService,MonthAppModule
     //AppService, LoginService
   ],
   bootstrap: [AppComponent]

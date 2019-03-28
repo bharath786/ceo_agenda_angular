@@ -20,7 +20,7 @@
                             <mat-error *ngIf="form.controls.password.hasError('minlength')">Password isn't long enough</mat-error>
                         </mat-form-field>
                         <div class="w-100">
-                            <mat-checkbox formControlName="rememberMe">Remember me!</mat-checkbox>
+                            <mat-checkbox formControlName="rememberMe" [(ngModel)]="rememberMe">Remember me!</mat-checkbox>
                             <a routerLink='forgotpw' class="pull-right" style="color: #1c76c3;">Forgot Password?</a>
                         </div>
                     </mat-card>

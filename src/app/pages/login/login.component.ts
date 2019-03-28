@@ -8,6 +8,7 @@ import { LoginService } from './login.service';
 import { MatSnackBar} from '@angular/material';
 import { CookieService } from 'angular2-cookie/services/cookies.service';
 import { ToasterService } from 'angular2-toaster/src/toaster.service';
+import { AppService } from 'src/app/app.service';
 
 
 @Component({
@@ -19,10 +20,12 @@ export class LoginComponent {
 
   public form: FormGroup;
   public settings: Settings;
+  rememberMe: boolean;
 
   constructor(public appSettings: AppSettings, public fb: FormBuilder, 
             public router: Router, public login: LoginService,
              public _cookieService: CookieService, public toasterService : ToasterService,
+             public _appService: AppService,
              public snackBar: MatSnackBar) {
     this.settings = this.appSettings.settings;
   
@@ -34,10 +37,11 @@ export class LoginComponent {
     });
 
     //Setting the values to the input form the cookie service (cookie service => input type)
-    if (_cookieService.get('rememberMe')) {
+    if (_cookieService.get('rememberMe') || this.rememberMe) {
       this.form.controls['email'].setValue(this._cookieService.get('email'));
       this.form.controls['password'].setValue(this._cookieService.get('password'));
       this.form.controls['rememberMe'].setValue(this._cookieService.get('rememberMe'));
+      this.rememberMe = true
     }
   }
 
@@ -58,9 +62,16 @@ export class LoginComponent {
               defaultCountryId: data['DefaultCountryId'], 
               defaultDivisionId: data['DefaultDivisionId'], 
               defaultEntityId: data['DefaultEntityId'],
-              defaultEntityYear: data['DefaultEntityCreatedYear'] }));              
+              defaultEntityYear: data['DefaultYear'] }));              
               //Sending message to Snackbar
-
+              this._appService.getUserPermissions(data['loginData']['userId']).subscribe(
+                data=>{
+                  localStorage.setItem('userPermissions', JSON.stringify({ PermissionArray: data['UserPermissions'] }));
+                },
+                error=>{
+                  console.log(error)
+                }
+              )
               this.toasterService.pop('success','',data['responseType']['message']);
               this.router.navigate(['/dashboard']);
               //  location.reload();

@@ -31,16 +31,16 @@
                 <th class="thblue">
                     Phone Number
                 </th>
-                <th class="thblue">
+                <th *ngIf="isWrite == true && userEmail == 'admin@ceo.com'" class="thblue">
                     Permissions
                 </th>
-                <th class="thblue">
+                <th *ngIf="isWrite == true && userEmail == 'admin@ceo.com'" class="thblue">
                     Assign Entity
                 </th>
                 <th class="thblue">
                     Status
                 </th>
-                <th class="text-center thblue">
+                <th  *ngIf="isWrite == true" class="text-center thblue">
                     Actions
                 </th>
             </tr>
@@ -49,7 +49,7 @@
             <tr *ngIf="mf.data?.length == 0">
                 <td colspan="6">No record found</td>
             </tr>
-            <tr *ngFor="let data of mf.data" [ngClass]="{'disablerow': data.firstName=='Admin'}">
+            <tr *ngFor="let data of mf.data" [ngClass]="{'display-none': data.email=='admin@ceo.com' || userEmail == data.email}">
                 <td>{{data.firstName}} {{data.lastName}} </td>
                 <td>{{data.email}} <i *ngIf="data.verified==true" class="fa fa-check green" tooltip="Email is Verified"
                         placement="right"></i><i *ngIf="data.verified==false" mwlConfirmationPopover
@@ -58,19 +58,19 @@
                         class="fa fa-times red" tooltip="Email is not verified. Click here to resend verification mail"
                         placement="right"></i> </td>
                 <td>{{data.phoneNo}}</td>
-                <td>
+                <td *ngIf="isWrite == true && userEmail == 'admin@ceo.com'">
                     <a title="Click to Assign Permissions" (click)="permissionModal1Toggle(data.userId)">Assign Permissions</a>
                 </td>
-                <td>
-                    <a title="Click to Assign Permissions"
+                <td *ngIf="isWrite == true && userEmail == 'admin@ceo.com'">
+                    <a title="Click to Assign Entities"
                         (click)="entitiesnModalToggle(data)">{{data.AssignedEntitiesCount}}/{{data.TotalEntitiesCount}}</a>
                 </td>
-                <td>
+                <td [ngClass]="{'disable-cursor': isWrite == false}">
                     <a (click)="changeStatus(data)">{{ data.status ? '&nbsp;&nbsp;&nbsp;Active'
                         :'Inactive'}}
                     </a>
                 </td>
-                <td class="text-center">
+                <td  *ngIf="isWrite == true" class="text-center">
                     <a title="Click to Update details">
                         <i (click)="updateProfile(data)" class="fa fa-pencil-square"></i>
                     </a>&nbsp;
@@ -188,14 +188,14 @@
                             </div>
                         </div>
                     </div>
-                    <div class="form-group">
+                    <!-- <div class="form-group">
                         <label class="col-md-3 control-label">Permissions</label>
                         <div class="col-md-7 no-padding">
                             <label class="radio-inline" style="margin-left:0px;"
                                 (click)="permissionModalToggle(1)"><a>Click
                                     Here</a></label>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
                 <div class="modal-footer">
                     <button [disabled]="!userForm.form.valid" type="submit" class="btn btn-success">Submit</button>
@@ -303,121 +303,6 @@
 </div>
 
 
-
-<!-- For Permission Modal Popup -->
-<div class="modal fade" bsModal #permissionModal="bs-modal" [config]="{backdrop: 'static'}" role="dialog">
-    <div class="modal-dialog modal-custom">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title titlemodal">
-                    <b>Permissions</b> <i (click)="permissionModalToggle(2)"
-                        class="fa fa-times pull-right titlemodal"></i>
-                </h4>
-            </div>
-            <div class="modal-body row">
-                <div class="col-sm-12">
-                    <table
-                        class="table table-hover table-bordered table-scrollable-borderless col-sm-6 table-striped margin-top"
-                        id="table1">
-                        <thead>
-
-                            <tr>
-                                <th class="thblue">
-                                    Select
-                                </th>
-                                <th class="thblue">
-                                    Permission
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>
-                                    <mat-checkbox></mat-checkbox>
-                                </td>
-                                <td class="textleft"><b>View Dashboard</b></td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <mat-checkbox></mat-checkbox>
-                                </td>
-                                <td class="textleft">Manage Organization</td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <mat-checkbox></mat-checkbox>
-                                </td>
-                                <td class="textleft">Manage Division</td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <mat-checkbox></mat-checkbox>
-                                </td>
-                                <td class="textleft">Manage Location</td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <mat-checkbox></mat-checkbox>
-                                </td>
-                                <td class="textleft">Manage Entity</td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <mat-checkbox></mat-checkbox>
-                                </td>
-                                <td class="textleft"><b>Setup</b></td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <mat-checkbox></mat-checkbox>
-                                </td>
-                                <td class="textleft">Manage Dimension</td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <mat-checkbox></mat-checkbox>
-                                </td>
-                                <td class="textleft">Manage KRA</td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <mat-checkbox></mat-checkbox>
-                                </td>
-                                <td class="textleft">Manage KPI</td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <mat-checkbox></mat-checkbox>
-                                </td>
-                                <td class="textleft"><b>Users</b></td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <mat-checkbox></mat-checkbox>
-                                </td>
-                                <td class="textleft">Manage Users</td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <mat-checkbox></mat-checkbox>
-                                </td>
-                                <td class="textleft">Assign Permissions</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="submit" (click)="permissionModalToggle(2)" class="btn btn-primary"><i
-                        class="fa fa-check"></i>&nbsp;Update</button>
-                <button type="button" class="btn btn-default" (click)="permissionModal1Toggle(null)"><i
-                        class="fa fa-arrow-left"></i>&nbsp;Go
-                    Back</button>
-            </div>
-        </div>
-    </div>
-</div>
-
 <!-- For Permission Modal Popup Readonly Mode -->
 <div class="modal fade" bsModal #permissionModal1="bs-modal" [config]="{backdrop: 'static'}" role="dialog">
     <div class="modal-dialog modal-custom">
@@ -469,7 +354,7 @@
                             class="fa fa-check"></i>&nbsp;Update</button>
                     <button type="button" class="btn btn-danger" (click)="permissionModal1Toggle(null)"><i
                             class="fa fa-times"></i>&nbsp;Close</button>
-                </div>
+            </div>
         </div>
     </div>
 </div>

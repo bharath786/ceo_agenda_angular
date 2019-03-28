@@ -221,17 +221,16 @@ export class AdminsettingsService {
   }
   // For Setup Tree
   public getSetup(): Observable<any> {
-    var EntityDetails = JSON.parse(localStorage['EntityDetails'])
+    var EntityDetails = JSON.parse(localStorage.getItem('EntityDetails'))
     console.log(EntityDetails)
 
-    return this.http.get(this.getSetupAPI + '?entityId=' + EntityDetails.defaultEntityId + '&isTarget=' + null+'&filterYear='+EntityDetails.year, this.getHeaders())
+    return this.http.get(this.getSetupAPI + '?entityId=' + EntityDetails.defaultEntityId + '&isTarget=' + null+'&filterYear='+EntityDetails.defaultEntityYear, this.getHeaders())
   }
 
   // For Setup Tree
   public getTarget(): Observable<any> {
-    var EntityDetails = JSON.parse(localStorage['EntityDetails'])
-
-    return this.http.get(this.getSetupAPI + '?entityId=' + EntityDetails.defaultEntityId + '&isTarget=' + true + '&filterYear='+EntityDetails.year, this.getHeaders())
+    var EntityDetails = JSON.parse(localStorage.getItem('EntityDetails'))
+    return this.http.get(this.getSetupAPI + '?entityId=' + EntityDetails.defaultEntityId + '&isTarget=' + true + '&filterYear='+EntityDetails.defaultEntityYear, this.getHeaders())
   }
 
 

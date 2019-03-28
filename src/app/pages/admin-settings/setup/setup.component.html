@@ -19,7 +19,7 @@
                 <form [formGroup]="analyticsform" (ngSubmit)="onSubmitAnalytics(analyticsform.value)"
                     #analyticsupdateform="ngForm" class="form-horizontal">
                     <h4 class="modal-title"><span class="bold">Category Details</span>
-                        <a (click)='adddimension(1)' class="pull-right btn btn-primary"><i class="fa fa-plus"></i> Add Dimension </a></h4>
+                        <a *ngIf="isWrite == true" (click)='adddimension(1)' class="pull-right btn btn-primary"><i class="fa fa-plus"></i> Add Dimension </a></h4>
                     <br>
                     <div class="form-group">
                         <label class="col-md-12 lblfnt required">Category Name</label>
@@ -41,9 +41,9 @@
                         </div>
                     </div>
                     <div class="pull-right margin-top25">
-                        <button [disabled]="!analyticsupdateform.form.valid" class="btn btn-success"
+                        <button *ngIf="isWrite == true" [disabled]="!analyticsupdateform.form.valid" class="btn btn-success"
                             id="btnupdateFimrDiv" type="submit">Update</button>
-                        <button type="button" id="btn_firmdiv" class="btn btn-danger hide" data-toggle="modal"
+                        <button *ngIf="isWrite == true" type="button" id="btn_firmdiv" class="btn btn-danger hide" data-toggle="modal"
                             data-target="#Mymodel-FirmDivDelete" data-tooltip="tooltip" data-placement="top" title=""
                             value="" data-original-title="Delete">
                             <i class="fa fa-trash"></i>
@@ -60,7 +60,7 @@
                     <h4 class="modal-title"><span class="bold padding-left13">{{ allforms ==
                             'adddimension' ? 'Add
                             Dimension' : 'Edit Dimension Details'}}</span>
-                        <a *ngIf="allforms == 'updatedimension'" (click)='addKRA(1)'
+                        <a *ngIf="allforms == 'updatedimension' && isWrite == true" (click)='addKRA(1)'
                             class="pull-right btn btn-primary"><i class="fa fa-plus"></i> 
                             Add KRA </a></h4>
                     <br>
@@ -82,33 +82,14 @@
                                     placeholder="Description" cols="12" rows="5"></textarea>
                             </div>
                         </div>
-                        <!-- <div class="form-group">
-                            <label class="col-md-12 add-member-label add-member-input lblfnt">Scope</label>
-                            <div class="col-md-12">
-                            <div class="input-icon right">
-                                            <i class="fa fa-file-excel-o"></i>
-                                <input accept=".csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
-                                    maxlength="50" class="form-control" type="file"
-                                    [ngClass]="{'disablecustom': scopeValue}" (change)="handleFileSelect($event)">
-                                <label *ngIf="fileName!=null" class="lblfnt">Existing File:&nbsp;</label> <span>{{fileName}}
-                                </span>
-                            </div>
-                            </div>
-                        </div> -->
-                        <!-- <div class="form-group">
-                            <div class="col-md-12">
-                                <mat-checkbox formControlName="scopeApplicable" [(ngModel)]="scopeValue">Select if
-                                    scope is not applicable</mat-checkbox>
-                            </div>
-                        </div> -->
                         <div *ngIf="allforms == 'adddimension'" class="pull-right">
-                            <button [disabled]="!dimensionupsertform.form.valid" class="btn btn-success"
+                            <button *ngIf="isWrite == true" [disabled]="!dimensionupsertform.form.valid" class="btn btn-success"
                                 type="submit">Save</button>
                         </div>
                         <div *ngIf="allforms == 'updatedimension'" class="pull-right">
-                            <button [disabled]="!dimensionupsertform.form.valid" class="btn btn-success marginbtn"
+                            <button *ngIf="isWrite == true" [disabled]="!dimensionupsertform.form.valid" class="btn btn-success marginbtn"
                                 type="submit">Update</button>
-                            <button type="button" mwlConfirmationPopover [popoverTitle]="popoverTitle"
+                            <button *ngIf="isWrite == true" type="button" mwlConfirmationPopover [popoverTitle]="popoverTitle"
                                 [confirmText]="confirmText" [cancelText]="cancelText" [popoverMessage]="popoverMessage"
                                 placement="left" (confirm)="onDeleteDimension(dimensionform.value)"
                                 class="btn btn-danger marginbtn" data-toggle="modal" data-tooltip="tooltip"
@@ -129,7 +110,7 @@
                             'Add
                             KRA'
                             :'Edit KRA Details'}}</span>
-                        <a *ngIf="allforms=='updateKRA'" (click)='addKPI(1)' class="pull-right btn btn-primary"><i class="fa fa-plus"></i> Add KPI
+                        <a *ngIf="allforms=='updateKRA' && isWrite == true" (click)='addKPI(1)' class="pull-right btn btn-primary"><i class="fa fa-plus"></i> Add KPI
                         </a></h4>
                     <br>
                     <div class="col-xs-12">
@@ -153,17 +134,17 @@
                             </div>
                         </div>
                         <div *ngIf="allforms == 'addKRA'" class="pull-right margin-top25">
-                            <button [disabled]="!KRAupsertform.form.valid" class="btn btn-success" id="btnupdateFimrDiv"
+                            <button *ngIf="isWrite == true" [disabled]="!KRAupsertform.form.valid" class="btn btn-success" id="btnupdateFimrDiv"
                                 type="submit">Save</button>
                         </div>
                         <div *ngIf="allforms == 'updateKRA'" class="pull-right margin-top25">
-                            <button [disabled]="!KRAupsertform.form.valid" class="btn btn-success marginbtn"
+                            <button *ngIf="isWrite == true" [disabled]="!KRAupsertform.form.valid" class="btn btn-success marginbtn"
                                 type="submit">Update</button>
                             <!-- <button type="button" (click)="onDeleteKRA(KRAform.value)" class="btn btn-danger marginbtn" data-toggle="modal" data-tooltip="tooltip" data-placement="top" title=""
                              data-original-title="Delete">
                             <i class="fa fa-trash"></i>
                         </button> -->
-                            <button type="button" mwlConfirmationPopover [popoverTitle]="popoverTitle"
+                            <button *ngIf="isWrite == true" type="button" mwlConfirmationPopover [popoverTitle]="popoverTitle"
                                 [confirmText]="confirmText" [cancelText]="cancelText" [popoverMessage]="popoverMessage"
                                 placement="left" (confirm)="onDeleteKRA(KRAform.value)" class="btn btn-danger marginbtn"
                                 data-toggle="modal" data-tooltip="tooltip" data-original-title="Delete">
@@ -197,7 +178,7 @@
                         <div class="form-group">
                             <label class="col-md-12 lblfnt required">Code</label>
                             <div class="col-md-12">
-                                <input maxlength="50" formControlName="KPICode" class="form-control" type="text"
+                                <input maxlength="8"  pKeyFilter="alphanum" formControlName="KPICode" class="form-control" type="text"
                                     placeholder="Enter KPI Code">
                                 <mat-error
                                     *ngIf="KPIform.controls.KPICode.errors?.required && KPIform.controls.KPICode.touched">
@@ -239,7 +220,7 @@
                                     Please Select Range</mat-error>
                                 </div>
                             </div>
-                        <div class="form-group">
+                        <div *ngIf="rangeApplicableDataType" class="form-group">
                             <label class="col-md-12 lblfnt required">Direction</label>
                             <div class="col-md-12">
                                 <mat-radio-group formControlName="PriorityTypeId">
@@ -279,17 +260,17 @@
                             </div>
                         </div>
                         <div *ngIf="allforms == 'addKPI'" class="pull-right margin-top25">
-                            <button [disabled]="!KPIupsertform.form.valid" [ngClass]="{'customDisabled': !customValidation()}" class="btn btn-success"
+                            <button *ngIf="isWrite == true" [disabled]="!KPIupsertform.form.valid" [ngClass]="{'customDisabled': !customValidation()}" class="btn btn-success"
                                 type="submit">Save</button>
                         </div>
                         <div *ngIf="allforms == 'updateKPI'" class="pull-right margin-top25">
-                            <button [disabled]="!KPIupsertform.form.valid" [ngClass]="{'customDisabled': !customValidation()}" class="btn btn-success marginbtn"
+                            <button *ngIf="isWrite == true" [disabled]="!KPIupsertform.form.valid" [ngClass]="{'customDisabled': !customValidation()}" class="btn btn-success marginbtn"
                                 type="submit">Update</button>
                             <!-- <button type="button" (click)="onDeleteKPI(KPIform.value)" class="btn btn-danger marginbtn" data-toggle="modal" data-tooltip="tooltip" data-placement="top" title=""
                          data-original-title="Delete">
                             <i class="fa fa-trash"></i>
                         </button> -->
-                            <button type="button" mwlConfirmationPopover [popoverTitle]="popoverTitle"
+                            <button *ngIf="isWrite == true" type="button" mwlConfirmationPopover [popoverTitle]="popoverTitle"
                                 [confirmText]="confirmText" [cancelText]="cancelText" [popoverMessage]="popoverMessage"
                                 placement="left" (confirm)="onDeleteKPI(KPIform.value)" class="btn btn-danger marginbtn"
                                 data-toggle="modal" data-tooltip="tooltip" data-original-title="Delete">

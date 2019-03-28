@@ -52,6 +52,8 @@ export class TargetComponent implements OnInit {
   targetSavedData: any;
   Data: { 'KPICreatedYear': any; 'KPICreatedMonth': any; 'KPICreatedWeek': any; 'KPIId': any; 'year':number}[];
   KPIFilteredTargetData: any[];
+  isRead: any = false;
+  isWrite: any = false;
 
   constructor(private _adminsettingservice: AdminsettingsService,
     public fb: FormBuilder, public snackBar: MatSnackBar,
@@ -65,6 +67,29 @@ export class TargetComponent implements OnInit {
       'Month': null,
       'Week': null
     });
+
+    let PermsissionDetails = [];
+    PermsissionDetails = JSON.parse(localStorage['userPermissions']);
+    PermsissionDetails = PermsissionDetails['PermissionArray']
+    console.log(PermsissionDetails,'User Permissions')
+    let Userdetails = JSON.parse(localStorage['Session_name']);
+    if(Userdetails.email == 'admin@ceo.com')
+    {
+      this.isRead = true;
+      this.isWrite = true;
+    }
+    else{
+     var permissionlist = [];
+     permissionlist =  PermsissionDetails.filter(x=>x.screen_name == 'Target');
+     if(permissionlist.length > 0){
+       this.isRead = permissionlist[0]['bt_isRead'];
+       this.isWrite = permissionlist[0]['bt_isWrite'];
+     }
+     else{
+      this.isRead = false;
+      this.isWrite = false;
+     }
+    }
 
   }
 
@@ -89,10 +114,10 @@ export class TargetComponent implements OnInit {
   }
 
   onSubmit(value) {
-    this.sessionUser = JSON.parse(localStorage['Session_name'])
+    this.sessionUser = JSON.parse(localStorage.getItem('Session_name'))
     value['KPIId'] = this.kpiDetails['KPIId'];
-    var EntityDetails = JSON.parse(localStorage['EntityDetails'])
-    value['year'] = EntityDetails.year;
+    var EntityDetails = JSON.parse(localStorage.getItem('EntityDetails'))
+    value['year'] = EntityDetails.defaultEntityYear;
     value['createdById'] = this.sessionUser['user_id'],
       this._adminsettingservice.postTargetValues(value).subscribe(
         data => {
@@ -175,7 +200,7 @@ export class TargetComponent implements OnInit {
       'KPICreatedMonth': this.kpiDetails['KPICreateMonth'],
       'KPICreatedWeek': this.kpiDetails['KPICreatedWeek'],
       'KPIId': this.kpiDetails['KPIId'],
-      'year': EntityDetails.year
+      'year': EntityDetails.defaultEntityYear
     }];
 
     //Custom Validator for Week Frequency

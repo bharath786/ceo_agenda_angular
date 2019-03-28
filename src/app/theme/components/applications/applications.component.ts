@@ -32,7 +32,7 @@ export class ApplicationsComponent implements OnInit {
   checkEntityCode(){
     this.isEntityCode = false
     if(localStorage['EntityDetails']  != null){
-      var EntityDetails = JSON.parse(localStorage['EntityDetails']);
+      var EntityDetails = JSON.parse(localStorage.getItem('EntityDetails'));
       this.EntityCode = EntityDetails['entityCode'];
       this.isEntityCode = true;
     }

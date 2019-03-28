@@ -6,6 +6,10 @@
     border: 1px solid #ddd !important;
   }
 
+.display-none{
+  display: none !important;
+}
+
 .close{
     float: right;
     color: black;
@@ -42,5 +46,10 @@
 
 .removeborder:hover{
     background-color: #fafafa !important;
+}
+
+.disable-cursor{
+  cursor: not-allowed !important;
+  pointer-events:none !important;
 }
 

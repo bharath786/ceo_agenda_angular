@@ -9,10 +9,10 @@
                 </div>
                 <div class="details">
                     <div class="number">
-                        4/9
+                    {{TotalCompliance}}
                     </div>
                     <div class="desc">
-                        Dimension Score
+                       <b>Overall Complaince</b> 
                     </div>
                 </div>
             </div>
@@ -24,10 +24,10 @@
                 </div>
                 <div class="details">
                     <div class="number">
-                        40/53
+                        {{PresentMonthCompliance}}
                     </div>
                     <div class="desc">
-                        KRA Score
+                      <b>Current Month Complaince</b> 
                     </div>
                 </div>
             </div>
@@ -39,10 +39,10 @@
                 </div>
                 <div class="details">
                     <div class="number">
-                        64/70
+                        {{TotalExceptions}}
                     </div>
                     <div class="desc">
-                        KPI Score
+                      <b> Overall Exceptions</b> 
                     </div>
                 </div>
 
@@ -55,10 +55,10 @@
                 </div>
                 <div class="details">
                     <div class="number">
-                        75%
+                        {{presentMonthExceptions}}
                     </div>
                     <div class="desc">
-                        Overall Score
+                     <b>Current Month Exceptions</b>   
                     </div>
                 </div>
 
@@ -66,13 +66,48 @@
         </div>
     </div>
 
+
     <!-- For Dashboard Charts -->
-    <!-- <div class="row">
-        <div [chart]="dimensionsummarychart" class="col-sm-6 charts"></div>
+    <div class="row">
+            <div class="col-sm-12" [chart]="barChartDataforExceptions"></div>
+            <div class="">
+                    <div class="col-sm-6" style="margin-top:20px !important;" [chart]="exceptionDimensionSpecific"></div>
+                    <div class="col-sm-6" style="margin-top:20px !important;" [chart]="exceptionCategorySpecific"></div>
+            </div>
+           
+        <!-- <div [chart]="dimensionsummarychart" class="col-sm-6 charts"></div>
         <div [chart]="krasummarychart" class="col-sm-6 charts"></div>
         <div [chart]="kpisummarychart" class="col-sm-6 charts"></div>
-        <div [chart]="exceptionschart" class="col-sm-6 charts"></div>
-    </div> -->
+        <div [chart]="exceptionschart" class="col-sm-6 charts"></div> -->
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <table class="table table-hover table-bordered table-scrollable-borderless table-striped margin-top">
+                    <thead>
+                <tr>        
+                        <th class="thblue">KRA</th>
+                        <th class="thblue">KPI</th>
+                        <th class="thblue">Exceptions</th>
+                        <th class="thblue">Compliance</th>
+                        <th class="thblue">Frequency</th>
+                </tr>
+                    </thead>
+                    <tbody>
+                            <tr *ngIf="last10Exceptions?.length == 0">
+                                    <td colspan="5">No record found</td>
+                                </tr>
+                        <tr *ngFor="let item of last10Exceptions">
+                            <td>{{item.KRA_Name}}</td>
+                            <td>{{item.KPI_Name}}</td>
+                            <td>{{item.Exceptions}}</td>
+                            <td>{{item.Compliance}}</td>
+                            <td>{{item.WeekId != 0 ? 'Week' + item.WeekId : item.MonthId | MonthNameAppModule}}</td>
+                        </tr>
+                    </tbody>
+            </table>
+        </div>
+    </div>
 
 </div>
 

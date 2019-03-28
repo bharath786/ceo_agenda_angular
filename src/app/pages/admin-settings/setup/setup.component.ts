@@ -65,6 +65,8 @@ export class SetupComponent implements OnInit {
   DatatypeId: any;
   rangeApplicableDataType: any;
   datatypeType: boolean;
+  isRead: boolean = false;
+  isWrite: boolean = false;
 
   constructor(private appSettings: AppSettings,public toasterService:ToasterService, private excelService: DownloadExcelService, private setupservice: AdminsettingsService, public router: Router, public fb: FormBuilder, public snackBar: MatSnackBar) {
 
@@ -114,29 +116,47 @@ export class SetupComponent implements OnInit {
       'scopeAlias': null
     });
 
+    let PermsissionDetails = [];
+    PermsissionDetails = JSON.parse(localStorage['userPermissions']);
+    PermsissionDetails = PermsissionDetails['PermissionArray']
+    console.log(PermsissionDetails,'User Permissions')
+    let Userdetails = JSON.parse(localStorage['Session_name']);
+    if(Userdetails.email == 'admin@ceo.com')
+    {
+      this.isRead = true;
+      this.isWrite = true;
+    }
+    else{
+     var permissionlist = [];
+     permissionlist =  PermsissionDetails.filter(x=>x.screen_name == 'Setup');
+     if(permissionlist.length > 0){
+       this.isRead = permissionlist[0]['bt_isRead'];
+       this.isWrite = permissionlist[0]['bt_isWrite'];
+     }
+     else{
+      this.isRead = false;
+      this.isWrite = false;
+     }
+    }
+
   }
 
-
   dataTypeCheck(event){
-
     if(event == "7" || event == "10" ){
       this.rangeValues = [];
       this.rangeApplicableDataType = true;
       this.datatypeType = true;
+      this.KPIform.controls['PriorityTypeId'].setValidators(null);
     }
-    
       else{
         this.rangeValues = [];
         this.rangeApplicableDataType = false;
         this.datatypeType = true;
-      
-   
+        this.KPIform.controls['PriorityTypeId'].setValidators(Validators.compose([Validators.required]));
     }
   }
 
   customValidation(){
-
-
     if(this.rangeApplicableDataType){
       if(this.rangeValues[0] == this.rangeValues[1]){
         return false;
@@ -165,7 +185,6 @@ export class SetupComponent implements OnInit {
   ngOnInit() {
     //For Loading setup Tree On Load
     this.getSetup();
-   
   }
 
   removeScopeAlias(){
@@ -202,6 +221,19 @@ export class SetupComponent implements OnInit {
     console.log(this.fileScope.name)
   }
 
+  //Function to give unique multi-dimensional array (To prevent duplicates) 
+multiDimensionalUnique(arr: any[]) {
+  var uniques = [];
+  var itemsFound = {};
+  for (var i = 0, l = arr.length; i < l; i++) {
+    var stringified = JSON.stringify(arr[i]);
+    if (itemsFound[stringified]) { continue; }
+    uniques.push(arr[i]);
+    itemsFound[stringified] = true;
+  }
+  return uniques;
+}
+
   Upload() {
     let fileReader = new FileReader();
     fileReader.onload = (e) => {
@@ -215,22 +247,37 @@ export class SetupComponent implements OnInit {
       var worksheet = workbook.Sheets[first_sheet_name];
       console.log(XLSX.utils.sheet_to_json(worksheet, { raw: true }));
       this.submittedfile = XLSX.utils.sheet_to_json(worksheet, { raw: true })
-
       console.log(this.submittedfile)
       if(this.submittedfile.length > 0){
-      console.log(this.submittedfile[0].ScopeCode)
-      console.log(this.submittedfile[0].ScopeValue)
+      let is_Code_Value_Null = false;
 
-      if(this.submittedfile[0].ScopeCode == undefined || this.submittedfile[0].ScopeValue == undefined){
-        console.log("Please upload relavent data")
-        this.uploadedFileFormatChecking = false;
-        this.toasterService.pop('success','Invalid File',"Uploaded file is invalid, please refer to download sample")
+        let codeCheckArray =[];
+        this.submittedfile.filter(x=>{
+          codeCheckArray.push(x.ScopeCode)
+          if(x.ScopeCode == "" || x.ScopeValue == "" || x.ScopeCode == undefined || x.ScopeValue == undefined){
+            is_Code_Value_Null = true;
+            this.fileScopeInput = '';
+            console.log(x,"is_Code_Value_Null")
+          }
+        })
+        
+      if(is_Code_Value_Null){
+        this.toasterService.pop('error','Invalid File',"System dosn't allow null values")
         this.fileScopeInput = '';
       }
-      else{
+      else if(this.submittedfile.length != this.multiDimensionalUnique(codeCheckArray).length){
+          this.toasterService.pop('error','Invalid File',"Please maintain unique scope code")
+          this.fileScopeInput = '';
+          is_Code_Value_Null = false;
+        }
+        else{
         this.uploadedFileFormatChecking = true;
-      }
+        }
 
+      }
+    else{
+      this.toasterService.pop('error','Invalid File',"No data available in the uploaded file")
+      this.fileScopeInput = '';
     }
   }
     fileReader.readAsArrayBuffer(this.fileScope);

@@ -79,7 +79,7 @@
                     <p-message *ngIf="targetForm.controls.numericData.errors?.required && targetForm.controls.numericData.touched" class="col-sm-3 customValidMessage no-padding" severity="error" text="Target is required"></p-message>
                     <p-message *ngIf="targetForm.controls.numericData.errors?.min || targetForm.controls.numericData.errors?.max" class="col-sm-3 customValidMessage no-padding" severity="error" text="Target should be between Min and Max Value"></p-message>
                           <div class="col-sm-1"></div>
-                        <button type="submit" [disabled]="!TargetUpsertForm.form.valid" class="btn btn-success col-sm-1 form-group pull-right margin-top5" style="margin-right: 0px;">Save</button>
+                        <button *ngIf="isWrite == true" type="submit" [disabled]="!TargetUpsertForm.form.valid" class="btn btn-success col-sm-1 form-group pull-right margin-top5" style="margin-right: 0px;">Save</button>
   
                 </mat-card-content>
                 </form>
@@ -131,7 +131,6 @@
                   <tr *ngIf="mf.data?.length == 0">
                     <td colspan="6">No record found</td>
                   </tr>
-      
                   <tr *ngFor="let item of mf.data">
                     <td> {{item.vc_year}}</td>
                     <td *ngIf="item.int_week != null">Week {{item.int_week}}</td>

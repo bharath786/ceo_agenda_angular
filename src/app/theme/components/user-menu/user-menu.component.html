@@ -7,11 +7,11 @@
 <mat-menu #userMenu="matMenu" [overlapTrigger]="false" class="toolbar-dropdown-menu user-menu">
 
     <mat-toolbar color="primary">
-        <div fxLayout="row" fxLayoutAlign="space-around center" class="user-info">
-            <img [src]="userImage" alt="user-image" width="80" class="rounded mat-elevation-z6">
-            <p>{{name}} <br> <small>Designation</small></p>
+        <div fxLayout="row" fxLayoutAlign="space-around" class="user-info">
+            <!-- <img [src]="userImage" alt="user-image" width="80" class="rounded mat-elevation-z6"> -->
+            {{name}}
         </div>
-    </mat-toolbar>
+        </mat-toolbar>
     <a mat-menu-item routerLink="profile" (click)="profileModalToggle(1)">
         <mat-icon>person</mat-icon>
         <span>Profile</span>

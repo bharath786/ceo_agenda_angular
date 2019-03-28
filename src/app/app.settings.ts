@@ -13,9 +13,11 @@ export class AppSettings {
     private menuSelected = new Subject<any>();
     private KpiId = new Subject<any>();
     private isNewAdded = new Subject<boolean>();
+    private isSubmitted = new Subject<boolean>();
     kpiId$: Observable<any> = this.KpiId.asObservable();
     menuId$: Observable<any> = this.menuSelected.asObservable();
     newAdded$: Observable<boolean> = this.isNewAdded.asObservable();
+    isSubmitted$: Observable<boolean> = this.isSubmitted.asObservable();
 
 
     public setMenuId(id) {
@@ -41,6 +43,14 @@ export class AppSettings {
 
     public getIsNewAdded() {
         return this.newAdded$;
+    }
+
+    public filterSubmitted(flag){
+        this.isSubmitted$ = flag;
+    }
+
+    public isfilterSubmitted() {
+        return this.isSubmitted$;
     }
 
 
